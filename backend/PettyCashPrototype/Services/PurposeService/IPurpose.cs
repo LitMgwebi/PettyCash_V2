@@ -4,8 +4,8 @@
     {
         public Task<IEnumerable<Purpose>> GetAll();
         public Task<Purpose> GetOne(int id);
-        public Task<int> Create(Purpose purpose);
-        public Task<int> Edit(Purpose purpose);
-        public Task<int> Delete(int id);
+        public void Create(Purpose purpose);
+        public void Edit(Purpose purpose);
+        public void SoftDelete(Purpose purpose);
     }
 }

@@ -1,7 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System.Reflection;
-
-namespace PettyCashPrototype.Controllers
+﻿namespace PettyCashPrototype.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -13,6 +10,7 @@ namespace PettyCashPrototype.Controllers
             _purpose = purpose;
         }
 
+        #region GET
 
         // GET: api/<PurposesController>
         [HttpGet, Route("index")]
@@ -45,22 +43,61 @@ namespace PettyCashPrototype.Controllers
             }
         }
 
-        // DELETE api/<PurposesController>/5
-        [HttpDelete, Route("delete")]
-        public async Task<ActionResult> Delete(int id)
+        #endregion
+
+        #region POST
+
+        [HttpPost, Route("create")]
+        public ActionResult<Purpose> Create(Purpose purpose)
         {
             try
             {
-                int result = await _purpose.Delete(id);
+                _purpose.Create(purpose);
 
-                if (result == 0)
-                    return UnprocessableEntity("System was unable to delete the selected purpose");
+                return Ok(new { message = "The new purpose has been added to the system." });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+        #endregion
 
-                return Ok(new { message = "Purpose has been deleted" });
+        #region PUT
+
+        [HttpPut, Route("edit")]
+        public ActionResult Edit(Purpose purpose)
+        {
+            try
+            {
+                _purpose.Edit(purpose);
+
+                return Ok(new { message = $"{purpose.Name} has been edited." });
             } catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
         }
+
+        #endregion
+
+        #region DELETE
+
+        // DELETE api/<PurposesController>/5
+        [HttpDelete, Route("delete")]
+        public ActionResult Delete(Purpose purpose)
+        {
+            try
+            {
+                 _purpose.SoftDelete(purpose);
+
+                return Ok(new { message = "Purpose has been deleted." });
+            } catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        #endregion
     }
 }

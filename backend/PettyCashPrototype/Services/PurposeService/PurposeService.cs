@@ -1,6 +1,4 @@
-﻿using PettyCashPrototype.Models;
-
-namespace PettyCashPrototype.Services.PurposeService
+﻿namespace PettyCashPrototype.Services.PurposeService
 {
     public class PurposeService: IPurpose
     {
@@ -46,13 +44,15 @@ namespace PettyCashPrototype.Services.PurposeService
             }
         }
 
-        public async Task<int> Create(Purpose purpose)
+        public void Create(Purpose purpose)
         {
             try
             {
-                await _db.Purposes!.AddAsync(purpose);
-                int result = await _db.SaveChangesAsync();
-                return result;
+                _db.Purposes!.Add(purpose);
+                int result = _db.SaveChanges();
+
+                if (result == 0)
+                    throw new DbUpdateException("System was not able to add the new purpose.");
             }
             catch
             {
@@ -60,13 +60,16 @@ namespace PettyCashPrototype.Services.PurposeService
             }
         }
 
-        public async Task<int> Edit(Purpose purpose)
+        public void Edit(Purpose purpose)
         {
             try
             {
                 _db.Purposes!.Update(purpose);
-                int result = await _db.SaveChangesAsync();
-                return result;
+                int result = _db.SaveChanges();
+
+                if (result == 0)
+                    throw new DbUpdateException($"System could not edit ${purpose.Name}.");
+
             }
             catch
             {
@@ -74,15 +77,16 @@ namespace PettyCashPrototype.Services.PurposeService
             }
         }
 
-        public async Task<int> Delete(int id)
+        public void SoftDelete(Purpose purpose)
         {
             try
             {
-                Purpose purpose = await GetOne(id);
                 purpose.IsActive = false;
                 _db.Purposes!.Update(purpose);
-                int result = await _db.SaveChangesAsync();
-                return result;
+                int result = _db.SaveChanges();
+
+                if (result == 0)
+                    throw new DbUpdateException($"System could not delete ${purpose.Name}.");
             }
             catch
             {

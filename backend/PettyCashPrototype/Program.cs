@@ -1,10 +1,17 @@
+#region Global Imports
+
 global using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+global using PettyCashPrototype.Services.MainAccountService;
 global using PettyCashPrototype.Services.SubAccountService;
 global using PettyCashPrototype.Services.PurposeService;
 global using Microsoft.AspNetCore.Identity;
 global using Microsoft.EntityFrameworkCore;
 global using PettyCashPrototype.Models;
+global using Microsoft.AspNetCore.Mvc;
 global using Newtonsoft.Json;
+global using System.Data;
+
+#endregion
 
 var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
@@ -13,13 +20,14 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddScoped<IPurpose, PurposeService>();
 builder.Services.AddScoped<ISubAccount, SubAccountService>();
+builder.Services.AddScoped<IMainAccount, MainAccountService>();
 
 builder.Services.AddAutoMapper(typeof(Program));
 
 #endregion
 
-
 #region Controllers and Endpoints Config
+
 builder.Services.AddControllers()
     .AddNewtonsoftJson(options =>
     {
@@ -27,6 +35,8 @@ builder.Services.AddControllers()
     });
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+#endregion
 
 #region Identity Configuration
 
@@ -37,8 +47,9 @@ builder.Services.AddIdentityCore<User>()
 
 #endregion
 
-
 var app = builder.Build();
+
+#region Web Application Config
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -63,3 +74,5 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
+#endregion

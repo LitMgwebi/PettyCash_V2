@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace PettyCashPrototype.Models;
+﻿namespace PettyCashPrototype.Models;
 
 public partial class MainAccount
 {
