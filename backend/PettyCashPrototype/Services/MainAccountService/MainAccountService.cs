@@ -1,7 +1,4 @@
-﻿using PettyCashPrototype.Models;
-using System.Data;
-
-namespace PettyCashPrototype.Services.MainAccountService
+﻿namespace PettyCashPrototype.Services.MainAccountService
 {
     public class MainAccountService: IMainAccount
     {
@@ -33,7 +30,7 @@ namespace PettyCashPrototype.Services.MainAccountService
             {
                 MainAccount mainAccount = await _db.MainAccounts
                     .Where(a => a.IsActive == true)
-                    .SingleOrDefaultAsync(x => x.MainAccountId == id);
+                    .SingleAsync(x => x.MainAccountId == id);
 
                 if (mainAccount == null)
                     throw new Exception("System could not retrieve the main account.");

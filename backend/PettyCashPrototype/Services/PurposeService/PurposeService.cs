@@ -31,7 +31,7 @@
             {
                 Purpose purpose = await _db.Purposes
                     .Where(a => a.IsActive == true)
-                    .SingleOrDefaultAsync(x => x.PurposeId == id);
+                    .SingleAsync(x => x.PurposeId == id);
                 
                 if (purpose == null)
                     throw new Exception("System could not retrieve the Purpose");

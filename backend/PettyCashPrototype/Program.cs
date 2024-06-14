@@ -3,6 +3,7 @@
 global using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 global using PettyCashPrototype.Services.MainAccountService;
 global using PettyCashPrototype.Services.SubAccountService;
+global using PettyCashPrototype.Services.GLAccountService;
 global using PettyCashPrototype.Services.PurposeService;
 global using Microsoft.AspNetCore.Identity;
 global using Microsoft.EntityFrameworkCore;
@@ -19,6 +20,7 @@ var builder = WebApplication.CreateBuilder(args);
 #region Scoping Services and Mapping Config
 
 builder.Services.AddScoped<IPurpose, PurposeService>();
+builder.Services.AddScoped<IGLAccount, GLAccountService>();
 builder.Services.AddScoped<ISubAccount, SubAccountService>();
 builder.Services.AddScoped<IMainAccount, MainAccountService>();
 
