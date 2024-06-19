@@ -65,7 +65,7 @@
             try
             {
                 _glAccount.Edit(glAccount);
-                return Ok(new { message = $"{glAccount.Name} has been edited" });
+                return Ok(new { message = $"{glAccount.Name} has been edited." });
             } catch (Exception ex)
             {
                 return BadRequest(ex.Message);
