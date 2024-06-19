@@ -1,10 +1,12 @@
 #region Global Imports
 
 global using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+global using PettyCashPrototype.Services.RequisitionService;
 global using PettyCashPrototype.Services.MainAccountService;
 global using PettyCashPrototype.Services.SubAccountService;
 global using PettyCashPrototype.Services.GLAccountService;
 global using PettyCashPrototype.Services.PurposeService;
+global using PettyCashPrototype.Services.OfficeService;
 global using Microsoft.AspNetCore.Identity;
 global using Microsoft.EntityFrameworkCore;
 global using PettyCashPrototype.Models;
@@ -19,10 +21,13 @@ var builder = WebApplication.CreateBuilder(args);
 
 #region Scoping Services and Mapping Config
 
+builder.Services.AddScoped<IOffice, OfficeService>();
 builder.Services.AddScoped<IPurpose, PurposeService>();
 builder.Services.AddScoped<IGLAccount, GLAccountService>();
 builder.Services.AddScoped<ISubAccount, SubAccountService>();
 builder.Services.AddScoped<IMainAccount, MainAccountService>();
+builder.Services.AddScoped<IRequisition, RequisitionService>();
+
 
 builder.Services.AddAutoMapper(typeof(Program));
 

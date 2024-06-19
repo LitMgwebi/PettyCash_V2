@@ -15,7 +15,7 @@
                     .ToListAsync();
 
                 if (purposes == null)
-                    throw new Exception("System could not find any Purposes");
+                    throw new Exception("System could not find any Purposes.");
 
                 return purposes;
             } 
@@ -34,7 +34,7 @@
                     .SingleAsync(x => x.PurposeId == id);
                 
                 if (purpose == null)
-                    throw new Exception("System could not retrieve the Purpose");
+                    throw new Exception("System could not retrieve the Purpose.");
 
                 return purpose;
             }
