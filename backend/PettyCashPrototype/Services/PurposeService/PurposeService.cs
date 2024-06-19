@@ -69,7 +69,6 @@
 
                 if (result == 0)
                     throw new DbUpdateException($"System could not edit ${purpose.Name}.");
-
             }
             catch
             {
