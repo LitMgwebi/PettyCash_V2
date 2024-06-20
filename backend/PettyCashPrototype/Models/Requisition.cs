@@ -32,7 +32,7 @@ public partial class Requisition
 
     public string? IssuerId { get; set; }
 
-    public bool IsActive { get; set; }
+    public bool IsActive { get; set; } = true;
 
     [ForeignKey(nameof(ApplicantId))]
     public virtual User Applicant { get; set; } = null!;

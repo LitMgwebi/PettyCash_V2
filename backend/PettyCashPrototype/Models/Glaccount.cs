@@ -17,7 +17,7 @@ public partial class Glaccount
 
     public int PurposeId { get; set; }
 
-    public bool IsActive { get; set; }
+    public bool IsActive { get; set; } = true;
 
     public virtual MainAccount MainAccount { get; set; } = null!;
 
