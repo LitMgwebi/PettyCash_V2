@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PettyCashPrototype.Models;
 
@@ -11,9 +12,11 @@ using PettyCashPrototype.Models;
 namespace PettyCashPrototype.Migrations
 {
     [DbContext(typeof(PettyCashPrototypeContext))]
-    partial class PettyCashPrototypeContextModelSnapshot : ModelSnapshot
+    [Migration("20240621081227_DepartmentSeeding")]
+    partial class DepartmentSeeding
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -255,29 +258,6 @@ namespace PettyCashPrototype.Migrations
                     b.HasKey("OfficeId");
 
                     b.ToTable("Office", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            OfficeId = 1,
-                            Description = "Johannesburg",
-                            IsActive = true,
-                            Name = "JHB"
-                        },
-                        new
-                        {
-                            OfficeId = 2,
-                            Description = "Kimberely",
-                            IsActive = true,
-                            Name = "KIM"
-                        },
-                        new
-                        {
-                            OfficeId = 3,
-                            Description = "Cape Town",
-                            IsActive = true,
-                            Name = "CPT"
-                        });
                 });
 
             modelBuilder.Entity("PettyCashPrototype.Models.Purpose", b =>

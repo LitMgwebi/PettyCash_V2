@@ -1,4 +1,6 @@
-<template>HI</template>
+<template>
+	<div>Home page</div>
+</template>
 
 <script setup>
 </script>

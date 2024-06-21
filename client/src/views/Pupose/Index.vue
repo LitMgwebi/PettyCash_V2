@@ -38,7 +38,7 @@
 			<span v-if="updatedPurpose.name.length > 0">
 				<h3>Edit {{ updatedPurpose.name }}</h3>
 			</span>
-			<span v-else><h3>Select Module to edit</h3></span>
+			<span v-else><h3>Select Purpose to edit</h3></span>
 			<form @submit.prevent="editSubmit">
 				<div>
 					<label>Name: </label>
@@ -58,41 +58,36 @@
 </template>
 
 <script setup>
-import {
-	getPurposes,
-	addPurpose,
-	editPurpose,
-	deletePurpose,
-} from "@/hooks/purposeCRUD";
-import { ref } from "vue";
+import { getPurposes, addPurpose, editPurpose, deletePurpose } from '@/hooks/purposeCRUD'
+import { ref } from 'vue'
 
-const reloadPage = () => window.location.reload();
-const { purposes } = getPurposes();
+const reloadPage = () => window.location.reload()
+const { purposes } = getPurposes()
 
 //#region Add Config
 
 const newPurpose = ref({
-	name: "",
-	description: "",
-});
-const addSubmit = () => addPurpose(newPurpose.value);
+	name: '',
+	description: ''
+})
+const addSubmit = () => addPurpose(newPurpose.value)
 
 //#endregion
 
 //#region Edit Config
 
 const updatedPurpose = ref({
-	name: "",
-	description: "",
-});
-const populateEdit = (purpose) => (updatedPurpose.value = purpose);
-const editSubmit = () => editPurpose(updatedPurpose.value);
+	name: '',
+	description: ''
+})
+const populateEdit = (purpose) => (updatedPurpose.value = purpose)
+const editSubmit = () => editPurpose(updatedPurpose.value)
 
 //#endregion
 
 //#region Delete Config
 
-const deleteRecord = (purpose) => deletePurpose(purpose);
+const deleteRecord = (purpose) => deletePurpose(purpose)
 
 //#endregion
 </script>
