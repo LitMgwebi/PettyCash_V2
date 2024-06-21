@@ -8,15 +8,15 @@ public partial class User: IdentityUser
 
     public string Idnumber { get; set; } = null!;
 
-    public int? DepartmentId { get; set; }
+    public int DepartmentId { get; set; }
 
-    public int? OfficeId { get; set; }
+    public int OfficeId { get; set; }
 
     public bool IsActive { get; set; } = true;
 
-    public virtual Department? Department { get; set; }
+    public virtual Department Department { get; set; } = null!;
 
-    public virtual Office? Office { get; set; }
+    public virtual Office Office { get; set; } = null!;
 
     [JsonIgnore]
     public virtual ICollection<Requisition> Applicants { get; set; } = new List<Requisition>();

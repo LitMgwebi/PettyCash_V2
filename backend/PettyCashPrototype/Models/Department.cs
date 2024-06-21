@@ -14,5 +14,5 @@ public partial class Department
     public bool IsActive { get; set; } = true;
 
     [JsonIgnore]
-    public virtual ICollection<User> Users { get; set; } = new List<User>();
+    public virtual ICollection<Glaccount> Glaccounts { get; set; } = new List<Glaccount>();
 }
