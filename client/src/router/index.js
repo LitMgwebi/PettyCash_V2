@@ -4,6 +4,7 @@ import Purpose from '@/views/Pupose/Index.vue'
 import Department from '@/views/Department/Index.vue'
 import Office from '@/views/Office/Index.vue'
 import SubAccount from '@/views/SubAccount/Index.vue'
+import MainAccount from '@/views/MainAccount/Index.vue'
 import NotFound from '@/views/NotFound.vue'
 
 const routes = [
@@ -31,6 +32,11 @@ const routes = [
         path: '/sub_accounts',
         name: 'sub_accounts',
         component: SubAccount
+    },
+    {
+        path: '/main_accounts',
+        name: 'main_accounts',
+        component: MainAccount
     },
     {
         path: '/about',

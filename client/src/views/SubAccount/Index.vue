@@ -80,7 +80,7 @@ const { subAccounts } = getSubAccounts()
 
 const newSubAccount = ref({
 	name: '',
-	accountNumber: 0,
+	accountNumber: '',
 	description: ''
 })
 const addSubmit = () => addSubAccount(newSubAccount.value)
@@ -91,7 +91,7 @@ const addSubmit = () => addSubAccount(newSubAccount.value)
 
 const updatedSubAccount = ref({
 	name: '',
-	accountNumber: 0,
+	accountNumber: '',
 	description: ''
 })
 const populateEdit = (subAccount) => (updatedSubAccount.value = subAccount)
