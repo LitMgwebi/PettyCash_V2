@@ -2,7 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import Purpose from '@/views/Pupose/Index.vue'
 import Department from '@/views/Department/Index.vue'
-import Office from '@/views/Department/Index.vue'
+import Office from '@/views/Office/Index.vue'
 import NotFound from '@/views/NotFound.vue'
 
 const routes = [
