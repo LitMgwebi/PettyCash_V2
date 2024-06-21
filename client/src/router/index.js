@@ -3,6 +3,7 @@ import HomeView from '../views/HomeView.vue'
 import Purpose from '@/views/Pupose/Index.vue'
 import Department from '@/views/Department/Index.vue'
 import Office from '@/views/Office/Index.vue'
+import SubAccount from '@/views/SubAccount/Index.vue'
 import NotFound from '@/views/NotFound.vue'
 
 const routes = [
@@ -25,6 +26,11 @@ const routes = [
         path: '/offices',
         name: 'offices',
         component: Office
+    },
+    {
+        path: '/sub_accounts',
+        name: 'sub_accounts',
+        component: SubAccount
     },
     {
         path: '/about',

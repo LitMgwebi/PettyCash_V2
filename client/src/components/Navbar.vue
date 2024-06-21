@@ -4,6 +4,7 @@
 			<router-link to="/">Home</router-link> | <router-link to="/about">About</router-link> |
 			<router-link to="/purposes">Purposes</router-link> |
 			<router-link to="/departments">Departments</router-link> |
+			<router-link to="/sub_accounts">Sub-Accounts</router-link> |
 			<router-link to="/offices">Offices</router-link>
 		</span>
 		<div v-if="loading">Loading</div>

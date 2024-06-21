@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PettyCashPrototype.Models;
 
@@ -11,9 +12,11 @@ using PettyCashPrototype.Models;
 namespace PettyCashPrototype.Migrations
 {
     [DbContext(typeof(PettyCashPrototypeContext))]
-    partial class PettyCashPrototypeContextModelSnapshot : ModelSnapshot
+    [Migration("20240621094939_SubAcountSeeding")]
+    partial class SubAcountSeeding
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -213,9 +216,8 @@ namespace PettyCashPrototype.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("MainAccountId"));
 
-                    b.Property<string>("AccountNumber")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("AccountNumber")
+                        .HasColumnType("int");
 
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
@@ -231,29 +233,6 @@ namespace PettyCashPrototype.Migrations
                     b.HasKey("MainAccountId");
 
                     b.ToTable("MainAccount", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            MainAccountId = 1,
-                            AccountNumber = "2013",
-                            IsActive = true,
-                            Name = "Insurance"
-                        },
-                        new
-                        {
-                            MainAccountId = 2,
-                            AccountNumber = "2012",
-                            IsActive = true,
-                            Name = "Inspection"
-                        },
-                        new
-                        {
-                            MainAccountId = 3,
-                            AccountNumber = "2007",
-                            IsActive = true,
-                            Name = "Domestic Travel"
-                        });
                 });
 
             modelBuilder.Entity("PettyCashPrototype.Models.Office", b =>
@@ -473,9 +452,8 @@ namespace PettyCashPrototype.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SubAccountId"));
 
-                    b.Property<string>("AccountNumber")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("AccountNumber")
+                        .HasColumnType("int");
 
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
@@ -496,21 +474,21 @@ namespace PettyCashPrototype.Migrations
                         new
                         {
                             SubAccountId = 1,
-                            AccountNumber = "0206",
+                            AccountNumber = 206,
                             IsActive = true,
                             Name = "IT Audit"
                         },
                         new
                         {
                             SubAccountId = 2,
-                            AccountNumber = "0045",
+                            AccountNumber = 45,
                             IsActive = true,
                             Name = "Meeting Fees"
                         },
                         new
                         {
                             SubAccountId = 3,
-                            AccountNumber = "0001",
+                            AccountNumber = 1,
                             IsActive = true,
                             Name = "Accomodation"
                         });

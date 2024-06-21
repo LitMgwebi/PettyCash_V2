@@ -4,7 +4,7 @@ public partial class SubAccount
 {
     public int SubAccountId { get; set; }
 
-    public int AccountNumber { get; set; }
+    public string AccountNumber { get; set; } = null!;
 
     public string Name { get; set; } = null!;
 
