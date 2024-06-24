@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PettyCashPrototype.Models;
 
@@ -11,9 +12,11 @@ using PettyCashPrototype.Models;
 namespace PettyCashPrototype.Migrations
 {
     [DbContext(typeof(PettyCashPrototypeContext))]
-    partial class PettyCashPrototypeContextModelSnapshot : ModelSnapshot
+    [Migration("20240624084433_SetGLPropsToNullable")]
+    partial class SetGLPropsToNullable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -471,33 +474,6 @@ namespace PettyCashPrototype.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "8e8df257-54a0-4cdf-97b1-3a9e0e741f4c",
-                            Name = "Admin"
-                        },
-                        new
-                        {
-                            Id = "8f2229c2-4a3e-485e-b134-e4cef0514156",
-                            Name = "Finance Officer"
-                        },
-                        new
-                        {
-                            Id = "d8a04f4a-11c2-4f28-9b08-05dbda455554",
-                            Name = "Finance Manager"
-                        },
-                        new
-                        {
-                            Id = "9a1de92b-0472-4886-8be3-94390a149dbb",
-                            Name = "ICT Officer"
-                        },
-                        new
-                        {
-                            Id = "bd5577a0-6377-4605-a33c-e1529809aec5",
-                            Name = "ICT Manager"
-                        });
                 });
 
             modelBuilder.Entity("PettyCashPrototype.Models.SubAccount", b =>

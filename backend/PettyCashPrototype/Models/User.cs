@@ -14,9 +14,9 @@ public partial class User: IdentityUser
 
     public bool IsActive { get; set; } = true;
 
-    public virtual Department Department { get; set; } = null!;
+    public virtual Department? Department { get; set; }
 
-    public virtual Office Office { get; set; } = null!;
+    public virtual Office? Office { get; set; }
 
     [JsonIgnore]
     public virtual ICollection<Requisition> Applicants { get; set; } = new List<Requisition>();

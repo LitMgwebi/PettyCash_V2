@@ -7,7 +7,7 @@ public partial class Glaccount
 {
     public int GlaccountId { get; set; }
 
-    public string Name { get; set; } = null!;
+    public string? Name { get; set; }
 
     public string? Description { get; set; }
 
@@ -23,16 +23,16 @@ public partial class Glaccount
 
     public bool IsActive { get; set; } = true;
 
-    public virtual MainAccount MainAccount { get; set; } = null!;
+    public virtual MainAccount? MainAccount { get; set; }
 
-    public virtual Purpose Purpose { get; set; } = null!;
+    public virtual Purpose? Purpose { get; set; }
 
-    public virtual Department Department { get; set; } = null!;
+    public virtual Department? Department { get; set; }
 
-    public virtual Office Office { get; set; } = null!;
+    public virtual Office? Office { get; set; }
 
     [JsonIgnore]
     public virtual ICollection<Requisition> Requisitions { get; set; } = new List<Requisition>();
 
-    public virtual SubAccount SubAccount { get; set; } = null!;
+    public virtual SubAccount? SubAccount { get; set; }
 }

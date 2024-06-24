@@ -43,11 +43,11 @@
         #region POST
 
         [HttpPost, Route("create")]
-        public ActionResult<Glaccount> Create(Glaccount glAccount)
+        public async Task<ActionResult<Glaccount>> Create(Glaccount glAccount)
         {
             try
             {
-                _glAccount.Create(glAccount);
+                await _glAccount.Create(glAccount);
                 return Ok(new {message = "The new GL Account has been added to the system."});
             } catch (Exception ex)
             {
@@ -60,11 +60,11 @@
         #region PUT
 
         [HttpPut, Route("edit")]
-        public ActionResult Edit(Glaccount glAccount)
+        public async Task<ActionResult> Edit(Glaccount glAccount)
         {
             try
             {
-                _glAccount.Edit(glAccount);
+                await _glAccount.Edit(glAccount);
                 return Ok(new { message = $"{glAccount.Name} has been edited." });
             } catch (Exception ex)
             {

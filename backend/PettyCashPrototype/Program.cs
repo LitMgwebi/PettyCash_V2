@@ -9,6 +9,7 @@ global using PettyCashPrototype.Services.GLAccountService;
 global using PettyCashPrototype.Services.PurposeService;
 global using PettyCashPrototype.Services.OfficeService;
 global using PettyCashPrototype.Services.UserService;
+global using PettyCashPrototype.Services.AuthService;
 global using Microsoft.AspNetCore.Identity;
 global using Microsoft.EntityFrameworkCore;
 global using PettyCashPrototype.Models;
@@ -33,6 +34,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 #region Scoping Services and Mapping Config
 
+builder.Services.AddScoped<IAuth, AuthService>();
 builder.Services.AddScoped<IUser, UserService>();
 builder.Services.AddScoped<IOffice, OfficeService>();
 builder.Services.AddScoped<IPurpose, PurposeService>();
