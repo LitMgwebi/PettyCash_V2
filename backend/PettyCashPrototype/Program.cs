@@ -117,7 +117,7 @@ builder.Services.AddAuthorization(options =>
 
 builder.Services.AddDbContext<PettyCashPrototypeContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DevelopmentConnection")));
 builder.Services.AddIdentityCore<User>()
-    .AddRoles<Role>()
+    .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<PettyCashPrototypeContext>();
 builder.Services.Configure<IdentityOptions>(options =>
 {

@@ -2,7 +2,7 @@
 
 namespace PettyCashPrototype.Models;
 
-public partial class PettyCashPrototypeContext : IdentityDbContext<User, Role, string, IdentityUserClaim<string>, UserRole, IdentityUserLogin<string>, IdentityRoleClaim<string>, IdentityUserToken<string>>
+public partial class PettyCashPrototypeContext : IdentityDbContext<User>
 {
     public PettyCashPrototypeContext()
     {
@@ -105,6 +105,7 @@ public partial class PettyCashPrototypeContext : IdentityDbContext<User, Role, s
             entity.Property(e => e.IsActive).HasColumnName("isActive");
             entity.Property(e => e.IssuerId).HasColumnName("IssuerID");
             entity.Property(e => e.ManagerApprovalId).HasColumnName("ManagerApprovalID");
+            entity.Property(e => e.StatusId).HasColumnName("StatusID");
             entity.Property(e => e.ManagerId).HasColumnName("ManagerID");
             entity.Property(e => e.TotalExpenses).HasColumnType("decimal(18, 2)");
 
@@ -132,6 +133,10 @@ public partial class PettyCashPrototypeContext : IdentityDbContext<User, Role, s
             entity.HasOne(d => d.ManagerApproval).WithMany(p => p.ManagerApprovals)
                 .HasForeignKey(d => d.ManagerApprovalId)
                 .HasConstraintName("FK_Requisition_TripStatus");
+            
+            entity.HasOne(d => d.TripStatus).WithMany(p => p.Statuses)
+                .HasForeignKey(d => d.StatusId)
+                .HasConstraintName("FK_Requisition_TripStatus2");
 
             entity.HasOne(d => d.Manager).WithMany(p => p.Managers)
                 .HasForeignKey(d => d.ManagerId)
@@ -162,6 +167,6 @@ public partial class PettyCashPrototypeContext : IdentityDbContext<User, Role, s
         modelBuilder.ApplyConfiguration(new OfficeSeeding());
         modelBuilder.ApplyConfiguration(new SubAccountSeeding());
         modelBuilder.ApplyConfiguration(new MainAccountSeeding());
-        modelBuilder.ApplyConfiguration(new RolesSeeding());
+        //modelBuilder.ApplyConfiguration(new RolesSeeding());
     }
 }

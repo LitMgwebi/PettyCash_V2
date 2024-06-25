@@ -26,12 +26,12 @@ namespace PettyCashPrototype.Controllers
 
                 if(await _auth.ValidateUser(loginModel.Password, user))
                 {
-                    UserMapper userMapper = await _user.GetMappedUserByEmail(loginModel.Email);
+                    UserMapper userMapper = await _user.GetMappedUserByEmail(user);
                     JWTToken jwt = await _auth.CreateToken(user);
                     return Ok(new { jwt, message = "You are logged in.", user = userMapper });
                 }
                 return Unauthorized("Incorrect Email or Password.");
-            } catch(Exception ex) { return BadRequest(ex); }
+            } catch(Exception ex) { return BadRequest(ex.Message); }
         }
 
         [HttpPost, Route("register")]

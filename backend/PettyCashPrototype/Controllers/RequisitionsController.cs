@@ -31,16 +31,29 @@
             } catch (Exception ex) { return BadRequest(ex.Message); }
         }
 
+        [HttpGet, Route("applicant_forms")]
+        public async Task<ActionResult<IEnumerable<Requisition>>> ApplicantForms(string id)
+        {
+            try
+            {
+                IEnumerable<Requisition> requisitions = await _requisition.GetByApplicant(id);
+
+                return Ok(requisitions);
+            }
+            catch (Exception ex) { return BadRequest(ex.Message); }
+        }
+
         #endregion
 
         #region POST
 
         [HttpPost, Route("create")]
-        public ActionResult<Requisition> Create(Requisition requisition)
+        public async Task<ActionResult<Requisition>> Create(Requisition requisition)
         {
             try
             {
-                _requisition.Create(requisition);
+                requisition.StartDate = DateTime.UtcNow;
+                await _requisition.Create(requisition);
                 return Ok(new { message = "The new Requisition has been added to the system" });
             }
             catch (Exception ex) { return BadRequest(ex.Message); }

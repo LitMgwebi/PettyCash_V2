@@ -38,6 +38,20 @@
             }
         }
 
+        [HttpGet, Route("index_department")]
+        public async Task<ActionResult<IEnumerable<Glaccount>>> IndexByDepartment(int id)
+        {
+            try
+            {
+                IEnumerable<Glaccount> glaccounts = await _glAccount.GetAllbyDepartment(id);
+                return Ok(glaccounts);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
         #endregion
 
         #region POST

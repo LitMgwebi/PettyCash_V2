@@ -30,8 +30,8 @@ public partial class User: IdentityUser
     [JsonIgnore]
     public virtual ICollection<Requisition> Managers { get; set; } = new List<Requisition>();
     
-    [JsonIgnore]
-    public IList<UserRole>? UserRoles { get; set; }
+    //[JsonIgnore]
+    //public IList<UserRole>? UserRoles { get; set; }
 
     public string FullName
     {

@@ -33,6 +33,23 @@
             } catch { throw; }
         }
 
+        public async Task<IEnumerable<Glaccount>> GetAllbyDepartment(int departmentId)
+        {
+            try
+            {
+                IEnumerable<Glaccount> glAccounts = await _db.Glaccounts
+                    .Where(d =>  d.DepartmentId == departmentId)
+                    .Where(x => x.IsActive == true)
+                    .ToListAsync();
+
+                if (glAccounts == null)
+                    throw new Exception("System could not find any GL accounts in your department.");
+
+                return glAccounts;
+            }
+            catch { throw; }
+        }
+
         public async Task<Glaccount> GetOne(int id)
         {
             try

@@ -63,7 +63,16 @@ const routes = [
         name: 'gl_accounts',
         component: () => import('@/views/GLAccount/Index.vue')
     },
-
+    {
+        path: '/requisitions',
+        name: 'requisitions',
+        component: () => import('@/views/Requisition/List.vue')
+    },
+    {
+        path: '/requisitions/create',
+        name: 'requistion_create',
+        component: () => import('@/views/Requisition/Create.vue')
+    },
     {
         path: '/:catchAll(.*)',
         name: 'notFound',

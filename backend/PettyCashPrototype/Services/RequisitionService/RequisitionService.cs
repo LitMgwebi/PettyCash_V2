@@ -3,7 +3,11 @@
     public class RequisitionService: IRequisition
     {
         private PettyCashPrototypeContext _db;
-        public RequisitionService(PettyCashPrototypeContext db) { _db = db; }
+        private readonly IUser _user;
+        public RequisitionService(PettyCashPrototypeContext db, IUser user) { 
+            _db = db;
+            _user = user;
+        }
 
         public async Task<IEnumerable<Requisition>> GetAll()
         {
@@ -14,6 +18,22 @@
                     .ToListAsync();
 
                 if (requisitions == null) throw new Exception("System could not find any requisitions.");
+                return requisitions;
+            }
+            catch { throw; }
+        }
+
+        public async Task<IEnumerable<Requisition>> GetByApplicant(string id)
+        {
+            try
+            {
+                IEnumerable<Requisition> requisitions = await _db.Requisitions
+                    .Where(a => a.ApplicantId == id)
+                    .Include(a => a.Applicant)
+                    .Where(a => a.IsActive == true)
+                    .ToListAsync();
+
+                if (requisitions == null) throw new Exception("System could not find any of your requisition forms.");
                 return requisitions;
             }
             catch { throw; }
@@ -33,10 +53,11 @@
             catch { throw; }
         }
 
-        public void Create(Requisition requisition)
+        public async Task Create(Requisition requisition)
         {
             try
             {
+                requisition.Applicant = await _user.GetUserById(requisition.ApplicantId);
                 _db.Requisitions.Add(requisition);
                 int result = _db.SaveChanges();
 

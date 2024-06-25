@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PettyCashPrototype.Models;
 
@@ -11,9 +12,11 @@ using PettyCashPrototype.Models;
 namespace PettyCashPrototype.Migrations
 {
     [DbContext(typeof(PettyCashPrototypeContext))]
-    partial class PettyCashPrototypeContextModelSnapshot : ModelSnapshot
+    [Migration("20240625061852_ChangingRequisitionDate")]
+    partial class ChangingRequisitionDate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,60 +24,6 @@ namespace PettyCashPrototype.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("ConcurrencyStamp")
-                        .IsConcurrencyToken()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<string>("NormalizedName")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("NormalizedName")
-                        .IsUnique()
-                        .HasDatabaseName("RoleNameIndex")
-                        .HasFilter("[NormalizedName] IS NOT NULL");
-
-                    b.ToTable("AspNetRoles", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "8be0cb29-4215-4dff-8ea2-e39aab1acf5f",
-                            Name = "Admin"
-                        },
-                        new
-                        {
-                            Id = "4f239420-b1e1-4953-ac96-34116e4a3ad8",
-                            Name = "Finance Officer"
-                        },
-                        new
-                        {
-                            Id = "ca490148-543d-4292-8ca5-d921093a29b5",
-                            Name = "Finance Manager"
-                        },
-                        new
-                        {
-                            Id = "a058a161-a496-4cfd-89ac-2cb6ae50f9a5",
-                            Name = "ICT Officer"
-                        },
-                        new
-                        {
-                            Id = "12c3c950-bb90-4c8e-bb57-9925bbf9850d",
-                            Name = "ICT Manager"
-                        });
-                });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
@@ -146,21 +95,6 @@ namespace PettyCashPrototype.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("AspNetUserLogins", (string)null);
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
-                {
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("RoleId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("UserId", "RoleId");
-
-                    b.HasIndex("RoleId");
-
-                    b.ToTable("AspNetUserRoles", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
@@ -462,9 +396,6 @@ namespace PettyCashPrototype.Migrations
                     b.Property<DateTime?>("CloseDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int?>("FinanceApprovalId")
                         .HasColumnType("int")
                         .HasColumnName("FinanceApprovalID");
@@ -496,10 +427,6 @@ namespace PettyCashPrototype.Migrations
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("StatusId")
-                        .HasColumnType("int")
-                        .HasColumnName("StatusID");
-
                     b.Property<decimal?>("TotalExpenses")
                         .HasColumnType("decimal(18, 2)");
 
@@ -519,9 +446,61 @@ namespace PettyCashPrototype.Migrations
 
                     b.HasIndex("ManagerId");
 
-                    b.HasIndex("StatusId");
-
                     b.ToTable("Requisition", (string)null);
+                });
+
+            modelBuilder.Entity("PettyCashPrototype.Models.Role", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("NormalizedName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NormalizedName")
+                        .IsUnique()
+                        .HasDatabaseName("RoleNameIndex")
+                        .HasFilter("[NormalizedName] IS NOT NULL");
+
+                    b.ToTable("AspNetRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "65907695-03f1-42fc-a41c-a5c0a2e30106",
+                            Name = "Admin"
+                        },
+                        new
+                        {
+                            Id = "3fe0a728-fab6-4fbd-b2af-2ec90ee1d5e8",
+                            Name = "Finance Officer"
+                        },
+                        new
+                        {
+                            Id = "ba545bc9-81ac-4e2d-8772-9d3b63a169ab",
+                            Name = "Finance Manager"
+                        },
+                        new
+                        {
+                            Id = "95422b69-93e3-4e82-b6fc-69f114467566",
+                            Name = "ICT Officer"
+                        },
+                        new
+                        {
+                            Id = "c0e36a16-8c44-4256-8047-e9dc8ecb5ceb",
+                            Name = "ICT Manager"
+                        });
                 });
 
             modelBuilder.Entity("PettyCashPrototype.Models.SubAccount", b =>
@@ -688,9 +667,34 @@ namespace PettyCashPrototype.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
+            modelBuilder.Entity("PettyCashPrototype.Models.UserRole", b =>
+                {
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("RoleId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("RoleId1")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("UserId1")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("UserId", "RoleId");
+
+                    b.HasIndex("RoleId");
+
+                    b.HasIndex("RoleId1");
+
+                    b.HasIndex("UserId1");
+
+                    b.ToTable("AspNetUserRoles", (string)null);
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
+                    b.HasOne("PettyCashPrototype.Models.Role", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -708,21 +712,6 @@ namespace PettyCashPrototype.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("PettyCashPrototype.Models.User", null)
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
-                {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
-                        .WithMany()
-                        .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("PettyCashPrototype.Models.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
@@ -820,11 +809,6 @@ namespace PettyCashPrototype.Migrations
                         .HasForeignKey("ManagerId")
                         .HasConstraintName("FK_Requisition_User2");
 
-                    b.HasOne("PettyCashPrototype.Models.TripStatus", "TripStatus")
-                        .WithMany("Statuses")
-                        .HasForeignKey("StatusId")
-                        .HasConstraintName("FK_Requisition_TripStatus2");
-
                     b.Navigation("Applicant");
 
                     b.Navigation("FinanceApproval");
@@ -838,8 +822,6 @@ namespace PettyCashPrototype.Migrations
                     b.Navigation("Manager");
 
                     b.Navigation("ManagerApproval");
-
-                    b.Navigation("TripStatus");
                 });
 
             modelBuilder.Entity("PettyCashPrototype.Models.User", b =>
@@ -859,6 +841,33 @@ namespace PettyCashPrototype.Migrations
                     b.Navigation("Department");
 
                     b.Navigation("Office");
+                });
+
+            modelBuilder.Entity("PettyCashPrototype.Models.UserRole", b =>
+                {
+                    b.HasOne("PettyCashPrototype.Models.Role", null)
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("PettyCashPrototype.Models.Role", "Role")
+                        .WithMany("UserRoles")
+                        .HasForeignKey("RoleId1");
+
+                    b.HasOne("PettyCashPrototype.Models.User", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("PettyCashPrototype.Models.User", "User")
+                        .WithMany("UserRoles")
+                        .HasForeignKey("UserId1");
+
+                    b.Navigation("Role");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("PettyCashPrototype.Models.Department", b =>
@@ -886,6 +895,11 @@ namespace PettyCashPrototype.Migrations
                     b.Navigation("Glaccounts");
                 });
 
+            modelBuilder.Entity("PettyCashPrototype.Models.Role", b =>
+                {
+                    b.Navigation("UserRoles");
+                });
+
             modelBuilder.Entity("PettyCashPrototype.Models.SubAccount", b =>
                 {
                     b.Navigation("Glaccounts");
@@ -896,8 +910,6 @@ namespace PettyCashPrototype.Migrations
                     b.Navigation("FinanceApprovals");
 
                     b.Navigation("ManagerApprovals");
-
-                    b.Navigation("Statuses");
                 });
 
             modelBuilder.Entity("PettyCashPrototype.Models.User", b =>
@@ -909,6 +921,8 @@ namespace PettyCashPrototype.Migrations
                     b.Navigation("Issuers");
 
                     b.Navigation("Managers");
+
+                    b.Navigation("UserRoles");
                 });
 #pragma warning restore 612, 618
         }

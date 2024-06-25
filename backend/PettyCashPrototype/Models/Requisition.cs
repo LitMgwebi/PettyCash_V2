@@ -8,15 +8,19 @@ public partial class Requisition
 
     public decimal AmountRequested { get; set; }
 
+    public string? Description { get; set; }
+
+    public int? StatusId { get; set; }
+
     public decimal? CashIssued { get; set; }
 
     public decimal? TotalExpenses { get; set; }
 
     public decimal? Change { get; set; }
 
-    public DateOnly StartDate { get; set; }
+    public DateTime StartDate { get; set; }
 
-    public DateOnly? CloseDate { get; set; }
+    public DateTime? CloseDate { get; set; }
 
     public string ApplicantId { get; set; } = null!;
 
@@ -35,7 +39,7 @@ public partial class Requisition
     public bool IsActive { get; set; } = true;
 
     [ForeignKey(nameof(ApplicantId))]
-    public virtual User Applicant { get; set; } = null!;
+    public virtual User? Applicant { get; set; }
 
     [ForeignKey(nameof(FinanceApprovalId))]
     public virtual TripStatus? FinanceApproval { get; set; }
@@ -53,4 +57,7 @@ public partial class Requisition
 
     [ForeignKey(nameof(ManagerApprovalId))]
     public virtual TripStatus? ManagerApproval { get; set; }
+
+    [ForeignKey(nameof(StatusId))]
+    public virtual TripStatus? TripStatus { get; set; }
 }

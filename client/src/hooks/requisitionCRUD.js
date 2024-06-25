@@ -1,68 +1,69 @@
-import store from '@/store/index'
+import store from '@/store/index.js'
 import axios from 'axios'
 import { ref } from 'vue'
 
-export function getGLAccounts() {
+export function getRequisitions() {
     store.commit('setLoading')
-    const glAccounts = ref([])
+    const requisitions = ref([])
     axios({
         method: 'GET',
-        url: 'GLAccounts/index'
+        url: 'Requisitions/index'
     })
-        .then((res) => (glAccounts.value = res.data))
+        .then((res) => (requisitions.value = res.data))
         .catch((error) => store.dispatch('setStatus', error.response.data))
         .finally(() => store.commit('doneLoading'))
 
-    return { glAccounts }
+    return { requisitions }
 }
 
-export function getGLAccountsByDepartment(departmentId) {
+export function getRequisitionsByApplicant(id) {
     store.commit('setLoading')
-    const glAccounts = ref([])
+    const requisitions = ref([])
     axios({
         method: 'GET',
-        url: 'GLAccounts/index_department',
+        url: 'Requisitions/applicant_forms',
         params: {
-            id: departmentId
+            id: id
         }
     })
-        .then((res) => (glAccounts.value = res.data))
+        .then((res) => (requisitions.value = res.data))
         .catch((error) => store.dispatch('setStatus', error.response.data))
         .finally(() => store.commit('doneLoading'))
 
-    return { glAccounts }
+    console.log(requisitions)
+    return { requisitions }
 }
 
-export function addGLAccount(glAccount) {
+export function addRequisition(requisition) {
     store.commit('setLoading')
     axios({
         method: 'POST',
-        url: 'GLAccounts/create',
-        data: glAccount
+        url: 'Requisitions/create',
+        data: requisition
     })
         .then((res) => store.dispatch('setStatus', res.data.message))
         .catch((error) => store.dispatch('setStatus', error.response.data))
         .finally(() => store.commit('doneLoading'))
 }
 
-export function editGLAccount(glAccount) {
+export function editRequisition(requisition) {
     store.commit('setLoading')
     axios({
         method: 'PUT',
-        url: 'GLAccounts/edit',
-        data: glAccount
+        url: 'Requisition/edit',
+        data: requisition
     })
         .then((res) => store.dispatch('setStatus', res.data.message))
         .catch((error) => store.dispatch('setStatus', error.response.data))
         .finally(() => store.commit('doneLoading'))
 }
 
-export function deleteGLAccount(glAccount) {
+export function deleteRequisition(requisition) {
     store.commit('setLoading')
     axios({
         method: 'DELETE',
-        url: 'GLAccounts/delete',
-        data: glAccount
+        url: 'Requisition/delete',
+        data: requisition
     })
         .then((res) => store.dispatch('setStatus', res.data.message))
         .catch((error) => store.dispatch('setStatus', error.response.data))

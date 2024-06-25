@@ -55,18 +55,32 @@ namespace PettyCashPrototype.Services.UserService
             catch { throw; }
         }
 
-        public async Task<UserMapper> GetMappedUserByEmail(string email)
+        public async Task<User> GetUserById(string id)
         {
             try
             {
                 User user = await _db.Users
                     .Where(a => a.IsActive == true)
-                    .SingleAsync(e => e.Email == email);
+                    .SingleAsync(e => e.Id == id);
 
-                IEnumerable<string> roles = await _userManager.GetRolesAsync(user!);
+                if (user == null) throw new Exception("System was not able to retrieve user");
 
+                return user;
+            }
+            catch { throw; }
+        }
+
+        public async Task<UserMapper> GetMappedUserByEmail(User user)
+        {
+            try
+            {
+                IEnumerable<string> roles = await _userManager.GetRolesAsync(user);
+                if (roles == null)
+                {
+                    throw new Exception("You have not been given a role by system administrator.");
+                }
                 UserMapper userMapper = _mapper.Map<UserMapper>(user);
-                userMapper.Role = roles.Single();
+                userMapper.Role = roles.FirstOrDefault()!;
 
                 return userMapper;
             }
@@ -79,7 +93,7 @@ namespace PettyCashPrototype.Services.UserService
             {
                 user.Office = await _office.GetOne(user.OfficeId);
                 user.Department = await _department.GetOne(user.DepartmentId);
-                IdentityResult result = await _userManager.CreateAsync(user);
+                IdentityResult result = await _userManager.CreateAsync(user, password);
                 if (result.Succeeded)
                 {
                     await _db.SaveChangesAsync();

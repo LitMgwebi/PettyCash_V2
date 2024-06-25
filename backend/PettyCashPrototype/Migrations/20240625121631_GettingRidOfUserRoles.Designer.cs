@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PettyCashPrototype.Models;
 
@@ -11,9 +12,11 @@ using PettyCashPrototype.Models;
 namespace PettyCashPrototype.Migrations
 {
     [DbContext(typeof(PettyCashPrototypeContext))]
-    partial class PettyCashPrototypeContextModelSnapshot : ModelSnapshot
+    [Migration("20240625121631_GettingRidOfUserRoles")]
+    partial class GettingRidOfUserRoles
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -51,27 +54,27 @@ namespace PettyCashPrototype.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "8be0cb29-4215-4dff-8ea2-e39aab1acf5f",
+                            Id = "f3fee0e5-871e-4773-879d-dc9683d4e1f0",
                             Name = "Admin"
                         },
                         new
                         {
-                            Id = "4f239420-b1e1-4953-ac96-34116e4a3ad8",
+                            Id = "fa553eee-5c85-4c4e-b474-df99300440e6",
                             Name = "Finance Officer"
                         },
                         new
                         {
-                            Id = "ca490148-543d-4292-8ca5-d921093a29b5",
+                            Id = "b6530f90-65ee-4b8c-81e5-f282b6c469a8",
                             Name = "Finance Manager"
                         },
                         new
                         {
-                            Id = "a058a161-a496-4cfd-89ac-2cb6ae50f9a5",
+                            Id = "e109d0eb-6725-4f9a-a8f7-c86a216e22a0",
                             Name = "ICT Officer"
                         },
                         new
                         {
-                            Id = "12c3c950-bb90-4c8e-bb57-9925bbf9850d",
+                            Id = "df99e842-7c2b-4da4-95e1-65a833a0c29a",
                             Name = "ICT Manager"
                         });
                 });
@@ -496,10 +499,6 @@ namespace PettyCashPrototype.Migrations
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("StatusId")
-                        .HasColumnType("int")
-                        .HasColumnName("StatusID");
-
                     b.Property<decimal?>("TotalExpenses")
                         .HasColumnType("decimal(18, 2)");
 
@@ -518,8 +517,6 @@ namespace PettyCashPrototype.Migrations
                     b.HasIndex("ManagerApprovalId");
 
                     b.HasIndex("ManagerId");
-
-                    b.HasIndex("StatusId");
 
                     b.ToTable("Requisition", (string)null);
                 });
@@ -820,11 +817,6 @@ namespace PettyCashPrototype.Migrations
                         .HasForeignKey("ManagerId")
                         .HasConstraintName("FK_Requisition_User2");
 
-                    b.HasOne("PettyCashPrototype.Models.TripStatus", "TripStatus")
-                        .WithMany("Statuses")
-                        .HasForeignKey("StatusId")
-                        .HasConstraintName("FK_Requisition_TripStatus2");
-
                     b.Navigation("Applicant");
 
                     b.Navigation("FinanceApproval");
@@ -838,8 +830,6 @@ namespace PettyCashPrototype.Migrations
                     b.Navigation("Manager");
 
                     b.Navigation("ManagerApproval");
-
-                    b.Navigation("TripStatus");
                 });
 
             modelBuilder.Entity("PettyCashPrototype.Models.User", b =>
@@ -896,8 +886,6 @@ namespace PettyCashPrototype.Migrations
                     b.Navigation("FinanceApprovals");
 
                     b.Navigation("ManagerApprovals");
-
-                    b.Navigation("Statuses");
                 });
 
             modelBuilder.Entity("PettyCashPrototype.Models.User", b =>

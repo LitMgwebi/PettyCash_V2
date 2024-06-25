@@ -13,4 +13,7 @@ public partial class TripStatus
 
     [JsonIgnore]
     public virtual ICollection<Requisition> ManagerApprovals { get; set; } = new List<Requisition>();
+    
+    [JsonIgnore]
+    public virtual ICollection<Requisition> Statuses { get; set; } = new List<Requisition>();
 }

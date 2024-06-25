@@ -2,28 +2,28 @@
 
 namespace PettyCashPrototype.Seeding.Entites
 {
-    public class RolesSeeding: IEntityTypeConfiguration<Role>
+    public class RolesSeeding: IEntityTypeConfiguration<IdentityRole>
     {
-        public void Configure(EntityTypeBuilder<Role> builder)
+        public void Configure(EntityTypeBuilder<IdentityRole> builder)
         {
             builder.HasData(
-                new Role
+                new IdentityRole
                 {
                     Name = "Admin"
                 },
-                new Role
+                new IdentityRole
                 {
                     Name = "Finance Officer"
                 },
-                new Role
+                new IdentityRole
                 {
                     Name = "Finance Manager"
                 },
-                new Role
+                new IdentityRole
                 {
                     Name = "ICT Officer"
                 },
-                new Role
+                new IdentityRole
                 {
                     Name = "ICT Manager"
                 }

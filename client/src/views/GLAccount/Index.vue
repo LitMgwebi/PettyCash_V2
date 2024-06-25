@@ -4,7 +4,7 @@
 		<section class="table">
 			<div v-for="glAccount in glAccounts" :key="glAccount">
 				<span class="module">
-					{{ glAccount.name }}
+					{{ glAccount.name }} -
 					<span v-if="glAccount.description != null">
 						{{ glAccount.description }}
 					</span>

@@ -38,10 +38,18 @@
             catch { throw; }
         }
 
-        public void Create(SubAccount subAccount)
+        public async Task Create(SubAccount subAccount)
         {
             try
             {
+                IEnumerable<SubAccount> subAccounts = await GetAll();
+
+                if (subAccounts.Select(x => x.Name).ToList().Contains(subAccount.Name))
+                    throw new DbUpdateException($"System already contains Sub Account with the name: {subAccount.Name}");
+
+                if(subAccounts.Select(x => x.AccountNumber).ToList().Contains(subAccount.AccountNumber))
+                    throw new DbUpdateException($"System already contains Sub Account with the account number: {subAccount.AccountNumber}");
+
                 _db.SubAccounts.Add(subAccount);
                 int result = _db.SaveChanges();
 

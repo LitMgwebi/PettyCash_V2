@@ -1,5 +1,5 @@
 import { createStore } from 'vuex'
-import { login as loginFunction } from '@/hooks/userCRUD'
+import { login as loginFunction, logout } from '@/hooks/userCRUD'
 import router from '@/router'
 
 export default createStore({
@@ -30,29 +30,35 @@ export default createStore({
         setStatus: ({ commit }, status) => {
             try {
                 commit('setStatus', status)
-                setTimeout(() => {
-                    commit('setStatus', null)
-                }, 10000)
+                // setTimeout(() => {
+                //     commit('setStatus', null)
+                // }, 10000)
             } catch (error) {
-                console.log(error)
+                commit('setStatus', error)
+            } finally {
+                // setTimeout(() => location.reload(), 2500)
             }
-            //  finally {
-            //     setTimeout(() => location.reload(), 3000)
-            // }
         },
         login: async ({ commit }, userDetails) => {
-            commit('setLoading')
-            await loginFunction(userDetails)
-            commit('logIn')
-            commit('doneLoading')
-            router.push('/dashboard')
+            try {
+                await loginFunction(userDetails)
+            } catch {
+                return
+            }
         },
-        logout: ({ commit }) => {
-            localStorage.removeItem('Token', null)
-            localStorage.removeItem('User', null)
-            commit('logOut')
-            window.location.reload()
-            router.push('/')
+        logout: () => {
+            try {
+                logout()
+            } catch {
+                return
+            }
+        },
+        checkToken: ({ commit }) => {
+            const token = localStorage.getItem('Token')
+            if (token != null || token != undefined) {
+                if (token.length > 0) commit('logIn')
+                else commit('logOut')
+            } else commit('logOut')
         }
     },
     modules: {}
