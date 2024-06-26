@@ -28,7 +28,11 @@ public partial class Requisition
 
     public string? ManagerId { get; set; }
 
-    public int? ManagerApprovalId { get; set; }
+    public DateTime? ManagerRecommendationDate { get; set; }
+
+    public int? ManagerRecommendationId { get; set; }
+
+    public DateTime? FinanceApprovalDate {  get; set; }
 
     public int? FinanceApprovalId { get; set; }
 
@@ -53,6 +57,6 @@ public partial class Requisition
     [ForeignKey(nameof(ManagerId))]
     public virtual User? Manager { get; set; }
 
-    [ForeignKey(nameof(ManagerApprovalId))]
-    public virtual TripStatus? ManagerApproval { get; set; }
+    [ForeignKey(nameof(ManagerRecommendationId))]
+    public virtual TripStatus? ManagerRecommendation { get; set; }
 }

@@ -8,7 +8,7 @@
 			</span>
 			<span v-else>
 				<router-link to="/dashboard">Dashboard</router-link> |
-				<span v-if="user.role == 'Admin'">
+				<span v-if="user.role == 'ICT_Admin'">
 					<router-link to="/purposes">Purposes</router-link> |
 					<router-link to="/departments">Departments</router-link> |
 					<router-link to="/sub_accounts">Sub-Accounts</router-link> |
@@ -16,7 +16,7 @@
 					<router-link to="/gl_accounts">GL Accounts</router-link> |
 					<router-link to="/offices">Offices</router-link> |
 				</span>
-				<span v-else-if="user.role == 'ICT Officer'">
+				<span v-else-if="user.role == 'Employee'">
 					<router-link to="/requisitions">Petty Cash</router-link> |
 				</span>
 				<a href="#" @click.prevent="onLogout">Logout</a>
@@ -31,12 +31,6 @@
 <script setup>
 import { computed, inject, onBeforeMount, onMounted, ref } from 'vue'
 import store from '@/store/index'
-
-onBeforeMount(() => {
-	const user = ref({
-		role: ''
-	})
-})
 
 const auth = computed(() => store.state.loggedIn)
 const status = computed(() => store.state.status)

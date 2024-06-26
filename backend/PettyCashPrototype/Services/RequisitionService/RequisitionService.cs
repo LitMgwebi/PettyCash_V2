@@ -29,7 +29,7 @@
             {
                 IEnumerable<Requisition> requisitions = await _db.Requisitions
                     .Where(a => a.IsActive == true)
-                    .Where(a => a.ManagerApproval == null && a.FinanceApproval == null)
+                    .Where(a => a.ManagerRecommendation == null && a.FinanceApproval == null)
                     .Include(a => a.Applicant)
                     .ToListAsync();
 

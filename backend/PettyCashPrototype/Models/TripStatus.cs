@@ -12,7 +12,7 @@ public partial class TripStatus
     public virtual ICollection<Requisition> FinanceApprovals { get; set; } = new List<Requisition>();
 
     [JsonIgnore]
-    public virtual ICollection<Requisition> ManagerApprovals { get; set; } = new List<Requisition>();
+    public virtual ICollection<Requisition> ManagerRecommendations { get; set; } = new List<Requisition>();
     
     [JsonIgnore]
     public virtual ICollection<Requisition> Statuses { get; set; } = new List<Requisition>();

@@ -106,7 +106,7 @@ public partial class PettyCashPrototypeContext : IdentityDbContext<User>
             entity.Property(e => e.GlaccountId).HasColumnName("GLAccountID");
             entity.Property(e => e.IsActive).HasColumnName("isActive");
             entity.Property(e => e.IssuerId).HasColumnName("IssuerID");
-            entity.Property(e => e.ManagerApprovalId).HasColumnName("ManagerApprovalID");
+            entity.Property(e => e.ManagerRecommendationId).HasColumnName("ManagerApprovalID");
             entity.Property(e => e.ManagerId).HasColumnName("ManagerID");
             entity.Property(e => e.TotalExpenses).HasColumnType("decimal(18, 2)");
 
@@ -131,8 +131,8 @@ public partial class PettyCashPrototypeContext : IdentityDbContext<User>
                 .HasForeignKey(d => d.IssuerId)
                 .HasConstraintName("FK_Requisition_User3");
 
-            entity.HasOne(d => d.ManagerApproval).WithMany(p => p.ManagerApprovals)
-                .HasForeignKey(d => d.ManagerApprovalId)
+            entity.HasOne(d => d.ManagerRecommendation).WithMany(p => p.ManagerRecommendations)
+                .HasForeignKey(d => d.ManagerRecommendationId)
                 .HasConstraintName("FK_Requisition_TripStatus");
 
             entity.HasOne(d => d.Manager).WithMany(p => p.Managers)
