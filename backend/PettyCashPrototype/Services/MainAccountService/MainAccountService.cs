@@ -40,11 +40,19 @@
             catch { throw; }
         }
 
-        public void Create(MainAccount mainAccount)
+        public async Task Create(MainAccount mainAccount)
         {
             try
             {
-                _db.MainAccounts.Add(mainAccount);
+                IEnumerable<MainAccount> mainAccounts = await GetAll();
+
+                if (mainAccounts.Select(x => x.Name).ToList().Contains(mainAccount.Name))
+                    throw new DbUpdateException($"System already contains Main Account with the name: {mainAccount.Name}");
+                
+                if (mainAccounts.Select(x => x.AccountNumber).ToList().Contains(mainAccount.AccountNumber))
+                    throw new DbUpdateException($"System already contains Main Account with the number: {mainAccount.AccountNumber}");
+                
+                var res = _db.MainAccounts.Add(mainAccount);
                 int result = _db.SaveChanges();
 
                 if (result == 0)

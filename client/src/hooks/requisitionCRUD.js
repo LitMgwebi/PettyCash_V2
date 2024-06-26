@@ -34,6 +34,20 @@ export function getRequisitionsByApplicant(id) {
     return { requisitions }
 }
 
+export function getRequisitionsForManagerApproval() {
+    store.commit('setLoading')
+    const requisitions = ref([])
+    axios({
+        method: 'GET',
+        url: 'Requisitions/manager_approval'
+    })
+        .then((res) => (requisitions.value = res.data))
+        .catch((error) => store.dispatch('setStatus', error.response.data))
+        .finally(() => store.commit('doneLoading'))
+
+    return { requisitions }
+}
+
 export function addRequisition(requisition) {
     store.commit('setLoading')
     axios({

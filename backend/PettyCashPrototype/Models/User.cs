@@ -12,11 +12,15 @@ public partial class User: IdentityUser
 
     public int OfficeId { get; set; }
 
+    public int? JobTitleId { get; set; }
+
     public bool IsActive { get; set; } = true;
 
     public virtual Department? Department { get; set; }
 
     public virtual Office? Office { get; set; }
+
+    public virtual JobTitle? JobTitle { get; set; }
 
     [JsonIgnore]
     public virtual ICollection<Requisition> Applicants { get; set; } = new List<Requisition>();

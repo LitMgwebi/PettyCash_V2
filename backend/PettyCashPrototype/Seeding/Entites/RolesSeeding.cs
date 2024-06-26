@@ -9,23 +9,55 @@ namespace PettyCashPrototype.Seeding.Entites
             builder.HasData(
                 new IdentityRole
                 {
-                    Name = "Admin"
+                    Name = "Super_User"
                 },
                 new IdentityRole
                 {
-                    Name = "Finance Officer"
+                    Name = "Manager"
                 },
                 new IdentityRole
                 {
-                    Name = "Finance Manager"
+                    Name = "GM_Manager"
                 },
                 new IdentityRole
                 {
-                    Name = "ICT Officer"
+                    Name = "ICT_Admin"
                 },
                 new IdentityRole
                 {
-                    Name = "ICT Manager"
+                    Name = "Cashier"
+                },
+                new IdentityRole
+                {
+                    Name = "HR_Admin"
+                },
+                new IdentityRole
+                {
+                    Name = "Finance_Admin"
+                },
+                new IdentityRole
+                {
+                    Name = "PA_Admin"
+                },
+                new IdentityRole
+                {
+                    Name = "CEO_Admin"
+                },
+                new IdentityRole
+                {
+                    Name = "SCM_Admin"
+                },
+                new IdentityRole
+                {
+                    Name = "Employee"
+                },
+                new IdentityRole
+                {
+                    Name = "DEEC_Admin"
+                },
+                new IdentityRole
+                {
+                    Name = "SRM_Admin"
                 }
 
                 );

@@ -21,6 +21,18 @@
             catch (Exception ex) { return BadRequest(ex.Message); }
         }
 
+        [HttpGet, Route("manager_approval")]
+        public async Task<ActionResult<IEnumerable<Requisition>>> IndexForManager()
+        {
+            try
+            {
+                IEnumerable<Requisition> requisitions = await _requisition.GetAllForManagerApproval();
+
+                return Ok(requisitions);
+            }
+            catch (Exception ex) { return BadRequest(ex.Message); }
+        }
+
         [HttpGet, Route("details")]
         public async Task<ActionResult<Requisition>> Details(int id)
         {

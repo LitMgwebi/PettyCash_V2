@@ -10,8 +10,6 @@ public partial class Requisition
 
     public string? Description { get; set; }
 
-    public int? StatusId { get; set; }
-
     public decimal? CashIssued { get; set; }
 
     public decimal? TotalExpenses { get; set; }
@@ -57,7 +55,4 @@ public partial class Requisition
 
     [ForeignKey(nameof(ManagerApprovalId))]
     public virtual TripStatus? ManagerApproval { get; set; }
-
-    [ForeignKey(nameof(StatusId))]
-    public virtual TripStatus? TripStatus { get; set; }
 }

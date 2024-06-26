@@ -23,6 +23,22 @@
             catch { throw; }
         }
 
+        public async Task<IEnumerable<Requisition>> GetAllForManagerApproval()
+        {
+            try
+            {
+                IEnumerable<Requisition> requisitions = await _db.Requisitions
+                    .Where(a => a.IsActive == true)
+                    .Where(a => a.ManagerApproval == null && a.FinanceApproval == null)
+                    .Include(a => a.Applicant)
+                    .ToListAsync();
+
+                if (requisitions == null) throw new Exception("System could not find any requisitions.");
+                return requisitions;
+            }
+            catch { throw; }
+        }
+
         public async Task<IEnumerable<Requisition>> GetByApplicant(string id)
         {
             try
@@ -45,6 +61,7 @@
             {
                 Requisition requisition= await _db.Requisitions
                     .Where(a => a.IsActive == true)
+                    .Include(z => z.Applicant)
                     .SingleAsync(i => i.RequisitionId == id);
 
                 if (requisition == null) throw new Exception("System could not retrieve the Requisition requested.");
