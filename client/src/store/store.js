@@ -1,6 +1,6 @@
 import { createStore } from 'vuex'
 import { login as loginFunction, logout } from '@/hooks/userCRUD'
-import router from '@/router'
+import router from '@/router/router'
 
 export default createStore({
     state: {
@@ -29,15 +29,15 @@ export default createStore({
     actions: {
         setStatus: ({ commit }, status) => {
             try {
-                // location.reload()
-                // setTimeout(() => location.reload(), 2500)
-            } catch (error) {
-                commit('setStatus', error)
-            } finally {
                 commit('setStatus', status)
                 setTimeout(() => {
                     commit('setStatus', null)
-                }, 5000)
+                }, 3000)
+                // location.reload()
+            } catch (error) {
+                commit('setStatus', error)
+            } finally {
+                setTimeout(() => location.reload(), 3000)
             }
         },
         login: async ({ commit }, userDetails) => {

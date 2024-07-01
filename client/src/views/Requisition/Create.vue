@@ -34,12 +34,12 @@
 import { getGLAccountsByDepartment } from '@/hooks/glAccountCRUD'
 import { inject, ref } from 'vue'
 import { addRequisition } from '@/hooks/requisitionCRUD'
-import router from '@/router'
+import router from '@/router/router'
 
 const user = inject('User')
 const reloadPage = () => location.reload()
 const requisition = ref({
-	glAccount: 0,
+	glAccount: null,
 	applicantId: user.id,
 	amountRequested: null,
 	description: ''

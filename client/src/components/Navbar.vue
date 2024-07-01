@@ -2,6 +2,12 @@
 	<nav>
 		<span>
 			<router-link to="/">Home</router-link> |
+			<router-link to="/purposes">Purposes</router-link> |
+			<router-link to="/departments">Departments</router-link> |
+			<router-link to="/sub_accounts">Sub-Accounts</router-link> |
+			<router-link to="/main_accounts">Main Accounts</router-link> |
+			<router-link to="/gl_accounts">GL Accounts</router-link> |
+			<router-link to="/offices">Offices</router-link> |
 			<span v-if="!auth">
 				<router-link :to="{ name: 'login' }">Login</router-link> |
 				<router-link :to="{ name: 'register' }">Register</router-link> |
@@ -30,7 +36,7 @@
 
 <script setup>
 import { computed, inject, onBeforeMount, onMounted, ref } from 'vue'
-import store from '@/store/index'
+import store from '@/store/store'
 
 const auth = computed(() => store.state.loggedIn)
 const status = computed(() => store.state.status)

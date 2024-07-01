@@ -4,9 +4,11 @@
     {
         private PettyCashPrototypeContext _db;
         private readonly IUser _user;
-        public RequisitionService(PettyCashPrototypeContext db, IUser user) { 
+        private readonly IGLAccount _glAccount;
+        public RequisitionService(PettyCashPrototypeContext db, IUser user, IGLAccount gLAccount) { 
             _db = db;
             _user = user;
+            _glAccount = gLAccount;
         }
 
         public async Task<IEnumerable<Requisition>> GetAll()
@@ -75,6 +77,7 @@
             try
             {
                 requisition.Applicant = await _user.GetUserById(requisition.ApplicantId);
+                requisition.Glaccount = await _glAccount.GetOne(requisition.GlaccountId);
                 _db.Requisitions.Add(requisition);
                 int result = _db.SaveChanges();
 

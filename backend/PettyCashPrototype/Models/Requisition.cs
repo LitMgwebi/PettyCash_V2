@@ -22,7 +22,7 @@ public partial class Requisition
 
     public string ApplicantId { get; set; } = null!;
 
-    public int? GlaccountId { get; set; }
+    public int GlaccountId { get; set; }
 
     public string? FinanceOfficerId { get; set; }
 

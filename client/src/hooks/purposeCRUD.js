@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { ref } from 'vue'
-import store from '@/store/index'
+import store from '@/store/store'
 
 function getPurposes() {
     store.commit('setLoading')

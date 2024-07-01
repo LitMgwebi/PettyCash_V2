@@ -1,4 +1,4 @@
-import store from '@/store/index.js'
+import store from '@/store/store.js'
 import axios from 'axios'
 import { ref } from 'vue'
 

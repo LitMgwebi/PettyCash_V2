@@ -16,7 +16,7 @@
 	</form>
 </template>
 <script setup>
-import store from '@/store/index'
+import store from '@/store/store'
 
 const userDetails = {
 	email: '',

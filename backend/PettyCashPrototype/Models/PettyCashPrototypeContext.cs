@@ -164,7 +164,7 @@ public partial class PettyCashPrototypeContext : IdentityDbContext<User>
         modelBuilder.ApplyConfiguration(new OfficeSeeding());
         modelBuilder.ApplyConfiguration(new SubAccountSeeding());
         modelBuilder.ApplyConfiguration(new MainAccountSeeding());
-        //modelBuilder.ApplyConfiguration(new RolesSeeding());
+        modelBuilder.ApplyConfiguration(new RolesSeeding());
         modelBuilder.ApplyConfiguration(new JobTitleSeeding());
     }
 }

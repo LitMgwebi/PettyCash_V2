@@ -47,6 +47,73 @@ namespace PettyCashPrototype.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "f97d5884-7868-4ca1-ad8f-5820ce574d42",
+                            Name = "Super_User"
+                        },
+                        new
+                        {
+                            Id = "74befd96-e0b1-4c8a-9b73-b2ee7f456dfc",
+                            Name = "Manager"
+                        },
+                        new
+                        {
+                            Id = "e1f9f14d-9f32-438a-bac3-516c569d8ef4",
+                            Name = "GM_Manager"
+                        },
+                        new
+                        {
+                            Id = "7df7078f-7ee6-4a16-92a2-04d842ebf479",
+                            Name = "ICT_Admin"
+                        },
+                        new
+                        {
+                            Id = "7d48f182-8b3e-4880-8f2a-bc2c8bef7de5",
+                            Name = "Cashier"
+                        },
+                        new
+                        {
+                            Id = "1c714fdc-9b2d-4595-b20e-a83f4a3fb0f5",
+                            Name = "HR_Admin"
+                        },
+                        new
+                        {
+                            Id = "555130ce-1a00-44e7-85b1-a341c0e64f06",
+                            Name = "Finance_Admin"
+                        },
+                        new
+                        {
+                            Id = "ddb88df1-b401-4327-a9cd-1971a87b7c7b",
+                            Name = "PA_Admin"
+                        },
+                        new
+                        {
+                            Id = "05b7aaa9-23c6-4278-b4d1-c8347d16b7e7",
+                            Name = "CEO_Admin"
+                        },
+                        new
+                        {
+                            Id = "e5f50fa5-168c-49ef-8316-4aa646c09ab4",
+                            Name = "SCM_Admin"
+                        },
+                        new
+                        {
+                            Id = "1d1aefcd-b287-4eb3-9eab-c13a5e827bb1",
+                            Name = "Employee"
+                        },
+                        new
+                        {
+                            Id = "5ed60838-1b84-4ab9-bcc0-f673dd013d3c",
+                            Name = "DEEC_Admin"
+                        },
+                        new
+                        {
+                            Id = "a3426578-a26e-4518-8fcb-7b039da07d82",
+                            Name = "SRM_Admin"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -533,7 +600,7 @@ namespace PettyCashPrototype.Migrations
                         .HasColumnType("nvarchar(450)")
                         .HasColumnName("FinanceOfficerID");
 
-                    b.Property<int?>("GlaccountId")
+                    b.Property<int>("GlaccountId")
                         .HasColumnType("int")
                         .HasColumnName("GLAccountID");
 
@@ -870,6 +937,8 @@ namespace PettyCashPrototype.Migrations
                     b.HasOne("PettyCashPrototype.Models.Glaccount", "Glaccount")
                         .WithMany("Requisitions")
                         .HasForeignKey("GlaccountId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
                         .HasConstraintName("FK_Requisition_GLAccount");
 
                     b.HasOne("PettyCashPrototype.Models.User", "Issuer")

@@ -1,4 +1,4 @@
-import store from '@/store/index.js'
+import store from '@/store/store.js'
 import axios from 'axios'
 import { ref } from 'vue'
 
@@ -49,15 +49,16 @@ export function getRequisitionsForManagerApproval() {
 }
 
 export function addRequisition(requisition) {
-    store.commit('setLoading')
-    axios({
-        method: 'POST',
-        url: 'Requisitions/create',
-        data: requisition
-    })
-        .then((res) => store.dispatch('setStatus', res.data.message))
-        .catch((error) => store.dispatch('setStatus', error.response.data))
-        .finally(() => store.commit('doneLoading'))
+    console.log(requisition)
+    // store.commit('setLoading')
+    // axios({
+    //     method: 'POST',
+    //     url: 'Requisitions/create',
+    //     data: requisition
+    // })
+    //     .then((res) => store.dispatch('setStatus', res.data.message))
+    //     .catch((error) => store.dispatch('setStatus', error.response.data))
+    //     .finally(() => store.commit('doneLoading'))
 }
 
 export function editRequisition(requisition) {

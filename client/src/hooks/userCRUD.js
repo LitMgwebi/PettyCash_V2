@@ -1,5 +1,5 @@
-import router from '@/router/index'
-import store from '@/store/index'
+import router from '@/router/router'
+import store from '@/store/store'
 import axios from 'axios'
 
 export async function login(userDetails) {
