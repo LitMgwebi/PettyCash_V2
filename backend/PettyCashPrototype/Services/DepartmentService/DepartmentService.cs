@@ -8,11 +8,11 @@
             _db = db;
         }
 
-        public async Task<IEnumerable<Department>> GetAll()
+        public async Task<IEnumerable<Division>> GetAll()
         {
             try
             {
-                IEnumerable<Department> departments = await _db.Departments
+                IEnumerable<Division> departments = await _db.Departments
                     .Where(x => x.IsActive == true)
                     .ToListAsync();
 
@@ -24,11 +24,11 @@
             catch { throw; }
         }
 
-        public async Task<Department> GetOne(int id)
+        public async Task<Division> GetOne(int id)
         {
             try
             {
-                Department department = await _db.Departments
+                Division department = await _db.Departments
                     .Where(a => a.IsActive == true)
                     .SingleAsync(x => x.DepartmentId == id);
 
@@ -39,7 +39,7 @@
             catch { throw; }
         }
 
-        public void Create(Department department)
+        public void Create(Division department)
         {
             try
             {
@@ -51,7 +51,7 @@
             catch { throw; }
         }
 
-        public void Edit(Department department)
+        public void Edit(Division department)
         {
             try
             {
@@ -63,7 +63,7 @@
             catch { throw; }
         }
 
-        public void SoftDelete(Department department)
+        public void SoftDelete(Division department)
         {
             try
             {

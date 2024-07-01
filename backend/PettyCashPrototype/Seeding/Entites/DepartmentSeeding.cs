@@ -2,7 +2,7 @@
 
 namespace PettyCashPrototype.Seeding.Entites
 {
-    public class DepartmentSeeding: IEntityTypeConfiguration<Department>
+    public class DepartmentSeeding : IEntityTypeConfiguration<Department>
     {
         public void Configure(EntityTypeBuilder<Department> builder)
         {
@@ -10,23 +10,32 @@ namespace PettyCashPrototype.Seeding.Entites
                 new Department
                 {
                     DepartmentId = 1,
-                    Name = "INS",
-                    Description = "Inspectorate",
-                    IsActive = true,
-                }, 
+                    Name = "CEO Office"
+                },
                 new Department
                 {
                     DepartmentId = 2,
-                    Name = "ICT",
-                    Description = "Information Communication Technology",
-                    IsActive = true,
+                    Name = "CFO Office"
                 },
                 new Department
                 {
                     DepartmentId = 3,
-                    Name = "LEG",
-                    Description = "Legal",
-                    IsActive = true,
+                    Name = "Governance"
+                },
+                new Department
+                {
+                    DepartmentId = 4,
+                    Name = "Regulatory Compliance"
+                },
+                new Department
+                {
+                    DepartmentId = 5,
+                    Name = "Corporate Services"
+                },
+                new Department
+                {
+                    DepartmentId = 6,
+                    Name = "Trade"
                 }
                 );
         }

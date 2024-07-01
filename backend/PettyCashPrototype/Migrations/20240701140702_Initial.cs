@@ -3,10 +3,12 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace PettyCashPrototype.Migrations
 {
     /// <inheritdoc />
-    public partial class intial : Migration
+    public partial class Initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -41,12 +43,25 @@ namespace PettyCashPrototype.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "JobTitles",
+                columns: table => new
+                {
+                    JobTitleId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_JobTitles", x => x.JobTitleId);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "MainAccount",
                 columns: table => new
                 {
                     MainAccountID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    AccountNumber = table.Column<int>(type: "int", nullable: false),
+                    AccountNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     isActive = table.Column<bool>(type: "bit", nullable: false)
@@ -92,7 +107,7 @@ namespace PettyCashPrototype.Migrations
                 {
                     SubAccountID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    AccountNumber = table.Column<int>(type: "int", nullable: false),
+                    AccountNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     isActive = table.Column<bool>(type: "bit", nullable: false)
@@ -138,6 +153,28 @@ namespace PettyCashPrototype.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Division",
+                columns: table => new
+                {
+                    DivisionId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DepartmentId = table.Column<int>(type: "int", nullable: false),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Division", x => x.DivisionId);
+                    table.ForeignKey(
+                        name: "FK_Division_Department_DepartmentId",
+                        column: x => x.DepartmentId,
+                        principalTable: "Department",
+                        principalColumn: "DepartmentID",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "AspNetUsers",
                 columns: table => new
                 {
@@ -145,8 +182,9 @@ namespace PettyCashPrototype.Migrations
                     Firstname = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Lastname = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Idnumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    DepartmentId = table.Column<int>(type: "int", nullable: true),
-                    OfficeId = table.Column<int>(type: "int", nullable: true),
+                    DivisionId = table.Column<int>(type: "int", nullable: false),
+                    OfficeId = table.Column<int>(type: "int", nullable: false),
+                    JobTitleId = table.Column<int>(type: "int", nullable: false),
                     IsActive = table.Column<bool>(type: "bit", nullable: false),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -167,15 +205,23 @@ namespace PettyCashPrototype.Migrations
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_AspNetUsers_Department_DepartmentId",
-                        column: x => x.DepartmentId,
-                        principalTable: "Department",
-                        principalColumn: "DepartmentID");
+                        name: "FK_AspNetUsers_Division_DivisionId",
+                        column: x => x.DivisionId,
+                        principalTable: "Division",
+                        principalColumn: "DivisionId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_AspNetUsers_JobTitles_JobTitleId",
+                        column: x => x.JobTitleId,
+                        principalTable: "JobTitles",
+                        principalColumn: "JobTitleId",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_AspNetUsers_Office_OfficeId",
                         column: x => x.OfficeId,
                         principalTable: "Office",
-                        principalColumn: "OfficeID");
+                        principalColumn: "OfficeID",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -184,21 +230,35 @@ namespace PettyCashPrototype.Migrations
                 {
                     GLAccountID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     MainAccountID = table.Column<int>(type: "int", nullable: false),
                     SubAccountID = table.Column<int>(type: "int", nullable: false),
                     PurposeID = table.Column<int>(type: "int", nullable: false),
+                    DivisionId = table.Column<int>(type: "int", nullable: false),
+                    OfficeId = table.Column<int>(type: "int", nullable: false),
                     isActive = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_GLAccount", x => x.GLAccountID);
                     table.ForeignKey(
+                        name: "FK_GLAccount_Division_DivisionId",
+                        column: x => x.DivisionId,
+                        principalTable: "Division",
+                        principalColumn: "DivisionId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
                         name: "FK_GLAccount_MainAccount",
                         column: x => x.MainAccountID,
                         principalTable: "MainAccount",
                         principalColumn: "MainAccountID");
+                    table.ForeignKey(
+                        name: "FK_GLAccount_Office_OfficeId",
+                        column: x => x.OfficeId,
+                        principalTable: "Office",
+                        principalColumn: "OfficeID",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_GLAccount_Purpose",
                         column: x => x.PurposeID,
@@ -303,19 +363,23 @@ namespace PettyCashPrototype.Migrations
                     RequisitionID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     AmountRequested = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CashIssued = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
                     TotalExpenses = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
                     Change = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
-                    StartDate = table.Column<DateOnly>(type: "date", nullable: false),
-                    CloseDate = table.Column<DateOnly>(type: "date", nullable: true),
+                    StartDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CloseDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     ApplicantID = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    GLAccountID = table.Column<int>(type: "int", nullable: true),
+                    GLAccountID = table.Column<int>(type: "int", nullable: false),
                     FinanceOfficerID = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     ManagerID = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    ManagerRecommendationDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     ManagerApprovalID = table.Column<int>(type: "int", nullable: true),
+                    FinanceApprovalDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     FinanceApprovalID = table.Column<int>(type: "int", nullable: true),
                     IssuerID = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    isActive = table.Column<bool>(type: "bit", nullable: false)
+                    isActive = table.Column<bool>(type: "bit", nullable: false),
+                    TripStatusId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -324,7 +388,8 @@ namespace PettyCashPrototype.Migrations
                         name: "FK_Requisition_GLAccount",
                         column: x => x.GLAccountID,
                         principalTable: "GLAccount",
-                        principalColumn: "GLAccountID");
+                        principalColumn: "GLAccountID",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Requisition_TripStatus",
                         column: x => x.ManagerApprovalID,
@@ -333,6 +398,11 @@ namespace PettyCashPrototype.Migrations
                     table.ForeignKey(
                         name: "FK_Requisition_TripStatus1",
                         column: x => x.FinanceApprovalID,
+                        principalTable: "TripStatus",
+                        principalColumn: "TripStatusID");
+                    table.ForeignKey(
+                        name: "FK_Requisition_TripStatus_TripStatusId",
+                        column: x => x.TripStatusId,
                         principalTable: "TripStatus",
                         principalColumn: "TripStatusID");
                     table.ForeignKey(
@@ -355,6 +425,111 @@ namespace PettyCashPrototype.Migrations
                         column: x => x.IssuerID,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id");
+                });
+
+            migrationBuilder.InsertData(
+                table: "AspNetRoles",
+                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
+                values: new object[,]
+                {
+                    { "16ea7aa2-f170-4433-bb6a-08266ada6029", null, "CEO_Admin", null },
+                    { "3b3146f8-9aba-4770-83de-c538e5cae3a7", null, "DEEC_Admin", null },
+                    { "40323865-3ca6-47a9-be1f-b81a6c4d5f1b", null, "SCM_Admin", null },
+                    { "4a3e14ec-b870-4534-90dc-0e5d72bf622a", null, "PA_Admin", null },
+                    { "4e58e31f-3bc5-4bc1-97f8-a74832efb73f", null, "Manager", null },
+                    { "5e1e28d6-da03-401e-b558-00ed0eea805f", null, "Super_User", null },
+                    { "6d64c097-8c33-4e33-8986-0432a2cbac55", null, "Finance_Admin", null },
+                    { "6f17444f-e17b-4576-aedf-411c68912ed4", null, "HR_Admin", null },
+                    { "765bcc05-9271-435b-9db7-0f8443b3164f", null, "Employee", null },
+                    { "7776b4d0-9a3e-42eb-8730-f6f987bd9c62", null, "ICT_Admin", null },
+                    { "9ecceff9-7fb0-4d0c-9597-884d8e4957d7", null, "Cashier", null },
+                    { "aa44333f-aa07-4491-a851-b043ba55b34d", null, "GM_Manager", null },
+                    { "fdb012f2-c43d-4cc0-b4c2-52ad400ef930", null, "SRM_Admin", null }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Department",
+                columns: new[] { "DepartmentID", "Description", "isActive", "Name" },
+                values: new object[,]
+                {
+                    { 1, null, true, "CEO Office" },
+                    { 2, null, true, "CFO Office" },
+                    { 3, null, true, "Governance" },
+                    { 4, null, true, "Regulatory Compliance" },
+                    { 5, null, true, "Corporate Services" },
+                    { 6, null, true, "Trade" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "JobTitles",
+                columns: new[] { "JobTitleId", "Description" },
+                values: new object[,]
+                {
+                    { 1, "CEO" },
+                    { 2, "CFO" },
+                    { 3, "GM: Corporate Services" },
+                    { 4, "GM: Governance" },
+                    { 5, "GM: Regulatory Compliance" },
+                    { 6, "GM: Trade" },
+                    { 7, "Manager" },
+                    { 8, "Staff" },
+                    { 9, "Consultant" },
+                    { 10, "Chair Person" },
+                    { 11, "Board Member" },
+                    { 12, "WGM" },
+                    { 13, "General Manager" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "MainAccount",
+                columns: new[] { "MainAccountID", "AccountNumber", "Description", "isActive", "Name" },
+                values: new object[,]
+                {
+                    { 1, "2013", null, true, "Insurance" },
+                    { 2, "2012", null, true, "Inspection" },
+                    { 3, "2007", null, true, "Domestic Travel" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Office",
+                columns: new[] { "OfficeID", "Description", "isActive", "Name" },
+                values: new object[,]
+                {
+                    { 1, "Johannesburg", true, "JHB" },
+                    { 2, "Kimberely", true, "KIM" },
+                    { 3, "Cape Town", true, "CPT" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Purpose",
+                columns: new[] { "PurposeID", "Description", "isActive", "Name" },
+                values: new object[,]
+                {
+                    { 1, "Administration", true, "ADM" },
+                    { 2, "Regulatory Compliance", true, "RGC" },
+                    { 3, "Diamond Trade", true, "DMT" },
+                    { 4, null, true, "ZZZ" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "SubAccount",
+                columns: new[] { "SubAccountID", "AccountNumber", "Description", "isActive", "Name" },
+                values: new object[,]
+                {
+                    { 1, "0206", null, true, "IT Audit" },
+                    { 2, "0045", null, true, "Meeting Fees" },
+                    { 3, "0001", null, true, "Accomodation" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Division",
+                columns: new[] { "DivisionId", "DepartmentId", "Description", "IsActive", "Name" },
+                values: new object[,]
+                {
+                    { 1, 4, "Inspectorate", true, "INS" },
+                    { 2, 5, "Information Communication Technology", true, "ICT" },
+                    { 3, 3, "Governance", true, "LEG" },
+                    { 4, 5, "Human Resources", true, "HRE" }
                 });
 
             migrationBuilder.CreateIndex(
@@ -390,9 +565,14 @@ namespace PettyCashPrototype.Migrations
                 column: "NormalizedEmail");
 
             migrationBuilder.CreateIndex(
-                name: "IX_AspNetUsers_DepartmentId",
+                name: "IX_AspNetUsers_DivisionId",
                 table: "AspNetUsers",
-                column: "DepartmentId");
+                column: "DivisionId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AspNetUsers_JobTitleId",
+                table: "AspNetUsers",
+                column: "JobTitleId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetUsers_OfficeId",
@@ -407,9 +587,24 @@ namespace PettyCashPrototype.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Division_DepartmentId",
+                table: "Division",
+                column: "DepartmentId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_GLAccount_DivisionId",
+                table: "GLAccount",
+                column: "DivisionId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_GLAccount_MainAccountID",
                 table: "GLAccount",
                 column: "MainAccountID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_GLAccount_OfficeId",
+                table: "GLAccount",
+                column: "OfficeId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_GLAccount_PurposeID",
@@ -455,6 +650,11 @@ namespace PettyCashPrototype.Migrations
                 name: "IX_Requisition_ManagerID",
                 table: "Requisition",
                 column: "ManagerID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Requisition_TripStatusId",
+                table: "Requisition",
+                column: "TripStatusId");
         }
 
         /// <inheritdoc />
@@ -500,10 +700,16 @@ namespace PettyCashPrototype.Migrations
                 name: "SubAccount");
 
             migrationBuilder.DropTable(
-                name: "Department");
+                name: "Division");
+
+            migrationBuilder.DropTable(
+                name: "JobTitles");
 
             migrationBuilder.DropTable(
                 name: "Office");
+
+            migrationBuilder.DropTable(
+                name: "Department");
         }
     }
 }

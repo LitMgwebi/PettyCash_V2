@@ -10,22 +10,22 @@
         #region GET
 
         [HttpGet, Route("index")]
-        public async Task<ActionResult<IEnumerable<Department>>> Index()
+        public async Task<ActionResult<IEnumerable<Division>>> Index()
         {
             try
             {
-                IEnumerable<Department> departments = await _department.GetAll();
+                IEnumerable<Division> departments = await _department.GetAll();
                 return Ok(departments);
             }
             catch (Exception ex) { return BadRequest(ex.Message); }
         }
 
         [HttpGet, Route("details")]
-        public async Task<ActionResult<Department>> Details(int id)
+        public async Task<ActionResult<Division>> Details(int id)
         {
             try
             {
-                Department department = await _department.GetOne(id);
+                Division department = await _department.GetOne(id);
 
                 return Ok(department);
             }
@@ -37,7 +37,7 @@
         #region POST
 
         [HttpPost, Route("create")]
-        public ActionResult<Department> Create(Department department)
+        public ActionResult<Division> Create(Division department)
         {
             try
             {
@@ -53,7 +53,7 @@
         #region PUT
 
         [HttpPut, Route("edit")]
-        public ActionResult Edit(Department department)
+        public ActionResult Edit(Division department)
         {
             try
             {
@@ -68,7 +68,7 @@
         #region DELETE
 
         [HttpDelete, Route("delete")]
-        public ActionResult Delete(Department department)
+        public ActionResult Delete(Division department)
         {
             try
             {

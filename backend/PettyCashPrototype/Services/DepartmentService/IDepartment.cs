@@ -2,10 +2,10 @@
 {
     public interface IDepartment
     {
-        public Task<IEnumerable<Department>> GetAll();
-        public Task<Department> GetOne(int id);
-        public void Create(Department department);
-        public void Edit(Department department);
-        public void SoftDelete(Department department);
+        public Task<IEnumerable<Division>> GetAll();
+        public Task<Division> GetOne(int id);
+        public void Create(Division department);
+        public void Edit(Division department);
+        public void SoftDelete(Division department);
     }
 }

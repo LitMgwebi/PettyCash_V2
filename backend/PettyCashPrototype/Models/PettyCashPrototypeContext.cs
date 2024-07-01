@@ -1,4 +1,5 @@
-﻿using PettyCashPrototype.Seeding.Entites;
+﻿using PettyCashPrototype.Seeding;
+using PettyCashPrototype.Seeding.Entites;
 
 namespace PettyCashPrototype.Models;
 
@@ -13,7 +14,9 @@ public partial class PettyCashPrototypeContext : IdentityDbContext<User>
     {
     }
 
-    public virtual DbSet<Department> Departments { get; set; }
+    public virtual DbSet<Division> Departments { get; set; }
+    
+    public virtual DbSet<Division> Divisions { get; set; }
 
     public virtual DbSet<JobTitle> JobTitles { get; set; }
 
@@ -160,11 +163,12 @@ public partial class PettyCashPrototypeContext : IdentityDbContext<User>
         base.OnModelCreating(modelBuilder);
 
         modelBuilder.ApplyConfiguration(new PurposeSeeding());
-        modelBuilder.ApplyConfiguration(new DepartmentSeeding());
+        modelBuilder.ApplyConfiguration(new DivisionSeeding());
+        modelBuilder.ApplyConfiguration(new DepartmentSeeding());        
         modelBuilder.ApplyConfiguration(new OfficeSeeding());
         modelBuilder.ApplyConfiguration(new SubAccountSeeding());
         modelBuilder.ApplyConfiguration(new MainAccountSeeding());
-        modelBuilder.ApplyConfiguration(new RolesSeeding());
+        //modelBuilder.ApplyConfiguration(new RolesSeeding());
         modelBuilder.ApplyConfiguration(new JobTitleSeeding());
     }
 }

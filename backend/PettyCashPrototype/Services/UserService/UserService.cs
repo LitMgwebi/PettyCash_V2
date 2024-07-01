@@ -92,7 +92,7 @@ namespace PettyCashPrototype.Services.UserService
             try
             {
                 user.Office = await _office.GetOne(user.OfficeId);
-                user.Department = await _department.GetOne(user.DepartmentId);
+                user.Division = await _department.GetOne(user.DivisionId);
                 IdentityResult result = await _userManager.CreateAsync(user, password);
                 if (result.Succeeded)
                 {

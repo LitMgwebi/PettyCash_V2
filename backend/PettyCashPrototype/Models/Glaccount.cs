@@ -14,7 +14,7 @@ public partial class Glaccount
 
     public int PurposeId { get; set; }
 
-    public int DepartmentId { get; set; }
+    public int DivisionId { get; set; }
 
     public int OfficeId { get; set; }
 
@@ -24,7 +24,7 @@ public partial class Glaccount
 
     public virtual Purpose? Purpose { get; set; }
 
-    public virtual Department? Department { get; set; }
+    public virtual Division? Division { get; set; }
 
     public virtual Office? Office { get; set; }
 

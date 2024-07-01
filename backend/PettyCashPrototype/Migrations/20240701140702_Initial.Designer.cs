@@ -12,8 +12,8 @@ using PettyCashPrototype.Models;
 namespace PettyCashPrototype.Migrations
 {
     [DbContext(typeof(PettyCashPrototypeContext))]
-    [Migration("20240625121631_GettingRidOfUserRoles")]
-    partial class GettingRidOfUserRoles
+    [Migration("20240701140702_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -54,28 +54,68 @@ namespace PettyCashPrototype.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "f3fee0e5-871e-4773-879d-dc9683d4e1f0",
-                            Name = "Admin"
+                            Id = "5e1e28d6-da03-401e-b558-00ed0eea805f",
+                            Name = "Super_User"
                         },
                         new
                         {
-                            Id = "fa553eee-5c85-4c4e-b474-df99300440e6",
-                            Name = "Finance Officer"
+                            Id = "4e58e31f-3bc5-4bc1-97f8-a74832efb73f",
+                            Name = "Manager"
                         },
                         new
                         {
-                            Id = "b6530f90-65ee-4b8c-81e5-f282b6c469a8",
-                            Name = "Finance Manager"
+                            Id = "aa44333f-aa07-4491-a851-b043ba55b34d",
+                            Name = "GM_Manager"
                         },
                         new
                         {
-                            Id = "e109d0eb-6725-4f9a-a8f7-c86a216e22a0",
-                            Name = "ICT Officer"
+                            Id = "7776b4d0-9a3e-42eb-8730-f6f987bd9c62",
+                            Name = "ICT_Admin"
                         },
                         new
                         {
-                            Id = "df99e842-7c2b-4da4-95e1-65a833a0c29a",
-                            Name = "ICT Manager"
+                            Id = "9ecceff9-7fb0-4d0c-9597-884d8e4957d7",
+                            Name = "Cashier"
+                        },
+                        new
+                        {
+                            Id = "6f17444f-e17b-4576-aedf-411c68912ed4",
+                            Name = "HR_Admin"
+                        },
+                        new
+                        {
+                            Id = "6d64c097-8c33-4e33-8986-0432a2cbac55",
+                            Name = "Finance_Admin"
+                        },
+                        new
+                        {
+                            Id = "4a3e14ec-b870-4534-90dc-0e5d72bf622a",
+                            Name = "PA_Admin"
+                        },
+                        new
+                        {
+                            Id = "16ea7aa2-f170-4433-bb6a-08266ada6029",
+                            Name = "CEO_Admin"
+                        },
+                        new
+                        {
+                            Id = "40323865-3ca6-47a9-be1f-b81a6c4d5f1b",
+                            Name = "SCM_Admin"
+                        },
+                        new
+                        {
+                            Id = "765bcc05-9271-435b-9db7-0f8443b3164f",
+                            Name = "Employee"
+                        },
+                        new
+                        {
+                            Id = "3b3146f8-9aba-4770-83de-c538e5cae3a7",
+                            Name = "DEEC_Admin"
+                        },
+                        new
+                        {
+                            Id = "fdb012f2-c43d-4cc0-b4c2-52ad400ef930",
+                            Name = "SRM_Admin"
                         });
                 });
 
@@ -213,23 +253,100 @@ namespace PettyCashPrototype.Migrations
                         new
                         {
                             DepartmentId = 1,
+                            IsActive = true,
+                            Name = "CEO Office"
+                        },
+                        new
+                        {
+                            DepartmentId = 2,
+                            IsActive = true,
+                            Name = "CFO Office"
+                        },
+                        new
+                        {
+                            DepartmentId = 3,
+                            IsActive = true,
+                            Name = "Governance"
+                        },
+                        new
+                        {
+                            DepartmentId = 4,
+                            IsActive = true,
+                            Name = "Regulatory Compliance"
+                        },
+                        new
+                        {
+                            DepartmentId = 5,
+                            IsActive = true,
+                            Name = "Corporate Services"
+                        },
+                        new
+                        {
+                            DepartmentId = 6,
+                            IsActive = true,
+                            Name = "Trade"
+                        });
+                });
+
+            modelBuilder.Entity("PettyCashPrototype.Models.Division", b =>
+                {
+                    b.Property<int>("DivisionId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("DivisionId"));
+
+                    b.Property<int>("DepartmentId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("DivisionId");
+
+                    b.HasIndex("DepartmentId");
+
+                    b.ToTable("Division");
+
+                    b.HasData(
+                        new
+                        {
+                            DivisionId = 1,
+                            DepartmentId = 4,
                             Description = "Inspectorate",
                             IsActive = true,
                             Name = "INS"
                         },
                         new
                         {
-                            DepartmentId = 2,
+                            DivisionId = 2,
+                            DepartmentId = 5,
                             Description = "Information Communication Technology",
                             IsActive = true,
                             Name = "ICT"
                         },
                         new
                         {
+                            DivisionId = 3,
                             DepartmentId = 3,
-                            Description = "Legal",
+                            Description = "Governance",
                             IsActive = true,
                             Name = "LEG"
+                        },
+                        new
+                        {
+                            DivisionId = 4,
+                            DepartmentId = 5,
+                            Description = "Human Resources",
+                            IsActive = true,
+                            Name = "HRE"
                         });
                 });
 
@@ -242,11 +359,11 @@ namespace PettyCashPrototype.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("GlaccountId"));
 
-                    b.Property<int>("DepartmentId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("DivisionId")
+                        .HasColumnType("int");
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit")
@@ -272,7 +389,7 @@ namespace PettyCashPrototype.Migrations
 
                     b.HasKey("GlaccountId");
 
-                    b.HasIndex("DepartmentId");
+                    b.HasIndex("DivisionId");
 
                     b.HasIndex("MainAccountId");
 
@@ -283,6 +400,90 @@ namespace PettyCashPrototype.Migrations
                     b.HasIndex("SubAccountId");
 
                     b.ToTable("GLAccount", (string)null);
+                });
+
+            modelBuilder.Entity("PettyCashPrototype.Models.JobTitle", b =>
+                {
+                    b.Property<int>("JobTitleId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("JobTitleId"));
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("JobTitleId");
+
+                    b.ToTable("JobTitles");
+
+                    b.HasData(
+                        new
+                        {
+                            JobTitleId = 1,
+                            Description = "CEO"
+                        },
+                        new
+                        {
+                            JobTitleId = 2,
+                            Description = "CFO"
+                        },
+                        new
+                        {
+                            JobTitleId = 3,
+                            Description = "GM: Corporate Services"
+                        },
+                        new
+                        {
+                            JobTitleId = 4,
+                            Description = "GM: Governance"
+                        },
+                        new
+                        {
+                            JobTitleId = 5,
+                            Description = "GM: Regulatory Compliance"
+                        },
+                        new
+                        {
+                            JobTitleId = 6,
+                            Description = "GM: Trade"
+                        },
+                        new
+                        {
+                            JobTitleId = 7,
+                            Description = "Manager"
+                        },
+                        new
+                        {
+                            JobTitleId = 8,
+                            Description = "Staff"
+                        },
+                        new
+                        {
+                            JobTitleId = 9,
+                            Description = "Consultant"
+                        },
+                        new
+                        {
+                            JobTitleId = 10,
+                            Description = "Chair Person"
+                        },
+                        new
+                        {
+                            JobTitleId = 11,
+                            Description = "Board Member"
+                        },
+                        new
+                        {
+                            JobTitleId = 12,
+                            Description = "WGM"
+                        },
+                        new
+                        {
+                            JobTitleId = 13,
+                            Description = "General Manager"
+                        });
                 });
 
             modelBuilder.Entity("PettyCashPrototype.Models.MainAccount", b =>
@@ -468,6 +669,9 @@ namespace PettyCashPrototype.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateTime?>("FinanceApprovalDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<int?>("FinanceApprovalId")
                         .HasColumnType("int")
                         .HasColumnName("FinanceApprovalID");
@@ -476,7 +680,7 @@ namespace PettyCashPrototype.Migrations
                         .HasColumnType("nvarchar(450)")
                         .HasColumnName("FinanceOfficerID");
 
-                    b.Property<int?>("GlaccountId")
+                    b.Property<int>("GlaccountId")
                         .HasColumnType("int")
                         .HasColumnName("GLAccountID");
 
@@ -488,19 +692,25 @@ namespace PettyCashPrototype.Migrations
                         .HasColumnType("nvarchar(450)")
                         .HasColumnName("IssuerID");
 
-                    b.Property<int?>("ManagerApprovalId")
-                        .HasColumnType("int")
-                        .HasColumnName("ManagerApprovalID");
-
                     b.Property<string>("ManagerId")
                         .HasColumnType("nvarchar(450)")
                         .HasColumnName("ManagerID");
+
+                    b.Property<DateTime?>("ManagerRecommendationDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("ManagerRecommendationId")
+                        .HasColumnType("int")
+                        .HasColumnName("ManagerApprovalID");
 
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("datetime2");
 
                     b.Property<decimal?>("TotalExpenses")
                         .HasColumnType("decimal(18, 2)");
+
+                    b.Property<int?>("TripStatusId")
+                        .HasColumnType("int");
 
                     b.HasKey("RequisitionId");
 
@@ -514,9 +724,11 @@ namespace PettyCashPrototype.Migrations
 
                     b.HasIndex("IssuerId");
 
-                    b.HasIndex("ManagerApprovalId");
-
                     b.HasIndex("ManagerId");
+
+                    b.HasIndex("ManagerRecommendationId");
+
+                    b.HasIndex("TripStatusId");
 
                     b.ToTable("Requisition", (string)null);
                 });
@@ -607,7 +819,7 @@ namespace PettyCashPrototype.Migrations
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("DepartmentId")
+                    b.Property<int>("DivisionId")
                         .HasColumnType("int");
 
                     b.Property<string>("Email")
@@ -627,6 +839,9 @@ namespace PettyCashPrototype.Migrations
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
+
+                    b.Property<int>("JobTitleId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Lastname")
                         .IsRequired()
@@ -670,7 +885,9 @@ namespace PettyCashPrototype.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("DepartmentId");
+                    b.HasIndex("DivisionId");
+
+                    b.HasIndex("JobTitleId");
 
                     b.HasIndex("NormalizedEmail")
                         .HasDatabaseName("EmailIndex");
@@ -736,11 +953,22 @@ namespace PettyCashPrototype.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("PettyCashPrototype.Models.Glaccount", b =>
+            modelBuilder.Entity("PettyCashPrototype.Models.Division", b =>
                 {
                     b.HasOne("PettyCashPrototype.Models.Department", "Department")
-                        .WithMany("Glaccounts")
+                        .WithMany("Divisions")
                         .HasForeignKey("DepartmentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Department");
+                });
+
+            modelBuilder.Entity("PettyCashPrototype.Models.Glaccount", b =>
+                {
+                    b.HasOne("PettyCashPrototype.Models.Division", "Division")
+                        .WithMany("Glaccounts")
+                        .HasForeignKey("DivisionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -768,7 +996,7 @@ namespace PettyCashPrototype.Migrations
                         .IsRequired()
                         .HasConstraintName("FK_GLAccount_SubAccount");
 
-                    b.Navigation("Department");
+                    b.Navigation("Division");
 
                     b.Navigation("MainAccount");
 
@@ -800,6 +1028,8 @@ namespace PettyCashPrototype.Migrations
                     b.HasOne("PettyCashPrototype.Models.Glaccount", "Glaccount")
                         .WithMany("Requisitions")
                         .HasForeignKey("GlaccountId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
                         .HasConstraintName("FK_Requisition_GLAccount");
 
                     b.HasOne("PettyCashPrototype.Models.User", "Issuer")
@@ -807,15 +1037,19 @@ namespace PettyCashPrototype.Migrations
                         .HasForeignKey("IssuerId")
                         .HasConstraintName("FK_Requisition_User3");
 
-                    b.HasOne("PettyCashPrototype.Models.TripStatus", "ManagerApproval")
-                        .WithMany("ManagerApprovals")
-                        .HasForeignKey("ManagerApprovalId")
-                        .HasConstraintName("FK_Requisition_TripStatus");
-
                     b.HasOne("PettyCashPrototype.Models.User", "Manager")
                         .WithMany("Managers")
                         .HasForeignKey("ManagerId")
                         .HasConstraintName("FK_Requisition_User2");
+
+                    b.HasOne("PettyCashPrototype.Models.TripStatus", "ManagerRecommendation")
+                        .WithMany("ManagerRecommendations")
+                        .HasForeignKey("ManagerRecommendationId")
+                        .HasConstraintName("FK_Requisition_TripStatus");
+
+                    b.HasOne("PettyCashPrototype.Models.TripStatus", null)
+                        .WithMany("Statuses")
+                        .HasForeignKey("TripStatusId");
 
                     b.Navigation("Applicant");
 
@@ -829,14 +1063,20 @@ namespace PettyCashPrototype.Migrations
 
                     b.Navigation("Manager");
 
-                    b.Navigation("ManagerApproval");
+                    b.Navigation("ManagerRecommendation");
                 });
 
             modelBuilder.Entity("PettyCashPrototype.Models.User", b =>
                 {
-                    b.HasOne("PettyCashPrototype.Models.Department", "Department")
-                        .WithMany()
-                        .HasForeignKey("DepartmentId")
+                    b.HasOne("PettyCashPrototype.Models.Division", "Division")
+                        .WithMany("Users")
+                        .HasForeignKey("DivisionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("PettyCashPrototype.Models.JobTitle", "JobTitle")
+                        .WithMany("Users")
+                        .HasForeignKey("JobTitleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -846,19 +1086,33 @@ namespace PettyCashPrototype.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Department");
+                    b.Navigation("Division");
+
+                    b.Navigation("JobTitle");
 
                     b.Navigation("Office");
                 });
 
             modelBuilder.Entity("PettyCashPrototype.Models.Department", b =>
                 {
+                    b.Navigation("Divisions");
+                });
+
+            modelBuilder.Entity("PettyCashPrototype.Models.Division", b =>
+                {
                     b.Navigation("Glaccounts");
+
+                    b.Navigation("Users");
                 });
 
             modelBuilder.Entity("PettyCashPrototype.Models.Glaccount", b =>
                 {
                     b.Navigation("Requisitions");
+                });
+
+            modelBuilder.Entity("PettyCashPrototype.Models.JobTitle", b =>
+                {
+                    b.Navigation("Users");
                 });
 
             modelBuilder.Entity("PettyCashPrototype.Models.MainAccount", b =>
@@ -885,7 +1139,9 @@ namespace PettyCashPrototype.Migrations
                 {
                     b.Navigation("FinanceApprovals");
 
-                    b.Navigation("ManagerApprovals");
+                    b.Navigation("ManagerRecommendations");
+
+                    b.Navigation("Statuses");
                 });
 
             modelBuilder.Entity("PettyCashPrototype.Models.User", b =>

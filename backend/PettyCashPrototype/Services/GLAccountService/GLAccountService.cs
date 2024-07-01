@@ -33,12 +33,12 @@
             } catch { throw; }
         }
 
-        public async Task<IEnumerable<Glaccount>> GetAllbyDepartment(int departmentId)
+        public async Task<IEnumerable<Glaccount>> GetAllbyDepartment(int divisionId)
         {
             try
             {
                 IEnumerable<Glaccount> glAccounts = await _db.Glaccounts
-                    .Where(d =>  d.DepartmentId == departmentId)
+                    .Where(d =>  d.DivisionId == divisionId)
                     .Where(x => x.IsActive == true)
                     .ToListAsync();
 
@@ -59,7 +59,7 @@
                     .Include(x => x.Purpose)
                     .Include(x => x.MainAccount)
                     .Include(x => x.SubAccount)
-                    .Include(x => x.Department)
+                    .Include(x => x.Division)
                     .Include(x => x.Office)
                     .SingleAsync(x => x.GlaccountId == id);
 
@@ -76,10 +76,10 @@
             {
                 glAccount.MainAccount = await _mainAccount.GetOne(glAccount.MainAccountId);
                 glAccount.SubAccount = await _subAccount.GetOne(glAccount.SubAccountId);
-                glAccount.Department = await _department.GetOne(glAccount.DepartmentId);
+                glAccount.Division = await _department.GetOne(glAccount.DivisionId);
                 glAccount.Purpose = await _purpose.GetOne(glAccount.PurposeId);
                 glAccount.Office = await _office.GetOne(glAccount.OfficeId);
-                glAccount.Description = $"{glAccount.MainAccount.AccountNumber}/{glAccount.SubAccount.AccountNumber}/{glAccount.Department.Name}/{glAccount.Purpose.Name}/{glAccount.Office.Name}";
+                glAccount.Description = $"{glAccount.MainAccount.AccountNumber}/{glAccount.SubAccount.AccountNumber}/{glAccount.Division.Name}/{glAccount.Purpose.Name}/{glAccount.Office.Name}";
                 _db.Glaccounts.Add(glAccount);
                 int result = _db.SaveChanges();
 
@@ -95,10 +95,10 @@
             {
                 glAccount.MainAccount = await _mainAccount.GetOne(glAccount.MainAccountId);
                 glAccount.SubAccount = await _subAccount.GetOne(glAccount.SubAccountId);
-                glAccount.Department = await _department.GetOne(glAccount.DepartmentId);
+                glAccount.Division = await _department.GetOne(glAccount.DivisionId);
                 glAccount.Purpose = await _purpose.GetOne(glAccount.PurposeId);
                 glAccount.Office = await _office.GetOne(glAccount.OfficeId);
-                glAccount.Description = $"{glAccount.MainAccount.AccountNumber}/{glAccount.SubAccount.AccountNumber}/{glAccount.Department.Name}/{glAccount.Purpose.Name}/{glAccount.Office.Name}";
+                glAccount.Description = $"{glAccount.MainAccount.AccountNumber}/{glAccount.SubAccount.AccountNumber}/{glAccount.Division.Name}/{glAccount.Purpose.Name}/{glAccount.Office.Name}";
                 _db.Glaccounts.Update(glAccount);
                 int result = _db.SaveChanges();
 
