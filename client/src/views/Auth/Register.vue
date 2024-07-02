@@ -46,15 +46,28 @@
 			</select>
 		</div>
 		<div class="dropdown">
-			<label>Departments: </label>
-			<select :disabled="departments.length == 0" v-model="userDetails.departmentId">
-				<option value="" disabled>Select a department</option>
+			<label>Divisions: </label>
+			<select :disabled="divisions.length == 0" v-model="userDetails.divisionId">
+				<option value="" disabled>Select a division</option>
 				<option
-					v-for="department in departments"
-					:value="department.departmentId"
-					:key="department.departmentId"
+					v-for="division in divisions"
+					:value="division.divisionId"
+					:key="division.divisionId"
 				>
-					{{ department.name }}
+					{{ division.description }}
+				</option>
+			</select>
+		</div>
+		<div class="dropdown">
+			<label>Job Titles: </label>
+			<select :disabled="jobTitles.length == 0" v-model="userDetails.jobTitleId">
+				<option value="" disabled>Select a job titles</option>
+				<option
+					v-for="jobTitle in jobTitles"
+					:value="jobTitle.jobTitleId"
+					:key="jobTitle.jobTitleId"
+				>
+					{{ jobTitle.description }}
 				</option>
 			</select>
 		</div>
@@ -67,7 +80,8 @@
 <script setup>
 import { register } from '@/hooks/userCRUD'
 import { getOffices } from '@/hooks/officeCRUD'
-import { getDepartments } from '@/hooks/departmentCRUD'
+import { getDivisions } from '@/hooks/divisionCRUD'
+import { getJobTitles } from '@/hooks/jobTotleCRUD'
 import { ref } from 'vue'
 
 const userDetails = ref({
@@ -80,11 +94,13 @@ const userDetails = ref({
 	idNumber: '',
 	passwordHash: '',
 	officeId: '',
-	departmentId: ''
+	divisionId: '',
+	jobTitleId: ''
 })
 
 const { offices } = getOffices()
-const { departments } = getDepartments()
+const { divisions } = getDivisions()
+const { jobTitles } = getJobTitles()
 
 function handleSubmit() {
 	register(userDetails.value)

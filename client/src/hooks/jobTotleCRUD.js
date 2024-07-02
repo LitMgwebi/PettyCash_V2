@@ -2,16 +2,16 @@ import store from '@/store/store'
 import axios from 'axios'
 import { ref } from 'vue'
 
-export function getDepartments() {
+export function getJobTitles() {
     store.commit('setLoading')
-    const departments = ref([])
+    const jobTitles = ref([])
     axios({
         method: 'GET',
-        url: 'Departments/index'
+        url: 'JobTitles/index'
     })
-        .then((res) => (departments.value = res.data))
+        .then((res) => (jobTitles.value = res.data))
         .catch((error) => store.dispatch('setStatus', error.response.data))
         .finally(() => store.commit('doneLoading'))
 
-    return { departments }
+    return { jobTitles }
 }

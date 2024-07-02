@@ -9,14 +9,16 @@ namespace PettyCashPrototype.Services.UserService
         private readonly UserManager<User> _userManager;
         private readonly IMapper _mapper;
         private readonly IOffice _office;
-        private readonly IDepartment _department;
-        public UserService(PettyCashPrototypeContext db, UserManager<User> userManager, IMapper mapper, IOffice office, IDepartment department)
+        private readonly IDivision _department;
+        private readonly IJobTitle _jobTitle;
+        public UserService(PettyCashPrototypeContext db, UserManager<User> userManager, IMapper mapper, IOffice office, IDivision department, IJobTitle jobTitle)
         {
             _userManager = userManager;
             _db = db;
             _mapper = mapper;
             _office = office;
             _department = department;
+            _jobTitle = jobTitle;
         }
 
 
@@ -93,7 +95,15 @@ namespace PettyCashPrototype.Services.UserService
             {
                 user.Office = await _office.GetOne(user.OfficeId);
                 user.Division = await _department.GetOne(user.DivisionId);
+                user.JobTitle = await _jobTitle.GetOne(user.JobTitleId);
                 IdentityResult result = await _userManager.CreateAsync(user, password);
+
+                if (user.JobTitle.Description.Contains("GM"))
+                    result = await _userManager.AddToRoleAsync(user, "GM_Manager");
+                else if (user.JobTitle.Description == "Manager")
+                    result = await _userManager.AddToRoleAsync(user, "Manager");
+                else if (user.JobTitle.Description == "Staff")
+                    result = await _userManager.AddToRoleAsync(user, "Employee");
                 if (result.Succeeded)
                 {
                     await _db.SaveChangesAsync();

@@ -38,9 +38,9 @@ const routes = [
         // beforeEnter: authGuard
     },
     {
-        path: '/departments',
-        name: 'departments',
-        component: () => import('@/views/Department/Index.vue')
+        path: '/divisions',
+        name: 'divisions',
+        component: () => import('@/views/Division/Index.vue')
         // beforeEnter: guard
     },
     {

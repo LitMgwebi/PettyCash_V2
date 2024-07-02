@@ -3,12 +3,12 @@
     public class GLAccountService: IGLAccount
     {
         private PettyCashPrototypeContext _db;
-        private readonly IDepartment _department;
+        private readonly IDivision _department;
         private readonly IMainAccount _mainAccount;
         private readonly ISubAccount _subAccount;
         private readonly IPurpose _purpose;
         private readonly IOffice _office;
-        public GLAccountService(PettyCashPrototypeContext db, IDepartment department, IMainAccount mainAccount, ISubAccount subAccount, IPurpose purpose, IOffice office)
+        public GLAccountService(PettyCashPrototypeContext db, IDivision department, IMainAccount mainAccount, ISubAccount subAccount, IPurpose purpose, IOffice office)
         {
             _db = db;
             _department = department;

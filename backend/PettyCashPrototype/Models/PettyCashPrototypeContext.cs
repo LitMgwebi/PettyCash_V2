@@ -14,7 +14,7 @@ public partial class PettyCashPrototypeContext : IdentityDbContext<User>
     {
     }
 
-    public virtual DbSet<Division> Departments { get; set; }
+    public virtual DbSet<Department> Departments { get; set; }
     
     public virtual DbSet<Division> Divisions { get; set; }
 
@@ -37,14 +37,6 @@ public partial class PettyCashPrototypeContext : IdentityDbContext<User>
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<Department>(entity =>
-        {
-            entity.ToTable("Department");
-
-            entity.Property(e => e.DepartmentId).HasColumnName("DepartmentID");
-            entity.Property(e => e.IsActive).HasColumnName("isActive");
-        });
-
         modelBuilder.Entity<Glaccount>(entity =>
         {
             entity.ToTable("GLAccount");
@@ -168,7 +160,7 @@ public partial class PettyCashPrototypeContext : IdentityDbContext<User>
         modelBuilder.ApplyConfiguration(new OfficeSeeding());
         modelBuilder.ApplyConfiguration(new SubAccountSeeding());
         modelBuilder.ApplyConfiguration(new MainAccountSeeding());
-        //modelBuilder.ApplyConfiguration(new RolesSeeding());
+        modelBuilder.ApplyConfiguration(new RolesSeeding());
         modelBuilder.ApplyConfiguration(new JobTitleSeeding());
     }
 }

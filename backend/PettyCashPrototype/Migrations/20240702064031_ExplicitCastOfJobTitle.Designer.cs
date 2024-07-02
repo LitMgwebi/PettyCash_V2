@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PettyCashPrototype.Models;
 
@@ -11,9 +12,11 @@ using PettyCashPrototype.Models;
 namespace PettyCashPrototype.Migrations
 {
     [DbContext(typeof(PettyCashPrototypeContext))]
-    partial class PettyCashPrototypeContextModelSnapshot : ModelSnapshot
+    [Migration("20240702064031_ExplicitCastOfJobTitle")]
+    partial class ExplicitCastOfJobTitle
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -51,81 +54,68 @@ namespace PettyCashPrototype.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "514f32b0-aa72-4699-8291-3bec23225a01",
-                            Name = "Super_User",
-                            NormalizedName = "Super_User"
+                            Id = "dd83ec06-3bd4-4e38-9719-565ea8e68269",
+                            Name = "Super_User"
                         },
                         new
                         {
-                            Id = "dcad8123-09d6-4fdb-a049-9aeb918b056f",
-                            Name = "Manager",
-                            NormalizedName = "Manager"
+                            Id = "639783ab-ec91-4fe8-9da4-70eb08761ac5",
+                            Name = "Manager"
                         },
                         new
                         {
-                            Id = "e336aaf5-07b2-4572-803c-963dffe74028",
-                            Name = "GM_Manager",
-                            NormalizedName = "GM_Manager"
+                            Id = "2dc52cde-7056-4941-9329-58eb6ac555f7",
+                            Name = "GM_Manager"
                         },
                         new
                         {
-                            Id = "d24ec523-d9c7-4591-b223-33df7747180c",
-                            Name = "ICT_Admin",
-                            NormalizedName = "ICT_Admin"
+                            Id = "9deee18c-f64d-43f4-8d2a-f01075f0e56a",
+                            Name = "ICT_Admin"
                         },
                         new
                         {
-                            Id = "a06601dd-7649-4353-8b7b-aa5a67dbe299",
-                            Name = "Cashier",
-                            NormalizedName = "Cashier"
+                            Id = "6bcc1a7b-0483-4680-a620-0a55ce75ba56",
+                            Name = "Cashier"
                         },
                         new
                         {
-                            Id = "de7cce33-2713-4315-9fb7-277dff5cec3e",
-                            Name = "HR_Admin",
-                            NormalizedName = "HR_Admin"
+                            Id = "71cbe21f-b860-4465-a625-49a920b9eda4",
+                            Name = "HR_Admin"
                         },
                         new
                         {
-                            Id = "02e9c964-6bf1-4c8a-bc48-639812e4e2c3",
-                            Name = "Finance_Admin",
-                            NormalizedName = "Finance_Admin"
+                            Id = "f0696d41-ff81-4f84-93ab-371d77053e51",
+                            Name = "Finance_Admin"
                         },
                         new
                         {
-                            Id = "2d2a9a13-9dd0-49d0-9b56-a05b59ec4180",
-                            Name = "PA_Admin",
-                            NormalizedName = "PA_Admin"
+                            Id = "9ac85057-8d09-4f38-aa80-28c8a78ea657",
+                            Name = "PA_Admin"
                         },
                         new
                         {
-                            Id = "dc83af92-56de-48fa-94a5-96e2202676b4",
-                            Name = "CEO_Admin",
-                            NormalizedName = "CEO_Admin"
+                            Id = "8230c2c4-7721-47eb-8583-28b17ad7d5e8",
+                            Name = "CEO_Admin"
                         },
                         new
                         {
-                            Id = "23357a53-b098-440b-a204-35133941992a",
-                            Name = "SCM_Admin",
-                            NormalizedName = "SCM_Admin"
+                            Id = "378bdc02-e958-47e4-a306-ecc6b5bd5ab7",
+                            Name = "SCM_Admin"
                         },
                         new
                         {
-                            Id = "f38bc1c8-23cc-46aa-9a9d-8301ec2d067b",
-                            Name = "Employee",
-                            NormalizedName = "Employee"
+                            Id = "ac1811c8-e9f5-452e-bb19-376e1fe0eb37",
+                            Name = "Employee"
                         },
                         new
                         {
-                            Id = "91e1a5f7-327b-4a34-9076-142913d06a9d",
-                            Name = "DEEC_Admin",
-                            NormalizedName = "DEEC_Admin"
+                            Id = "d314d8af-8d31-4833-879d-68d48c0829b4",
+                            Name = "DEEC_Admin"
                         },
                         new
                         {
-                            Id = "7613f8fc-eec0-42db-82bf-6e8bb4de5166",
-                            Name = "SRM_Admin",
-                            NormalizedName = "SRM_Admin"
+                            Id = "e3175e0c-6af4-4c39-a7ee-8f7e3a1921f8",
+                            Name = "SRM_Admin"
                         });
                 });
 
@@ -422,9 +412,6 @@ namespace PettyCashPrototype.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
-
                     b.HasKey("JobTitleId");
 
                     b.ToTable("JobTitle");
@@ -433,80 +420,67 @@ namespace PettyCashPrototype.Migrations
                         new
                         {
                             JobTitleId = 1,
-                            Description = "CEO",
-                            IsActive = true
+                            Description = "CEO"
                         },
                         new
                         {
                             JobTitleId = 2,
-                            Description = "CFO",
-                            IsActive = true
+                            Description = "CFO"
                         },
                         new
                         {
                             JobTitleId = 3,
-                            Description = "GM: Corporate Services",
-                            IsActive = true
+                            Description = "GM: Corporate Services"
                         },
                         new
                         {
                             JobTitleId = 4,
-                            Description = "GM: Governance",
-                            IsActive = true
+                            Description = "GM: Governance"
                         },
                         new
                         {
                             JobTitleId = 5,
-                            Description = "GM: Regulatory Compliance",
-                            IsActive = true
+                            Description = "GM: Regulatory Compliance"
                         },
                         new
                         {
                             JobTitleId = 6,
-                            Description = "GM: Trade",
-                            IsActive = true
+                            Description = "GM: Trade"
                         },
                         new
                         {
                             JobTitleId = 7,
-                            Description = "Manager",
-                            IsActive = true
+                            Description = "Manager"
                         },
                         new
                         {
                             JobTitleId = 8,
-                            Description = "Staff",
-                            IsActive = true
+                            Description = "Staff"
                         },
                         new
                         {
                             JobTitleId = 9,
-                            Description = "Consultant",
-                            IsActive = true
+                            Description = "Consultant"
                         },
                         new
                         {
                             JobTitleId = 10,
-                            Description = "Chair Person",
-                            IsActive = true
+                            Description = "Chair Person"
                         },
                         new
                         {
                             JobTitleId = 11,
-                            Description = "Board Member",
-                            IsActive = true
+                            Description = "Board Member"
                         },
                         new
                         {
                             JobTitleId = 12,
-                            Description = "WGM",
-                            IsActive = true
+                            Description = "WGM"
                         },
                         new
                         {
                             JobTitleId = 13,
-                            Description = "General Manager",
-                            IsActive = true
+                            Description = "General Manager"
                         });
                 });
 

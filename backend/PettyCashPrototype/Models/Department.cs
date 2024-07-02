@@ -2,6 +2,7 @@
 
 namespace PettyCashPrototype.Models
 {
+    [Table("Department")]
     public class Department
     {
         public int DepartmentId { get; set; }

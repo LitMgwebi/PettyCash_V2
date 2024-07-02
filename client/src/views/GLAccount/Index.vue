@@ -53,15 +53,15 @@
 					</select>
 				</div>
 				<div class="dropdown">
-					<label>Departments: </label>
-					<select :disabled="departments.length == 0" v-model="newGLAccount.departmentId">
-						<option value="" disabled>Select a department</option>
+					<label>Divisions: </label>
+					<select :disabled="divisions.length == 0" v-model="newGLAccount.divisionId">
+						<option value="" disabled>Select a division</option>
 						<option
-							v-for="department in departments"
-							:value="department.departmentId"
-							:key="department.departmentId"
+							v-for="division in divisions"
+							:value="division.divisionId"
+							:key="division.divisionId"
 						>
-							{{ department.name }}
+							{{ division.description }}
 						</option>
 					</select>
 				</div>
@@ -141,18 +141,15 @@
 					</select>
 				</div>
 				<div class="dropdown">
-					<label>Departments: </label>
-					<select
-						:disabled="departments.length == 0"
-						v-model="updatedGLAccount.departmentId"
-					>
-						<option value="" disabled>Select a department</option>
+					<label>Divisions: </label>
+					<select :disabled="divisions.length == 0" v-model="updatedGLAccount.divisionId">
+						<option value="" disabled>Select a division</option>
 						<option
-							v-for="department in departments"
-							:value="department.departmentId"
-							:key="department.departmentId"
+							v-for="division in divisions"
+							:value="division.divisionId"
+							:key="division.divisionId"
 						>
-							{{ department.name }}
+							{{ division.name }}
 						</option>
 					</select>
 				</div>
@@ -197,14 +194,14 @@ import { getOffices } from '@/hooks/officeCRUD'
 import { getSubAccounts } from '@/hooks/subAccountCRUD'
 import { getMainAccounts } from '@/hooks/mainAccountCRUD'
 import { getPurposes } from '@/hooks/purposeCRUD'
-import { getDepartments } from '@/hooks/departmentCRUD'
+import { getDivisions } from '@/hooks/divisionCRUD'
 import { ref } from 'vue'
 
 const { offices } = getOffices()
 const { subAccounts } = getSubAccounts()
 const { mainAccounts } = getMainAccounts()
 const { purposes } = getPurposes()
-const { departments } = getDepartments()
+const { divisions } = getDivisions()
 const reloadPage = () => location.reload()
 const { glAccounts } = getGLAccounts()
 
@@ -214,7 +211,7 @@ const newGLAccount = ref({
 	name: '',
 	mainAccountId: '',
 	subAccountId: '',
-	departmentId: '',
+	divisionId: '',
 	purposeId: '',
 	officeId: ''
 })
@@ -228,7 +225,7 @@ const updatedGLAccount = ref({
 	name: '',
 	mainAccountId: '',
 	subAccountId: '',
-	departmentId: '',
+	divisionId: '',
 	purposeId: '',
 	officeId: ''
 })

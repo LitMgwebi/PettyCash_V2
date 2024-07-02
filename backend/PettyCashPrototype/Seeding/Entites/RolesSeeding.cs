@@ -9,55 +9,68 @@ namespace PettyCashPrototype.Seeding.Entites
             builder.HasData(
                 new IdentityRole
                 {
-                    Name = "Super_User"
+                    Name = "Super_User",
+                    NormalizedName = "Super_User"
                 },
                 new IdentityRole
                 {
-                    Name = "Manager"
+                    Name = "Manager",
+                    NormalizedName = "Manager",
                 },
                 new IdentityRole
                 {
-                    Name = "GM_Manager"
+                    Name = "GM_Manager",
+                    NormalizedName = "GM_Manager"
                 },
                 new IdentityRole
                 {
-                    Name = "ICT_Admin"
+                    Name = "ICT_Admin",
+                    NormalizedName = "ICT_Admin"
                 },
                 new IdentityRole
                 {
-                    Name = "Cashier"
+                    Name = "Cashier",
+                    NormalizedName = "Cashier",
                 },
                 new IdentityRole
                 {
-                    Name = "HR_Admin"
+                    Name = "HR_Admin",
+                    NormalizedName = "HR_Admin",
                 },
                 new IdentityRole
                 {
-                    Name = "Finance_Admin"
+                    Name = "Finance_Admin",
+                    NormalizedName = "Finance_Admin",
                 },
                 new IdentityRole
                 {
-                    Name = "PA_Admin"
+                    Name = "PA_Admin",
+                    NormalizedName = "PA_Admin",
                 },
                 new IdentityRole
                 {
-                    Name = "CEO_Admin"
+                    Name = "CEO_Admin",
+                    NormalizedName = "CEO_Admin",
                 },
                 new IdentityRole
                 {
-                    Name = "SCM_Admin"
+                    Name = "SCM_Admin",
+                    NormalizedName = "SCM_Admin",
                 },
                 new IdentityRole
                 {
-                    Name = "Employee"
+                    Name = "Employee",
+                    NormalizedName = "Employee",
                 },
                 new IdentityRole
                 {
-                    Name = "DEEC_Admin"
+                    Name = "DEEC_Admin",
+                    NormalizedName = "DEEC_Admin",
                 },
                 new IdentityRole
                 {
-                    Name = "SRM_Admin"
+                    Name = "SRM_Admin",
+                    NormalizedName = "SRM_Admin",
                 }
 
                 );

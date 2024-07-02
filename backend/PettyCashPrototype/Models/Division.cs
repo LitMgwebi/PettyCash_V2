@@ -5,6 +5,7 @@ using PettyCashPrototype.Seeding;
 
 namespace PettyCashPrototype.Models;
 
+[Table("Division")]
 public partial class Division
 {
     public int DivisionId { get; set; }
