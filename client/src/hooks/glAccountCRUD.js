@@ -16,15 +16,12 @@ export function getGLAccounts() {
     return { glAccounts }
 }
 
-export function getGLAccountsByDepartment(departmentId) {
+export function getGLAccountsByDepartment() {
     store.commit('setLoading')
     const glAccounts = ref([])
     axios({
         method: 'GET',
-        url: 'GLAccounts/index_department',
-        params: {
-            id: departmentId
-        }
+        url: 'GLAccounts/index_department'
     })
         .then((res) => (glAccounts.value = res.data))
         .catch((error) => store.dispatch('setStatus', error.response.data))

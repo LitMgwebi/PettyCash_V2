@@ -7,8 +7,16 @@
 	<div>
 		<ApplicantList />
 	</div>
+
+	<div v-if="user.role == 'Manager'">
+		<ManagerApprovalList />
+	</div>
 </template>
 
 <script setup>
 import ApplicantList from '@/components/Requisition/ApplicantList.vue'
+import ManagerApprovalList from '@/components/Requisition/ManagerApprovalList.vue'
+import { inject } from 'vue'
+
+const user = inject('User')
 </script>

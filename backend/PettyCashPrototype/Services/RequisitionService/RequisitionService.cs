@@ -25,14 +25,15 @@
             catch { throw; }
         }
 
-        public async Task<IEnumerable<Requisition>> GetAllForManagerApproval()
+        public async Task<IEnumerable<Requisition>> GetAllForManagerApproval(int divisionId)
         {
             try
             {
                 IEnumerable<Requisition> requisitions = await _db.Requisitions
-                    .Where(a => a.IsActive == true)
-                    .Where(a => a.ManagerRecommendation == null && a.FinanceApproval == null)
                     .Include(a => a.Applicant)
+                    .Where(a => a.IsActive == true)
+                    .Where(d => d.Applicant!.DivisionId == divisionId)
+                    .Where(a => a.ManagerRecommendation == null && a.FinanceApproval == null)
                     .ToListAsync();
 
                 if (requisitions == null) throw new Exception("System could not find any requisitions.");

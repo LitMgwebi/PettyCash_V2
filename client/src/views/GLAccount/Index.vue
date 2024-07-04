@@ -19,10 +19,10 @@
 		<section class="create">
 			<h3>Add GL Account</h3>
 			<form @submit.prevent="addSubmit">
-				<div>
+				<!-- <div>
 					<label>Name: </label>
 					<input type="text" v-model="newGLAccount.name" />
-				</div>
+				</div> -->
 				<div class="dropdown">
 					<label>Main Accounts: </label>
 					<select
@@ -74,7 +74,7 @@
 							:value="purpose.purposeId"
 							:key="purpose.purposeId"
 						>
-							{{ purpose.name }}
+							{{ purpose.description }}
 						</option>
 					</select>
 				</div>
@@ -87,7 +87,7 @@
 							:value="office.officeId"
 							:key="office.officeId"
 						>
-							{{ office.name }}
+							{{ office.description }}
 						</option>
 					</select>
 				</div>
@@ -104,10 +104,10 @@
 			</span>
 			<span v-else><h3>Select GL Account to edit</h3></span>
 			<form @submit.prevent="editSubmit">
-				<div>
+				<!-- <div>
 					<label>Name: </label>
 					<input type="text" v-model="updatedGLAccount.name" />
-				</div>
+				</div> -->
 				<div class="dropdown">
 					<label>Main Accounts: </label>
 					<select
@@ -162,7 +162,7 @@
 							:value="purpose.purposeId"
 							:key="purpose.purposeId"
 						>
-							{{ purpose.name }}
+							{{ purpose.description }}
 						</option>
 					</select>
 				</div>
@@ -175,7 +175,7 @@
 							:value="office.officeId"
 							:key="office.officeId"
 						>
-							{{ office.name }}
+							{{ office.description }}
 						</option>
 					</select>
 				</div>

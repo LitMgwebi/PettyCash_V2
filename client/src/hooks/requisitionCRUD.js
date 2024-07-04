@@ -16,21 +16,17 @@ export function getRequisitions() {
     return { requisitions }
 }
 
-export function getRequisitionsByApplicant(id) {
+export function getRequisitionsByApplicant() {
     store.commit('setLoading')
     const requisitions = ref([])
     axios({
         method: 'GET',
-        url: 'Requisitions/applicant_forms',
-        params: {
-            id: id
-        }
+        url: 'Requisitions/applicant_forms'
     })
         .then((res) => (requisitions.value = res.data))
         .catch((error) => store.dispatch('setStatus', error.response.data))
         .finally(() => store.commit('doneLoading'))
 
-    console.log(requisitions)
     return { requisitions }
 }
 
@@ -49,16 +45,15 @@ export function getRequisitionsForManagerApproval() {
 }
 
 export function addRequisition(requisition) {
-    console.log(requisition)
-    // store.commit('setLoading')
-    // axios({
-    //     method: 'POST',
-    //     url: 'Requisitions/create',
-    //     data: requisition
-    // })
-    //     .then((res) => store.dispatch('setStatus', res.data.message))
-    //     .catch((error) => store.dispatch('setStatus', error.response.data))
-    //     .finally(() => store.commit('doneLoading'))
+    store.commit('setLoading')
+    axios({
+        method: 'POST',
+        url: 'Requisitions/create',
+        data: requisition
+    })
+        .then((res) => store.dispatch('setStatus', res.data.message))
+        .catch((error) => store.dispatch('setStatus', error.response.data))
+        .finally(() => store.commit('doneLoading'))
 }
 
 export function editRequisition(requisition) {

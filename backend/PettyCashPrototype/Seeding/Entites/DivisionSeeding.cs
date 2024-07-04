@@ -27,7 +27,7 @@ namespace PettyCashPrototype.Seeding.Entites
                 {
                     DivisionId = 3,
                     Name = "LEG",
-                    Description = "Governance",
+                    Description = "Legal",
                     DepartmentId = 3,
                     IsActive = true,
                 },

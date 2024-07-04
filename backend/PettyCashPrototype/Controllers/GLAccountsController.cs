@@ -1,7 +1,11 @@
-﻿namespace PettyCashPrototype.Controllers
+﻿using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
+
+namespace PettyCashPrototype.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class GLAccountsController : ControllerBase
     {
         private readonly IGLAccount _glAccount;
@@ -39,11 +43,13 @@
         }
 
         [HttpGet, Route("index_department")]
-        public async Task<ActionResult<IEnumerable<Glaccount>>> IndexByDepartment(int id)
+        public async Task<ActionResult<IEnumerable<Glaccount>>> IndexByDepartment()
         {
             try
             {
-                IEnumerable<Glaccount> glaccounts = await _glAccount.GetAllbyDepartment(id);
+                var identity = (ClaimsIdentity)User.Identity!;
+                var divisionId = identity.Claims.Where(c => c.Type == "Division").Select(c => c.Value).FirstOrDefault()!;
+                IEnumerable<Glaccount> glaccounts = await _glAccount.GetAllbyDepartment(int.Parse(divisionId));
                 return Ok(glaccounts);
             }
             catch (Exception ex)

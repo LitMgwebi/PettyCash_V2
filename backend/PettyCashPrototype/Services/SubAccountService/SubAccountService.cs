@@ -12,6 +12,7 @@
             {
                 IEnumerable<SubAccount> subAccounts = await _db.SubAccounts
                     .Where(x => x.IsActive == true)
+                    .OrderBy(x => x.Name)
                     .ToListAsync();
 
                 if (subAccounts == null)

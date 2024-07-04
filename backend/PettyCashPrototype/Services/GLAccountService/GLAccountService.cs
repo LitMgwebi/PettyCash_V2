@@ -80,6 +80,8 @@
                 glAccount.Purpose = await _purpose.GetOne(glAccount.PurposeId);
                 glAccount.Office = await _office.GetOne(glAccount.OfficeId);
                 glAccount.Description = $"{glAccount.MainAccount.AccountNumber}/{glAccount.SubAccount.AccountNumber}/{glAccount.Division.Name}/{glAccount.Purpose.Name}/{glAccount.Office.Name}";
+
+                glAccount.Name = $"{glAccount.Division.Name} {glAccount.MainAccount.Name} ({glAccount.SubAccount.Name})";
                 _db.Glaccounts.Add(glAccount);
                 int result = _db.SaveChanges();
 
@@ -99,6 +101,7 @@
                 glAccount.Purpose = await _purpose.GetOne(glAccount.PurposeId);
                 glAccount.Office = await _office.GetOne(glAccount.OfficeId);
                 glAccount.Description = $"{glAccount.MainAccount.AccountNumber}/{glAccount.SubAccount.AccountNumber}/{glAccount.Division.Name}/{glAccount.Purpose.Name}/{glAccount.Office.Name}";
+                glAccount.Name = $"{glAccount.Division.Name} {glAccount.MainAccount.Name} ({glAccount.SubAccount.Name})";
                 _db.Glaccounts.Update(glAccount);
                 int result = _db.SaveChanges();
 

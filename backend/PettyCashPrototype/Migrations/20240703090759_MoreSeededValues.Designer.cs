@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PettyCashPrototype.Models;
 
@@ -11,9 +12,11 @@ using PettyCashPrototype.Models;
 namespace PettyCashPrototype.Migrations
 {
     [DbContext(typeof(PettyCashPrototypeContext))]
-    partial class PettyCashPrototypeContextModelSnapshot : ModelSnapshot
+    [Migration("20240703090759_MoreSeededValues")]
+    partial class MoreSeededValues
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -47,86 +50,6 @@ namespace PettyCashPrototype.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "c303538f-3fd6-4fc1-974c-d94c07ba1391",
-                            Name = "Super_User",
-                            NormalizedName = "Super_User"
-                        },
-                        new
-                        {
-                            Id = "37ce7a5a-9260-405c-9dd0-b8f4a32156fd",
-                            Name = "Manager",
-                            NormalizedName = "Manager"
-                        },
-                        new
-                        {
-                            Id = "68d5c727-9ae8-401a-8c2c-1cebb5e78735",
-                            Name = "GM_Manager",
-                            NormalizedName = "GM_Manager"
-                        },
-                        new
-                        {
-                            Id = "1a69126a-3658-44b3-9b2b-1732d0ce9e1a",
-                            Name = "ICT_Admin",
-                            NormalizedName = "ICT_Admin"
-                        },
-                        new
-                        {
-                            Id = "24e9d163-c600-42db-92ca-594fdc639e58",
-                            Name = "Cashier",
-                            NormalizedName = "Cashier"
-                        },
-                        new
-                        {
-                            Id = "f50b76c7-3bba-4edb-93d4-eef4af92a9ab",
-                            Name = "HR_Admin",
-                            NormalizedName = "HR_Admin"
-                        },
-                        new
-                        {
-                            Id = "fd1d6d8f-9e0f-49e1-a569-746fc8eaa6f6",
-                            Name = "Finance_Admin",
-                            NormalizedName = "Finance_Admin"
-                        },
-                        new
-                        {
-                            Id = "b139cc03-eb14-45a2-a560-8415006211a1",
-                            Name = "PA_Admin",
-                            NormalizedName = "PA_Admin"
-                        },
-                        new
-                        {
-                            Id = "bd88b1a9-2e95-4167-88d2-7c0d6b204f44",
-                            Name = "CEO_Admin",
-                            NormalizedName = "CEO_Admin"
-                        },
-                        new
-                        {
-                            Id = "6bd427b1-62c9-425b-86ed-a1f69d2d570b",
-                            Name = "SCM_Admin",
-                            NormalizedName = "SCM_Admin"
-                        },
-                        new
-                        {
-                            Id = "b69328a6-ad18-4ae3-bc96-a69816cd3a1d",
-                            Name = "Employee",
-                            NormalizedName = "Employee"
-                        },
-                        new
-                        {
-                            Id = "3531888a-9e52-4f49-aca7-e85fe0705c33",
-                            Name = "DEEC_Admin",
-                            NormalizedName = "DEEC_Admin"
-                        },
-                        new
-                        {
-                            Id = "50b0ecd5-fb64-4724-9190-bc9953ccd7b5",
-                            Name = "SRM_Admin",
-                            NormalizedName = "SRM_Admin"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

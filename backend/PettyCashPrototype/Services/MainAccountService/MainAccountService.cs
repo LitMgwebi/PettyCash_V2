@@ -14,6 +14,7 @@
             {
                 IEnumerable<MainAccount> mainAccounts = await _db.MainAccounts
                     .Where(x => x.IsActive == true)
+                    .OrderBy(x => x.Name)
                     .ToListAsync();
 
                 if (mainAccounts == null)

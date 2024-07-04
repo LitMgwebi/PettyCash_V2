@@ -27,6 +27,13 @@ namespace PettyCashPrototype.Seeding.Entites
                     Name = "CPT",
                     Description = "Cape Town",
                     IsActive = true,
+                },
+                new Office
+                {
+                    OfficeId = 4,
+                    Name = "DBN",
+                    Description = "Durban",
+                    IsActive = true,
                 }
                 );
         }

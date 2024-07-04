@@ -12,14 +12,14 @@
 		</div>
 		<div class="dropdown">
 			<label>GL Accounts: </label>
-			<select :disabled="glAccounts.length == 0" v-model="requisition.glAccount">
+			<select :disabled="glAccounts.length == 0" v-model="requisition.glaccountId">
 				<option value="" disabled>Select a GL account</option>
 				<option
 					v-for="glAccount in glAccounts"
-					:value="glAccount.glAccountId"
-					:key="glAccount.glAccountId"
+					:value="glAccount.glaccountId"
+					:key="glAccount.glaccountId"
 				>
-					{{ glAccount.name }} - {{ glAccount.description }}
+					{{ glAccount.description }}
 				</option>
 			</select>
 		</div>
@@ -36,16 +36,14 @@ import { inject, ref } from 'vue'
 import { addRequisition } from '@/hooks/requisitionCRUD'
 import router from '@/router/router'
 
-const user = inject('User')
 const reloadPage = () => location.reload()
 const requisition = ref({
-	glAccount: null,
-	applicantId: user.id,
-	amountRequested: null,
+	glaccountId: '',
+	applicantId: '',
+	amountRequested: '',
 	description: ''
 })
-
-const { glAccounts } = getGLAccountsByDepartment(user.departmentId)
+const { glAccounts } = getGLAccountsByDepartment()
 
 function handleSubmit() {
 	addRequisition(requisition.value)

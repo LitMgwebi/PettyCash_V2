@@ -1,4 +1,6 @@
-﻿namespace PettyCashPrototype.Controllers
+﻿using System.Security.Claims;
+
+namespace PettyCashPrototype.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -22,11 +24,28 @@
         }
 
         [HttpGet, Route("manager_approval")]
+        
         public async Task<ActionResult<IEnumerable<Requisition>>> IndexForManager()
         {
             try
             {
-                IEnumerable<Requisition> requisitions = await _requisition.GetAllForManagerApproval();
+                var identity = (ClaimsIdentity)User.Identity!;
+                var divisionId = identity.Claims.Where(c => c.Type == "Division").Select(c => c.Value).FirstOrDefault()!;
+                IEnumerable<Requisition> requisitions = await _requisition.GetAllForManagerApproval(int.Parse(divisionId));
+
+                return Ok(requisitions);
+            }
+            catch (Exception ex) { return BadRequest(ex.Message); }
+        }
+
+        [HttpGet, Route("applicant_forms")]
+        public async Task<ActionResult<IEnumerable<Requisition>>> ApplicantForms()
+        {
+            try
+            {
+                var identity = (ClaimsIdentity)User.Identity!;
+                var userId = identity.Claims.Where(c => c.Type == ClaimTypes.Sid).Select(c => c.Value).FirstOrDefault()!;
+                IEnumerable<Requisition> requisitions = await _requisition.GetByApplicant(userId);
 
                 return Ok(requisitions);
             }
@@ -43,18 +62,6 @@
             } catch (Exception ex) { return BadRequest(ex.Message); }
         }
 
-        [HttpGet, Route("applicant_forms")]
-        public async Task<ActionResult<IEnumerable<Requisition>>> ApplicantForms(string id)
-        {
-            try
-            {
-                IEnumerable<Requisition> requisitions = await _requisition.GetByApplicant(id);
-
-                return Ok(requisitions);
-            }
-            catch (Exception ex) { return BadRequest(ex.Message); }
-        }
-
         #endregion
 
         #region POST
@@ -64,6 +71,10 @@
         {
             try
             {
+                var identity = (ClaimsIdentity)User.Identity!;
+                var userId = identity.Claims.Where(c => c.Type == ClaimTypes.Sid).Select(c => c.Value).FirstOrDefault()!;
+
+                requisition.ApplicantId = userId;
                 requisition.StartDate = DateTime.UtcNow;
                 await _requisition.Create(requisition);
                 return Ok(new { message = "The new Requisition has been added to the system" });
