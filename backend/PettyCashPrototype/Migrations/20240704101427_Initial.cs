@@ -31,28 +31,29 @@ namespace PettyCashPrototype.Migrations
                 name: "Department",
                 columns: table => new
                 {
-                    DepartmentID = table.Column<int>(type: "int", nullable: false)
+                    DepartmentId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    isActive = table.Column<bool>(type: "bit", nullable: false)
+                    IsActive = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Department", x => x.DepartmentID);
+                    table.PrimaryKey("PK_Department", x => x.DepartmentId);
                 });
 
             migrationBuilder.CreateTable(
-                name: "JobTitles",
+                name: "JobTitle",
                 columns: table => new
                 {
                     JobTitleId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_JobTitles", x => x.JobTitleId);
+                    table.PrimaryKey("PK_JobTitle", x => x.JobTitleId);
                 });
 
             migrationBuilder.CreateTable(
@@ -124,7 +125,9 @@ namespace PettyCashPrototype.Migrations
                     TripStatusID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Description = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    isActive = table.Column<bool>(type: "bit", nullable: false)
+                    isActive = table.Column<bool>(type: "bit", nullable: false),
+                    IsRecommended = table.Column<bool>(type: "bit", nullable: false),
+                    IsApproved = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -170,7 +173,7 @@ namespace PettyCashPrototype.Migrations
                         name: "FK_Division_Department_DepartmentId",
                         column: x => x.DepartmentId,
                         principalTable: "Department",
-                        principalColumn: "DepartmentID",
+                        principalColumn: "DepartmentId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -211,9 +214,9 @@ namespace PettyCashPrototype.Migrations
                         principalColumn: "DivisionId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_AspNetUsers_JobTitles_JobTitleId",
+                        name: "FK_AspNetUsers_JobTitle_JobTitleId",
                         column: x => x.JobTitleId,
-                        principalTable: "JobTitles",
+                        principalTable: "JobTitle",
                         principalColumn: "JobTitleId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
@@ -378,8 +381,7 @@ namespace PettyCashPrototype.Migrations
                     FinanceApprovalDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     FinanceApprovalID = table.Column<int>(type: "int", nullable: true),
                     IssuerID = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    isActive = table.Column<bool>(type: "bit", nullable: false),
-                    TripStatusId = table.Column<int>(type: "int", nullable: true)
+                    isActive = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -398,11 +400,6 @@ namespace PettyCashPrototype.Migrations
                     table.ForeignKey(
                         name: "FK_Requisition_TripStatus1",
                         column: x => x.FinanceApprovalID,
-                        principalTable: "TripStatus",
-                        principalColumn: "TripStatusID");
-                    table.ForeignKey(
-                        name: "FK_Requisition_TripStatus_TripStatusId",
-                        column: x => x.TripStatusId,
                         principalTable: "TripStatus",
                         principalColumn: "TripStatusID");
                     table.ForeignKey(
@@ -432,24 +429,24 @@ namespace PettyCashPrototype.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "16ea7aa2-f170-4433-bb6a-08266ada6029", null, "CEO_Admin", null },
-                    { "3b3146f8-9aba-4770-83de-c538e5cae3a7", null, "DEEC_Admin", null },
-                    { "40323865-3ca6-47a9-be1f-b81a6c4d5f1b", null, "SCM_Admin", null },
-                    { "4a3e14ec-b870-4534-90dc-0e5d72bf622a", null, "PA_Admin", null },
-                    { "4e58e31f-3bc5-4bc1-97f8-a74832efb73f", null, "Manager", null },
-                    { "5e1e28d6-da03-401e-b558-00ed0eea805f", null, "Super_User", null },
-                    { "6d64c097-8c33-4e33-8986-0432a2cbac55", null, "Finance_Admin", null },
-                    { "6f17444f-e17b-4576-aedf-411c68912ed4", null, "HR_Admin", null },
-                    { "765bcc05-9271-435b-9db7-0f8443b3164f", null, "Employee", null },
-                    { "7776b4d0-9a3e-42eb-8730-f6f987bd9c62", null, "ICT_Admin", null },
-                    { "9ecceff9-7fb0-4d0c-9597-884d8e4957d7", null, "Cashier", null },
-                    { "aa44333f-aa07-4491-a851-b043ba55b34d", null, "GM_Manager", null },
-                    { "fdb012f2-c43d-4cc0-b4c2-52ad400ef930", null, "SRM_Admin", null }
+                    { "1a69126a-3658-44b3-9b2b-1732d0ce9e1a", null, "ICT_Admin", "ICT_Admin" },
+                    { "24e9d163-c600-42db-92ca-594fdc639e58", null, "Cashier", "Cashier" },
+                    { "3531888a-9e52-4f49-aca7-e85fe0705c33", null, "DEEC_Admin", "DEEC_Admin" },
+                    { "37ce7a5a-9260-405c-9dd0-b8f4a32156fd", null, "Manager", "Manager" },
+                    { "50b0ecd5-fb64-4724-9190-bc9953ccd7b5", null, "SRM_Admin", "SRM_Admin" },
+                    { "68d5c727-9ae8-401a-8c2c-1cebb5e78735", null, "GM_Manager", "GM_Manager" },
+                    { "6bd427b1-62c9-425b-86ed-a1f69d2d570b", null, "SCM_Admin", "SCM_Admin" },
+                    { "b139cc03-eb14-45a2-a560-8415006211a1", null, "PA_Admin", "PA_Admin" },
+                    { "b69328a6-ad18-4ae3-bc96-a69816cd3a1d", null, "Employee", "Employee" },
+                    { "bd88b1a9-2e95-4167-88d2-7c0d6b204f44", null, "CEO_Admin", "CEO_Admin" },
+                    { "c303538f-3fd6-4fc1-974c-d94c07ba1391", null, "Super_User", "Super_User" },
+                    { "f50b76c7-3bba-4edb-93d4-eef4af92a9ab", null, "HR_Admin", "HR_Admin" },
+                    { "fd1d6d8f-9e0f-49e1-a569-746fc8eaa6f6", null, "Finance_Admin", "Finance_Admin" }
                 });
 
             migrationBuilder.InsertData(
                 table: "Department",
-                columns: new[] { "DepartmentID", "Description", "isActive", "Name" },
+                columns: new[] { "DepartmentId", "Description", "IsActive", "Name" },
                 values: new object[,]
                 {
                     { 1, null, true, "CEO Office" },
@@ -461,23 +458,23 @@ namespace PettyCashPrototype.Migrations
                 });
 
             migrationBuilder.InsertData(
-                table: "JobTitles",
-                columns: new[] { "JobTitleId", "Description" },
+                table: "JobTitle",
+                columns: new[] { "JobTitleId", "Description", "IsActive" },
                 values: new object[,]
                 {
-                    { 1, "CEO" },
-                    { 2, "CFO" },
-                    { 3, "GM: Corporate Services" },
-                    { 4, "GM: Governance" },
-                    { 5, "GM: Regulatory Compliance" },
-                    { 6, "GM: Trade" },
-                    { 7, "Manager" },
-                    { 8, "Staff" },
-                    { 9, "Consultant" },
-                    { 10, "Chair Person" },
-                    { 11, "Board Member" },
-                    { 12, "WGM" },
-                    { 13, "General Manager" }
+                    { 1, "CEO", true },
+                    { 2, "CFO", true },
+                    { 3, "GM: Corporate Services", true },
+                    { 4, "GM: Governance", true },
+                    { 5, "GM: Regulatory Compliance", true },
+                    { 6, "GM: Trade", true },
+                    { 7, "Manager", true },
+                    { 8, "Staff", true },
+                    { 9, "Consultant", true },
+                    { 10, "Chair Person", true },
+                    { 11, "Board Member", true },
+                    { 12, "WGM", true },
+                    { 13, "General Manager", true }
                 });
 
             migrationBuilder.InsertData(
@@ -487,7 +484,13 @@ namespace PettyCashPrototype.Migrations
                 {
                     { 1, "2013", null, true, "Insurance" },
                     { 2, "2012", null, true, "Inspection" },
-                    { 3, "2007", null, true, "Domestic Travel" }
+                    { 3, "2007", null, true, "Domestic Travel" },
+                    { 4, "2031", null, true, "Staff Renumeration" },
+                    { 5, "2017", null, true, "Legal Fees" },
+                    { 6, "2080", null, true, "Support Services" },
+                    { 7, "2038", null, true, "Training and Development" },
+                    { 8, "2035", null, true, "Telecommunication" },
+                    { 9, "2011", null, true, "Hospitality" }
                 });
 
             migrationBuilder.InsertData(
@@ -497,7 +500,8 @@ namespace PettyCashPrototype.Migrations
                 {
                     { 1, "Johannesburg", true, "JHB" },
                     { 2, "Kimberely", true, "KIM" },
-                    { 3, "Cape Town", true, "CPT" }
+                    { 3, "Cape Town", true, "CPT" },
+                    { 4, "Durban", true, "DBN" }
                 });
 
             migrationBuilder.InsertData(
@@ -518,7 +522,27 @@ namespace PettyCashPrototype.Migrations
                 {
                     { 1, "0206", null, true, "IT Audit" },
                     { 2, "0045", null, true, "Meeting Fees" },
-                    { 3, "0001", null, true, "Accomodation" }
+                    { 3, "0001", null, true, "Accomodation" },
+                    { 4, "0006", null, true, "Basic Salaries" },
+                    { 5, "0034", null, true, "Housing" },
+                    { 6, "0101", null, true, "Membership Fees" },
+                    { 7, "0094", null, true, "System Support" },
+                    { 8, "0002", null, true, "Air travel" },
+                    { 9, "0066", null, true, "Shuttle and Taxi Service" },
+                    { 10, "0044", null, true, "Medical Aid" },
+                    { 11, "0010", null, true, "Cellphones and Data" },
+                    { 12, "0086", null, true, "Vehicle Rental" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "TripStatus",
+                columns: new[] { "TripStatusID", "Description", "isActive", "IsApproved", "IsRecommended" },
+                values: new object[,]
+                {
+                    { 1, "Approved", true, true, false },
+                    { 2, "Declined", true, true, false },
+                    { 3, "Recommended", true, false, true },
+                    { 4, "Not Recommended", true, false, true }
                 });
 
             migrationBuilder.InsertData(
@@ -528,7 +552,7 @@ namespace PettyCashPrototype.Migrations
                 {
                     { 1, 4, "Inspectorate", true, "INS" },
                     { 2, 5, "Information Communication Technology", true, "ICT" },
-                    { 3, 3, "Governance", true, "LEG" },
+                    { 3, 3, "Legal", true, "LEG" },
                     { 4, 5, "Human Resources", true, "HRE" }
                 });
 
@@ -650,11 +674,6 @@ namespace PettyCashPrototype.Migrations
                 name: "IX_Requisition_ManagerID",
                 table: "Requisition",
                 column: "ManagerID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Requisition_TripStatusId",
-                table: "Requisition",
-                column: "TripStatusId");
         }
 
         /// <inheritdoc />
@@ -703,7 +722,7 @@ namespace PettyCashPrototype.Migrations
                 name: "Division");
 
             migrationBuilder.DropTable(
-                name: "JobTitles");
+                name: "JobTitle");
 
             migrationBuilder.DropTable(
                 name: "Office");

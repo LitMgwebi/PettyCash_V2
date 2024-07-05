@@ -32,7 +32,7 @@ public partial class PettyCashPrototypeContext : IdentityDbContext<User>
 
     public virtual DbSet<SubAccount> SubAccounts { get; set; }
 
-    public virtual DbSet<TripStatus> TripStatuses { get; set; }
+    public virtual DbSet<Status> Statuses { get; set; }
 
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -112,7 +112,7 @@ public partial class PettyCashPrototypeContext : IdentityDbContext<User>
 
             entity.HasOne(d => d.FinanceApproval).WithMany(p => p.FinanceApprovals)
                 .HasForeignKey(d => d.FinanceApprovalId)
-                .HasConstraintName("FK_Requisition_TripStatus1");
+                .HasConstraintName("FK_Requisition_Status1");
 
             entity.HasOne(d => d.FinanceOfficer).WithMany(p => p.FinanceOfficers)
                 .HasForeignKey(d => d.FinanceOfficerId)
@@ -128,7 +128,7 @@ public partial class PettyCashPrototypeContext : IdentityDbContext<User>
 
             entity.HasOne(d => d.ManagerRecommendation).WithMany(p => p.ManagerRecommendations)
                 .HasForeignKey(d => d.ManagerRecommendationId)
-                .HasConstraintName("FK_Requisition_TripStatus");
+                .HasConstraintName("FK_Requisition_Status");
 
             entity.HasOne(d => d.Manager).WithMany(p => p.Managers)
                 .HasForeignKey(d => d.ManagerId)
@@ -143,11 +143,11 @@ public partial class PettyCashPrototypeContext : IdentityDbContext<User>
             entity.Property(e => e.IsActive).HasColumnName("isActive");
         });
 
-        modelBuilder.Entity<TripStatus>(entity =>
+        modelBuilder.Entity<Status>(entity =>
         {
-            entity.ToTable("TripStatus");
+            entity.ToTable("Status");
 
-            entity.Property(e => e.TripStatusId).HasColumnName("TripStatusID");
+            entity.Property(e => e.StatusId).HasColumnName("StatusID");
             entity.Property(e => e.Description).HasMaxLength(50);
             entity.Property(e => e.IsActive).HasColumnName("isActive");
         });
@@ -161,6 +161,7 @@ public partial class PettyCashPrototypeContext : IdentityDbContext<User>
         modelBuilder.ApplyConfiguration(new SubAccountSeeding());
         modelBuilder.ApplyConfiguration(new MainAccountSeeding());
         modelBuilder.ApplyConfiguration(new RolesSeeding());
+        modelBuilder.ApplyConfiguration(new StatusSeeding());
         modelBuilder.ApplyConfiguration(new JobTitleSeeding());
     }
 }

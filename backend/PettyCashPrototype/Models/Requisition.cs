@@ -44,7 +44,7 @@ public partial class Requisition
     public virtual User? Applicant { get; set; }
 
     [ForeignKey(nameof(FinanceApprovalId))]
-    public virtual TripStatus? FinanceApproval { get; set; }
+    public virtual Status? FinanceApproval { get; set; }
 
     [ForeignKey(nameof(FinanceOfficerId))]
     public virtual User? FinanceOfficer { get; set; }
@@ -58,5 +58,5 @@ public partial class Requisition
     public virtual User? Manager { get; set; }
 
     [ForeignKey(nameof(ManagerRecommendationId))]
-    public virtual TripStatus? ManagerRecommendation { get; set; }
+    public virtual Status? ManagerRecommendation { get; set; }
 }

@@ -782,9 +782,6 @@ namespace PettyCashPrototype.Migrations
                     b.Property<decimal?>("TotalExpenses")
                         .HasColumnType("decimal(18, 2)");
 
-                    b.Property<int?>("TripStatusId")
-                        .HasColumnType("int");
-
                     b.HasKey("RequisitionId");
 
                     b.HasIndex("ApplicantId");
@@ -801,9 +798,69 @@ namespace PettyCashPrototype.Migrations
 
                     b.HasIndex("ManagerRecommendationId");
 
-                    b.HasIndex("TripStatusId");
-
                     b.ToTable("Requisition", (string)null);
+                });
+
+            modelBuilder.Entity("PettyCashPrototype.Models.Status", b =>
+                {
+                    b.Property<int>("StatusId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("StatusID");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("StatusId"));
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit")
+                        .HasColumnName("isActive");
+
+                    b.Property<bool>("IsApproved")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsRecommended")
+                        .HasColumnType("bit");
+
+                    b.HasKey("StatusId");
+
+                    b.ToTable("Status", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            StatusId = 1,
+                            Description = "Approved",
+                            IsActive = true,
+                            IsApproved = true,
+                            IsRecommended = false
+                        },
+                        new
+                        {
+                            StatusId = 2,
+                            Description = "Declined",
+                            IsActive = true,
+                            IsApproved = true,
+                            IsRecommended = false
+                        },
+                        new
+                        {
+                            StatusId = 3,
+                            Description = "Recommended",
+                            IsActive = true,
+                            IsApproved = false,
+                            IsRecommended = true
+                        },
+                        new
+                        {
+                            StatusId = 4,
+                            Description = "Not Recommended",
+                            IsActive = true,
+                            IsApproved = false,
+                            IsRecommended = true
+                        });
                 });
 
             modelBuilder.Entity("PettyCashPrototype.Models.SubAccount", b =>
@@ -919,28 +976,6 @@ namespace PettyCashPrototype.Migrations
                             IsActive = true,
                             Name = "Vehicle Rental"
                         });
-                });
-
-            modelBuilder.Entity("PettyCashPrototype.Models.TripStatus", b =>
-                {
-                    b.Property<int>("TripStatusId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasColumnName("TripStatusID");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TripStatusId"));
-
-                    b.Property<string>("Description")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit")
-                        .HasColumnName("isActive");
-
-                    b.HasKey("TripStatusId");
-
-                    b.ToTable("TripStatus", (string)null);
                 });
 
             modelBuilder.Entity("PettyCashPrototype.Models.User", b =>
@@ -1151,10 +1186,10 @@ namespace PettyCashPrototype.Migrations
                         .IsRequired()
                         .HasConstraintName("FK_Requisition_User");
 
-                    b.HasOne("PettyCashPrototype.Models.TripStatus", "FinanceApproval")
+                    b.HasOne("PettyCashPrototype.Models.Status", "FinanceApproval")
                         .WithMany("FinanceApprovals")
                         .HasForeignKey("FinanceApprovalId")
-                        .HasConstraintName("FK_Requisition_TripStatus1");
+                        .HasConstraintName("FK_Requisition_Status1");
 
                     b.HasOne("PettyCashPrototype.Models.User", "FinanceOfficer")
                         .WithMany("FinanceOfficers")
@@ -1178,14 +1213,10 @@ namespace PettyCashPrototype.Migrations
                         .HasForeignKey("ManagerId")
                         .HasConstraintName("FK_Requisition_User2");
 
-                    b.HasOne("PettyCashPrototype.Models.TripStatus", "ManagerRecommendation")
+                    b.HasOne("PettyCashPrototype.Models.Status", "ManagerRecommendation")
                         .WithMany("ManagerRecommendations")
                         .HasForeignKey("ManagerRecommendationId")
-                        .HasConstraintName("FK_Requisition_TripStatus");
-
-                    b.HasOne("PettyCashPrototype.Models.TripStatus", null)
-                        .WithMany("Statuses")
-                        .HasForeignKey("TripStatusId");
+                        .HasConstraintName("FK_Requisition_Status");
 
                     b.Navigation("Applicant");
 
@@ -1266,18 +1297,16 @@ namespace PettyCashPrototype.Migrations
                     b.Navigation("Glaccounts");
                 });
 
-            modelBuilder.Entity("PettyCashPrototype.Models.SubAccount", b =>
-                {
-                    b.Navigation("Glaccounts");
-                });
-
-            modelBuilder.Entity("PettyCashPrototype.Models.TripStatus", b =>
+            modelBuilder.Entity("PettyCashPrototype.Models.Status", b =>
                 {
                     b.Navigation("FinanceApprovals");
 
                     b.Navigation("ManagerRecommendations");
+                });
 
-                    b.Navigation("Statuses");
+            modelBuilder.Entity("PettyCashPrototype.Models.SubAccount", b =>
+                {
+                    b.Navigation("Glaccounts");
                 });
 
             modelBuilder.Entity("PettyCashPrototype.Models.User", b =>
