@@ -38,6 +38,14 @@ namespace PettyCashPrototype.Seeding.Entites
                     Description = "Human Resources",
                     DepartmentId = 5,
                     IsActive = true,
+                },
+                new Division
+                {
+                    DivisionId = 6,
+                    Name = "FIN",
+                    Description = "Finance",
+                    DepartmentId = 5,
+                    IsActive = true,
                 }
                 );
         }

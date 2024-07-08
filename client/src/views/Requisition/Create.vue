@@ -6,6 +6,10 @@
 			<label>Amount Requested: </label>
 			<input type="text" v-model="requisition.amountRequested" />
 		</div>
+		<div v-if="requisition.amountRequested >= 2000 || glAccount.NeedsMotivation == true">
+			<label>Motivation </label>
+			<input type="text" v-model="requisition.file" required />
+		</div>
 		<div>
 			<label>Description: </label>
 			<textarea type="text" v-model="requisition.description" />
@@ -40,8 +44,9 @@ const reloadPage = () => location.reload()
 const requisition = ref({
 	glaccountId: '',
 	applicantId: '',
-	amountRequested: '',
-	description: ''
+	amountRequested: 0,
+	description: '',
+	file: ''
 })
 const { glAccounts } = getGLAccountsByDepartment()
 

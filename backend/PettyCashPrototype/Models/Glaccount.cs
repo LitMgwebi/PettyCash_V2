@@ -19,6 +19,8 @@ public partial class Glaccount
     public int OfficeId { get; set; }
 
     public bool IsActive { get; set; } = true;
+    
+    public bool NeedsMotivation { get; set; } = true;
 
     public virtual MainAccount? MainAccount { get; set; }
 

@@ -37,7 +37,7 @@ export default createStore({
             } catch (error) {
                 commit('setStatus', error)
             } finally {
-                setTimeout(() => location.reload(), 1500)
+                // setTimeout(() => location.reload(), 1500)
             }
         },
         login: async ({ commit }, userDetails) => {
