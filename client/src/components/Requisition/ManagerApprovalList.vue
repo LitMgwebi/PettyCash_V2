@@ -5,34 +5,27 @@
 			{{ requisition.applicant.fullName }} - {{ requisition.amountRequested }} -
 			{{ requisition.description }}</span
 		>
-		<!-- <span class="dropdown">
-			<select :disabled="statuses.length == 0" v-model="updatedStatus.tripStatusId">
-				<option value="" disabled>Select a sub account</option>
-				<option
-					v-for="statuse in statuses"
-					:value="statuse.subAccountId"
-					:key="subAccount.subAccountId"
-				>
-					{{ subAccount.name }}
+		<span class="dropdown">
+			<select :disabled="statuses.length == 0" v-model="requisition.managerRecommendationId">
+				<option value="" disabled>What is you're verdict</option>
+				<option v-for="status in statuses" :value="status.statusId" :key="status.statusId">
+					{{ status.description }}
 				</option>
 			</select>
-		</span> -->
-		<button @click="requisitionApproval('approve')">Approve</button>
-		<button @click="requisitionApproval('decline')">Decline</button>
+		</span>
+		<button @click="handleSubmit(requisition)">Approve</button>
 	</div>
 </template>
 
 <script setup>
 import { getRequisitionsForManagerApproval } from '@/hooks/requisitionCRUD'
-import { getApprovalStatuses } from '@/hooks/statusCRUD'
+import { getRecommendationStatuses, editManagerRecommendation } from '@/hooks/statusCRUD'
+import { ref } from 'vue'
 
 const { requisitions } = getRequisitionsForManagerApproval()
-const { statuses } = getApprovalStatuses()
+const { statuses } = getRecommendationStatuses()
 
-const updatedStatus = ref({
-	tripStatusId: ''
-})
-const requisitionApproval = (answer) => {
-	console.log(answer)
+const handleSubmit = (requisition) => {
+	editManagerRecommendation(requisition)
 }
 </script>

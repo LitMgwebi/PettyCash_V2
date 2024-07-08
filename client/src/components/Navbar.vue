@@ -8,7 +8,7 @@
 			</span>
 			<span v-else>
 				<router-link to="/dashboard">Dashboard</router-link> |
-				<span v-if="user.role == 'Super_User'">
+				<span v-if="user.role == 'Finance_Admin'">
 					<router-link to="/purposes">Purposes</router-link> |
 					<router-link to="/divisions">Divisions</router-link> |
 					<router-link to="/sub_accounts">Sub-Accounts</router-link> |

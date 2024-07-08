@@ -5,7 +5,7 @@ namespace PettyCashPrototype.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    [Authorize(Roles = "Finance_Admin")]
     public class GLAccountsController : ControllerBase
     {
         private readonly IGLAccount _glAccount;
@@ -17,6 +17,7 @@ namespace PettyCashPrototype.Controllers
         #region GET
 
         [HttpGet, Route("index")]
+        [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<Glaccount>>> Index()
         {
             try
@@ -43,6 +44,7 @@ namespace PettyCashPrototype.Controllers
         }
 
         [HttpGet, Route("index_department")]
+        [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<Glaccount>>> IndexByDepartment()
         {
             try

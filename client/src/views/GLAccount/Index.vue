@@ -91,6 +91,17 @@
 						</option>
 					</select>
 				</div>
+				<div class="dropdown">
+					<label>Does this account need Motivation?: </label>
+					<select
+						:disabled="newGLAccount.length != null"
+						v-model="newGLAccount.needsMotivation"
+					>
+						<option value="" disabled>Please select</option>
+						<option :value="true">Yes</option>
+						<option :value="false">No</option>
+					</select>
+				</div>
 				<div class="submit">
 					<button>Add</button>
 					<button @click="reloadPage">Cancel</button>
@@ -149,7 +160,7 @@
 							:value="division.divisionId"
 							:key="division.divisionId"
 						>
-							{{ division.name }}
+							{{ division.description }}
 						</option>
 					</select>
 				</div>
@@ -177,6 +188,17 @@
 						>
 							{{ office.description }}
 						</option>
+					</select>
+				</div>
+				<div class="dropdown">
+					<label>Does this account need Motivation?: </label>
+					<select
+						:disabled="updatedGLAccount.length != null"
+						v-model="updatedGLAccount.needsMotivation"
+					>
+						<option value="" disabled>Please select</option>
+						<option :value="true">Yes</option>
+						<option :value="false">No</option>
 					</select>
 				</div>
 				<div class="submit">
@@ -213,7 +235,8 @@ const newGLAccount = ref({
 	subAccountId: '',
 	divisionId: '',
 	purposeId: '',
-	officeId: ''
+	officeId: '',
+	needsMotivation: false
 })
 const addSubmit = () => addGLAccount(newGLAccount.value)
 
@@ -227,7 +250,8 @@ const updatedGLAccount = ref({
 	subAccountId: '',
 	divisionId: '',
 	purposeId: '',
-	officeId: ''
+	officeId: '',
+	needsMotivation: ''
 })
 const populateEdit = (glAccount) => (updatedGLAccount.value = glAccount)
 const editSubmit = () => editGLAccount(updatedGLAccount.value)

@@ -6,7 +6,7 @@
 			<label>Amount Requested: </label>
 			<input type="text" v-model="requisition.amountRequested" />
 		</div>
-		<div v-if="requisition.amountRequested >= 2000 || glAccount.NeedsMotivation == true">
+		<div v-if="requisition.amountRequested >= 2000">
 			<label>Motivation </label>
 			<input type="text" v-model="requisition.file" required />
 		</div>
@@ -46,9 +46,10 @@ const requisition = ref({
 	applicantId: '',
 	amountRequested: 0,
 	description: '',
-	file: ''
+	stage: ''
 })
 const { glAccounts } = getGLAccountsByDepartment()
+console.log(glAccounts)
 
 function handleSubmit() {
 	addRequisition(requisition.value)

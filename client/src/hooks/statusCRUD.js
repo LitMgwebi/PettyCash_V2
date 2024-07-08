@@ -16,7 +16,7 @@ export function getApprovalStatuses() {
     return { statuses }
 }
 
-export function getApprovalRecommendations() {
+export function getRecommendationStatuses() {
     store.commit('setLoading')
     const statuses = ref([])
     axios({
@@ -28,4 +28,16 @@ export function getApprovalRecommendations() {
         .finally(() => store.commit('doneLoading'))
 
     return { statuses }
+}
+
+export function editManagerRecommendation(requisition) {
+    store.commit('setLoading')
+    axios({
+        method: 'PUT',
+        url: 'Requisitions/manager_recommendation',
+        data: requisition
+    })
+        .then((res) => store.dispatch('setStatus', res.data.message))
+        .catch((error) => store.dispatch('setStatus', error.response.data))
+        .finally(() => store.commit('doneLoading'))
 }

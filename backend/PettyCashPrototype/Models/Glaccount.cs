@@ -20,7 +20,7 @@ public partial class Glaccount
 
     public bool IsActive { get; set; } = true;
     
-    public bool NeedsMotivation { get; set; } = true;
+    public bool NeedsMotivation { get; set; }
 
     public virtual MainAccount? MainAccount { get; set; }
 

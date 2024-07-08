@@ -74,6 +74,7 @@ namespace PettyCashPrototype.Controllers
                 var identity = (ClaimsIdentity)User.Identity!;
                 var userId = identity.Claims.Where(c => c.Type == ClaimTypes.Sid).Select(c => c.Value).FirstOrDefault()!;
 
+                requisition.Stage = "Requisiton has been sent to your Line Manager, currently awaiting manager approval";
                 requisition.ApplicantId = userId;
                 requisition.StartDate = DateTime.UtcNow;
                 await _requisition.Create(requisition);
@@ -91,6 +92,23 @@ namespace PettyCashPrototype.Controllers
         {
             try
             {
+                _requisition.Edit(requisition);
+                return Ok(new { message = $"The requisition has been edited." });
+            }
+            catch (Exception ex) { return BadRequest(ex.Message); }
+        }
+
+        [HttpPut, Route("manager_recommendation")]
+        public ActionResult ManagerRecommendation(Requisition requisition)
+        {
+            try
+            {
+                var identity = (ClaimsIdentity)User.Identity!;
+                var userId = identity.Claims.Where(c => c.Type == ClaimTypes.Sid).Select(c => c.Value).FirstOrDefault()!;
+
+                requisition.ManagerId = userId;
+                requisition.ManagerRecommendationDate = DateTime.UtcNow;
+                requisition.Stage = "Line manager has approved this requisition. Awaiting Finance Approval.";
                 _requisition.Edit(requisition);
                 return Ok(new { message = $"The requisition has been edited." });
             }
