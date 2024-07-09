@@ -4,6 +4,7 @@
 		<span>
 			{{ requisition.description }} - {{ requisition.amountRequested }} -
 			{{ requisition.stage }}
+			<span v-if="requisition.comment">{{ requisition.comment }}</span>
 		</span>
 		<button @click="populateEdit(requistion)">Edit</button>
 		<button @click="deleteRecord(requistion)">Delete</button>

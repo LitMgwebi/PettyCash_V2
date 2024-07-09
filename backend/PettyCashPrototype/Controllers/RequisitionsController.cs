@@ -4,10 +4,15 @@ namespace PettyCashPrototype.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class RequisitionsController : ControllerBase
     {
         private IRequisition _requisition;
-        public RequisitionsController(IRequisition requisition) { _requisition = requisition; }
+        public RequisitionsController(IRequisition requisition) 
+        { 
+            _requisition = requisition; 
+            
+        }
 
         #region GET
 
@@ -24,7 +29,7 @@ namespace PettyCashPrototype.Controllers
         }
 
         [HttpGet, Route("manager_approval")]
-        
+
         public async Task<ActionResult<IEnumerable<Requisition>>> IndexForManager()
         {
             try
@@ -59,7 +64,8 @@ namespace PettyCashPrototype.Controllers
             {
                 Requisition requisition = await _requisition.GetOne(id);
                 return Ok(requisition);
-            } catch (Exception ex) { return BadRequest(ex.Message); }
+            }
+            catch (Exception ex) { return BadRequest(ex.Message); }
         }
 
         #endregion
@@ -108,9 +114,14 @@ namespace PettyCashPrototype.Controllers
 
                 requisition.ManagerId = userId;
                 requisition.ManagerRecommendationDate = DateTime.UtcNow;
-                requisition.Stage = "Line manager has approved this requisition. Awaiting Finance Approval.";
+
+                if (requisition.ManagerRecommendationId == 4)
+                    requisition.Stage = "Line manager has not recommended this requisition.";
+                else if (requisition.ManagerRecommendationId == 3)
+                    requisition.Stage = "Line manager has recommended this requisition. Awaiting Finance Approval.";
+
                 _requisition.Edit(requisition);
-                return Ok(new { message = $"The requisition has been edited." });
+                return Ok(new { message = $"Your recommendation has been added to the system." });
             }
             catch (Exception ex) { return BadRequest(ex.Message); }
         }

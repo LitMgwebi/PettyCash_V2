@@ -21,7 +21,7 @@ export function getGLAccountsByDepartment() {
     const glAccounts = ref([])
     axios({
         method: 'GET',
-        url: 'GLAccounts/index_department'
+        url: 'GLAccounts/index_office'
     })
         .then((res) => (glAccounts.value = res.data))
         .catch((error) => store.dispatch('setStatus', error.response.data))

@@ -13,6 +13,7 @@ global using PettyCashPrototype.Services.OfficeService;
 global using PettyCashPrototype.Services.StatusService;
 global using PettyCashPrototype.Services.UserService;
 global using PettyCashPrototype.Services.AuthService;
+global using Microsoft.AspNetCore.Authorization;
 global using Microsoft.AspNetCore.Identity;
 global using Microsoft.EntityFrameworkCore;
 global using PettyCashPrototype.Models;

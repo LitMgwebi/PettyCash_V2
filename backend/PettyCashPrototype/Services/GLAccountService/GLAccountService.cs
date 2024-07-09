@@ -4,11 +4,12 @@
     {
         private PettyCashPrototypeContext _db;
         private readonly IDivision _department;
+        private readonly IUser _user;
         private readonly IMainAccount _mainAccount;
         private readonly ISubAccount _subAccount;
         private readonly IPurpose _purpose;
         private readonly IOffice _office;
-        public GLAccountService(PettyCashPrototypeContext db, IDivision department, IMainAccount mainAccount, ISubAccount subAccount, IPurpose purpose, IOffice office)
+        public GLAccountService(PettyCashPrototypeContext db, IDivision department, IMainAccount mainAccount, ISubAccount subAccount, IPurpose purpose, IOffice office, IUser user)
         {
             _db = db;
             _department = department;
@@ -16,6 +17,7 @@
             _subAccount = subAccount;
             _purpose = purpose;
             _office = office;
+            _user = user;
         }
 
         public async Task<IEnumerable<Glaccount>> GetAll()
@@ -33,12 +35,34 @@
             } catch { throw; }
         }
 
-        public async Task<IEnumerable<Glaccount>> GetAllbyDepartment(int divisionId)
+        public async Task<IEnumerable<Glaccount>> GetAllbyOfficeAndDivision(string userId)
         {
             try
             {
+                User user = await _user.GetUserById(userId);
+
                 IEnumerable<Glaccount> glAccounts = await _db.Glaccounts
-                    .Where(d =>  d.DivisionId == divisionId)
+                    .Where(d =>  d.DivisionId == user.DivisionId)
+                    .Where(o => o.OfficeId == user.OfficeId)
+                    .Where(x => x.IsActive == true)
+                    .ToListAsync();
+
+                if (glAccounts == null)
+                    throw new Exception("System could not find any GL accounts in your department.");
+
+                return glAccounts;
+            }
+            catch { throw; }
+        }
+        
+        public async Task<IEnumerable<Glaccount>> GetAllbyDivision(string userId)
+        {
+            try
+            {
+                User user = await _user.GetUserById(userId);
+
+                IEnumerable<Glaccount> glAccounts = await _db.Glaccounts
+                    .Where(d =>  d.DivisionId == user.DivisionId)
                     .Where(x => x.IsActive == true)
                     .ToListAsync();
 
@@ -82,6 +106,12 @@
                 glAccount.Description = $"{glAccount.MainAccount.AccountNumber}/{glAccount.SubAccount.AccountNumber}/{glAccount.Division.Name}/{glAccount.Purpose.Name}/{glAccount.Office.Name}";
 
                 glAccount.Name = $"{glAccount.Division.Description} {glAccount.MainAccount.Name} ({glAccount.SubAccount.Name})";
+
+                IEnumerable<Glaccount> glAccounts = await GetAll();
+
+                if(glAccounts.Select(x => x.Name).ToList().Contains(glAccount.Name))
+                    throw new DbUpdateException($"System already contains GL Account with the name: {glAccount.Name}");
+
                 _db.Glaccounts.Add(glAccount);
                 int result = _db.SaveChanges();
 

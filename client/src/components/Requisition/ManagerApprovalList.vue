@@ -13,7 +13,11 @@
 				</option>
 			</select>
 		</span>
-		<button @click="handleSubmit(requisition)">Approve</button>
+		<span v-if="requisition.managerRecommendationId == 4">
+			<label>Would you like to leave a comment?: </label>
+			<textarea v-model="requisition.comment" />
+		</span>
+		<button @click="handleSubmit(requisition)">Submit</button>
 	</div>
 </template>
 

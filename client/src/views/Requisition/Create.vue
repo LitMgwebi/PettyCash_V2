@@ -23,7 +23,7 @@
 					:value="glAccount.glaccountId"
 					:key="glAccount.glaccountId"
 				>
-					{{ glAccount.description }}
+					{{ glAccount.name }}
 				</option>
 			</select>
 		</div>

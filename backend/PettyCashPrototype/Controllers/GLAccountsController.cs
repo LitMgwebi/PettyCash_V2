@@ -30,6 +30,40 @@ namespace PettyCashPrototype.Controllers
             }
         }
 
+        [HttpGet, Route("index_division")]
+        [AllowAnonymous]
+        public async Task<ActionResult<IEnumerable<Glaccount>>> IndexByDivision()
+        {
+            try
+            {
+                var identity = (ClaimsIdentity)User.Identity!;
+                var userId = identity.Claims.Where(c => c.Type == ClaimTypes.Sid).Select(c => c.Value).FirstOrDefault()!;
+                IEnumerable<Glaccount> glaccounts = await _glAccount.GetAllbyDivision(userId);
+                return Ok(glaccounts);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpGet, Route("index_office")]
+        [AllowAnonymous]
+        public async Task<ActionResult<IEnumerable<Glaccount>>> IndexByOfficeAndDivision()
+        {
+            try
+            {
+                var identity = (ClaimsIdentity)User.Identity!;
+                var userId = identity.Claims.Where(c => c.Type == ClaimTypes.Sid).Select(c => c.Value).FirstOrDefault()!;
+                IEnumerable<Glaccount> glaccounts = await _glAccount.GetAllbyOfficeAndDivision(userId);
+                return Ok(glaccounts);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
         [HttpGet, Route("details")]
         public async Task<ActionResult<Glaccount>> Details(int id)
         {
@@ -38,23 +72,6 @@ namespace PettyCashPrototype.Controllers
                 Glaccount glAccount = await _glAccount.GetOne(id);
                 return Ok(glAccount);
             } catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
-        }
-
-        [HttpGet, Route("index_department")]
-        [AllowAnonymous]
-        public async Task<ActionResult<IEnumerable<Glaccount>>> IndexByDepartment()
-        {
-            try
-            {
-                var identity = (ClaimsIdentity)User.Identity!;
-                var divisionId = identity.Claims.Where(c => c.Type == "Division").Select(c => c.Value).FirstOrDefault()!;
-                IEnumerable<Glaccount> glaccounts = await _glAccount.GetAllbyDepartment(int.Parse(divisionId));
-                return Ok(glaccounts);
-            }
-            catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
