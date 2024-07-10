@@ -21,7 +21,7 @@ export function getRequisitionsByApplicant() {
     const requisitions = ref([])
     axios({
         method: 'GET',
-        url: 'Requisitions/applicant_forms'
+        url: 'Requisitions/applicant_index'
     })
         .then((res) => (requisitions.value = res.data))
         .catch((error) => store.dispatch('setStatus', error.response.data))
@@ -35,7 +35,21 @@ export function getRequisitionsForManagerApproval() {
     const requisitions = ref([])
     axios({
         method: 'GET',
-        url: 'Requisitions/manager_approval'
+        url: 'Requisitions/manager_index'
+    })
+        .then((res) => (requisitions.value = res.data))
+        .catch((error) => store.dispatch('setStatus', error.response.data))
+        .finally(() => store.commit('doneLoading'))
+
+    return { requisitions }
+}
+
+export function getRequisitionsForFinanceApproval() {
+    store.commit('setLoading')
+    const requisitions = ref([])
+    axios({
+        method: 'GET',
+        url: 'Requisitions/finance_index'
     })
         .then((res) => (requisitions.value = res.data))
         .catch((error) => store.dispatch('setStatus', error.response.data))

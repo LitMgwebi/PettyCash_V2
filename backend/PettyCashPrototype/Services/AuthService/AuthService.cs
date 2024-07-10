@@ -40,6 +40,7 @@ namespace PettyCashPrototype.Services.AuthService
                     claims.Add(new Claim(ClaimTypes.Email, user.Email!));
                     claims.Add(new Claim(ClaimTypes.Name, user.FullName));
                     claims.Add(new Claim("Division", user.DivisionId.ToString()));
+                    claims.Add(new Claim("JobTitle", user.JobTitleId.ToString()));
                 }
                 else
                     throw new InvalidOperationException("You have not been authorized for access by the system's administration. Please contact system administration to gain access.");

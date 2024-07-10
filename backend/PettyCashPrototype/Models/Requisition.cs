@@ -40,7 +40,9 @@ public partial class Requisition
 
     public string Stage { get; set; } = null!;
 
-    public string? Comment { get; set; }
+    public string? ManagerComment { get; set; }
+
+    public string? FinanceComment { get; set; }
 
     public bool IsActive { get; set; } = true;
 

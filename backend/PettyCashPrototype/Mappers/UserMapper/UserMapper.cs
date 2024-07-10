@@ -6,6 +6,6 @@
         public string FullName { get; set; } = null!;
         public string Role { get; set; } = null!;
         public string Email { get; set; } = null!;
-        public string DepartmentId { get; set; } = null!;
+        public string DivisionId { get; set; } = null!;
     }
 }

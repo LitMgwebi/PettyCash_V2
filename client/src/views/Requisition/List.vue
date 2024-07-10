@@ -11,11 +11,16 @@
 	<div v-if="user.role == 'Manager'">
 		<ManagerApprovalList />
 	</div>
+
+	<div v-if="user.divisionId == 6">
+		<FinanceApprovalList />
+	</div>
 </template>
 
 <script setup>
 import ApplicantList from '@/components/Requisition/ApplicantList.vue'
 import ManagerApprovalList from '@/components/Requisition/ManagerApprovalList.vue'
+import FinanceApprovalList from '@/components/Requisition/FinanceApprovalList.vue'
 import { inject } from 'vue'
 
 const user = inject('User')

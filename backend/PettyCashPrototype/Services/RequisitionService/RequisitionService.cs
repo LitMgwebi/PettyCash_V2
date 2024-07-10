@@ -1,14 +1,18 @@
-﻿namespace PettyCashPrototype.Services.RequisitionService
+﻿using PettyCashPrototype.Services.ApprovalStuctureServices.FinanceApprovalService;
+
+namespace PettyCashPrototype.Services.RequisitionService
 {
     public class RequisitionService: IRequisition
     {
         private PettyCashPrototypeContext _db;
         private readonly IUser _user;
         private readonly IGLAccount _glAccount;
-        public RequisitionService(PettyCashPrototypeContext db, IUser user, IGLAccount gLAccount) { 
+        private readonly IJobTitle _jobTitle;
+        public RequisitionService(PettyCashPrototypeContext db, IUser user, IGLAccount gLAccount, IJobTitle jobTitle) { 
             _db = db;
             _user = user;
             _glAccount = gLAccount;
+            _jobTitle = jobTitle;
         }
 
         public async Task<IEnumerable<Requisition>> GetAll()
@@ -35,6 +39,33 @@
                     .Where(d => d.Applicant!.DivisionId == divisionId)
                     .Where(a => a.ManagerRecommendation == null && a.FinanceApproval == null)
                     .ToListAsync();
+
+                if (requisitions == null) throw new Exception("System could not find any requisitions.");
+                return requisitions;
+            }
+            catch { throw; }
+        }
+
+        public async Task<IEnumerable<Requisition>> GetAllForFinanceApproval(int divisionId, int jobTitleId)
+        {
+            try
+            {
+                JobTitle jobTitle = await _jobTitle.GetOne(jobTitleId);
+                IEnumerable<Requisition> requisitions = new List<Requisition>();
+                if (divisionId == 6)
+                {
+
+                    IFinanceApproval Deputy = new Deputy(_db);
+                    IFinanceApproval Manager = new Manager(_db);
+                    IFinanceApproval CFO = new CFO(_db);
+
+                    CFO.SetNext(Manager);
+                    Manager.SetNext(Deputy);
+
+                    requisitions = await CFO.GetRequisitions(jobTitle.Description);
+                }
+                else
+                    throw new Exception("You have to be in the Finance Department to approve of this requisitions.");
 
                 if (requisitions == null) throw new Exception("System could not find any requisitions.");
                 return requisitions;
