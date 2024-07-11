@@ -1,89 +1,46 @@
 ﻿using PettyCashPrototype.Services.ApprovalStuctureServices.FinanceApprovalService;
+using PettyCashPrototype.Services.RequisitionService.IndexHandler;
 
 namespace PettyCashPrototype.Services.RequisitionService
 {
-    public class RequisitionService: IRequisition
+    public class RequisitionService : IRequisition
     {
         private PettyCashPrototypeContext _db;
         private readonly IUser _user;
         private readonly IGLAccount _glAccount;
         private readonly IJobTitle _jobTitle;
-        public RequisitionService(PettyCashPrototypeContext db, IUser user, IGLAccount gLAccount, IJobTitle jobTitle) { 
+        public RequisitionService(PettyCashPrototypeContext db, IUser user, IGLAccount gLAccount, IJobTitle jobTitle)
+        {
             _db = db;
             _user = user;
             _glAccount = gLAccount;
             _jobTitle = jobTitle;
         }
 
-        public async Task<IEnumerable<Requisition>> GetAll()
+        public async Task<IEnumerable<Requisition>> GetAll(string purpose, int divisionId, int jobTitleId, string userId)
         {
             try
             {
-                IEnumerable<Requisition> requisitions = await _db.Requisitions
-                    .Where(a => a.IsActive == true)
-                    .ToListAsync();
-
-                if (requisitions == null) throw new Exception("System could not find any requisitions.");
-                return requisitions;
-            }
-            catch { throw; }
-        }
-
-        public async Task<IEnumerable<Requisition>> GetAllForManagerApproval(int divisionId)
-        {
-            try
-            {
-                IEnumerable<Requisition> requisitions = await _db.Requisitions
-                    .Include(a => a.Applicant)
-                    .Where(a => a.IsActive == true)
-                    .Where(d => d.Applicant!.DivisionId == divisionId)
-                    .Where(a => a.ManagerRecommendation == null && a.FinanceApproval == null)
-                    .ToListAsync();
-
-                if (requisitions == null) throw new Exception("System could not find any requisitions.");
-                return requisitions;
-            }
-            catch { throw; }
-        }
-
-        public async Task<IEnumerable<Requisition>> GetAllForFinanceApproval(int divisionId, int jobTitleId)
-        {
-            try
-            {
-                JobTitle jobTitle = await _jobTitle.GetOne(jobTitleId);
+                GetRequisitionsHandler indexHandler = new GetRequisitionsHandler();
                 IEnumerable<Requisition> requisitions = new List<Requisition>();
-                if (divisionId == 6)
+
+                if (purpose == "all")
                 {
-
-                    IFinanceApproval Deputy = new Deputy(_db);
-                    IFinanceApproval Manager = new Manager(_db);
-                    IFinanceApproval CFO = new CFO(_db);
-
-                    CFO.SetNext(Manager);
-                    Manager.SetNext(Deputy);
-
-                    requisitions = await CFO.GetRequisitions(jobTitle.Description);
+                    indexHandler.setState(new GetAllState());
+                    requisitions = await indexHandler.request(_db);
+                } else if (purpose == "applicant") 
+                {
+                    indexHandler.setState(new GetForApplicantState());
+                    requisitions = await indexHandler.request(_db, userId: userId);
+                } else if (purpose == "manager")
+                {
+                    indexHandler.setState(new GetForRecommendationState());
+                    requisitions = await indexHandler.request(_db, divisionId: divisionId);
+                } else if(purpose == "finance")
+                {
+                    indexHandler.setState(new GetForApprovalState());
+                    requisitions = await indexHandler.request(_db, jobTitleId: jobTitleId, divisionId: divisionId);
                 }
-                else
-                    throw new Exception("You have to be in the Finance Department to approve of this requisitions.");
-
-                if (requisitions == null) throw new Exception("System could not find any requisitions.");
-                return requisitions;
-            }
-            catch { throw; }
-        }
-
-        public async Task<IEnumerable<Requisition>> GetByApplicant(string id)
-        {
-            try
-            {
-                IEnumerable<Requisition> requisitions = await _db.Requisitions
-                    .Where(a => a.ApplicantId == id)
-                    .Include(a => a.Applicant)
-                    .Where(a => a.IsActive == true)
-                    .ToListAsync();
-
-                if (requisitions == null) throw new Exception("System could not find any of your requisition forms.");
                 return requisitions;
             }
             catch { throw; }
@@ -93,7 +50,7 @@ namespace PettyCashPrototype.Services.RequisitionService
         {
             try
             {
-                Requisition requisition= await _db.Requisitions
+                Requisition requisition = await _db.Requisitions
                     .Where(a => a.IsActive == true)
                     .Include(z => z.Applicant)
                     .SingleAsync(i => i.RequisitionId == id);

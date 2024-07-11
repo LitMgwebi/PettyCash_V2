@@ -2,10 +2,7 @@
 {
     public interface IRequisition
     {
-        public Task<IEnumerable<Requisition>> GetAll();
-        public Task<IEnumerable<Requisition>> GetAllForManagerApproval(int divisionId);
-        public Task<IEnumerable<Requisition>> GetAllForFinanceApproval(int divisionId, int jobTitleId);
-        public Task<IEnumerable<Requisition>> GetByApplicant(string id);
+        public Task<IEnumerable<Requisition>> GetAll(string purpose, int divisionId, int jobTitleId, string userId);
         public Task<Requisition> GetOne(int id);
         public Task Create(Requisition requisition);
         public void Edit(Requisition requisition);

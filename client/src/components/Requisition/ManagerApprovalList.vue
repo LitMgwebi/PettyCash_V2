@@ -22,11 +22,11 @@
 </template>
 
 <script setup>
-import { getRequisitionsForManagerApproval, editRequisition } from '@/hooks/requisitionCRUD'
+import { getRequisitions, editRequisition } from '@/hooks/requisitionCRUD'
 import { getRecommendationStatuses } from '@/hooks/statusCRUD'
 import { ref } from 'vue'
 
-const { requisitions } = getRequisitionsForManagerApproval()
+const { requisitions } = getRequisitions('manager')
 const { statuses } = getRecommendationStatuses()
 
 const handleSubmit = (requisition) => {

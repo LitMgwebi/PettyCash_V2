@@ -2,12 +2,15 @@ import store from '@/store/store.js'
 import axios from 'axios'
 import { ref } from 'vue'
 
-export function getRequisitions() {
+export function getRequisitions(purpose) {
     store.commit('setLoading')
     const requisitions = ref([])
     axios({
         method: 'GET',
-        url: 'Requisitions/index'
+        url: 'Requisitions/index',
+        params: {
+            purpose: purpose
+        }
     })
         .then((res) => (requisitions.value = res.data))
         .catch((error) => store.dispatch('setStatus', error.response.data))

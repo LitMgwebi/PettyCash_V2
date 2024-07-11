@@ -5,7 +5,7 @@ namespace PettyCashPrototype.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    //[Authorize]
     public class RequisitionsController : ControllerBase
     {
         private IRequisition _requisition;
@@ -18,60 +18,22 @@ namespace PettyCashPrototype.Controllers
         #region GET
 
         [HttpGet, Route("index")]
-        public async Task<ActionResult<IEnumerable<Requisition>>> Index()
-        {
-            try
-            {
-                IEnumerable<Requisition> requisitions = await _requisition.GetAll();
-
-                return Ok(requisitions);
-            }
-            catch (Exception ex) { return BadRequest(ex.Message); }
-        }
-
-        [HttpGet, Route("manager_index")]
-        public async Task<ActionResult<IEnumerable<Requisition>>> IndexForManager()
+        public async Task<ActionResult<IEnumerable<Requisition>>> Index(string purpose)
         {
             try
             {
                 var identity = (ClaimsIdentity)User.Identity!;
-                var divisionId = identity.Claims.Where(c => c.Type == "Division").Select(c => c.Value).FirstOrDefault()!;
-                IEnumerable<Requisition> requisitions = await _requisition.GetAllForManagerApproval(int.Parse(divisionId));
-
-                return Ok(requisitions);
-            }
-            catch (Exception ex) { return BadRequest(ex.Message); }
-        }
-
-        [HttpGet, Route("finance_index")]
-        public async Task<ActionResult<IEnumerable<Requisition>>> IndexForFinance()
-        {
-            try
-            {
-                var identity = (ClaimsIdentity)User.Identity!;
-
                 var divisionId = identity.Claims.Where(c => c.Type == "Division").Select(c => c.Value).FirstOrDefault()!;
                 var jobTitleId = identity.Claims.Where(c => c.Type == "JobTitle").Select(c => c.Value).FirstOrDefault()!;
-                IEnumerable<Requisition> requisitions = await _requisition.GetAllForFinanceApproval(int.Parse(divisionId), int.Parse(jobTitleId));
-
-                return Ok(requisitions);
-            }
-            catch (Exception ex) { return BadRequest(ex.Message); }
-        }
-
-        [HttpGet, Route("applicant_index")]
-        public async Task<ActionResult<IEnumerable<Requisition>>> ApplicantForms()
-        {
-            try
-            {
-                var identity = (ClaimsIdentity)User.Identity!;
                 var userId = identity.Claims.Where(c => c.Type == ClaimTypes.Sid).Select(c => c.Value).FirstOrDefault()!;
-                IEnumerable<Requisition> requisitions = await _requisition.GetByApplicant(userId);
+
+                IEnumerable<Requisition> requisitions = await _requisition.GetAll(purpose, int.Parse(divisionId), int.Parse(jobTitleId), userId);
 
                 return Ok(requisitions);
             }
             catch (Exception ex) { return BadRequest(ex.Message); }
         }
+
 
         [HttpGet, Route("details")]
         public async Task<ActionResult<Requisition>> Details(int id)

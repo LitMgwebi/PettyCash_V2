@@ -12,8 +12,8 @@
 </template>
 
 <script setup>
-import { getRequisitionsByApplicant } from '@/hooks/requisitionCRUD'
+import { getRequisitions } from '@/hooks/requisitionCRUD'
 import { inject } from 'vue'
 
-const { requisitions } = getRequisitionsByApplicant()
+const { requisitions } = getRequisitions('applicant')
 </script>
