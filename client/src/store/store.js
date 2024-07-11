@@ -30,9 +30,9 @@ export default createStore({
         setStatus: ({ commit }, status) => {
             try {
                 commit('setStatus', status)
-                setTimeout(() => {
-                    commit('setStatus', null)
-                }, 2000)
+                // setTimeout(() => {
+                //     commit('setStatus', null)
+                // }, 2000)
                 // location.reload()
             } catch (error) {
                 commit('setStatus', error)

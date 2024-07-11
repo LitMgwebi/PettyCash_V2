@@ -8,6 +8,7 @@
 			</span>
 			<span v-else>
 				<router-link to="/dashboard">Dashboard</router-link> |
+				<router-link to="/requisitions">Petty Cash Requests</router-link> |
 				<span v-if="user.role == 'Finance_Admin'">
 					<router-link to="/purposes">Purposes</router-link> |
 					<router-link to="/divisions">Divisions</router-link> |
@@ -15,12 +16,6 @@
 					<router-link to="/main_accounts">Main Accounts</router-link> |
 					<router-link to="/gl_accounts">GL Accounts</router-link> |
 					<router-link to="/offices">Offices</router-link> |
-				</span>
-				<span v-else-if="user.role == 'Employee'">
-					<router-link to="/requisitions">Petty Cash Requests</router-link> |
-				</span>
-				<span v-else-if="user.role == 'Manager'">
-					<router-link to="/requisitions">Petty Cash Requests</router-link> |
 				</span>
 				<a href="#" @click.prevent="onLogout">Logout</a>
 			</span>

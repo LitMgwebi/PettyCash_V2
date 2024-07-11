@@ -1,4 +1,4 @@
-﻿using PettyCashPrototype.Models;
+﻿using PettyCashPrototype.Services.RequisitionService.EditHandler;
 using System.Security.Claims;
 
 namespace PettyCashPrototype.Controllers
@@ -110,56 +110,32 @@ namespace PettyCashPrototype.Controllers
         #region PUT
 
         [HttpPut, Route("edit")]
-        public ActionResult Edit(Requisition requisition)
-        {
-            try
-            {
-                _requisition.Edit(requisition);
-                return Ok(new { message = $"The requisition has been edited." });
-            }
-            catch (Exception ex) { return BadRequest(ex.Message); }
-        }
-
-        [HttpPut, Route("manager_recommendation")]
-        public ActionResult ManagerRecommendation(Requisition requisition)
+        public ActionResult Edit(RequisitionModelForEdit requisitionModel)
         {
             try
             {
                 var identity = (ClaimsIdentity)User.Identity!;
                 var userId = identity.Claims.Where(c => c.Type == ClaimTypes.Sid).Select(c => c.Value).FirstOrDefault()!;
+                string messageResponse = "";
 
-                requisition.ManagerId = userId;
-                requisition.ManagerRecommendationDate = DateTime.UtcNow;
+                EditRequisitionHandler editRequisition = new EditRequisitionHandler();
 
-                if (requisition.ManagerRecommendationId == 4)
-                    requisition.Stage = "Line manager has not recommended this requisition.";
-                else if (requisition.ManagerRecommendationId == 3)
-                    requisition.Stage = "Line manager has recommended this requisition. Awaiting Finance Approval.";
-
-                _requisition.Edit(requisition);
-                return Ok(new { message = $"Your recommendation has been added to the system." });
-            }
-            catch (Exception ex) { return BadRequest(ex.Message); }
-        }
-
-        [HttpPut, Route("finance_approval")]
-        public ActionResult FinanceApproval(Requisition requisition)
-        {
-            try
-            {
-                var identity = (ClaimsIdentity)User.Identity!;
-                var userId = identity.Claims.Where(c => c.Type == ClaimTypes.Sid).Select(c => c.Value).FirstOrDefault()!;
-
-                requisition.FinanceOfficerId = userId;
-                requisition.FinanceApprovalDate = DateTime.UtcNow;
-
-                if (requisition.ManagerRecommendationId == 1)
-                    requisition.Stage = "Finance has approved of this requisition.";
-                else if (requisition.ManagerRecommendationId == 2)
-                    requisition.Stage = "Finance has declined of this requisition";
-
-                _requisition.Edit(requisition);
-                return Ok(new { message = $"Your approval has been recorded by the system." });
+                if (requisitionModel.purpose == "manager")
+                {
+                    editRequisition.setState(new ManagerRecommendationState());
+                    messageResponse = editRequisition.request(_requisition, requisitionModel.Requisition, userId);
+                }
+                else if (requisitionModel.purpose == "finance")
+                {
+                    editRequisition.setState(new FinanceApprovalState());
+                    messageResponse = editRequisition.request(_requisition, requisitionModel.Requisition, userId);
+                }
+                else if (requisitionModel.purpose == "edit")
+                {
+                    editRequisition.setState(new WholeRequisitionState());
+                    messageResponse = editRequisition.request(_requisition, requisitionModel.Requisition);
+                }
+                return Ok(new { message = messageResponse });
             }
             catch (Exception ex) { return BadRequest(ex.Message); }
         }

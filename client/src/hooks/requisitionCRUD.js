@@ -70,12 +70,16 @@ export function addRequisition(requisition) {
         .finally(() => store.commit('doneLoading'))
 }
 
-export function editRequisition(requisition) {
+export function editRequisition(requisition, purpose) {
     store.commit('setLoading')
+    console.log({ requisition: requisition, purpose: purpose })
     axios({
         method: 'PUT',
-        url: 'Requisition/edit',
-        data: requisition
+        url: 'Requisitions/edit',
+        data: {
+            requisition: requisition,
+            purpose: purpose
+        }
     })
         .then((res) => store.dispatch('setStatus', res.data.message))
         .catch((error) => store.dispatch('setStatus', error.response.data))

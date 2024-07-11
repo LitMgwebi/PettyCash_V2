@@ -15,21 +15,21 @@
 		</span>
 		<span v-if="requisition.managerRecommendationId == 4">
 			<label>Would you like to leave a comment?: </label>
-			<textarea v-model="requisition.comment" />
+			<textarea v-model="requisition.managerComment" />
 		</span>
 		<button @click="handleSubmit(requisition)">Submit</button>
 	</div>
 </template>
 
 <script setup>
-import { getRequisitionsForManagerApproval } from '@/hooks/requisitionCRUD'
-import { getRecommendationStatuses, editManagerRecommendation } from '@/hooks/statusCRUD'
+import { getRequisitionsForManagerApproval, editRequisition } from '@/hooks/requisitionCRUD'
+import { getRecommendationStatuses } from '@/hooks/statusCRUD'
 import { ref } from 'vue'
 
 const { requisitions } = getRequisitionsForManagerApproval()
 const { statuses } = getRecommendationStatuses()
 
 const handleSubmit = (requisition) => {
-	editManagerRecommendation(requisition)
+	editRequisition(requisition, 'manager')
 }
 </script>
