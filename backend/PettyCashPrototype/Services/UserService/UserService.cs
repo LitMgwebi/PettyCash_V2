@@ -48,9 +48,9 @@ namespace PettyCashPrototype.Services.UserService
             {
                 User user = await _db.Users
                     .Where(a => a.IsActive == true)
-                    .SingleAsync(e => e.Email == email);
+                    .FirstOrDefaultAsync(e => e.Email == email);
 
-                if (user == null) throw new Exception("System was not able to retrieve user");
+                if (user == null) throw new Exception("System was not able to find user");
 
                 return user;
             }
@@ -63,7 +63,7 @@ namespace PettyCashPrototype.Services.UserService
             {
                 User user = await _db.Users
                     .Where(a => a.IsActive == true)
-                    .SingleAsync(e => e.Id == id);
+                    .FirstOrDefaultAsync(e => e.Id == id);
 
                 if (user == null) throw new Exception("System was not able to retrieve user");
 

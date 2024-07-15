@@ -1,5 +1,4 @@
-﻿using PettyCashPrototype.Services.ApprovalStuctureServices.FinanceApprovalService;
-using PettyCashPrototype.Services.RequisitionService.IndexHandler;
+﻿using PettyCashPrototype.Services.RequisitionService.IndexHandler;
 
 namespace PettyCashPrototype.Services.RequisitionService
 {
@@ -17,29 +16,29 @@ namespace PettyCashPrototype.Services.RequisitionService
             _jobTitle = jobTitle;
         }
 
-        public async Task<IEnumerable<Requisition>> GetAll(string purpose, int divisionId, int jobTitleId, string userId)
+        public async Task<IEnumerable<Requisition>> GetAll(string command, int divisionId, int jobTitleId, string userId)
         {
             try
             {
                 GetRequisitionsHandler indexHandler = new GetRequisitionsHandler();
                 IEnumerable<Requisition> requisitions = new List<Requisition>();
 
-                if (purpose == "all")
+                if (command == "all")
                 {
                     indexHandler.setState(new GetAllState());
                     requisitions = await indexHandler.request(_db);
-                } else if (purpose == "applicant") 
+                } else if (command == "applicant") 
                 {
                     indexHandler.setState(new GetForApplicantState());
                     requisitions = await indexHandler.request(_db, userId: userId);
-                } else if (purpose == "manager")
+                } else if (command == "manager")
                 {
                     indexHandler.setState(new GetForRecommendationState());
                     requisitions = await indexHandler.request(_db, divisionId: divisionId);
-                } else if(purpose == "finance")
+                } else if(command == "finance")
                 {
                     indexHandler.setState(new GetForApprovalState());
-                    requisitions = await indexHandler.request(_db, jobTitleId: jobTitleId, divisionId: divisionId);
+                    requisitions = await indexHandler.request(_db, jobTitleId: jobTitleId, divisionId: divisionId, _jobTitle: _jobTitle);
                 }
                 return requisitions;
             }
@@ -53,7 +52,7 @@ namespace PettyCashPrototype.Services.RequisitionService
                 Requisition requisition = await _db.Requisitions
                     .Where(a => a.IsActive == true)
                     .Include(z => z.Applicant)
-                    .SingleAsync(i => i.RequisitionId == id);
+                    .FirstOrDefaultAsync(i => i.RequisitionId == id);
 
                 if (requisition == null) throw new Exception("System could not retrieve the Requisition requested.");
                 return requisition;

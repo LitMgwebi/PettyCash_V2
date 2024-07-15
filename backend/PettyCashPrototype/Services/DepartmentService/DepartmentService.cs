@@ -33,7 +33,7 @@ namespace PettyCashPrototype.Services.DepartmentService
             {
                 Department department = await _db.Departments
                 .Where(a => a.IsActive == true)
-                .SingleAsync(x => x.DepartmentId == id);
+                .FirstOrDefaultAsync(x => x.DepartmentId == id);
 
                 if (department == null) throw new Exception("System could not retrieve the Department.");
 

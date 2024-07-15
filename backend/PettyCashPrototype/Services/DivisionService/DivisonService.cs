@@ -31,7 +31,7 @@
                 Division division = await _db.Divisions
                     .Where(a => a.IsActive == true)
                     .Include(d => d.Department)
-                    .SingleAsync(x => x.DivisionId == id);
+                    .FirstOrDefaultAsync(x => x.DivisionId == id);
 
                 if (division == null) throw new Exception("System could not retrieve the Department.");
 

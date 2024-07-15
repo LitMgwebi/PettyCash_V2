@@ -18,7 +18,7 @@ namespace PettyCashPrototype.Controllers
         #region GET
 
         [HttpGet, Route("index")]
-        public async Task<ActionResult<IEnumerable<Requisition>>> Index(string purpose)
+        public async Task<ActionResult<IEnumerable<Requisition>>> Index(string command)
         {
             try
             {
@@ -27,7 +27,7 @@ namespace PettyCashPrototype.Controllers
                 var jobTitleId = identity.Claims.Where(c => c.Type == "JobTitle").Select(c => c.Value).FirstOrDefault()!;
                 var userId = identity.Claims.Where(c => c.Type == ClaimTypes.Sid).Select(c => c.Value).FirstOrDefault()!;
 
-                IEnumerable<Requisition> requisitions = await _requisition.GetAll(purpose, int.Parse(divisionId), int.Parse(jobTitleId), userId);
+                IEnumerable<Requisition> requisitions = await _requisition.GetAll(command, int.Parse(divisionId), int.Parse(jobTitleId), userId);
 
                 return Ok(requisitions);
             }
@@ -82,17 +82,17 @@ namespace PettyCashPrototype.Controllers
 
                 EditRequisitionHandler editRequisition = new EditRequisitionHandler();
 
-                if (requisitionModel.purpose == "manager")
+                if (requisitionModel.command == "manager")
                 {
                     editRequisition.setState(new ManagerRecommendationState());
                     messageResponse = editRequisition.request(_requisition, requisitionModel.Requisition, userId);
                 }
-                else if (requisitionModel.purpose == "finance")
+                else if (requisitionModel.command == "finance")
                 {
                     editRequisition.setState(new FinanceApprovalState());
                     messageResponse = editRequisition.request(_requisition, requisitionModel.Requisition, userId);
                 }
-                else if (requisitionModel.purpose == "edit")
+                else if (requisitionModel.command == "edit")
                 {
                     editRequisition.setState(new WholeRequisitionState());
                     messageResponse = editRequisition.request(_requisition, requisitionModel.Requisition);

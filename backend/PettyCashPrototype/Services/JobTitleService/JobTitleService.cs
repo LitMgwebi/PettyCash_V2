@@ -30,7 +30,7 @@
             {
                 JobTitle jobTitle = await _db.JobTitles
                     .Where(x => x.IsActive == true)
-                    .SingleAsync(i => i.JobTitleId == id);
+                    .FirstOrDefaultAsync(i => i.JobTitleId == id);
 
                 if(jobTitle == null)
                     throw new Exception("System could not find any job titles");

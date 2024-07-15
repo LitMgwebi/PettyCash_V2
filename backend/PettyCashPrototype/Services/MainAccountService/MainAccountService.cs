@@ -31,7 +31,7 @@
             {
                 MainAccount mainAccount = await _db.MainAccounts
                     .Where(a => a.IsActive == true)
-                    .SingleAsync(x => x.MainAccountId == id);
+                    .FirstOrDefaultAsync(x => x.MainAccountId == id);
 
                 if (mainAccount == null)
                     throw new Exception("System could not retrieve the main account.");

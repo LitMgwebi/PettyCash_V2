@@ -1,4 +1,6 @@
-﻿namespace PettyCashPrototype.Services.GLAccountService
+﻿using PettyCashPrototype.Services.GLAccountService.GLIndexHandler;
+
+namespace PettyCashPrototype.Services.GLAccountService
 {
     public class GLAccountService: IGLAccount
     {
@@ -20,58 +22,31 @@
             _user = user;
         }
 
-        public async Task<IEnumerable<Glaccount>> GetAll()
+        public async Task<IEnumerable<Glaccount>> GetAll(string command, string userId = "")
         {
             try
             {
-                IEnumerable<Glaccount> glAccounts = await _db.Glaccounts
-                    .Where(x => x.IsActive == true)
-                    .ToListAsync();
+                User user = new User();
+                IEnumerable<Glaccount> glAccounts = new List<Glaccount>();
+                GetGLAccountsHandler getGLAccounts = new GetGLAccountsHandler();
 
-                if (glAccounts == null)
-                    throw new Exception("System could not find any GL accounts.");
+                if(command == "all")
+                {
+                    getGLAccounts.setState(new GetAllState());
+                    glAccounts = await getGLAccounts.request(_db);
+                } else if(command == "division")
+                {
+                    user = await _user.GetUserById(userId);
+                    getGLAccounts.setState(new GetAllbyDivisionState());
+                    glAccounts = await getGLAccounts.request(_db, user);
+                } else if(command == "office")
+                {
+                    getGLAccounts.setState(new GetAllbyOfficeDivisionState());
+                    glAccounts = await getGLAccounts.request(_db);
+                }
 
                 return glAccounts;
             } catch { throw; }
-        }
-
-        public async Task<IEnumerable<Glaccount>> GetAllbyOfficeAndDivision(string userId)
-        {
-            try
-            {
-                User user = await _user.GetUserById(userId);
-
-                IEnumerable<Glaccount> glAccounts = await _db.Glaccounts
-                    .Where(d =>  d.DivisionId == user.DivisionId)
-                    .Where(o => o.OfficeId == user.OfficeId)
-                    .Where(x => x.IsActive == true)
-                    .ToListAsync();
-
-                if (glAccounts == null)
-                    throw new Exception("System could not find any GL accounts in your department.");
-
-                return glAccounts;
-            }
-            catch { throw; }
-        }
-        
-        public async Task<IEnumerable<Glaccount>> GetAllbyDivision(string userId)
-        {
-            try
-            {
-                User user = await _user.GetUserById(userId);
-
-                IEnumerable<Glaccount> glAccounts = await _db.Glaccounts
-                    .Where(d =>  d.DivisionId == user.DivisionId)
-                    .Where(x => x.IsActive == true)
-                    .ToListAsync();
-
-                if (glAccounts == null)
-                    throw new Exception("System could not find any GL accounts in your department.");
-
-                return glAccounts;
-            }
-            catch { throw; }
         }
 
         public async Task<Glaccount> GetOne(int id)
@@ -85,7 +60,7 @@
                     .Include(x => x.SubAccount)
                     .Include(x => x.Division)
                     .Include(x => x.Office)
-                    .SingleAsync(x => x.GlaccountId == id);
+                    .FirstOrDefaultAsync(x => x.GlaccountId == id);
 
                 if (glAccount == null) throw new Exception("System could not retrieve the GL account.");
 
@@ -107,7 +82,7 @@
 
                 glAccount.Name = $"{glAccount.Division.Description} {glAccount.MainAccount.Name} ({glAccount.SubAccount.Name})";
 
-                IEnumerable<Glaccount> glAccounts = await GetAll();
+                IEnumerable<Glaccount> glAccounts = await GetAll(command: "all");
 
                 if(glAccounts.Select(x => x.Name).ToList().Contains(glAccount.Name))
                     throw new DbUpdateException($"System already contains GL Account with the name: {glAccount.Name}");

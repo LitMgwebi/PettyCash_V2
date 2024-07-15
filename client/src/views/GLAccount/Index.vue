@@ -224,8 +224,9 @@ const { subAccounts } = getSubAccounts()
 const { mainAccounts } = getMainAccounts()
 const { purposes } = getPurposes()
 const { divisions } = getDivisions()
+
 const reloadPage = () => location.reload()
-const { glAccounts } = getGLAccounts()
+const { glAccounts } = getGLAccounts('all')
 
 //#region Add Config
 

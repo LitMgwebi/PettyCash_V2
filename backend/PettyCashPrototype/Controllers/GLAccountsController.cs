@@ -18,52 +18,19 @@ namespace PettyCashPrototype.Controllers
 
         [HttpGet, Route("index")]
         [AllowAnonymous]
-        public async Task<ActionResult<IEnumerable<Glaccount>>> Index()
+        public async Task<ActionResult<IEnumerable<Glaccount>>> Index(string command)
         {
             try
             {
-                IEnumerable<Glaccount> glaccounts = await _glAccount.GetAll();
+                var identity = (ClaimsIdentity)User.Identity!;
+                var userId = identity.Claims.Where(c => c.Type == ClaimTypes.Sid).Select(c => c.Value).FirstOrDefault()!;
+                IEnumerable<Glaccount> glaccounts = await _glAccount.GetAll(command, userId);
                 return Ok(glaccounts);
             } catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
         }
-
-        [HttpGet, Route("index_division")]
-        [AllowAnonymous]
-        public async Task<ActionResult<IEnumerable<Glaccount>>> IndexByDivision()
-        {
-            try
-            {
-                var identity = (ClaimsIdentity)User.Identity!;
-                var userId = identity.Claims.Where(c => c.Type == ClaimTypes.Sid).Select(c => c.Value).FirstOrDefault()!;
-                IEnumerable<Glaccount> glaccounts = await _glAccount.GetAllbyDivision(userId);
-                return Ok(glaccounts);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
-        }
-
-        [HttpGet, Route("index_office")]
-        [AllowAnonymous]
-        public async Task<ActionResult<IEnumerable<Glaccount>>> IndexByOfficeAndDivision()
-        {
-            try
-            {
-                var identity = (ClaimsIdentity)User.Identity!;
-                var userId = identity.Claims.Where(c => c.Type == ClaimTypes.Sid).Select(c => c.Value).FirstOrDefault()!;
-                IEnumerable<Glaccount> glaccounts = await _glAccount.GetAllbyOfficeAndDivision(userId);
-                return Ok(glaccounts);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
-        }
-
         [HttpGet, Route("details")]
         public async Task<ActionResult<Glaccount>> Details(int id)
         {

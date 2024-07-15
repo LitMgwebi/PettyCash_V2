@@ -35,7 +35,7 @@
 </template>
 
 <script setup>
-import { getGLAccountsByDepartment } from '@/hooks/glAccountCRUD'
+import { getGLAccounts } from '@/hooks/glAccountCRUD'
 import { inject, ref } from 'vue'
 import { addRequisition } from '@/hooks/requisitionCRUD'
 import router from '@/router/router'
@@ -48,8 +48,7 @@ const requisition = ref({
 	description: '',
 	stage: ''
 })
-const { glAccounts } = getGLAccountsByDepartment()
-console.log(glAccounts)
+const { glAccounts } = getGLAccounts('division')
 
 function handleSubmit() {
 	addRequisition(requisition.value)

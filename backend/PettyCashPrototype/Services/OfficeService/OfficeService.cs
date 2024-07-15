@@ -28,7 +28,7 @@
             {
                 Office office = await _db.Offices
                     .Where(a => a.IsActive == true)
-                    .SingleAsync(i => i.OfficeId == id);
+                    .FirstOrDefaultAsync(i => i.OfficeId == id);
 
                 if (office == null) throw new Exception("System could not retrieve Office.");
 

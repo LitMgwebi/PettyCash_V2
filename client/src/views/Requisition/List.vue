@@ -4,23 +4,23 @@
 	<router-link :to="{ name: 'requistion_create' }" custom v-slot="{ navigate }">
 		<button @click="navigate" role="link">Create</button>
 	</router-link>
-	<div>
+	<div v-if="user.role != 'Manager' && user.role != 'CFO'">
 		<ApplicantList />
 	</div>
 
 	<div v-if="user.role == 'Manager'">
-		<ManagerApprovalList />
+		<RecommendationList />
 	</div>
 
-	<div v-if="user.divisionId == 6">
-		<FinanceApprovalList />
+	<div v-if="(user.role == 'Manager' || user.role == 'CFO') && user.divisionId == 6">
+		<ApprovalList />
 	</div>
 </template>
 
 <script setup>
 import ApplicantList from '@/components/Requisition/ApplicantList.vue'
-import ManagerApprovalList from '@/components/Requisition/ManagerApprovalList.vue'
-import FinanceApprovalList from '@/components/Requisition/FinanceApprovalList.vue'
+import RecommendationList from '@/components/Requisition/RecommendationList.vue'
+import ApprovalList from '@/components/Requisition/ApprovalList.vue'
 import { inject } from 'vue'
 
 const user = inject('User')

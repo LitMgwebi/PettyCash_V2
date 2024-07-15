@@ -29,7 +29,7 @@
             {
                 SubAccount subAccount = await _db.SubAccounts
                     .Where(a => a.IsActive == true)
-                    .SingleAsync(x => x.SubAccountId == id);
+                    .FirstOrDefaultAsync(x => x.SubAccountId == id);
 
                 if (subAccount == null)
                     throw new Exception("System could not retrieve the Sub Account.");

@@ -32,11 +32,13 @@
                             .Where(ar => ar.AmountRequested < 1000 && ar.AmountRequested > 500)
                             .ToListAsync();
             }
-            else if (nextOfficer != null)
+            else
             {
-                await nextOfficer.GetRequisitions(jobTitle);
+                if (nextOfficer != null)
+                    return await nextOfficer!.GetRequisitions(jobTitle);
+                else
+                    throw new Exception("Error on the Manager level");
             }
-            throw new Exception("Error on the Manager level");
         }
     }
 }

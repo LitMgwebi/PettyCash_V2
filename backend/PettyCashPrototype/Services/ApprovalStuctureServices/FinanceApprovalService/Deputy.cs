@@ -29,11 +29,13 @@
                             .Where(ar => ar.AmountRequested < 500)
                             .ToListAsync();
             }
-            else if (nextOfficer != null)
+            else
             {
-                return new List<Requisition>();
+                if (nextOfficer != null)
+                    return new List<Requisition>();
+                else
+                    throw new Exception("Error on the Deputy level");
             }
-            throw new Exception("Error on the Deputy level");
         }
     }
 }

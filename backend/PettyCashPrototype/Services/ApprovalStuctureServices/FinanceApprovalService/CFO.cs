@@ -1,6 +1,6 @@
 ﻿namespace PettyCashPrototype.Services.ApprovalStuctureServices.FinanceApprovalService
 {
-    public class CFO: IFinanceApproval
+    public class CFO : IFinanceApproval
     {
         private IFinanceApproval? nextOfficer;
         private PettyCashPrototypeContext _db;
@@ -20,7 +20,7 @@
 
         public async Task<IEnumerable<Requisition>> GetRequisitions(string jobTitle)
         {
-            if(jobTitle == requiredTitle)
+            if (jobTitle == requiredTitle)
             {
                 return await _db.Requisitions
                             .Include(a => a.Applicant)
@@ -31,11 +31,14 @@
                             .Where(a => a.FinanceApproval == null)
                             .Where(am => am.AmountRequested > 1000)
                             .ToListAsync();
-            } else if (nextOfficer != null)
-            {
-                await nextOfficer.GetRequisitions(jobTitle);
             }
-            throw new Exception("Error on the CFO level");
+            else
+            {
+                if (nextOfficer != null)
+                    return await nextOfficer!.GetRequisitions(jobTitle);
+                else
+                    throw new Exception("Error on CFO level");
+            }
         }
     }
 }
