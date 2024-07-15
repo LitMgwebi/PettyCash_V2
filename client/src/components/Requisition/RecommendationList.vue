@@ -1,5 +1,5 @@
 <template>
-	Your departments requests
+	Requisitions requiring recommendation
 	<div v-for="requisition in requisitions" :key="requisition.requisitionId">
 		<span>
 			{{ requisition.applicant.fullName }} - {{ requisition.amountRequested }} -

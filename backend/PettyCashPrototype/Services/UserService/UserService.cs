@@ -47,6 +47,8 @@ namespace PettyCashPrototype.Services.UserService
             try
             {
                 User user = await _db.Users
+                    .Include(d => d.Division)
+                    .Include(j => j.JobTitle)
                     .Where(a => a.IsActive == true)
                     .FirstOrDefaultAsync(e => e.Email == email);
 
@@ -62,6 +64,8 @@ namespace PettyCashPrototype.Services.UserService
             try
             {
                 User user = await _db.Users
+                    .Include(d => d.Division)
+                    .Include(j => j.JobTitle)
                     .Where(a => a.IsActive == true)
                     .FirstOrDefaultAsync(e => e.Id == id);
 

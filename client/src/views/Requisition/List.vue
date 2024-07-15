@@ -4,15 +4,15 @@
 	<router-link :to="{ name: 'requistion_create' }" custom v-slot="{ navigate }">
 		<button @click="navigate" role="link">Create</button>
 	</router-link>
-	<div v-if="user.role != 'Manager' && user.role != 'CFO'">
+	<div>
 		<ApplicantList />
 	</div>
 
-	<div v-if="user.role == 'Manager'">
+	<div v-if="user.role == 'Manager' || user.role == 'GM_Manager'">
 		<RecommendationList />
 	</div>
 
-	<div v-if="(user.role == 'Manager' || user.role == 'CFO') && user.divisionId == 6">
+	<div v-if="(user.role == 'Manager' || user.role == 'Executive') && user.divisionId == 6">
 		<ApprovalList />
 	</div>
 </template>

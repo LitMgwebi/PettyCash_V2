@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("PettyCashPrototype")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+15e48b9458576454b7e23e7c08cb41e337d42cee")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+3ed5bab456a11e677b9990da6786ec240093bc99")]
 [assembly: System.Reflection.AssemblyProductAttribute("PettyCashPrototype")]
 [assembly: System.Reflection.AssemblyTitleAttribute("PettyCashPrototype")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

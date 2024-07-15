@@ -33,8 +33,8 @@ namespace PettyCashPrototype.Services.RequisitionService
                     requisitions = await indexHandler.request(_db, userId: userId);
                 } else if (command == "manager")
                 {
-                    indexHandler.setState(new GetForRecommendationState());
-                    requisitions = await indexHandler.request(_db, divisionId: divisionId);
+                    indexHandler.setState(new GetForRecommendationState(_user));
+                    requisitions = await indexHandler.request(_db, userId: userId);
                 } else if(command == "finance")
                 {
                     indexHandler.setState(new GetForApprovalState());
@@ -50,6 +50,7 @@ namespace PettyCashPrototype.Services.RequisitionService
             try
             {
                 Requisition requisition = await _db.Requisitions
+                    .Include(m => m.ManagerRecommendation)
                     .Where(a => a.IsActive == true)
                     .Include(z => z.Applicant)
                     .FirstOrDefaultAsync(i => i.RequisitionId == id);
