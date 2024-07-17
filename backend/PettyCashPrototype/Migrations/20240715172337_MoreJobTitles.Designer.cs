@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PettyCashPrototype.Models;
 
@@ -11,9 +12,11 @@ using PettyCashPrototype.Models;
 namespace PettyCashPrototype.Migrations
 {
     [DbContext(typeof(PettyCashPrototypeContext))]
-    partial class PettyCashPrototypeContextModelSnapshot : ModelSnapshot
+    [Migration("20240715172337_MoreJobTitles")]
+    partial class MoreJobTitles
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -132,12 +135,6 @@ namespace PettyCashPrototype.Migrations
                             Id = "o36538f-4lk6-4fc1-974c-d94c07ba1391",
                             Name = "Executive",
                             NormalizedName = "Executive"
-                        },
-                        new
-                        {
-                            Id = "3yt427c9-62c9-425b-86ed-a1f69d2d603k",
-                            Name = "Senior Employee",
-                            NormalizedName = "Senior Employee"
                         });
                 });
 

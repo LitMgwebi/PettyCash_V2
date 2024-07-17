@@ -24,10 +24,11 @@ namespace PettyCashPrototype.Controllers
             {
                 var identity = (ClaimsIdentity)User.Identity!;
                 var divisionId = identity.Claims.Where(c => c.Type == "Division").Select(c => c.Value).FirstOrDefault()!;
+                var role = identity.Claims.Where(c => c.Type == ClaimTypes.Role).Select(c => c.Value).FirstOrDefault()!;
                 var jobTitleId = identity.Claims.Where(c => c.Type == "JobTitle").Select(c => c.Value).FirstOrDefault()!;
                 var userId = identity.Claims.Where(c => c.Type == ClaimTypes.Sid).Select(c => c.Value).FirstOrDefault()!;
 
-                IEnumerable<Requisition> requisitions = await _requisition.GetAll(command, int.Parse(divisionId), int.Parse(jobTitleId), userId);
+                IEnumerable<Requisition> requisitions = await _requisition.GetAll(command, int.Parse(divisionId), int.Parse(jobTitleId), userId, role);
 
                 return Ok(requisitions);
             }
@@ -58,7 +59,7 @@ namespace PettyCashPrototype.Controllers
                 var identity = (ClaimsIdentity)User.Identity!;
                 var userId = identity.Claims.Where(c => c.Type == ClaimTypes.Sid).Select(c => c.Value).FirstOrDefault()!;
 
-                requisition.Stage = "Requisiton has been sent to your Line Manager, currently awaiting manager approval";
+                requisition.Stage = "Requisiton has been sent for recommendation.";
                 requisition.ApplicantId = userId;
                 requisition.StartDate = DateTime.UtcNow;
                 await _requisition.Create(requisition);

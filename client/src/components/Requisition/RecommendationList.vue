@@ -1,9 +1,10 @@
 <template>
-	Requisitions requiring recommendation
+	<h3>Requisitions requiring recommendation</h3>
 	<div v-for="requisition in requisitions" :key="requisition.requisitionId">
 		<span>
-			{{ requisition.applicant.fullName }} - {{ requisition.amountRequested }} -
-			{{ requisition.description }}</span
+			{{ requisition.applicant.fullName }} - R{{ requisition.amountRequested }} ({{
+				requisition.glaccount.name
+			}}) - {{ requisition.description }}</span
 		>
 		<span class="dropdown">
 			<select :disabled="statuses.length == 0" v-model="requisition.managerRecommendationId">

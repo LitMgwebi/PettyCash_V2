@@ -1,5 +1,5 @@
 <template>
-	<div v-if="user.role == 'Manager'">
+	<!-- <div v-if="user.role == 'Manager'">
 		Your departments requests
 		<div v-for="requisition in requisitionsForRecommendation" :key="requisition.requisitionId">
 			<span>
@@ -27,14 +27,15 @@
 			</span>
 			<button @click="handleSubmit(requisition)">Submit</button>
 		</div>
-	</div>
+	</div> -->
 
 	<div>
-		Requests for you to approve
+		<h3>Requests for you to approve</h3>
 		<div v-for="requisition in requisitions" :key="requisition.requisitionId">
 			<span>
-				{{ requisition.applicant.fullName }} - {{ requisition.amountRequested }} -
-				{{ requisition.description }}</span
+				{{ requisition.applicant.fullName }} - R{{ requisition.amountRequested }} ({{
+					requisition.glaccount.name
+				}})- {{ requisition.description }}</span
 			>
 			<span class="dropdown">
 				<select :disabled="statuses.length == 0" v-model="requisition.financeApprovalID">
@@ -67,14 +68,14 @@ const user = inject('User')
 
 const { requisitions } = getRequisitions('finance')
 const { statuses } = getApprovalStatuses()
-const { requisitions: requisitionsForRecommendation } = getRequisitions('manager')
-const { statuses: recommendations } = getRecommendationStatuses()
+// const { requisitions: requisitionsForRecommendation } = getRequisitions('manager')
+// const { statuses: recommendations } = getRecommendationStatuses()
 
 const handleApproval = (requisition) => {
 	editRequisition(requisition, 'finance')
 }
 
-const handleRecommendation = (requisition) => {
-	editRequisition(requisition, 'manager')
-}
+// const handleRecommendation = (requisition) => {
+// 	editRequisition(requisition, 'manager')
+// }
 </script>

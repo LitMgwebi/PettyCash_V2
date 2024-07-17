@@ -10,10 +10,10 @@
             if (requisition.ManagerRecommendationId == 4)
                 requisition.Stage = "Your requisition has been rejected.";
             else if (requisition.ManagerRecommendationId == 3)
-                requisition.Stage = "Your requisition has been approved. Awaiting Finance Approval.";
+                requisition.Stage = "Your requisition has been recommended. Awaiting Finance Approval.";
 
             service.Edit(requisition);
-            return "Your recommendation has been added to the system.";
+            return "Your choice has been recorded.";
         }
     }
 }

@@ -1,18 +1,44 @@
 <template>
 	<h2>Petty Cash Requests</h2>
 
-	<router-link :to="{ name: 'requistion_create' }" custom v-slot="{ navigate }">
-		<button @click="navigate" role="link">Create</button>
-	</router-link>
-	<div>
+	<div
+		v-if="
+			user.role != 'GM_Manager' &&
+			!((user.role == 'Manager' || user.role == 'Senior_Employee') && user.divisionId == 6)
+		"
+	>
+		<router-link :to="{ name: 'requistion_create' }" custom v-slot="{ navigate }">
+			<button @click="navigate" role="link">Create</button>
+		</router-link>
+	</div>
+	<div
+		v-if="
+			user.role != 'Executive' &&
+			user.role != 'GM_Manager' &&
+			!((user.role == 'Manager' || user.role == 'Senior_Employee') && user.divisionId == 6)
+		"
+	>
 		<ApplicantList />
 	</div>
 
-	<div v-if="user.role == 'Manager' || user.role == 'GM_Manager'">
+	<div
+		v-if="
+			(user.role == 'Manager' && user.divisionId != 6) ||
+			user.role == 'GM_Manager' ||
+			user.role == 'Senior_Employee'
+		"
+	>
 		<RecommendationList />
 	</div>
 
-	<div v-if="(user.role == 'Manager' || user.role == 'Executive') && user.divisionId == 6">
+	<div
+		v-if="
+			(user.role == 'Senior_Employee' ||
+				user.role == 'Manager' ||
+				user.role == 'Executive') &&
+			user.divisionId == 6
+		"
+	>
 		<ApprovalList />
 	</div>
 </template>
@@ -22,6 +48,5 @@ import ApplicantList from '@/components/Requisition/ApplicantList.vue'
 import RecommendationList from '@/components/Requisition/RecommendationList.vue'
 import ApprovalList from '@/components/Requisition/ApprovalList.vue'
 import { inject } from 'vue'
-
 const user = inject('User')
 </script>

@@ -26,10 +26,12 @@
                             .Include(a => a.Applicant)
                             .Include(m => m.Manager)
                             .Include(mr => mr.ManagerRecommendation)
+                    .Include(gl => gl.Glaccount)
                             .Where(a => a.IsActive == true)
                             .Where(m => m.ManagerRecommendation != null && m.ManagerRecommendation.Description == "Recommended")
                             .Where(a => a.FinanceApproval == null)
                             .Where(am => am.AmountRequested > 1000)
+                    .AsNoTracking()
                             .ToListAsync();
             }
             else

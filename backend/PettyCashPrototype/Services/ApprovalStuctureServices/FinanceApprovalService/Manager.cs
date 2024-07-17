@@ -24,12 +24,14 @@
             {
                 return await _db.Requisitions
                             .Include(a => a.Applicant)
+                    .Include(gl => gl.Glaccount)
                             .Include(m => m.Manager)
                             .Include(mr => mr.ManagerRecommendation)
                             .Where(a => a.IsActive == true)
                             .Where(m => m.ManagerRecommendation != null && m.ManagerRecommendation.Description == "Recommended")
                             .Where(a => a.FinanceApproval == null)
                             .Where(ar => ar.AmountRequested < 1000 && ar.AmountRequested > 500)
+                    .AsNoTracking()
                             .ToListAsync();
             }
             else

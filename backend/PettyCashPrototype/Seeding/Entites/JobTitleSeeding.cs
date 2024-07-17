@@ -74,12 +74,12 @@ namespace PettyCashPrototype.Seeding.Entites
                 },
                 new JobTitle
                 {
-                    JobTitleId = 13,
+                    JobTitleId = 14,
                     Description = "Accountant"
                 },
                 new JobTitle
                 {
-                    JobTitleId = 13,
+                    JobTitleId = 15,
                     Description = "Bookkeeper"
                 }
                 );

@@ -16,7 +16,7 @@ namespace PettyCashPrototype.Services.RequisitionService
             _jobTitle = jobTitle;
         }
 
-        public async Task<IEnumerable<Requisition>> GetAll(string command, int divisionId, int jobTitleId, string userId)
+        public async Task<IEnumerable<Requisition>> GetAll(string command, int divisionId, int jobTitleId, string userId, string role)
         {
             try
             {
@@ -34,7 +34,7 @@ namespace PettyCashPrototype.Services.RequisitionService
                 } else if (command == "manager")
                 {
                     indexHandler.setState(new GetForRecommendationState(_user));
-                    requisitions = await indexHandler.request(_db, userId: userId);
+                    requisitions = await indexHandler.request(_db, userId: userId, role: role);
                 } else if(command == "finance")
                 {
                     indexHandler.setState(new GetForApprovalState());
@@ -51,8 +51,11 @@ namespace PettyCashPrototype.Services.RequisitionService
             {
                 Requisition requisition = await _db.Requisitions
                     .Include(m => m.ManagerRecommendation)
+                    .Include(f => f.FinanceOfficer)
+                    .Include(gl => gl.Glaccount)
                     .Where(a => a.IsActive == true)
                     .Include(z => z.Applicant)
+                    .AsNoTracking()
                     .FirstOrDefaultAsync(i => i.RequisitionId == id);
 
                 if (requisition == null) throw new Exception("System could not retrieve the Requisition requested.");
@@ -82,7 +85,7 @@ namespace PettyCashPrototype.Services.RequisitionService
                 _db.Requisitions.Update(requisition);
                 int result = _db.SaveChanges();
 
-                if (result == 0) throw new DbUpdateException($"System could not edit the requisition for {requisition.Applicant}.");
+                if (result == 0) throw new DbUpdateException($"System could not edit the requisition for {requisition.Applicant!.FullName}.");
             }
             catch { throw; }
         }

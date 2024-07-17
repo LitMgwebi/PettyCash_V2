@@ -1,14 +1,22 @@
 <template>
-	Your Requisitions
+	<h3>Open requistions</h3>
 	<div v-for="requisition in requisitions" :key="requisition.requisitionId">
-		<span>
-			{{ requisition.description }} - {{ requisition.amountRequested }} -
+		<!-- <section v-if="requisition.financeApprovalId == null"> -->
+		<div style="padding: 10px">
+			{{ requisition.description }} - R{{ requisition.amountRequested }} ({{
+				requisition.glaccount.name
+			}}) -
 			{{ requisition.stage }}
-			<span v-if="requisition.managerComment">- {{ requisition.managerComment }}</span>
-			<span v-if="requisition.financeComment">- {{ requisition.financeComment }}</span>
+			<div v-if="requisition.managerComment">Note: {{ requisition.managerComment }}</div>
+			<div v-if="requisition.financeComment">Note: {{ requisition.financeComment }}</div>
+		</div>
+		<span v-if="requisition.managerApprovalId == null">
+			<button @click="populateEdit(requistion)">Edit</button>
 		</span>
-		<button @click="populateEdit(requistion)">Edit</button>
-		<button @click="deleteRecord(requistion)">Delete</button>
+		<span v-if="requisition.issuerId == null">
+			<button @click="deleteRecord(requistion)">Delete</button>
+		</span>
+		<!-- </section> -->
 	</div>
 </template>
 

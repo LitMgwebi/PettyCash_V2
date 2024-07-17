@@ -90,6 +90,12 @@ namespace PettyCashPrototype.Seeding.Entites
                     Id = "o36538f-4lk6-4fc1-974c-d94c07ba1391",
                     Name = "Executive",
                     NormalizedName = "Executive",
+                },
+                new IdentityRole
+                {
+                    Id = "3yt427c9-62c9-425b-86ed-a1f69d2d603k",
+                    Name = "Senior Employee",
+                    NormalizedName = "Senior Employee",
                 }
 
                 );
