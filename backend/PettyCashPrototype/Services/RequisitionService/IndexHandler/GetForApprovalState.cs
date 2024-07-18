@@ -18,7 +18,7 @@ namespace PettyCashPrototype.Services.RequisitionService.IndexHandler
                 CFO.SetNext(Manager);
                 Manager.SetNext(Deputy);
 
-                requisitions = await CFO.GetRequisitions(jobTitle.Description);
+                requisitions = await CFO.GetRequisitionsForApproval(jobTitle.Description);
             }
             else
                 throw new Exception("You have to be in the Finance Department to approve of this requisitions.");

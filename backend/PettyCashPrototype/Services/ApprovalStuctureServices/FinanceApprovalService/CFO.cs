@@ -18,7 +18,7 @@
         }
 
 
-        public async Task<IEnumerable<Requisition>> GetRequisitions(string jobTitle)
+        public async Task<IEnumerable<Requisition>> GetRequisitionsForApproval(string jobTitle)
         {
             if (jobTitle == requiredTitle)
             {
@@ -37,7 +37,7 @@
             else
             {
                 if (nextOfficer != null)
-                    return await nextOfficer!.GetRequisitions(jobTitle);
+                    return await nextOfficer!.GetRequisitionsForApproval(jobTitle);
                 else
                     throw new Exception("Error on CFO level");
             }

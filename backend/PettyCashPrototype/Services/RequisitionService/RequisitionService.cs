@@ -27,15 +27,15 @@ namespace PettyCashPrototype.Services.RequisitionService
                 {
                     indexHandler.setState(new GetAllState());
                     requisitions = await indexHandler.request(_db);
-                } else if (command == "applicant") 
+                } else if (command == "forOne") 
                 {
                     indexHandler.setState(new GetForApplicantState());
                     requisitions = await indexHandler.request(_db, userId: userId);
-                } else if (command == "manager")
+                } else if (command == "recommendation")
                 {
                     indexHandler.setState(new GetForRecommendationState(_user));
                     requisitions = await indexHandler.request(_db, userId: userId, role: role);
-                } else if(command == "finance")
+                } else if(command == "approval")
                 {
                     indexHandler.setState(new GetForApprovalState());
                     requisitions = await indexHandler.request(_db, jobTitleId: jobTitleId, divisionId: divisionId, _jobTitle: _jobTitle);

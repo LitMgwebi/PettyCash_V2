@@ -27,10 +27,10 @@ import { getRequisitions, editRequisition } from '@/hooks/requisitionCRUD'
 import { getRecommendationStatuses } from '@/hooks/statusCRUD'
 import { ref } from 'vue'
 
-const { requisitions } = getRequisitions('manager')
+const { requisitions } = getRequisitions('recommendation')
 const { statuses } = getRecommendationStatuses()
 
 const handleSubmit = (requisition) => {
-	editRequisition(requisition, 'manager')
+	editRequisition(requisition, 'recommendation')
 }
 </script>

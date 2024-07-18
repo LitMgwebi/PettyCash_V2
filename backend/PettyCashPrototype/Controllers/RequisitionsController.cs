@@ -83,12 +83,12 @@ namespace PettyCashPrototype.Controllers
 
                 EditRequisitionHandler editRequisition = new EditRequisitionHandler();
 
-                if (requisitionModel.command == "manager")
+                if (requisitionModel.command == "recommendation")
                 {
                     editRequisition.setState(new RecommendationState());
                     messageResponse = editRequisition.request(_requisition, requisitionModel.Requisition, userId);
                 }
-                else if (requisitionModel.command == "finance")
+                else if (requisitionModel.command == "approval")
                 {
                     editRequisition.setState(new ApprovalState());
                     messageResponse = editRequisition.request(_requisition, requisitionModel.Requisition, userId);

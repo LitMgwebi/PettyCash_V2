@@ -18,7 +18,7 @@
         public void SetNext(IFinanceApproval nextOfficer) { }
 
 
-        public async Task<IEnumerable<Requisition>> GetRequisitions(string jobTitle)
+        public async Task<IEnumerable<Requisition>> GetRequisitionsForApproval(string jobTitle)
         {
             if (jobTitle == firstTitle)
             {

@@ -24,5 +24,5 @@
 import { getRequisitions } from '@/hooks/requisitionCRUD'
 import { inject } from 'vue'
 
-const { requisitions } = getRequisitions('applicant')
+const { requisitions } = getRequisitions('forOne')
 </script>

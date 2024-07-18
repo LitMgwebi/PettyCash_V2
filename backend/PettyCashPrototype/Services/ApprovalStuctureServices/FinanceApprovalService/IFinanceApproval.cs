@@ -2,7 +2,7 @@
 {
     public interface IFinanceApproval
     {
-        Task<IEnumerable<Requisition>> GetRequisitions(string jobTitle);
+        Task<IEnumerable<Requisition>> GetRequisitionsForApproval(string jobTitle);
         void SetNext(IFinanceApproval financeOfficer);
     }
 }
