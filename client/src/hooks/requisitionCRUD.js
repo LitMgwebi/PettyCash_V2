@@ -19,6 +19,23 @@ export function getRequisitions(command) {
     return { requisitions }
 }
 
+export function getRequisition(id) {
+    store.commit('setLoading')
+    const requisition = ref(null)
+    axios({
+        method: 'GET',
+        url: 'Requisitions/details',
+        params: {
+            id: id
+        }
+    })
+        .then((res) => (requisition.value = res.data))
+        .catch((error) => store.dispatch('setStatus', error.response.data))
+        .finally(() => store.commit('doneLoading'))
+
+    return { requisition }
+}
+
 export function addRequisition(requisition) {
     store.commit('setLoading')
     axios({

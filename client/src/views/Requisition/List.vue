@@ -7,8 +7,8 @@
 			!((user.role == 'Manager' || user.role == 'Senior_Employee') && user.divisionId == 6)
 		"
 	>
-		<router-link :to="{ name: 'requistion_create' }" custom v-slot="{ navigate }">
-			<button @click="navigate" role="link">Create</button>
+		<router-link :to="{ name: 'requisition_create' }">
+			<button>Create</button>
 		</router-link>
 	</div>
 	<div

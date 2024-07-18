@@ -8,7 +8,7 @@
 			</span>
 			<span v-else>
 				<router-link to="/dashboard">Dashboard</router-link> |
-				<router-link to="/requisitions">Petty Cash Requests</router-link> |
+				<router-link :to="{ name: 'requisitions' }">Petty Cash Requests</router-link> |
 				<span v-if="user.role == 'Finance_Admin'">
 					<router-link to="/purposes">Purposes</router-link> |
 					<router-link to="/divisions">Divisions</router-link> |

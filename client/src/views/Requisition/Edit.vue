@@ -1,5 +1,5 @@
 <template>
-	<h2>Petty Cash Requisition form</h2>
+	<h2>Edit form</h2>
 
 	<form @submit.prevent="handleSubmit">
 		<div>
@@ -49,7 +49,14 @@ const requisition = ref({
 	stage: ''
 })
 const { glAccounts } = getGLAccounts('division')
-
+// // same as beforeRouteLeave option but with no access to `this`
+// onBeforeRouteLeave((to, from) => {
+//   const answer = window.confirm(
+//     'Do you really want to leave? you have unsaved changes!'
+//   )
+//   // cancel the navigation and stay on the same page
+//   if (!answer) return false
+// })
 function handleSubmit() {
 	addRequisition(requisition.value)
 	router.push('/requisitions')

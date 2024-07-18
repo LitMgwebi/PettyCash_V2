@@ -44,7 +44,7 @@ namespace PettyCashPrototype.Controllers
                 Requisition requisition = await _requisition.GetOne(id);
                 return Ok(requisition);
             }
-            catch (Exception ex) { return BadRequest(ex.Message); }
+            catch (Exception ex) { return BadRequest(ex.InnerException); }
         }
 
         #endregion

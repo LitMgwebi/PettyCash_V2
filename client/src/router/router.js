@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import RequisitionDetails from '@/views/Requisition/Details.vue'
 import { authGuard } from './axios'
 
 const guard = (to, from, next) => {
@@ -69,8 +70,20 @@ const routes = [
         component: () => import('@/views/Requisition/List.vue')
     },
     {
+        path: '/requisitions/details/:id',
+        name: 'requisition_details',
+        component: () => import('@/views/Requisition/Details.vue'),
+        props: true
+    },
+    {
+        path: '/requisitions/edit/:id',
+        name: 'requisition_edit',
+        component: () => import('@/views/Requisition/Edit.vue'),
+        props: true
+    },
+    {
         path: '/requisitions/create',
-        name: 'requistion_create',
+        name: 'requisition_create',
         component: () => import('@/views/Requisition/Create.vue')
     },
     {
