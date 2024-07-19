@@ -3,10 +3,7 @@
     public class JobTitleService: IJobTitle
     {
         private PettyCashPrototypeContext _db;
-        public JobTitleService(PettyCashPrototypeContext db)
-        {
-            _db = db;
-        }
+        public JobTitleService(PettyCashPrototypeContext db) { _db = db; }
 
         public async Task<IEnumerable<JobTitle>> GetAll()
         {
@@ -14,6 +11,7 @@
             {
                 IEnumerable<JobTitle> jobTitles = await _db.JobTitles
                     .Where(x => x.IsActive == true)
+                    .AsNoTracking()
                     .ToListAsync();
 
                 if (jobTitles == null)
@@ -30,6 +28,7 @@
             {
                 JobTitle jobTitle = await _db.JobTitles
                     .Where(x => x.IsActive == true)
+                    .AsNoTracking()
                     .FirstOrDefaultAsync(i => i.JobTitleId == id);
 
                 if(jobTitle == null)

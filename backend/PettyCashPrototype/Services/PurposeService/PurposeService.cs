@@ -12,6 +12,7 @@
             {
                 IEnumerable<Purpose> purposes = await _db.Purposes
                     .Where(x => x.IsActive == true)
+                    .AsNoTracking()
                     .ToListAsync();
 
                 if (purposes == null)
@@ -31,6 +32,7 @@
             {
                 Purpose purpose = await _db.Purposes
                     .Where(a => a.IsActive == true)
+                    .AsNoTracking()
                     .FirstOrDefaultAsync(x => x.PurposeId == id);
                 
                 if (purpose == null)

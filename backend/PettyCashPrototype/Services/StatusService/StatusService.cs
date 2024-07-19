@@ -12,6 +12,7 @@
                 IEnumerable<Status> statuses = await _db.Statuses
                     .Where(a => a.IsActive == true)
                     .Where(c => c.IsApproved == true)
+                    .AsNoTracking()
                     .ToListAsync();
 
                 if (statuses == null) throw new Exception("System could not find any requisitions.");
@@ -27,6 +28,7 @@
                 IEnumerable<Status> statuses = await _db.Statuses
                     .Where(a => a.IsActive == true)
                     .Where (c => c.IsRecommended == true)
+                    .AsNoTracking()
                     .ToListAsync();
 
                 if (statuses == null) throw new Exception("System could not find any requisitions.");

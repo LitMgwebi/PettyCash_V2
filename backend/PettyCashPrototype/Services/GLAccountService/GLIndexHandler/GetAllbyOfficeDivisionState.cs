@@ -5,10 +5,11 @@
         public async Task<IEnumerable<Glaccount>> GetGlAccounts(PettyCashPrototypeContext db, User user)
         {
             IEnumerable<Glaccount> glAccounts = await db.Glaccounts
-                    .Where(d => d.DivisionId == user.DivisionId)
-                    .Where(o => o.OfficeId == user.OfficeId)
-                    .Where(x => x.IsActive == true)
-                    .ToListAsync();
+                .Where(d => d.DivisionId == user.DivisionId)
+                .Where(o => o.OfficeId == user.OfficeId)
+                .Where(x => x.IsActive == true)
+                .AsNoTracking()
+                .ToListAsync();
 
             if (glAccounts == null)
                 throw new Exception("System could not find any GL accounts in your department.");

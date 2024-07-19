@@ -3,10 +3,7 @@
     public class DivisonService: IDivision
     {
         private PettyCashPrototypeContext _db;
-        public DivisonService(PettyCashPrototypeContext db)
-        {
-            _db = db;
-        }
+        public DivisonService(PettyCashPrototypeContext db) { _db = db; }
 
         public async Task<IEnumerable<Division>> GetAll()
         {
@@ -14,6 +11,7 @@
             {
                 IEnumerable<Division> divisions = await _db.Divisions
                     .Where(x => x.IsActive == true)
+                    .AsNoTracking()
                     .ToListAsync();
 
                 if (divisions == null)
@@ -31,6 +29,7 @@
                 Division division = await _db.Divisions
                     .Where(a => a.IsActive == true)
                     .Include(d => d.Department)
+                    .AsNoTracking()
                     .FirstOrDefaultAsync(x => x.DivisionId == id);
 
                 if (division == null) throw new Exception("System could not retrieve the Department.");

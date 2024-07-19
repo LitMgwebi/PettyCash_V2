@@ -15,6 +15,7 @@
                 IEnumerable<MainAccount> mainAccounts = await _db.MainAccounts
                     .Where(x => x.IsActive == true)
                     .OrderBy(x => x.Name)
+                    .AsNoTracking()
                     .ToListAsync();
 
                 if (mainAccounts == null)
@@ -31,6 +32,7 @@
             {
                 MainAccount mainAccount = await _db.MainAccounts
                     .Where(a => a.IsActive == true)
+                    .AsNoTracking()
                     .FirstOrDefaultAsync(x => x.MainAccountId == id);
 
                 if (mainAccount == null)

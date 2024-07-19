@@ -2,13 +2,10 @@
 
 namespace PettyCashPrototype.Services.DepartmentService
 {
-    public class DepartmentService: IDepartment
+    public class DepartmentService : IDepartment
     {
         private PettyCashPrototypeContext _db;
-        public DepartmentService(PettyCashPrototypeContext db)
-        {
-            _db = db;
-        }
+        public DepartmentService(PettyCashPrototypeContext db) { _db = db; }
 
         public async Task<IEnumerable<Department>> GetAll()
         {
@@ -16,6 +13,7 @@ namespace PettyCashPrototype.Services.DepartmentService
             {
                 IEnumerable<Department> departments = await _db.Departments
                     .Where(x => x.IsActive == true)
+                    .AsNoTracking()
                     .ToListAsync();
 
                 if (departments == null)
@@ -33,6 +31,7 @@ namespace PettyCashPrototype.Services.DepartmentService
             {
                 Department department = await _db.Departments
                 .Where(a => a.IsActive == true)
+                    .AsNoTracking()
                 .FirstOrDefaultAsync(x => x.DepartmentId == id);
 
                 if (department == null) throw new Exception("System could not retrieve the Department.");

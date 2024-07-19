@@ -12,6 +12,7 @@
             {
                 IEnumerable<Office> offices = await _db.Offices
                     .Where(x => x.IsActive == true)
+                    .AsNoTracking()
                     .ToListAsync();
 
                 if (offices == null)
@@ -28,6 +29,7 @@
             {
                 Office office = await _db.Offices
                     .Where(a => a.IsActive == true)
+                    .AsNoTracking()
                     .FirstOrDefaultAsync(i => i.OfficeId == id);
 
                 if (office == null) throw new Exception("System could not retrieve Office.");

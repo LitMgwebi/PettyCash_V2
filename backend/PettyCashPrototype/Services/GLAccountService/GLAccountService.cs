@@ -60,6 +60,7 @@ namespace PettyCashPrototype.Services.GLAccountService
                     .Include(x => x.SubAccount)
                     .Include(x => x.Division)
                     .Include(x => x.Office)
+                    .AsNoTracking()
                     .FirstOrDefaultAsync(x => x.GlaccountId == id);
 
                 if (glAccount == null) throw new Exception("System could not retrieve the GL account.");

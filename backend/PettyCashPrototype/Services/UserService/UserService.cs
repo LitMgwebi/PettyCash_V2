@@ -28,6 +28,7 @@ namespace PettyCashPrototype.Services.UserService
             {
                 IEnumerable<User> users = await _db.Users
                     .Where(a => a.IsActive == true)
+                    .AsNoTracking()
                     .ToListAsync();
 
                 IEnumerable<UserMapper> userMapped = (users
@@ -47,7 +48,9 @@ namespace PettyCashPrototype.Services.UserService
             try
             {
                 User user = await _db.Users
+                    .AsNoTracking()
                     .Include(d => d.Division)
+                    .ThenInclude(a =>a.Department)
                     .Include(j => j.JobTitle)
                     .Where(a => a.IsActive == true)
                     .FirstOrDefaultAsync(e => e.Email == email);
@@ -67,6 +70,7 @@ namespace PettyCashPrototype.Services.UserService
                     .Include(d => d.Division)
                     .Include(j => j.JobTitle)
                     .Where(a => a.IsActive == true)
+                    .AsNoTracking()
                     .FirstOrDefaultAsync(e => e.Id == id);
 
                 if (user == null) throw new Exception("System was not able to retrieve user");
