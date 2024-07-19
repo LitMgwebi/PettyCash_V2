@@ -74,7 +74,7 @@ namespace PettyCashPrototype.Controllers
         #region PUT
 
         [HttpPut, Route("edit")]
-        public ActionResult Edit(RequisitionModelForEdit requisitionModel)
+        public async Task<ActionResult> Edit(RequisitionModelForEdit requisitionModel)
         {
             try
             {
@@ -87,17 +87,17 @@ namespace PettyCashPrototype.Controllers
                 if (requisitionModel.command == "recommendation")
                 {
                     editRequisition.setState(new RecommendationState());
-                    messageResponse = editRequisition.request(_requisition, requisitionModel.Requisition, userId);
+                    messageResponse = await editRequisition.request(_requisition, requisitionModel.Requisition, userId);
                 }
                 else if (requisitionModel.command == "approval")
                 {
                     editRequisition.setState(new ApprovalState());
-                    messageResponse = editRequisition.request(_requisition, requisitionModel.Requisition, userId);
+                    messageResponse = await editRequisition.request(_requisition, requisitionModel.Requisition, userId);
                 }
                 else if (requisitionModel.command == "edit")
                 {
                     editRequisition.setState(new WholeRequisitionState());
-                    messageResponse = editRequisition.request(_requisition, requisitionModel.Requisition);
+                    messageResponse = await editRequisition.request(_requisition, requisitionModel.Requisition);
                 }
                 return Ok(new { message = messageResponse });
             }

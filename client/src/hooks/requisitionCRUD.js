@@ -32,7 +32,7 @@ export function getRequisition(id) {
         .then((res) => (requisition.value = res.data))
         .catch((error) => store.dispatch('setStatus', error.response.data))
         .finally(() => store.commit('doneLoading'))
-
+    //Refresh res.data CALL
     return { requisition }
 }
 

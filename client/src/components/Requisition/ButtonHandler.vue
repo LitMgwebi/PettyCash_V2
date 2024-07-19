@@ -24,7 +24,8 @@
 				user.role == 'Manager' ||
 				user.role == 'Executive') &&
 			user.divisionId == 6 &&
-			requisition.financeApproval == null
+			requisition.financeApproval == null &&
+			requisition.managerRecommendation != null
 		"
 	>
 		<span class="dropdown">
@@ -38,7 +39,7 @@
 					:value="status.statusId"
 					:key="status.statusId"
 				>
-					{{ status.description }}
+					{{ status.option }}
 				</option>
 			</select>
 		</span>
@@ -69,7 +70,7 @@
 					:value="status.statusId"
 					:key="status.statusId"
 				>
-					{{ status.description }}
+					{{ status.option }}
 				</option>
 			</select>
 		</span>

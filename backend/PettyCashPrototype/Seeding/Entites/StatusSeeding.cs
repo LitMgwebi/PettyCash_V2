@@ -10,6 +10,7 @@ namespace PettyCashPrototype.Seeding.Entites
                 new Status
                 {
                     StatusId = 1,
+                    Option = "Approve",
                     Description = "Approved",
                     IsApproved = true,
                     IsRecommended = false,
@@ -18,6 +19,7 @@ namespace PettyCashPrototype.Seeding.Entites
                 new Status
                 {
                     StatusId = 2,
+                    Option = "Decline",
                     Description = "Declined",
                     IsApproved = true,
                     IsRecommended = false,
@@ -26,6 +28,7 @@ namespace PettyCashPrototype.Seeding.Entites
                 new Status
                 {
                     StatusId = 3,
+                    Option = "Recommend",
                     Description = "Recommended",
                     IsApproved = false,
                     IsRecommended = true,
@@ -34,7 +37,8 @@ namespace PettyCashPrototype.Seeding.Entites
                 new Status
                 {
                     StatusId = 4,
-                    Description = "Not Recommended",
+                    Option = "Reject",
+                    Description = "Rejected",
                     IsApproved = false,
                     IsRecommended = true,
                     IsActive = true

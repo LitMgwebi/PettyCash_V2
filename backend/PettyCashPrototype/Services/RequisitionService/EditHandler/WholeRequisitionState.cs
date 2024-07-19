@@ -2,7 +2,7 @@
 {
     public class WholeRequisitionState : IEditState
     {
-        public string EditRequisition(IRequisition service, Requisition requisition, string userId)
+        public async Task<string> EditRequisition(IRequisition service, Requisition requisition, string userId)
         {
             if (requisition.ManagerRecommendationId == null)
             {

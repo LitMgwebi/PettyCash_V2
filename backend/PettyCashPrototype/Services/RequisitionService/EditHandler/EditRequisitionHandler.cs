@@ -6,9 +6,9 @@
 
         public void setState(IEditState state) => this.state = state;
 
-        public string request(IRequisition service, Requisition requisition, string userId = "")
+        public async Task<string> request(IRequisition service, Requisition requisition, string userId = "")
         {
-            string message = state.EditRequisition(service, requisition, userId);
+            string message = await state.EditRequisition(service, requisition, userId);
             return message;
         }
     }

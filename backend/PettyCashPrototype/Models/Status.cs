@@ -4,6 +4,8 @@ public partial class Status
 {
     public int StatusId { get; set; }
 
+    public string? Option { get; set; }
+
     public string? Description { get; set; }
 
     public bool IsActive { get; set; } = true;
