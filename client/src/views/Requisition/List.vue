@@ -48,5 +48,6 @@ import ApplicantList from '@/components/Requisition/ApplicantList.vue'
 import RecommendationList from '@/components/Requisition/RecommendationList.vue'
 import ApprovalList from '@/components/Requisition/ApprovalList.vue'
 import { inject } from 'vue'
+
 const user = inject('User')
 </script>

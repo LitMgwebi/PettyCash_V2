@@ -51,10 +51,12 @@ namespace PettyCashPrototype.Services.RequisitionService
             {
                 Requisition requisition = await _db.Requisitions
                     .Include(m => m.ManagerRecommendation)
+                    .Include(f => f.FinanceApproval)
+                    .Include(m => m.Manager)
                     .Include(f => f.FinanceOfficer)
+                    .Include(z => z.Applicant)
                     .Include(gl => gl.Glaccount)
                     .Where(a => a.IsActive == true)
-                    .Include(z => z.Applicant)
                     .AsNoTracking()
                     .FirstOrDefaultAsync(i => i.RequisitionId == id);
 

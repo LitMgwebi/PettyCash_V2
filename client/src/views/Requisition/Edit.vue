@@ -1,7 +1,7 @@
 <template>
 	<h2>Edit form</h2>
 
-	<form @submit.prevent="handleSubmit">
+	<form v-if="requisition" @submit.prevent="handleSubmit">
 		<div>
 			<label>Amount Requested: </label>
 			<input type="text" v-model="requisition.amountRequested" />
@@ -17,7 +17,6 @@
 		<div class="dropdown">
 			<label>GL Accounts: </label>
 			<select :disabled="glAccounts.length == 0" v-model="requisition.glaccountId">
-				<option value="" disabled>Select a GL account</option>
 				<option
 					v-for="glAccount in glAccounts"
 					:value="glAccount.glaccountId"
@@ -28,26 +27,25 @@
 			</select>
 		</div>
 		<div class="submit">
-			<button>Add</button>
-			<button @click="reloadPage">Cancel</button>
+			<button>Edit</button>
+			<button>Cancel</button>
 		</div>
 	</form>
+	<div v-else>Cannot load information, Please contact ICT</div>
 </template>
 
 <script setup>
 import { getGLAccounts } from '@/hooks/glAccountCRUD'
-import { inject, ref } from 'vue'
-import { addRequisition } from '@/hooks/requisitionCRUD'
+import { defineProps, ref, toRefs } from 'vue'
+import { editRequisition, getRequisition } from '@/hooks/requisitionCRUD'
 import router from '@/router/router'
 
 const reloadPage = () => location.reload()
-const requisition = ref({
-	glaccountId: '',
-	applicantId: '',
-	amountRequested: 0,
-	description: '',
-	stage: ''
-})
+
+const props = defineProps(['id'])
+const { id } = toRefs(props)
+
+const { requisition } = getRequisition(id.value)
 const { glAccounts } = getGLAccounts('division')
 // // same as beforeRouteLeave option but with no access to `this`
 // onBeforeRouteLeave((to, from) => {
@@ -57,8 +55,9 @@ const { glAccounts } = getGLAccounts('division')
 //   // cancel the navigation and stay on the same page
 //   if (!answer) return false
 // })
+
 function handleSubmit() {
-	addRequisition(requisition.value)
-	router.push('/requisitions')
+	editRequisition(requisition.value, 'edit')
+	router.push({ name: 'requisition_details', params: { id: requisition.requisitionId } })
 }
 </script>

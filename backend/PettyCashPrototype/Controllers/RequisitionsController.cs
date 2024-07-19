@@ -42,6 +42,7 @@ namespace PettyCashPrototype.Controllers
             try
             {
                 Requisition requisition = await _requisition.GetOne(id);
+                var startdate = requisition.StartDate;
                 return Ok(requisition);
             }
             catch (Exception ex) { return BadRequest(ex.InnerException); }

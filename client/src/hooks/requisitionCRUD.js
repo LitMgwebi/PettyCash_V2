@@ -67,7 +67,7 @@ export function deleteRequisition(requisition) {
     store.commit('setLoading')
     axios({
         method: 'DELETE',
-        url: 'Requisition/delete',
+        url: 'Requisitions/delete',
         data: requisition
     })
         .then((res) => store.dispatch('setStatus', res.data.message))
