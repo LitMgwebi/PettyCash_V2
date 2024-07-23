@@ -12,6 +12,11 @@
 		>
 			<button>Edit</button>
 		</router-link>
+		<div
+			v-if="requisition.glaccount.needsMotivation == true && requisition.motivations == null"
+		>
+			upload
+		</div>
 		<span v-if="requisition.issuerId == null">
 			<button @click="deleteRecord">Delete</button>
 		</span>

@@ -15,7 +15,7 @@
                     .ToListAsync();
 
                 if (divisions == null)
-                    throw new Exception("System could not find any departments");
+                    throw new Exception("System could not find any departments.");
 
                 return divisions;
             }
@@ -46,7 +46,7 @@
                 _db.Divisions.Add(division);
                 int result = _db.SaveChanges();
 
-                if (result == 0) throw new DbUpdateException("System was unable to add the new departments.");
+                if (result == 0) throw new DbUpdateException("System was unable to add the new department.");
             }
             catch { throw; }
         }
@@ -58,7 +58,7 @@
                 _db.Divisions.Update(division);
                 int result = _db.SaveChanges();
 
-                if (result == 0) throw new DbUpdateException($"System could not edit ${division.Name}");
+                if (result == 0) throw new DbUpdateException($"System could not edit ${division.Name}.");
             }
             catch { throw; }
         }
@@ -71,7 +71,7 @@
                 _db.Divisions.Update(division);
                 int result = _db.SaveChanges();
 
-                if(result == 0) throw new DbUpdateException($"System could not delete ${division.Name}");
+                if(result == 0) throw new DbUpdateException($"System could not delete ${division.Name}.");
             }
             catch { throw; }
         }

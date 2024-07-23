@@ -14,7 +14,9 @@
             {
                 requisitions = await db.Requisitions
                     .Include(a => a.Applicant)
+                    .Include(m => m.Motivations)
                     .Include(gl => gl.Glaccount)
+                    .Where(gl => gl.Glaccount!.NeedsMotivation == true && gl.Motivations.Count > 0)
                     .Where(a => a.IsActive == true)
                     .Where(d => d.Applicant!.JobTitle!.JobTitleId == 7 && d.Applicant.Division!.DepartmentId == user.Division!.DepartmentId)
                     .Where(a => a.ManagerRecommendation == null && a.FinanceApproval == null)
@@ -25,8 +27,10 @@
             {
                 requisitions = await db.Requisitions
                     .Include(a => a.Applicant)
+                    .Include(m => m.Motivations)
                     .Include(gl => gl.Glaccount)
                     .Where(a => a.IsActive == true)
+                    .Where(gl => gl.Glaccount!.NeedsMotivation == true && gl.Motivations.Count > 0)
                     .Where(d => d.Applicant!.DivisionId == user.DivisionId && d.Applicant!.JobTitle!.JobTitleId != 7)
                     .Where(a => a.ManagerRecommendation == null && a.FinanceApproval == null)
                     .AsNoTracking()
@@ -36,7 +40,9 @@
             {
                 requisitions = await db.Requisitions
                     .Include(a => a.Applicant)
+                    .Include(m => m.Motivations)
                     .Include(gl => gl.Glaccount)
+                    .Where(gl => gl.Glaccount!.NeedsMotivation == true && gl.Motivations.Count > 0)
                     .Where(a => a.IsActive == true)
                     .Where(d => d.Applicant!.DivisionId == user.DivisionId)
                     .Where(a => a.ManagerRecommendation == null && a.FinanceApproval == null)

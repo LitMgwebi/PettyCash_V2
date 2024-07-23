@@ -34,6 +34,8 @@ public partial class PettyCashPrototypeContext : IdentityDbContext<User>
 
     public virtual DbSet<Status> Statuses { get; set; }
 
+    public virtual DbSet<Motivation> Motivations { get; set; }
+
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

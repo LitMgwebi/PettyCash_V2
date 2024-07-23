@@ -1,4 +1,5 @@
-﻿using PettyCashPrototype.Services.RequisitionService.EditHandler;
+﻿using PettyCashPrototype.Models;
+using PettyCashPrototype.Services.RequisitionService.EditHandler;
 using System.Security.Claims;
 
 namespace PettyCashPrototype.Controllers
@@ -9,10 +10,9 @@ namespace PettyCashPrototype.Controllers
     public class RequisitionsController : ControllerBase
     {
         private IRequisition _requisition;
-        public RequisitionsController(IRequisition requisition) 
-        { 
-            _requisition = requisition; 
-            
+        public RequisitionsController(IRequisition requisition)
+        {
+            _requisition = requisition;
         }
 
         #region GET
@@ -60,13 +60,10 @@ namespace PettyCashPrototype.Controllers
                 var identity = (ClaimsIdentity)User.Identity!;
                 var userId = identity.Claims.Where(c => c.Type == ClaimTypes.Sid).Select(c => c.Value).FirstOrDefault()!;
 
-                requisition.Stage = "Requisiton has been sent for recommendation.";
-                requisition.ApplicantId = userId;
-                requisition.StartDate = DateTime.UtcNow;
-                await _requisition.Create(requisition);
-                return Ok(new { message = "The new Requisition has been added to the system" });
+                string message = await _requisition.Create(requisition, userId);
+                return Ok(new { message = message });
             }
-            catch (Exception ex) { return BadRequest(ex.Message); }
+            catch (Exception ex) { return BadRequest(ex); }
         }
 
         #endregion

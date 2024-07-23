@@ -6,10 +6,10 @@
 			<label>Amount Requested: </label>
 			<input type="text" v-model="requisition.amountRequested" />
 		</div>
-		<div v-if="requisition.amountRequested >= 2000">
+		<!-- <div v-if="requisition.amountRequested >= 2000">
 			<label>Motivation </label>
 			<input type="text" v-model="requisition.file" required />
-		</div>
+		</div> -->
 		<div>
 			<label>Description: </label>
 			<textarea type="text" v-model="requisition.description" />

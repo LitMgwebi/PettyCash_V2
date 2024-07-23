@@ -7,7 +7,7 @@ const guard = (to, from, next) => {
     if (auth) {
         next()
     } else {
-        router.push('/')
+        router.push({ name: 'home' })
         next()
     }
 }
@@ -31,6 +31,7 @@ const routes = [
         path: '/dashboard',
         name: 'dashboard',
         component: () => import('@/views/User/Dashboard.vue')
+        // beforeEnter: guard
     },
     {
         path: '/purposes',

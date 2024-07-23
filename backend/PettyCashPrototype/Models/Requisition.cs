@@ -66,4 +66,7 @@ public partial class Requisition
 
     [ForeignKey(nameof(ManagerRecommendationId))]
     public virtual Status? ManagerRecommendation { get; set; }
+
+    [JsonIgnore]
+    public virtual IList<Motivation> Motivations { get; set; } = new List<Motivation>();
 }

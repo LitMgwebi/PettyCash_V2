@@ -1,4 +1,6 @@
-﻿using PettyCashPrototype.Services.RequisitionService.IndexHandler;
+﻿using PettyCashPrototype.Models;
+using PettyCashPrototype.Services.RequisitionService.CreateHandler;
+using PettyCashPrototype.Services.RequisitionService.IndexHandler;
 
 namespace PettyCashPrototype.Services.RequisitionService
 {
@@ -66,27 +68,30 @@ namespace PettyCashPrototype.Services.RequisitionService
             catch { throw; }
         }
 
-        public async Task Create(Requisition requisition)
+        public async Task<string> Create(Requisition requisition , string userId)
         {
             try
             {
-                requisition.Applicant = await _user.GetUserById(requisition.ApplicantId);
-                requisition.Glaccount = await _glAccount.GetOne(requisition.GlaccountId);
+                Glaccount glaccount = await _glAccount.GetOne(requisition.GlaccountId);
+                CreateRequisitionHandler createHandler = new CreateRequisitionHandler();
+                string message = string.Empty;
 
-                /*
-                The code for emails to be sent to the applicant and the users Line Manager/GM/Bookkeeper/Accountant for recommendation, stating that this requisition has been started.
-                Is there a design pattern I could use to switch between the various potential receivers?
-                    -Something that chooses based on the role of the user - The role would have to be passed down to this method for that to be operational.
-                    
-                 */
+                if(glaccount.NeedsMotivation == true)
+                {
+                    createHandler.setState(new WithMotivation());
+                    message = await createHandler.request(requisition, _db, userId);
+                } 
+                else if( glaccount.NeedsMotivation == false)
+                {
+                    createHandler.setState(new WithoutMotivation());
+                    message = await createHandler.request(requisition, _db, userId);
+                }
 
-                _db.Requisitions.Add(requisition);
-                int result = _db.SaveChanges();
-
-                if (result == 0) throw new DbUpdateException("System could not add the new Requisition.");
+                return message;
             }
             catch { throw; }
         }
+
 
         public void Edit(Requisition requisition)
         {

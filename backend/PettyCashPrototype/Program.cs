@@ -5,6 +5,7 @@ global using PettyCashPrototype.Services.RequisitionService;
 global using PettyCashPrototype.Services.MainAccountService;
 global using PettyCashPrototype.Services.SubAccountService;
 global using PettyCashPrototype.Services.DepartmentService;
+global using PettyCashPrototype.Services.MotivationService;
 global using PettyCashPrototype.Services.GLAccountService;
 global using PettyCashPrototype.Services.DivisionService;
 global using PettyCashPrototype.Services.JobTitleService;
@@ -46,6 +47,7 @@ builder.Services.AddScoped<IPurpose, PurposeService>();
 builder.Services.AddScoped<IDivision, DivisonService>();
 builder.Services.AddScoped<IJobTitle, JobTitleService>();
 builder.Services.AddScoped<IGLAccount, GLAccountService>();
+builder.Services.AddScoped<IMotivation, MotivationService>();
 builder.Services.AddScoped<ISubAccount, SubAccountService>();
 builder.Services.AddScoped<IDepartment, DepartmentService>();
 builder.Services.AddScoped<IMainAccount, MainAccountService>();
@@ -122,7 +124,11 @@ builder.Services.AddAuthorization(options =>
 
 #region Identity Configuration
 
-builder.Services.AddDbContext<PettyCashPrototypeContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DevelopmentConnection")));
+builder.Services.AddDbContext<PettyCashPrototypeContext>(options =>
+{
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DevelopmentConnection"));
+    options.EnableSensitiveDataLogging();
+});
 builder.Services.AddIdentityCore<User>()
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<PettyCashPrototypeContext>();
@@ -147,7 +153,6 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
 app.UseCors(options => options
     .AllowAnyHeader()
     .AllowAnyMethod()
@@ -158,6 +163,7 @@ app.UseCors(options => options
 app.UseRouting();
 
 app.UseHttpsRedirection();
+app.UseFileServer();
 
 app.UseAuthentication();
 app.UseAuthorization();
