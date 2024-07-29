@@ -2,7 +2,17 @@
 {
     public class WithMotivation: ICreateState
     {
-        public async Task<string> CreateRequisition(Requisition requisition, PettyCashPrototypeContext _db, string userId)
+        private readonly Requisition requisition;
+        private readonly PettyCashPrototypeContext _db;
+        private readonly string userId;
+
+        public WithMotivation(Requisition requisition, PettyCashPrototypeContext db, string userId)
+        {
+            this.requisition = requisition;
+            _db = db;
+            this.userId = userId;
+        }
+        public async Task<string> CreateRequisition()
         {
             requisition.Stage = "Requisition has been stored in the system. Motivation must be uploaded before it can be sent for recommendation.";
             requisition.ApplicantId = userId;

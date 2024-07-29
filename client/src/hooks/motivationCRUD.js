@@ -21,7 +21,7 @@ export function getMotivations(id) {
 
 export function addMotivation(File, id) {
     store.commit('setLoading')
-    // console.log(File.append, id)
+    console.log(File.append, id)
     axios({
         method: 'POST',
         url: 'Motivations/create',
@@ -29,6 +29,18 @@ export function addMotivation(File, id) {
         headers: {
             'Content-Type': 'multipart/form-data'
         }
+    })
+        .then((res) => store.dispatch('setStatus', res.data.message))
+        .catch((error) => store.dispatch('setStatus', error.response.data))
+        .finally(() => store.commit('doneLoading'))
+}
+
+export function deleteMotivation(motivation) {
+    store.commit('setLoading')
+    axios({
+        method: 'DELETE',
+        url: 'Motivations/delete',
+        data: motivation
     })
         .then((res) => store.dispatch('setStatus', res.data.message))
         .catch((error) => store.dispatch('setStatus', error.response.data))

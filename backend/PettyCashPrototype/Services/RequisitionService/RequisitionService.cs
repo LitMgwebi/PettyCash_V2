@@ -31,23 +31,27 @@ namespace PettyCashPrototype.Services.RequisitionService
                 {
                     indexHandler.setState(new GetAllState(_db));
                     requisitions = await indexHandler.request();
-                } else if (command == "forOne") 
+                }
+                else if (command == "forOne")
                 {
                     indexHandler.setState(new GetForApplicantState(_db, userId));
                     requisitions = await indexHandler.request();
-                } else if (command == "recommendation")
+                }
+                else if (command == "recommendation")
                 {
                     indexHandler.setState(new GetForRecommendationState(_user, _db, userId, role));
                     requisitions = await indexHandler.request();
-                } else if(command == "approval")
+                }
+                else if (command == "approval")
                 {
                     indexHandler.setState(new GetForApprovalState(_db, divisionId, jobTitleId, _jobTitle, userId));
                     requisitions = await indexHandler.request();
-                } else if(command == "issuing")
+                }
+                else if (command == "issuing")
                 {
                     indexHandler.setState(new GetForIssuingState(_user, _db, userId));
                     requisitions = await indexHandler.request();
-                } 
+                }
                 if (requisitions == null) throw new Exception("System could not find any of your requisition forms.");
                 return requisitions;
             }
@@ -77,7 +81,7 @@ namespace PettyCashPrototype.Services.RequisitionService
             catch { throw; }
         }
 
-        public async Task<string> Create(Requisition requisition , string userId)
+        public async Task<string> Create(Requisition requisition, string userId)
         {
             try
             {
@@ -85,15 +89,15 @@ namespace PettyCashPrototype.Services.RequisitionService
                 CreateRequisitionHandler createHandler = new CreateRequisitionHandler();
                 string message = string.Empty;
 
-                if(glaccount.NeedsMotivation == true)
+                if (glaccount.NeedsMotivation == true)
                 {
-                    createHandler.setState(new WithMotivation());
-                    message = await createHandler.request(requisition, _db, userId);
-                } 
-                else if( glaccount.NeedsMotivation == false)
+                    createHandler.setState(new WithMotivation(requisition, _db, userId));
+                    message = await createHandler.request();
+                }
+                else if (glaccount.NeedsMotivation == false)
                 {
-                    createHandler.setState(new WithoutMotivation());
-                    message = await createHandler.request(requisition, _db, userId);
+                    createHandler.setState(new WithoutMotivation(requisition, _db, userId));
+                    message = await createHandler.request();
                 }
 
                 return message;

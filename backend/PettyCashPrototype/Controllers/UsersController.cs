@@ -49,7 +49,7 @@ namespace PettyCashPrototype.Controllers
                     //return Ok(new { token, message = "You are logged in.", user = userMapper });
                 }
                 return Problem("Could not register user to system.");
-            } catch(Exception ex) { return BadRequest(new {ex}); }
+            } catch(Exception ex) { return BadRequest(new {ex.InnerException}); }
         }
         #endregion
     }

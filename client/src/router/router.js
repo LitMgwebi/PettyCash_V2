@@ -88,6 +88,12 @@ const routes = [
         component: () => import('@/views/Requisition/Create.vue')
     },
     {
+        path: '/motivations/:id',
+        name: 'motivations',
+        component: () => import('@/views/Motivation/Index.vue'),
+        props: true
+    },
+    {
         path: '/:catchAll(.*)',
         name: 'notFound',
         component: () => import('@/views/NotFound.vue')

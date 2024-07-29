@@ -82,18 +82,18 @@ namespace PettyCashPrototype.Controllers
 
                 if (requisitionModel.command == "recommendation")
                 {
-                    editRequisition.setState(new RecommendationState());
-                    messageResponse = await editRequisition.request(_requisition, requisitionModel.Requisition, userId);
+                    editRequisition.setState(new RecommendationState(_requisition, requisitionModel.Requisition, userId));
+                    messageResponse = await editRequisition.request();
                 }
                 else if (requisitionModel.command == "approval")
                 {
-                    editRequisition.setState(new ApprovalState());
-                    messageResponse = await editRequisition.request(_requisition, requisitionModel.Requisition, userId);
+                    editRequisition.setState(new ApprovalState(_requisition, requisitionModel.Requisition, userId));
+                    messageResponse = await editRequisition.request();
                 }
                 else if (requisitionModel.command == "edit")
                 {
-                    editRequisition.setState(new WholeRequisitionState());
-                    messageResponse = await editRequisition.request(_requisition, requisitionModel.Requisition);
+                    editRequisition.setState(new WholeRequisitionState(_requisition, requisitionModel.Requisition));
+                    messageResponse = await editRequisition.request();
                 }
                 return Ok(new { message = messageResponse });
             }

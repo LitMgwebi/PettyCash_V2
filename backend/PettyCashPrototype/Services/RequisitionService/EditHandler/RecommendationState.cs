@@ -2,7 +2,17 @@
 {
     public class RecommendationState: IEditState
     {
-        public async Task<string> EditRequisition(IRequisition service, Requisition requisition, string userId)
+        private readonly IRequisition service;
+        private readonly Requisition requisition;
+        private string userId;
+        public RecommendationState(IRequisition service, Requisition requisition, string userId)
+        {
+            this.service = service;
+            this.requisition = requisition;
+            this.userId = userId;
+        }
+
+        public async Task<string> EditRequisition()
         {
             /*
              * There has to code here which is used to send emails to the applicant and the specific Financial Auth

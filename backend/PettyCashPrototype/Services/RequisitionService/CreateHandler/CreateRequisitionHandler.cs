@@ -6,9 +6,9 @@
 
         public void setState(ICreateState state) => this.state = state;
 
-        public async Task<string> request(Requisition requisition, PettyCashPrototypeContext _db, string userId)
+        public async Task<string> request()
         {
-            string message = await state.CreateRequisition(requisition, _db, userId);
+            string message = await state.CreateRequisition();
             return message;
         } 
     }

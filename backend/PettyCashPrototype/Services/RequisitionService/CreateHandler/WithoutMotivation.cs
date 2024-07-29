@@ -4,7 +4,17 @@ namespace PettyCashPrototype.Services.RequisitionService.CreateHandler
 {
     public class WithoutMotivation : ICreateState
     {
-        public async Task<string> CreateRequisition(Requisition requisition, PettyCashPrototypeContext _db, string userId)
+        private readonly Requisition requisition;
+        private readonly PettyCashPrototypeContext _db;
+        private readonly string userId;
+
+        public WithoutMotivation(Requisition requisition, PettyCashPrototypeContext db, string userId) 
+        {
+            this.requisition = requisition;
+            _db = db;
+            this.userId = userId;
+        }
+        public async Task<string> CreateRequisition()
         {
             requisition.Stage = "Requisiton has been sent for recommendation.";
             requisition.ApplicantId = userId;

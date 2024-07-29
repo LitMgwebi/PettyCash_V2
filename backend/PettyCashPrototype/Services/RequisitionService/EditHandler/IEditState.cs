@@ -2,6 +2,6 @@
 {
     public interface IEditState
     {
-        Task<string> EditRequisition(IRequisition service, Requisition requisition, string userId);
+        Task<string> EditRequisition();
     }
 }

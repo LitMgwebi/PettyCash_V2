@@ -1,5 +1,6 @@
 ﻿using System.Security.Claims;
 using System.Security.Principal;
+using PettyCashPrototype.Services.RequisitionService.EditHandler;
 
 namespace PettyCashPrototype.Controllers
 {
@@ -9,7 +10,12 @@ namespace PettyCashPrototype.Controllers
     public class MotivationsController : ControllerBase
     {
         private IMotivation _motivation;
-        public MotivationsController(IMotivation motivation) => _motivation = motivation;
+        private IRequisition _requisition;
+        public MotivationsController(IMotivation motivation, IRequisition requisition)
+        { 
+            _motivation = motivation;
+            _requisition = requisition;
+        }
 
         #region GET
 
@@ -47,7 +53,15 @@ namespace PettyCashPrototype.Controllers
                 var identity = (ClaimsIdentity)User.Identity!;
                 string name = identity.Claims.Where(c => c.Type == ClaimTypes.Name).Select(c => c.Value).FirstOrDefault()!;
                 string message = await _motivation.Upload(uploadFile.File, uploadFile.RequisitionId, name);
-                return Ok(new { message = message });
+
+
+                Requisition requisition = await _requisition.GetOne(uploadFile.RequisitionId);
+                EditRequisitionHandler editRequisition = new EditRequisitionHandler();
+                requisition.Stage = "Motivation has been uploaded. Requisition has been sent for recommendation.";
+                editRequisition.setState(new WholeRequisitionState(_requisition, requisition));
+                string messageResponse = await editRequisition.request();
+
+                return Ok(new { message = $"{message} and {messageResponse}." });
             }
             catch (Exception ex) { return BadRequest(ex.InnerException); }
         }

@@ -41,13 +41,19 @@
 	>
 		<ApprovalList />
 	</div>
+
+	<div v-if="user.jobTitleId == 17">
+		<IssuingList />
+	</div>
 </template>
 
 <script setup>
 import ApplicantList from '@/components/Requisition/ApplicantList.vue'
 import RecommendationList from '@/components/Requisition/RecommendationList.vue'
 import ApprovalList from '@/components/Requisition/ApprovalList.vue'
+import IssuingList from '@/components/Requisition/IssuingList.vue'
 import { inject } from 'vue'
 
 const user = inject('User')
+console.log(user)
 </script>

@@ -1,4 +1,5 @@
 ﻿using PettyCashPrototype.Services.MotivationService.GetMotivations;
+using PettyCashPrototype.Services.RequisitionService.EditHandler;
 using System.Threading;
 
 namespace PettyCashPrototype.Services.MotivationService
@@ -6,7 +7,9 @@ namespace PettyCashPrototype.Services.MotivationService
     public class MotivationService : IMotivation
     {
         private PettyCashPrototypeContext _db;
-        public MotivationService(PettyCashPrototypeContext db) { _db = db; }
+        public MotivationService(PettyCashPrototypeContext db) { 
+            _db = db;
+        }
 
         public async Task<IEnumerable<Motivation>> GetAll(int requisitionId)
         {
@@ -85,10 +88,9 @@ namespace PettyCashPrototype.Services.MotivationService
                     {
                         await file.CopyToAsync(fileStream);
                     }
-
                     _db.Motivations.Add(motivation);
-                    int result = _db.SaveChanges();
 
+                    int result = _db.SaveChanges();
                     if (result == 0) throw new DbUpdateException("System was unable to add the new motivation.");
                     return "The motivation has been uploaded successfully.";
                 }

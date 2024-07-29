@@ -2,6 +2,6 @@
 {
     public interface ICreateState
     {
-        public Task<string> CreateRequisition(Requisition requisition, PettyCashPrototypeContext _db, string userId);
+        public Task<string> CreateRequisition();
     }
 }

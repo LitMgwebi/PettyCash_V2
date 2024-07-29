@@ -2,7 +2,15 @@
 {
     public class WholeRequisitionState : IEditState
     {
-        public async Task<string> EditRequisition(IRequisition service, Requisition requisition, string userId)
+        private readonly IRequisition service;
+        private readonly Requisition requisition;
+        public WholeRequisitionState(IRequisition service, Requisition requisition)
+        {
+            this.service = service;
+            this.requisition = requisition;
+        }
+
+        public async Task<string> EditRequisition()
         {
             if (requisition.ManagerRecommendationId == null)
             {

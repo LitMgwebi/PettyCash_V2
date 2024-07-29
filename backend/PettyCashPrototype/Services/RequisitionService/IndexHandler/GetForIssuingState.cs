@@ -19,7 +19,7 @@ namespace PettyCashPrototype.Services.RequisitionService.IndexHandler
         {
             User user = await _user.GetUserById(userId);
             IEnumerable<Requisition> requisitions = new List<Requisition>();
-            if (user.JobTitle!.JobTitleId == 16)
+            if (user.JobTitle!.JobTitleId == 17)
             {
                 requisitions = await db.Requisitions
                     .Include(a => a.Applicant)

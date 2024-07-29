@@ -101,17 +101,17 @@ namespace PettyCashPrototype.Services.UserService
         {
             try
             {
-                user.Office = await _office.GetOne(user.OfficeId);
-                user.Division = await _department.GetOne(user.DivisionId);
-                user.JobTitle = await _jobTitle.GetOne(user.JobTitleId);
+                //user.Office = await _office.GetOne(user.OfficeId);
+                //user.Division = await _department.GetOne(user.DivisionId);
+                //user.JobTitle = await _jobTitle.GetOne(user.JobTitleId);
                 IdentityResult result = await _userManager.CreateAsync(user, password);
 
-                if (user.JobTitle.Description.Contains("GM"))
-                    result = await _userManager.AddToRoleAsync(user, "GM_Manager");
-                else if (user.JobTitle.Description == "Manager")
-                    result = await _userManager.AddToRoleAsync(user, "Manager");
-                else if (user.JobTitle.Description == "Staff")
-                    result = await _userManager.AddToRoleAsync(user, "Employee");
+                //if (user.JobTitle.Description.Contains("GM"))
+                //    result = await _userManager.AddToRoleAsync(user, "GM_Manager");
+                //else if (user.JobTitle.Description == "Manager")
+                //    result = await _userManager.AddToRoleAsync(user, "Manager");
+                //else if (user.JobTitle.Description == "Staff")
+                //    result = await _userManager.AddToRoleAsync(user, "Employee");
                 if (result.Succeeded)
                 {
                     await _db.SaveChangesAsync();
