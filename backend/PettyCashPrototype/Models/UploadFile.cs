@@ -2,7 +2,7 @@
 {
     public class UploadFile
     {
-        public Requisition? Requisition { get; set; }
-        public IFormFile? File { get; set; }
+        public int RequisitionId { get; set; }
+        public IFormFile File { get; set; } = null!;
     }
 }

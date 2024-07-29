@@ -12,11 +12,6 @@
 		>
 			<button>Edit</button>
 		</router-link>
-		<div
-			v-if="requisition.glaccount.needsMotivation == true && requisition.motivations == null"
-		>
-			upload
-		</div>
 		<span v-if="requisition.issuerId == null">
 			<button @click="deleteRecord">Delete</button>
 		</span>
@@ -61,7 +56,8 @@
 			((user.role == 'Manager' && user.divisionId != 6) ||
 				user.role == 'GM_Manager' ||
 				user.role == 'Senior_Employee') &&
-			requisition.managerRecommendation == null
+			requisition.managerRecommendation == null &&
+			requisition.applicant.id != user.id
 		"
 	>
 		<span class="dropdown">

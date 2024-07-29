@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using PettyCashPrototype.Services.MotivationService.GetMotivations;
+using System.Threading;
 
 namespace PettyCashPrototype.Services.MotivationService
 {
@@ -7,22 +8,36 @@ namespace PettyCashPrototype.Services.MotivationService
         private PettyCashPrototypeContext _db;
         public MotivationService(PettyCashPrototypeContext db) { _db = db; }
 
-        public async Task<IEnumerable<Motivation>> GetAll()
+        public async Task<IEnumerable<Motivation>> GetAll(int requisitionId)
         {
             try
             {
-                IEnumerable<Motivation> motivations = await _db.Motivations
-                    .Where(x => x.IsActive == true)
-                    .AsNoTracking()
-                    .ToListAsync();
+                GetMotivationsHandler motivationsHandler = new GetMotivationsHandler();
+                IEnumerable<Motivation> motivations = new List<Motivation>();
 
-                if (motivations == null)
-                    throw new Exception("System could not find any motivations.");
-
+                if(requisitionId == 0)
+                {
+                    motivationsHandler.setState(new GetAllMotivationsState());
+                    motivations = await motivationsHandler.request(_db);
+                } 
+                else if (requisitionId > 0)
+                {
+                    motivationsHandler.setState(new GetByRequisitionState());
+                    motivations = await motivationsHandler.request(_db, requisitionId);
+                }
                 return motivations;
             }
             catch { throw; }
         }
+
+        //public async Task<IList<Motivation>> GetAllByRequisition(int requisitionId)
+        //{
+        //    try
+        //    {
+                
+        //    }
+        //    catch { throw; }
+        //}
 
         public async Task<Motivation> GetOne(int id)
         {

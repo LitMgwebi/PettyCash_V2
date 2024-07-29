@@ -2,7 +2,15 @@
 {
     public class GetForApplicantState: IIndexState
     {
-        public async Task<IEnumerable<Requisition>> GetRequisitions(PettyCashPrototypeContext db, int divisionId, int jobTitleId, IJobTitle _jobTitle, string userId, string role)
+        private readonly PettyCashPrototypeContext db;
+        private readonly string userId;
+
+        public GetForApplicantState(PettyCashPrototypeContext db, string userId)
+        {
+            this.db = db;
+            this.userId = userId;
+        }
+        public async Task<IEnumerable<Requisition>> GetRequisitions()
         {
             IEnumerable<Requisition> requisitions = await db.Requisitions
                     .Include(gl => gl.Glaccount)
@@ -12,7 +20,6 @@
                     .AsNoTracking()
                     .ToListAsync();
 
-            if (requisitions == null) throw new Exception("System could not find any of your requisition forms.");
             return requisitions;
         }
     }

@@ -13,6 +13,6 @@ namespace PettyCashPrototype.Models
         public bool IsActive { get; set; } = true;
 
         [ForeignKey(nameof(RequisitionId))]
-        public Requisition? Requisition { get; set; }
+        public virtual Requisition? Requisition { get; set; }
     }
 }

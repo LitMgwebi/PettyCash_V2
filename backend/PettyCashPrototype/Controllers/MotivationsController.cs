@@ -14,11 +14,11 @@ namespace PettyCashPrototype.Controllers
         #region GET
 
         [HttpGet, Route("index")]
-        public async Task<ActionResult<IEnumerable<Motivation>>> Index()
+        public async Task<ActionResult<IEnumerable<Motivation>>> Index(int requisitionId = 0)
         {
             try
             {
-                IEnumerable<Motivation> motivations = await _motivation.GetAll();
+                IEnumerable<Motivation> motivations = await _motivation.GetAll(requisitionId);
                 return Ok(motivations);
             }
             catch (Exception ex) { return BadRequest(ex.Message); }
@@ -39,18 +39,18 @@ namespace PettyCashPrototype.Controllers
 
         #region POST
 
-        //[HttpPost, Route("create")]
-        //public async Task<ActionResult<Motivation>> Create(UploadFile uploadFile)
-        //{
-        //    try
-        //    {
-        //        var identity = (ClaimsIdentity)User.Identity!;
-        //        string name = identity.Claims.Where(c => c.Type == ClaimTypes.Name).Select(c => c.Value).FirstOrDefault()!;
-        //        string message = await _motivation.Upload(uploadFile.File, uploadFile.id, name);
-        //        return Ok(new { message = message });
-        //    }
-        //    catch (Exception ex) { return BadRequest(ex.InnerException); }
-        //}
+        [HttpPost, Route("create")]
+        public async Task<ActionResult<Motivation>> Create(UploadFile uploadFile)
+        {
+            try
+            {
+                var identity = (ClaimsIdentity)User.Identity!;
+                string name = identity.Claims.Where(c => c.Type == ClaimTypes.Name).Select(c => c.Value).FirstOrDefault()!;
+                string message = await _motivation.Upload(uploadFile.File, uploadFile.RequisitionId, name);
+                return Ok(new { message = message });
+            }
+            catch (Exception ex) { return BadRequest(ex.InnerException); }
+        }
 
         #endregion
 

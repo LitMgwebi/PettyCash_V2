@@ -10,12 +10,14 @@ namespace PettyCashPrototype.Services.RequisitionService
         private readonly IUser _user;
         private readonly IGLAccount _glAccount;
         private readonly IJobTitle _jobTitle;
-        public RequisitionService(PettyCashPrototypeContext db, IUser user, IGLAccount gLAccount, IJobTitle jobTitle)
+        private readonly IMotivation _motivation;
+        public RequisitionService(PettyCashPrototypeContext db, IUser user, IGLAccount gLAccount, IJobTitle jobTitle, IMotivation motivation)
         {
             _db = db;
             _user = user;
             _glAccount = gLAccount;
             _jobTitle = jobTitle;
+            _motivation = motivation;
         }
 
         public async Task<IEnumerable<Requisition>> GetAll(string command, int divisionId, int jobTitleId, string userId, string role)
@@ -27,21 +29,26 @@ namespace PettyCashPrototype.Services.RequisitionService
 
                 if (command == "all")
                 {
-                    indexHandler.setState(new GetAllState());
-                    requisitions = await indexHandler.request(_db);
+                    indexHandler.setState(new GetAllState(_db));
+                    requisitions = await indexHandler.request();
                 } else if (command == "forOne") 
                 {
-                    indexHandler.setState(new GetForApplicantState());
-                    requisitions = await indexHandler.request(_db, userId: userId);
+                    indexHandler.setState(new GetForApplicantState(_db, userId));
+                    requisitions = await indexHandler.request();
                 } else if (command == "recommendation")
                 {
-                    indexHandler.setState(new GetForRecommendationState(_user));
-                    requisitions = await indexHandler.request(_db, userId: userId, role: role);
+                    indexHandler.setState(new GetForRecommendationState(_user, _db, userId, role));
+                    requisitions = await indexHandler.request();
                 } else if(command == "approval")
                 {
-                    indexHandler.setState(new GetForApprovalState());
-                    requisitions = await indexHandler.request(_db, jobTitleId: jobTitleId, divisionId: divisionId, _jobTitle: _jobTitle);
-                }
+                    indexHandler.setState(new GetForApprovalState(_db, divisionId, jobTitleId, _jobTitle, userId));
+                    requisitions = await indexHandler.request();
+                } else if(command == "issuing")
+                {
+                    indexHandler.setState(new GetForIssuingState(_user, _db, userId));
+                    requisitions = await indexHandler.request();
+                } 
+                if (requisitions == null) throw new Exception("System could not find any of your requisition forms.");
                 return requisitions;
             }
             catch { throw; }
@@ -61,6 +68,8 @@ namespace PettyCashPrototype.Services.RequisitionService
                     .Where(a => a.IsActive == true)
                     .AsNoTracking()
                     .FirstOrDefaultAsync(i => i.RequisitionId == id);
+
+                //requisition!.Motivations = await _motivation.GetAllByRequisition(id);
 
                 if (requisition == null) throw new Exception("System could not retrieve the Requisition requested.");
                 return requisition;
@@ -91,7 +100,6 @@ namespace PettyCashPrototype.Services.RequisitionService
             }
             catch { throw; }
         }
-
 
         public void Edit(Requisition requisition)
         {

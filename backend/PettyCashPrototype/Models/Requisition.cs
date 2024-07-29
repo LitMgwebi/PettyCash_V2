@@ -68,5 +68,5 @@ public partial class Requisition
     public virtual Status? ManagerRecommendation { get; set; }
 
     [JsonIgnore]
-    public virtual IList<Motivation> Motivations { get; set; } = new List<Motivation>();
+    public virtual ICollection<Motivation> Motivations { get; set; } = new List<Motivation>();
 }

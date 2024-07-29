@@ -2,10 +2,19 @@
 {
     public class GetForRecommendationState : IIndexState
     {
+        private readonly PettyCashPrototypeContext db;
+        private readonly string userId;
+        private readonly string role;
         private readonly IUser _user = null!;
 
-        public GetForRecommendationState(IUser user) { _user = user; }
-        public async Task<IEnumerable<Requisition>> GetRequisitions(PettyCashPrototypeContext db, int divisionId, int jobTitleId, IJobTitle _jobTitle, string userId, string role)
+        public GetForRecommendationState(IUser user, PettyCashPrototypeContext db, string userId, string role)
+        {
+            _user = user;
+            this.db = db;
+            this.userId = userId;
+            this.role = role;
+        }
+        public async Task<IEnumerable<Requisition>> GetRequisitions()
         {
             IEnumerable<Requisition> requisitions = new List<Requisition>();
             User user = await _user.GetUserById(userId);
@@ -49,7 +58,6 @@
                     .AsNoTracking()
                     .ToListAsync();
             }
-            if (requisitions == null) throw new Exception("System could not find any requisitions.");
             return requisitions;
         }
     }

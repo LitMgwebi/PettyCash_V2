@@ -81,6 +81,11 @@ namespace PettyCashPrototype.Seeding.Entites
                 {
                     JobTitleId = 15,
                     Description = "Bookkeeper"
+                },
+                new JobTitle
+                {
+                    JobTitleId = 16,
+                    Description = "Accounts Payable"
                 }
                 );
         }

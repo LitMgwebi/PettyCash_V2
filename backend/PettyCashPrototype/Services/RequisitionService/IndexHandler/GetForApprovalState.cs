@@ -2,9 +2,24 @@
 
 namespace PettyCashPrototype.Services.RequisitionService.IndexHandler
 {
-    public class GetForApprovalState: IIndexState
+    public class GetForApprovalState : IIndexState
     {
-        public async Task<IEnumerable<Requisition>> GetRequisitions(PettyCashPrototypeContext db, int divisionId, int jobTitleId, IJobTitle _jobTitle, string userId, string role)
+        private readonly PettyCashPrototypeContext db;
+        private readonly int divisionId;
+        private readonly int jobTitleId;
+        private readonly IJobTitle _jobTitle;
+        private readonly string userId;
+
+        public GetForApprovalState(PettyCashPrototypeContext db, int divisionId, int jobTitleId, IJobTitle _jobTitle, string userId)
+        {
+            this.db = db;
+            this.divisionId = divisionId;
+            this.jobTitleId = jobTitleId;
+            this._jobTitle = _jobTitle;
+            this.userId = userId;
+        }
+
+        public async Task<IEnumerable<Requisition>> GetRequisitions()
         {
             JobTitle jobTitle = await _jobTitle.GetOne(jobTitleId);
             IEnumerable<Requisition> requisitions = new List<Requisition>();
@@ -22,8 +37,6 @@ namespace PettyCashPrototype.Services.RequisitionService.IndexHandler
             }
             else
                 throw new Exception("You have to be in the Finance Department to approve of this requisitions.");
-
-            if (requisitions == null) throw new Exception("System could not find any requisitions.");
             return requisitions;
         }
     }

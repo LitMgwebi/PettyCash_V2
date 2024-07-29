@@ -2,7 +2,13 @@
 {
     public class GetAllState: IIndexState
     {
-        public async Task<IEnumerable<Requisition>> GetRequisitions(PettyCashPrototypeContext db, int divisionId, int jobTitleId, IJobTitle _jobTitle, string userId, string role)
+        private readonly PettyCashPrototypeContext db;
+
+        public GetAllState(PettyCashPrototypeContext db)
+        {
+            this.db = db;
+        }
+        public async Task<IEnumerable<Requisition>> GetRequisitions()
         {
             IEnumerable<Requisition> requisitions = await db.Requisitions
                     .Include(gl => gl.Glaccount)
@@ -10,7 +16,6 @@
                     .AsNoTracking()
                     .ToListAsync();
 
-            if (requisitions == null) throw new Exception("System could not find any requisitions.");
             return requisitions;
         }
     }

@@ -10,6 +10,14 @@
 					GL Account: {{ requisition.glaccount.name }} -
 					{{ requisition.glaccount.description }}
 				</p>
+
+				<div v-for="motivation in motivations" :key="motivation">
+					{{ motivation }}
+				</div>
+
+				<!-- <
+					Output all the motivations here, and upload motivations on edit page
+					 -->
 			</div>
 		</aside>
 		<aside v-if="user.id == requisition.applicant.id">
@@ -50,17 +58,26 @@
 </template>
 
 <script setup>
-import { defineProps, toRefs, inject } from 'vue'
+import { defineProps, toRefs, inject, ref } from 'vue'
 import { getRequisition } from '@/hooks/requisitionCRUD'
 import Buttonhandler from '@/components/Requisition/ButtonHandler.vue'
+import { addMotivation, getMotivations } from '@/hooks/motivationCRUD'
 import moment from 'moment'
 
 const props = defineProps(['id'])
 const { id } = toRefs(props)
 const user = inject('User')
+const file = ref(null)
+let formData = new FormData()
 
 function formatDate(date) {
 	if (date) return moment(String(date)).format('DD-MM-YYYY')
 }
 const { requisition } = getRequisition(id.value)
+const { motivations } = getMotivations(id.value)
+
+function saveImage() {
+	formData.append = ('file', file.value)
+	addMotivation(formData, id.value)
+}
 </script>
