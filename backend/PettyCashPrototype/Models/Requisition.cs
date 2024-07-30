@@ -39,6 +39,8 @@ public partial class Requisition
 
     public string? IssuerId { get; set; }
 
+    public DateTime? IssueDate { get; set; }
+
     public string Stage { get; set; } = null!;
 
     public string? ManagerComment { get; set; }

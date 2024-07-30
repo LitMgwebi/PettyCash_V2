@@ -19,7 +19,7 @@ namespace PettyCashPrototype.Services.RequisitionService.IndexHandler
         {
             User user = await _user.GetUserById(userId);
             IEnumerable<Requisition> requisitions = new List<Requisition>();
-            if (user.JobTitle!.JobTitleId == 17)
+            if (user.JobTitle!.JobTitleId == 16)
             {
                 requisitions = await db.Requisitions
                     .Include(a => a.Applicant)
@@ -30,6 +30,9 @@ namespace PettyCashPrototype.Services.RequisitionService.IndexHandler
                     .Where(a => a.ManagerRecommendation != null && a.FinanceApproval != null)
                     .AsNoTracking()
                     .ToListAsync();
+            } else
+            {
+                throw new Exception("You have to be an Accounts Payable to view the requisitions that require issuing.");
             }
             return requisitions;
         }

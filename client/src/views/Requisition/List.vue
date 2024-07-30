@@ -42,7 +42,7 @@
 		<ApprovalList />
 	</div>
 
-	<div v-if="user.jobTitleId == 17">
+	<div v-if="user.jobTitleId == 16">
 		<IssuingList />
 	</div>
 </template>
