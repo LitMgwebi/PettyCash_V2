@@ -1,5 +1,6 @@
 ﻿using PettyCashPrototype.Models;
 using PettyCashPrototype.Services.RequisitionService.CreateHandler;
+using PettyCashPrototype.Services.RequisitionService.EditHandler;
 using PettyCashPrototype.Services.RequisitionService.IndexHandler;
 
 namespace PettyCashPrototype.Services.RequisitionService
@@ -10,14 +11,12 @@ namespace PettyCashPrototype.Services.RequisitionService
         private readonly IUser _user;
         private readonly IGLAccount _glAccount;
         private readonly IJobTitle _jobTitle;
-        private readonly IMotivation _motivation;
-        public RequisitionService(PettyCashPrototypeContext db, IUser user, IGLAccount gLAccount, IJobTitle jobTitle, IMotivation motivation)
+        public RequisitionService(PettyCashPrototypeContext db, IUser user, IGLAccount gLAccount, IJobTitle jobTitle)
         {
             _db = db;
             _user = user;
             _glAccount = gLAccount;
             _jobTitle = jobTitle;
-            _motivation = motivation;
         }
 
         public async Task<IEnumerable<Requisition>> GetAll(string command, int divisionId, int jobTitleId, string userId, string role)
@@ -89,14 +88,14 @@ namespace PettyCashPrototype.Services.RequisitionService
                 CreateRequisitionHandler createHandler = new CreateRequisitionHandler();
                 string message = string.Empty;
 
-                if (glaccount.NeedsMotivation == true)
+                if (glaccount.NeedsMotivation == true || requisition.AmountRequested > 2000)
                 {
-                    createHandler.setState(new WithMotivation(requisition, _db, userId));
+                    createHandler.setState(new RequireMotivationState(requisition, _db, userId));
                     message = await createHandler.request();
                 }
                 else if (glaccount.NeedsMotivation == false)
                 {
-                    createHandler.setState(new WithoutMotivation(requisition, _db, userId));
+                    createHandler.setState(new StandardCreateState(requisition, _db, userId));
                     message = await createHandler.request();
                 }
 
@@ -105,14 +104,39 @@ namespace PettyCashPrototype.Services.RequisitionService
             catch { throw; }
         }
 
-        public void Edit(Requisition requisition)
+        public async Task<string> Edit(Requisition requisition, string command, string userId)
         {
             try
             {
-                _db.Requisitions.Update(requisition);
-                int result = _db.SaveChanges();
+                string messageResponse = "";
+                EditRequisitionHandler editRequisition = new EditRequisitionHandler();
+                Requisition reviewRequisition = await GetOne(requisition.RequisitionId);
 
-                if (result == 0) throw new DbUpdateException($"System could not edit the requisition for {requisition.Applicant!.FullName}.");
+                if (command == "recommendation")
+                {
+                    editRequisition.setState(new RecommendationState(_db, reviewRequisition, requisition, userId));
+                    messageResponse = await editRequisition.request();
+                }
+                else if (command == "approval")
+                {
+                    editRequisition.setState(new ApprovalState(_db, reviewRequisition, requisition, userId));
+                    messageResponse = await editRequisition.request();
+                }
+                else if (command == "edit")
+                {
+                    editRequisition.setState(new WholeRequisitionState(_db, requisition));
+                    messageResponse = await editRequisition.request();
+                } else if (command == "issuing")
+                {
+
+                }else if (command == "addMotivation")
+                {
+                    requisition.Stage = "Motivation has been uploaded. Requisition has been sent for recommendation.";
+                    editRequisition.setState(new WholeRequisitionState(_db, requisition));
+                    messageResponse = await editRequisition.request();
+                }
+
+                return messageResponse;
             }
             catch { throw; }
         }

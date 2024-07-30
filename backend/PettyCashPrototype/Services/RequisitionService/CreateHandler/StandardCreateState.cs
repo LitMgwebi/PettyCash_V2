@@ -1,12 +1,12 @@
 ﻿namespace PettyCashPrototype.Services.RequisitionService.CreateHandler
 {
-    public class WithMotivation: ICreateState
+    public class StandardCreateState : ICreateState
     {
         private readonly Requisition requisition;
         private readonly PettyCashPrototypeContext _db;
         private readonly string userId;
 
-        public WithMotivation(Requisition requisition, PettyCashPrototypeContext db, string userId)
+        public StandardCreateState(Requisition requisition, PettyCashPrototypeContext db, string userId) 
         {
             this.requisition = requisition;
             _db = db;
@@ -14,9 +14,10 @@
         }
         public async Task<string> CreateRequisition()
         {
-            requisition.Stage = "Requisition has been stored in the system. Motivation must be uploaded before it can be sent for recommendation.";
+            requisition.Stage = "Requisiton has been sent for recommendation.";
             requisition.ApplicantId = userId;
             requisition.StartDate = DateTime.Now;
+            requisition.NeedsMotivation = false;
             /*
             The code for emails to be sent to the applicant and the users Line Manager/GM/Bookkeeper/Accountant for recommendation, stating that this requisition has been started.
             Is there a design pattern I could use to switch between the various potential receivers?
@@ -27,7 +28,7 @@
             _db.Requisitions.Add(requisition);
             if (await _db.SaveChangesAsync() > 0)
             {
-                return "The new Requisition has been added to the system. Please upload motivation.";
+                return "The new Requisition has been added to the system";
 
             }
             else throw new DbUpdateException("System could not add the new Requisition.");

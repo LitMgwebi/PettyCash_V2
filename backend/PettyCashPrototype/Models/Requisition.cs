@@ -37,7 +37,13 @@ public partial class Requisition
 
     public int? FinanceApprovalId { get; set; }
 
+    public bool NeedsMotivation { get; set; }
+
     public string? IssuerId { get; set; }
+
+    public int ApplicantCode { get; set; }
+
+    public bool ConfirmApplicantCode { get; set; }
 
     public DateTime? IssueDate { get; set; }
 

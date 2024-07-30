@@ -1,15 +1,17 @@
 ﻿namespace PettyCashPrototype.Services.RequisitionService.EditHandler
 {
-    public class RecommendationState: IEditState
+    public class RecommendationState : IEditState
     {
-        private readonly IRequisition service;
+        private readonly Requisition reviewRequisition;
         private readonly Requisition requisition;
         private string userId;
-        public RecommendationState(IRequisition service, Requisition requisition, string userId)
+        private PettyCashPrototypeContext _db;
+        public RecommendationState(PettyCashPrototypeContext db, Requisition reviewRequisition, Requisition requisition, string userId)
         {
-            this.service = service;
+            this.reviewRequisition = reviewRequisition;
             this.requisition = requisition;
             this.userId = userId;
+            _db = db;
         }
 
         public async Task<string> EditRequisition()
@@ -23,20 +25,30 @@
              * Fourth - Pass the user's email address through the email API to tell user about the recommended requisition
              * 
              */
-            Requisition reviewRequisition = await service.GetOne(requisition.RequisitionId);
             if (reviewRequisition.ManagerRecommendation == null)
             {
                 requisition.ManagerId = userId;
                 requisition.ManagerRecommendationDate = DateTime.UtcNow;
+                string message = string.Empty;
 
                 if (requisition.ManagerRecommendationId == 4)
+                {
                     requisition.Stage = "Your requisition has been rejected.";
+                    message = "The rejection has been saved to system.";
+                }
                 else if (requisition.ManagerRecommendationId == 3)
+                {
                     requisition.Stage = "Your requisition has been recommended. Awaiting Finance Approval.";
+                    message = "The recommendation has ben saved to system";
+                }
+                _db.Requisitions.Update(requisition);
+                int result = await _db.SaveChangesAsync();
 
-                service.Edit(requisition);
-                return "Your choice has been recorded.";
-            } else { throw new Exception($"This requisition has already been reviewed by {reviewRequisition.Manager!.FullName}."); }
+                if (result == 0) throw new DbUpdateException($"System could not edit the requisition for {requisition.Applicant!.FullName}.");
+
+                return message;
+            }
+            else { throw new Exception($"This requisition has already been reviewed by {reviewRequisition.Manager!.FullName}."); }
         }
     }
 }

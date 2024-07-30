@@ -76,26 +76,9 @@ namespace PettyCashPrototype.Controllers
             {
                 var identity = (ClaimsIdentity)User.Identity!;
                 var userId = identity.Claims.Where(c => c.Type == ClaimTypes.Sid).Select(c => c.Value).FirstOrDefault()!;
-                string messageResponse = "";
 
-                EditRequisitionHandler editRequisition = new EditRequisitionHandler();
-
-                if (requisitionModel.command == "recommendation")
-                {
-                    editRequisition.setState(new RecommendationState(_requisition, requisitionModel.Requisition, userId));
-                    messageResponse = await editRequisition.request();
-                }
-                else if (requisitionModel.command == "approval")
-                {
-                    editRequisition.setState(new ApprovalState(_requisition, requisitionModel.Requisition, userId));
-                    messageResponse = await editRequisition.request();
-                }
-                else if (requisitionModel.command == "edit")
-                {
-                    editRequisition.setState(new WholeRequisitionState(_requisition, requisitionModel.Requisition));
-                    messageResponse = await editRequisition.request();
-                }
-                return Ok(new { message = messageResponse });
+                string message = await _requisition.Edit(requisitionModel.Requisition, requisitionModel.command, userId);
+                return Ok(new { message = message });
             }
             catch (Exception ex) { return BadRequest(ex.Message); }
         }

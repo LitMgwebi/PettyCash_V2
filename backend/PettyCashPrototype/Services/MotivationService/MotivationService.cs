@@ -1,4 +1,5 @@
-﻿using PettyCashPrototype.Services.MotivationService.GetMotivations;
+﻿using PettyCashPrototype.Models;
+using PettyCashPrototype.Services.MotivationService.GetMotivations;
 using PettyCashPrototype.Services.RequisitionService.EditHandler;
 using System.Threading;
 
@@ -80,10 +81,10 @@ namespace PettyCashPrototype.Services.MotivationService
                         motivation.FileExtension = fileExtension;
                     }
                     motivation.DateUploaded = DateTime.Now;
-                    motivation.FileName = $"{name}-{motivation.DateUploaded.ToString("yyyyMMddTHHmmss")}-Petty Cash.{fileExtension}";
+                    motivation.FileName = $"{name}-{motivation.DateUploaded.ToString("yyyyMMddTHHmmss")}-Petty Cash-{requisitionId}.{fileExtension}";
                     motivation.RequisitionId = requisitionId;
 
-                    string filePath = Path.Combine("Resources", $"{name}-{motivation.DateUploaded.ToString("yyyyMMddTHHmmss")}-Petty Cash.{fileExtension}");
+                    string filePath = Path.Combine("Resources", $"{name}-{motivation.DateUploaded.ToString("yyyyMMddTHHmmss")}-Petty Cash-{requisitionId}.{fileExtension}");
                     using (Stream fileStream = new FileStream(filePath, FileMode.Create))
                     {
                         await file.CopyToAsync(fileStream);

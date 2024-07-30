@@ -11,17 +11,12 @@
 					{{ requisition.glaccount.description }}
 				</p>
 
-				<div v-if="requisition.glaccount.needsMotivation == true">
-					<!-- <router-link
-						:to="{
-							name: 'motivations',
-							params: {
-								id: requisition.requisitionId
-							}
-						}"
-					>
-						<p>Motivations</p>
-					</router-link> -->
+				<div v-if="user.id == requisition.applicant.id">
+					<p v-if="requisition.applicantCode > 0">
+						Code: {{ requisition.applicantCode }}
+					</p>
+				</div>
+				<div v-if="requisition.needsMotivation == true">
 					<section class="table">
 						<div v-if="motivations">
 							<div v-if="motivations.length > 0">
@@ -60,7 +55,8 @@
 				</div>
 			</div>
 		</aside>
-		<aside v-if="user.id == requisition.applicant.id">
+		<!-- <aside v-if="user.id == requisition.applicant.id"> -->
+		<aside>
 			<h4>Authorization:</h4>
 			<p>{{ requisition.stage }}</p>
 			<div v-if="requisition.managerRecommendation != null">

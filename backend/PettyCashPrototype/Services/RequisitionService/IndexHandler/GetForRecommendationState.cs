@@ -39,7 +39,7 @@
                     .Include(m => m.Motivations)
                     .Include(gl => gl.Glaccount)
                     .Where(a => a.IsActive == true)
-                    .Where(gl => gl.Glaccount!.NeedsMotivation == true && gl.Motivations.Count > 0)
+                    .Where(nm => (nm.NeedsMotivation == true && nm.Motivations.Count > 0) || nm.NeedsMotivation == false)
                     .Where(d => d.Applicant!.DivisionId == user.DivisionId && d.Applicant!.JobTitle!.JobTitleId != 7)
                     .Where(a => a.ManagerRecommendation == null && a.FinanceApproval == null)
                     .AsNoTracking()

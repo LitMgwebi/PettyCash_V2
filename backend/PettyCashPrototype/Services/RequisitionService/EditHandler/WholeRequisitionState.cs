@@ -2,19 +2,23 @@
 {
     public class WholeRequisitionState : IEditState
     {
-        private readonly IRequisition service;
         private readonly Requisition requisition;
-        public WholeRequisitionState(IRequisition service, Requisition requisition)
+        private PettyCashPrototypeContext _db;
+        public WholeRequisitionState(PettyCashPrototypeContext db, Requisition requisition)
         {
-            this.service = service;
             this.requisition = requisition;
+            _db = db;
         }
 
         public async Task<string> EditRequisition()
         {
             if (requisition.ManagerRecommendationId == null)
             {
-                service.Edit(requisition);
+                _db.Requisitions.Update(requisition);
+                int result = await _db.SaveChangesAsync();
+
+                if (result == 0) throw new DbUpdateException($"System could not edit the requisition for {requisition.Applicant!.FullName}.");
+
                 return "The requisition has been edited.";
             }
             else
