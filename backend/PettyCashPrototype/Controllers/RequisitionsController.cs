@@ -77,7 +77,7 @@ namespace PettyCashPrototype.Controllers
                 var identity = (ClaimsIdentity)User.Identity!;
                 var userId = identity.Claims.Where(c => c.Type == ClaimTypes.Sid).Select(c => c.Value).FirstOrDefault()!;
 
-                string message = await _requisition.Edit(requisitionModel.Requisition, requisitionModel.command, userId);
+                string message = await _requisition.Edit(requisitionModel.Requisition, requisitionModel.command, userId, requisitionModel.attemptCode);
                 return Ok(new { message = message });
             }
             catch (Exception ex) { return BadRequest(ex.Message); }

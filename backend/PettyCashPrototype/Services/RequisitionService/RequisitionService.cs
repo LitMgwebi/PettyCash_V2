@@ -1,5 +1,4 @@
-﻿using PettyCashPrototype.Models;
-using PettyCashPrototype.Services.RequisitionService.CreateHandler;
+﻿using PettyCashPrototype.Services.RequisitionService.CreateHandler;
 using PettyCashPrototype.Services.RequisitionService.EditHandler;
 using PettyCashPrototype.Services.RequisitionService.IndexHandler;
 
@@ -51,6 +50,9 @@ namespace PettyCashPrototype.Services.RequisitionService
                     indexHandler.setState(new GetForIssuingState(_user, _db, userId));
                     requisitions = await indexHandler.request();
                 }
+                else
+                    throw new NotImplementedException("Could not resolve issue when retrieving requisitions");
+
                 if (requisitions == null) throw new Exception("System could not find any of your requisition forms.");
                 return requisitions;
             }
@@ -97,6 +99,9 @@ namespace PettyCashPrototype.Services.RequisitionService
                 {
                     createHandler.setState(new StandardCreateState(requisition, _db, userId));
                     message = await createHandler.request();
+                } else
+                {
+                    throw new Exception("System could not resolve error within requisition creation.");
                 }
 
                 return message;
@@ -104,7 +109,7 @@ namespace PettyCashPrototype.Services.RequisitionService
             catch { throw; }
         }
 
-        public async Task<string> Edit(Requisition requisition, string command, string userId)
+        public async Task<string> Edit(Requisition requisition, string command, string userId, int attemptCode)
         {
             try
             {
@@ -126,15 +131,20 @@ namespace PettyCashPrototype.Services.RequisitionService
                 {
                     editRequisition.setState(new WholeRequisitionState(_db, requisition));
                     messageResponse = await editRequisition.request();
-                } else if (command == "issuing")
+                }
+                else if (command == "issuing")
                 {
-
-                }else if (command == "addMotivation")
+                    editRequisition.setState(new IssuingState(_db, requisition, userId, attemptCode));
+                    messageResponse = await editRequisition.request();
+                }
+                else if (command == "addMotivation")
                 {
                     requisition.Stage = "Motivation has been uploaded. Requisition has been sent for recommendation.";
                     editRequisition.setState(new WholeRequisitionState(_db, requisition));
                     messageResponse = await editRequisition.request();
                 }
+                else
+                    throw new Exception("System could not resolve error within requisition editing.");
 
                 return messageResponse;
             }

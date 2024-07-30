@@ -48,14 +48,15 @@ export function addRequisition(requisition) {
         .finally(() => store.commit('doneLoading'))
 }
 
-export function editRequisition(requisition, command) {
+export function editRequisition(requisition, command, attemptCode = 0) {
     store.commit('setLoading')
     axios({
         method: 'PUT',
         url: 'Requisitions/edit',
         data: {
             requisition: requisition,
-            command: command
+            command: command,
+            attemptCode: attemptCode
         }
     })
         .then((res) => store.dispatch('setStatus', res.data.message))

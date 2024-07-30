@@ -16,6 +16,22 @@
 						Code: {{ requisition.applicantCode }}
 					</p>
 				</div>
+				<div v-else>
+					<form @submit.prevent="issueMoney">
+						<div>
+							<label>Cash to be issued: </label>
+							<input type="text" v-model="requisition.cashIssued" />
+						</div>
+						<div>
+							<label>Applicant Code: </label>
+							<input type="text" v-model="attemptCode" />
+						</div>
+
+						<div class="submit">
+							<button>Edit</button>
+						</div>
+					</form>
+				</div>
 				<div v-if="requisition.needsMotivation == true">
 					<section class="table">
 						<div v-if="motivations">
@@ -95,22 +111,26 @@
 
 <script setup>
 import { defineProps, toRefs, inject, ref } from 'vue'
-import { getRequisition } from '@/hooks/requisitionCRUD'
+import { getRequisition, editRequisition } from '@/hooks/requisitionCRUD'
 import { addMotivation, getMotivations, deleteMotivation } from '@/hooks/motivationCRUD'
 import Buttonhandler from '@/components/Requisition/ButtonHandler.vue'
 import moment from 'moment'
+import router from '@/router/router'
+
+//#region Variable Declarations
 
 const props = defineProps(['id'])
 const { id } = toRefs(props)
 const user = inject('User')
 const file = ref(null)
+const attemptCode = ref(0)
 let formData = new FormData()
-
-function formatDate(date) {
-	if (date) return moment(String(date)).format('DD-MM-YYYY')
-}
 const { requisition } = getRequisition(id.value)
 const { motivations } = getMotivations(id.value)
+
+//#endregion
+
+//#region Functions
 
 function saveImage() {
 	formData.append = ('file', file.value)
@@ -120,4 +140,15 @@ function saveImage() {
 function deleteRecord(motivation) {
 	deleteMotivation(motivation)
 }
+
+function formatDate(date) {
+	if (date) return moment(String(date)).format('DD-MM-YYYY')
+}
+
+function issueMoney() {
+	editRequisition(requisition.value, 'issuing', attemptCode.value)
+	router.push({ name: 'requisitions' })
+}
+
+//#endregion
 </script>
