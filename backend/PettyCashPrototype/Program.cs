@@ -31,6 +31,7 @@ using Microsoft.OpenApi.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using PettyCashPrototype.Services.NotificationService;
 
 #endregion
 
@@ -52,7 +53,7 @@ builder.Services.AddScoped<ISubAccount, SubAccountService>();
 builder.Services.AddScoped<IDepartment, DepartmentService>();
 builder.Services.AddScoped<IMainAccount, MainAccountService>();
 builder.Services.AddScoped<IRequisition, RequisitionService>();
-
+builder.Services.AddHostedService<PettyCashNotification>();
 
 builder.Services.AddAutoMapper(typeof(Program));
 

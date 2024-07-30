@@ -27,6 +27,7 @@
 							<input type="text" v-model="attemptCode" />
 						</div>
 
+						<!-- Grey out the button until the code and cash issued or both inputted -->
 						<div class="submit">
 							<button>Edit</button>
 						</div>
@@ -71,7 +72,6 @@
 				</div>
 			</div>
 		</aside>
-		<!-- <aside v-if="user.id == requisition.applicant.id"> -->
 		<aside>
 			<h4>Authorization:</h4>
 			<p>{{ requisition.stage }}</p>

@@ -50,6 +50,11 @@ namespace PettyCashPrototype.Services.RequisitionService
                     indexHandler.setState(new GetForIssuingState(_user, _db, userId));
                     requisitions = await indexHandler.request();
                 }
+                else if (command == "tracking")
+                {
+                    indexHandler.setState(new GetForTracking(_db));
+                    requisitions = await indexHandler.request();
+                }
                 else
                     throw new NotImplementedException("Could not resolve issue when retrieving requisitions");
 

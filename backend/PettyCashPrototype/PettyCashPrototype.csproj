@@ -30,8 +30,6 @@
 
   <ItemGroup>
     <Folder Include="Resources\" />
-    <Folder Include="Services\ApprovalStuctureServices\ICTDelegation\" />
-    <Folder Include="Services\ApprovalStuctureServices\FinanceDelegation\" />
   </ItemGroup>
 
 </Project>
