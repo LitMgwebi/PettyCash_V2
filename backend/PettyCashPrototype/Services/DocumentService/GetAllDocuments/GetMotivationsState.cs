@@ -1,9 +1,9 @@
 ﻿namespace PettyCashPrototype.Services.DocumentService.GetAllDocuments
 {
-    public class GetAllDocumentsState : IDocumentState
+    public class GetMotivationsState : IDocumentsState
     {
         private PettyCashPrototypeContext _db;
-        public GetAllDocumentsState(PettyCashPrototypeContext db)
+        public GetMotivationsState(PettyCashPrototypeContext db)
         {
             _db = db;
         }

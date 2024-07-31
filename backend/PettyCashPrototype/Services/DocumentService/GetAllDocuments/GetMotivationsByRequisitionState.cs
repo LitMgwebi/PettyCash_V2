@@ -1,10 +1,10 @@
 ﻿namespace PettyCashPrototype.Services.DocumentService.GetAllDocuments
 {
-    public class GetAllByRequisitionState : IDocumentState
+    public class GetMotivationsByRequisitionState : IDocumentsState
     {
         private PettyCashPrototypeContext db;
         private readonly int requisitionId;
-        public GetAllByRequisitionState(PettyCashPrototypeContext db, int requisitionId)
+        public GetMotivationsByRequisitionState(PettyCashPrototypeContext db, int requisitionId)
         {
             this.db = db;
             this.requisitionId = requisitionId;

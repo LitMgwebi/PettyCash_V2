@@ -2,10 +2,9 @@
 {
     public interface IDocument
     {
-        public Task<IEnumerable<Document>> GetAll(int requisitionId);
-        //public Task<IList<Motivation>> GetAllByRequisition(int requisitionId);
-        public Task<Document> GetOne(int id);
-        public Task<string> Upload(IFormFile file, int id, string name);
+        public Task<IEnumerable<Document>> GetAll(string command, int requisitionId);
+        public Task<Document> GetOne(string command, int documentId);
+        public Task<string> Upload(string command, IFormFile file, int id, string name);
         public void Edit(Document document);
         public void SoftDelete(Document document);
     }

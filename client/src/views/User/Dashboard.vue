@@ -6,6 +6,5 @@
 
 <script setup>
 import { inject, ref } from 'vue'
-import { addMotivation } from '@/hooks/motivationCRUD'
 const user = inject('User')
 </script>

@@ -3,24 +3,24 @@
   "WorkspaceRootPath": "C:\\Users\\lithim\\OneDrive - sadpmr.co.za\\Documents\\Default VS Repo\\PettyCashPrototype\\backend\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{F4A39040-71EA-4DCD-9014-56742C9785E2}|PettyCashPrototype\\PettyCashPrototype.csproj|c:\\users\\lithim\\onedrive - sadpmr.co.za\\documents\\default vs repo\\pettycashprototype\\backend\\pettycashprototype\\services\\documentservice\\getdocuments\\getbyrequisitionstate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F4A39040-71EA-4DCD-9014-56742C9785E2}|PettyCashPrototype\\PettyCashPrototype.csproj|solutionrelative:pettycashprototype\\services\\documentservice\\getdocuments\\getbyrequisitionstate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F4A39040-71EA-4DCD-9014-56742C9785E2}|PettyCashPrototype\\PettyCashPrototype.csproj|c:\\users\\lithim\\onedrive - sadpmr.co.za\\documents\\default vs repo\\pettycashprototype\\backend\\pettycashprototype\\models\\pettycashprototypecontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F4A39040-71EA-4DCD-9014-56742C9785E2}|PettyCashPrototype\\PettyCashPrototype.csproj|solutionrelative:pettycashprototype\\models\\pettycashprototypecontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{F4A39040-71EA-4DCD-9014-56742C9785E2}|PettyCashPrototype\\PettyCashPrototype.csproj|c:\\users\\lithim\\onedrive - sadpmr.co.za\\documents\\default vs repo\\pettycashprototype\\backend\\pettycashprototype\\services\\documentservice\\documentservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F4A39040-71EA-4DCD-9014-56742C9785E2}|PettyCashPrototype\\PettyCashPrototype.csproj|solutionrelative:pettycashprototype\\services\\documentservice\\documentservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{F4A39040-71EA-4DCD-9014-56742C9785E2}|PettyCashPrototype\\PettyCashPrototype.csproj|c:\\users\\lithim\\onedrive - sadpmr.co.za\\documents\\default vs repo\\pettycashprototype\\backend\\pettycashprototype\\controllers\\documentscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{F4A39040-71EA-4DCD-9014-56742C9785E2}|PettyCashPrototype\\PettyCashPrototype.csproj|solutionrelative:pettycashprototype\\controllers\\documentscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{F4A39040-71EA-4DCD-9014-56742C9785E2}|PettyCashPrototype\\PettyCashPrototype.csproj|c:\\users\\lithim\\onedrive - sadpmr.co.za\\documents\\default vs repo\\pettycashprototype\\backend\\pettycashprototype\\services\\documentservice\\documentservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F4A39040-71EA-4DCD-9014-56742C9785E2}|PettyCashPrototype\\PettyCashPrototype.csproj|solutionrelative:pettycashprototype\\services\\documentservice\\documentservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{F4A39040-71EA-4DCD-9014-56742C9785E2}|PettyCashPrototype\\PettyCashPrototype.csproj|c:\\users\\lithim\\onedrive - sadpmr.co.za\\documents\\default vs repo\\pettycashprototype\\backend\\pettycashprototype\\services\\documentservice\\getalldocuments\\getdocumentshandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F4A39040-71EA-4DCD-9014-56742C9785E2}|PettyCashPrototype\\PettyCashPrototype.csproj|solutionrelative:pettycashprototype\\services\\documentservice\\getalldocuments\\getdocumentshandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{F4A39040-71EA-4DCD-9014-56742C9785E2}|PettyCashPrototype\\PettyCashPrototype.csproj|c:\\users\\lithim\\onedrive - sadpmr.co.za\\documents\\default vs repo\\pettycashprototype\\backend\\pettycashprototype\\services\\documentservice\\idocument.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F4A39040-71EA-4DCD-9014-56742C9785E2}|PettyCashPrototype\\PettyCashPrototype.csproj|solutionrelative:pettycashprototype\\services\\documentservice\\idocument.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{F4A39040-71EA-4DCD-9014-56742C9785E2}|PettyCashPrototype\\PettyCashPrototype.csproj|c:\\users\\lithim\\onedrive - sadpmr.co.za\\documents\\default vs repo\\pettycashprototype\\backend\\pettycashprototype\\services\\documentservice\\getalldocuments\\idocumentsstate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F4A39040-71EA-4DCD-9014-56742C9785E2}|PettyCashPrototype\\PettyCashPrototype.csproj|solutionrelative:pettycashprototype\\services\\documentservice\\getalldocuments\\idocumentsstate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F4A39040-71EA-4DCD-9014-56742C9785E2}|PettyCashPrototype\\PettyCashPrototype.csproj|c:\\users\\lithim\\onedrive - sadpmr.co.za\\documents\\default vs repo\\pettycashprototype\\backend\\pettycashprototype\\services\\documentservice\\getalldocuments\\getreceiptsstate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F4A39040-71EA-4DCD-9014-56742C9785E2}|PettyCashPrototype\\PettyCashPrototype.csproj|solutionrelative:pettycashprototype\\services\\documentservice\\getalldocuments\\getreceiptsstate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -30,71 +30,71 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 4,
           "Children": [
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "PettyCashPrototypeContext.cs",
-              "DocumentMoniker": "C:\\Users\\lithim\\OneDrive - sadpmr.co.za\\Documents\\Default VS Repo\\PettyCashPrototype\\backend\\PettyCashPrototype\\Models\\PettyCashPrototypeContext.cs",
-              "RelativeDocumentMoniker": "PettyCashPrototype\\Models\\PettyCashPrototypeContext.cs",
-              "ToolTip": "C:\\Users\\lithim\\OneDrive - sadpmr.co.za\\Documents\\Default VS Repo\\PettyCashPrototype\\backend\\PettyCashPrototype\\Models\\PettyCashPrototypeContext.cs",
-              "RelativeToolTip": "PettyCashPrototype\\Models\\PettyCashPrototypeContext.cs",
-              "ViewState": "AQIAABEAAAAAAAAAAAAgwCoAAAAjAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-31T08:45:08.152Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "GetByRequisitionState.cs",
-              "DocumentMoniker": "C:\\Users\\lithim\\OneDrive - sadpmr.co.za\\Documents\\Default VS Repo\\PettyCashPrototype\\backend\\PettyCashPrototype\\Services\\DocumentService\\GetDocuments\\GetByRequisitionState.cs",
-              "RelativeDocumentMoniker": "PettyCashPrototype\\Services\\DocumentService\\GetDocuments\\GetByRequisitionState.cs",
-              "ToolTip": "C:\\Users\\lithim\\OneDrive - sadpmr.co.za\\Documents\\Default VS Repo\\PettyCashPrototype\\backend\\PettyCashPrototype\\Services\\DocumentService\\GetDocuments\\GetByRequisitionState.cs",
-              "RelativeToolTip": "PettyCashPrototype\\Services\\DocumentService\\GetDocuments\\GetByRequisitionState.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAcAAAAlAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-31T08:18:31.323Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "DocumentService.cs",
-              "DocumentMoniker": "C:\\Users\\lithim\\OneDrive - sadpmr.co.za\\Documents\\Default VS Repo\\PettyCashPrototype\\backend\\PettyCashPrototype\\Services\\DocumentService\\DocumentService.cs",
-              "RelativeDocumentMoniker": "PettyCashPrototype\\Services\\DocumentService\\DocumentService.cs",
-              "ToolTip": "C:\\Users\\lithim\\OneDrive - sadpmr.co.za\\Documents\\Default VS Repo\\PettyCashPrototype\\backend\\PettyCashPrototype\\Services\\DocumentService\\DocumentService.cs",
-              "RelativeToolTip": "PettyCashPrototype\\Services\\DocumentService\\DocumentService.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA8AAAAQAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-31T08:17:51.34Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "IDocument.cs",
-              "DocumentMoniker": "C:\\Users\\lithim\\OneDrive - sadpmr.co.za\\Documents\\Default VS Repo\\PettyCashPrototype\\backend\\PettyCashPrototype\\Services\\DocumentService\\IDocument.cs",
-              "RelativeDocumentMoniker": "PettyCashPrototype\\Services\\DocumentService\\IDocument.cs",
-              "ToolTip": "C:\\Users\\lithim\\OneDrive - sadpmr.co.za\\Documents\\Default VS Repo\\PettyCashPrototype\\backend\\PettyCashPrototype\\Services\\DocumentService\\IDocument.cs",
-              "RelativeToolTip": "PettyCashPrototype\\Services\\DocumentService\\IDocument.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAQAAAArAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-31T08:17:40.941Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
               "Title": "DocumentsController.cs",
               "DocumentMoniker": "C:\\Users\\lithim\\OneDrive - sadpmr.co.za\\Documents\\Default VS Repo\\PettyCashPrototype\\backend\\PettyCashPrototype\\Controllers\\DocumentsController.cs",
               "RelativeDocumentMoniker": "PettyCashPrototype\\Controllers\\DocumentsController.cs",
               "ToolTip": "C:\\Users\\lithim\\OneDrive - sadpmr.co.za\\Documents\\Default VS Repo\\PettyCashPrototype\\backend\\PettyCashPrototype\\Controllers\\DocumentsController.cs",
               "RelativeToolTip": "PettyCashPrototype\\Controllers\\DocumentsController.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAABgAAABGAAAA",
+              "ViewState": "AQIAABoAAAAAAAAAAAAmwDQAAABMAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-31T08:17:23.244Z",
+              "WhenOpened": "2024-07-31T13:12:11.547Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "GetDocumentsHandler.cs",
+              "DocumentMoniker": "C:\\Users\\lithim\\OneDrive - sadpmr.co.za\\Documents\\Default VS Repo\\PettyCashPrototype\\backend\\PettyCashPrototype\\Services\\DocumentService\\GetAllDocuments\\GetDocumentsHandler.cs",
+              "RelativeDocumentMoniker": "PettyCashPrototype\\Services\\DocumentService\\GetAllDocuments\\GetDocumentsHandler.cs",
+              "ToolTip": "C:\\Users\\lithim\\OneDrive - sadpmr.co.za\\Documents\\Default VS Repo\\PettyCashPrototype\\backend\\PettyCashPrototype\\Services\\DocumentService\\GetAllDocuments\\GetDocumentsHandler.cs",
+              "RelativeToolTip": "PettyCashPrototype\\Services\\DocumentService\\GetAllDocuments\\GetDocumentsHandler.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-07-31T12:58:28.552Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "GetReceiptsState.cs",
+              "DocumentMoniker": "C:\\Users\\lithim\\OneDrive - sadpmr.co.za\\Documents\\Default VS Repo\\PettyCashPrototype\\backend\\PettyCashPrototype\\Services\\DocumentService\\GetAllDocuments\\GetReceiptsState.cs",
+              "RelativeDocumentMoniker": "PettyCashPrototype\\Services\\DocumentService\\GetAllDocuments\\GetReceiptsState.cs",
+              "ToolTip": "C:\\Users\\lithim\\OneDrive - sadpmr.co.za\\Documents\\Default VS Repo\\PettyCashPrototype\\backend\\PettyCashPrototype\\Services\\DocumentService\\GetAllDocuments\\GetReceiptsState.cs",
+              "RelativeToolTip": "PettyCashPrototype\\Services\\DocumentService\\GetAllDocuments\\GetReceiptsState.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-07-31T12:58:26.21Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "IDocumentsState.cs",
+              "DocumentMoniker": "C:\\Users\\lithim\\OneDrive - sadpmr.co.za\\Documents\\Default VS Repo\\PettyCashPrototype\\backend\\PettyCashPrototype\\Services\\DocumentService\\GetAllDocuments\\IDocumentsState.cs",
+              "RelativeDocumentMoniker": "PettyCashPrototype\\Services\\DocumentService\\GetAllDocuments\\IDocumentsState.cs",
+              "ToolTip": "C:\\Users\\lithim\\OneDrive - sadpmr.co.za\\Documents\\Default VS Repo\\PettyCashPrototype\\backend\\PettyCashPrototype\\Services\\DocumentService\\GetAllDocuments\\IDocumentsState.cs",
+              "RelativeToolTip": "PettyCashPrototype\\Services\\DocumentService\\GetAllDocuments\\IDocumentsState.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-07-31T12:58:25.237Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "DocumentService.cs",
+              "DocumentMoniker": "C:\\Users\\lithim\\OneDrive - sadpmr.co.za\\Documents\\Default VS Repo\\PettyCashPrototype\\backend\\PettyCashPrototype\\Services\\DocumentService\\DocumentService.cs",
+              "RelativeDocumentMoniker": "PettyCashPrototype\\Services\\DocumentService\\DocumentService.cs",
+              "ToolTip": "C:\\Users\\lithim\\OneDrive - sadpmr.co.za\\Documents\\Default VS Repo\\PettyCashPrototype\\backend\\PettyCashPrototype\\Services\\DocumentService\\DocumentService.cs",
+              "RelativeToolTip": "PettyCashPrototype\\Services\\DocumentService\\DocumentService.cs",
+              "ViewState": "AQIAACsAAAAAAAAAAADwv2cAAABlAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-07-31T09:18:06.656Z",
               "EditorCaption": ""
             }
           ]

@@ -47,6 +47,8 @@ public partial class Requisition
 
     public bool ConfirmChangeReceived { get; set; }
 
+    public bool ReceiptReceived { get; set; }
+
     public DateTime? IssueDate { get; set; }
 
     public string Stage { get; set; } = null!;

@@ -1,6 +1,6 @@
 ﻿namespace PettyCashPrototype.Services.DocumentService.GetAllDocuments
 {
-    public interface IDocumentState
+    public interface IDocumentsState
     {
         Task<IEnumerable<Document>> GetDocuments();
     }

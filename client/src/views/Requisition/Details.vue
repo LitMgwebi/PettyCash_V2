@@ -11,35 +11,37 @@
 					{{ requisition.glaccount.description }}
 				</p>
 
-				<div v-if="user.id == requisition.applicant.id">
-					<p v-if="requisition.applicantCode > 0">
-						Code: {{ requisition.applicantCode }}
-					</p>
-				</div>
-				<div v-else>
-					<form @submit.prevent="issueMoney">
-						<div>
-							<label>Cash to be issued: </label>
-							<input type="text" v-model="requisition.cashIssued" />
-						</div>
-						<div>
-							<label>Applicant Code: </label>
-							<input type="text" v-model="attemptCode" />
-						</div>
+				<div v-if="user.jobTitle == 16">
+					<div v-if="user.id == requisition.applicant.id">
+						<p v-if="requisition.applicantCode > 0">
+							Code: {{ requisition.applicantCode }}
+						</p>
+					</div>
+					<div v-else>
+						<form @submit.prevent="issueMoney">
+							<div>
+								<label>Cash to be issued: </label>
+								<input type="text" v-model="requisition.cashIssued" />
+							</div>
+							<div>
+								<label>Applicant Code: </label>
+								<input type="text" v-model="attemptCode" />
+							</div>
 
-						<!-- Grey out the button until the code and cash issued or both inputted -->
-						<div class="submit">
-							<button>Edit</button>
-						</div>
-					</form>
+							<!-- Grey out the button until the code and cash issued or both inputted -->
+							<div class="submit">
+								<button>Edit</button>
+							</div>
+						</form>
+					</div>
 				</div>
 				<div v-if="requisition.needsMotivation == true">
 					<section class="table">
-						<div v-if="motivations">
-							<div v-if="motivations.length > 0">
-								<div v-for="motivation in motivations" :key="motivation">
+						<div v-if="documents">
+							<div v-if="documents.length > 0">
+								<div v-for="document in documents" :key="document">
 									<span>
-										{{ motivation.fileName }} {{ motivation.dateUploaded }}
+										{{ document.fileName }} {{ document.dateUploaded }}
 									</span>
 									<div v-if="user.id == requisition.applicant.id">
 										<button @click="deleteRecord(motivation)">Delete</button>
@@ -112,7 +114,7 @@
 <script setup>
 import { defineProps, toRefs, inject, ref } from 'vue'
 import { getRequisition, editRequisition } from '@/hooks/requisitionCRUD'
-import { addMotivation, getMotivations, deleteMotivation } from '@/hooks/motivationCRUD'
+import { addDocument, getDocuments, deleteDocument } from '@/hooks/documentCRUD'
 import Buttonhandler from '@/components/Requisition/ButtonHandler.vue'
 import moment from 'moment'
 import router from '@/router/router'
@@ -126,7 +128,7 @@ const file = ref(null)
 const attemptCode = ref(0)
 let formData = new FormData()
 const { requisition } = getRequisition(id.value)
-const { motivations } = getMotivations(id.value)
+const { documents } = getDocuments('motivations', id.value)
 
 //#endregion
 
@@ -134,11 +136,11 @@ const { motivations } = getMotivations(id.value)
 
 function saveImage() {
 	formData.append = ('file', file.value)
-	addMotivation(formData, id.value)
+	addDocument(formData, id.value, 'motivation')
 }
 
 function deleteRecord(motivation) {
-	deleteMotivation(motivation)
+	deleteDocument(motivation)
 }
 
 function formatDate(date) {

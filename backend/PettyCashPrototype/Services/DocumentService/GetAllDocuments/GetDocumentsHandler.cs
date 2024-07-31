@@ -2,14 +2,14 @@
 {
     public class GetDocumentsHandler
     {
-        private IDocumentState state = null!;
+        private IDocumentsState state = null!;
 
-        public void setState(IDocumentState state) => this.state = state;
+        public void setState(IDocumentsState state) => this.state = state;
 
         public async Task<IEnumerable<Document>> request()
         {
-            IEnumerable<Document> motivations = await state.GetDocuments();
-            return motivations;
+            IEnumerable<Document> documents = await state.GetDocuments();
+            return documents;
         }
     }
 }

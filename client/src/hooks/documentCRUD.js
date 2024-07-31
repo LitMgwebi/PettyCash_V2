@@ -2,30 +2,34 @@ import store from '@/store/store.js'
 import axios from 'axios'
 import { ref } from 'vue'
 
-export function getMotivations(id) {
+export function getDocuments(command, id) {
     store.commit('setLoading')
-    const motivations = ref()
+    const documents = ref()
     axios({
         method: 'GET',
         url: 'Documents/index',
         params: {
+            command,
             requisitionId: id
         }
     })
-        .then((res) => (motivations.value = res.data))
+        .then((res) => (documents.value = res.data))
         .catch((error) => store.dispatch('setStatus', error.response.data))
         .finally(() => store.commit('doneLoading'))
 
-    return { motivations }
+    return { documents }
 }
 
-export function addMotivation(File, id) {
+export function addDocument(File, id, command) {
     store.commit('setLoading')
-    console.log(File.append, id)
     axios({
         method: 'POST',
         url: 'Documents/create',
-        data: { File: File.append, requisitionId: id },
+        data: {
+            command,
+            File: File.append,
+            requisitionId: id
+        },
         headers: {
             'Content-Type': 'multipart/form-data'
         }
@@ -35,12 +39,12 @@ export function addMotivation(File, id) {
         .finally(() => store.commit('doneLoading'))
 }
 
-export function deleteMotivation(motivation) {
+export function deleteDocument(document) {
     store.commit('setLoading')
     axios({
         method: 'DELETE',
         url: 'Documents/delete',
-        data: motivation
+        data: document
     })
         .then((res) => store.dispatch('setStatus', res.data.message))
         .catch((error) => store.dispatch('setStatus', error.response.data))

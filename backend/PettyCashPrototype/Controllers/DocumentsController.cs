@@ -18,22 +18,22 @@ namespace PettyCashPrototype.Controllers
         #region GET
 
         [HttpGet, Route("index")]
-        public async Task<ActionResult<IEnumerable<Document>>> Index(int requisitionId = 0)
+        public async Task<ActionResult<IEnumerable<Document>>> Index(string command, int requisitionId = 0)
         {
             try
             {
-                IEnumerable<Document> documents = await _document.GetAll(requisitionId);
+                IEnumerable<Document> documents = await _document.GetAll(command, requisitionId);
                 return Ok(documents);
             }
             catch (Exception ex) { return BadRequest(ex.Message); }
         }
 
         [HttpGet, Route("details")]
-        public async Task<ActionResult<Motivation>> Details(int id)
+        public async Task<ActionResult<Motivation>> Details(string command, int id)
         {
             try
             {
-                Document document = await _document.GetOne(id);
+                Document document = await _document.GetOne(command, id);
                 return Ok(document);
             }
             catch (Exception ex) { return BadRequest(ex.Message); }
@@ -50,7 +50,7 @@ namespace PettyCashPrototype.Controllers
             {
                 var identity = (ClaimsIdentity)User.Identity!;
                 string name = identity.Claims.Where(c => c.Type == ClaimTypes.Name).Select(c => c.Value).FirstOrDefault()!;
-                string message = await _document.Upload(uploadFile.File, uploadFile.RequisitionId, name);
+                string message = await _document.Upload(uploadFile.command, uploadFile.File, uploadFile.RequisitionId, name);
 
                 Requisition requisition = await _requisition.GetOne(uploadFile.RequisitionId);
                 string messageFromRequisition = await _requisition.Edit(requisition, "addMotivation");
