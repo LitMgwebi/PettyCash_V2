@@ -48,12 +48,17 @@ namespace PettyCashPrototype.Controllers
         {
             try
             {
+                string messageFromRequisition = string.Empty;
                 var identity = (ClaimsIdentity)User.Identity!;
                 string name = identity.Claims.Where(c => c.Type == ClaimTypes.Name).Select(c => c.Value).FirstOrDefault()!;
                 string message = await _document.Upload(uploadFile.command, uploadFile.File, uploadFile.RequisitionId, name);
 
                 Requisition requisition = await _requisition.GetOne(uploadFile.RequisitionId);
-                string messageFromRequisition = await _requisition.Edit(requisition, "addMotivation");
+
+                if(uploadFile.command == "motivation")
+                   messageFromRequisition  = await _requisition.Edit(requisition, "addMotivation");
+                else if(uploadFile.command == "receipt")
+                    messageFromRequisition = await _requisition.Edit(requisition, "addReceipt");
 
                 return Ok(new { message = message });
             }

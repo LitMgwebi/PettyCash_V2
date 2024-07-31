@@ -153,6 +153,13 @@ namespace PettyCashPrototype.Services.RequisitionService
                     editRequisition.setState(new WholeRequisitionState(_db, requisition));
                     messageResponse = await editRequisition.request();
                 }
+                else if (command == "addReceipt")
+                {
+                    requisition.Stage = "Receipt has been uploaded. Please give money back to Accounts Payable.";
+                    requisition.ReceiptReceived = true;
+                    editRequisition.setState(new WholeRequisitionState(_db, requisition));
+                    messageResponse = await editRequisition.request();
+                }
                 else
                     throw new Exception("System could not resolve error within requisition editing.");
 
