@@ -5,8 +5,8 @@ global using PettyCashPrototype.Services.RequisitionService;
 global using PettyCashPrototype.Services.MainAccountService;
 global using PettyCashPrototype.Services.SubAccountService;
 global using PettyCashPrototype.Services.DepartmentService;
-global using PettyCashPrototype.Services.MotivationService;
 global using PettyCashPrototype.Services.GLAccountService;
+global using PettyCashPrototype.Services.DocumentService;
 global using PettyCashPrototype.Services.DivisionService;
 global using PettyCashPrototype.Services.JobTitleService;
 global using PettyCashPrototype.Services.PurposeService;
@@ -23,7 +23,6 @@ global using Newtonsoft.Json;
 global using System.Data;
 
 #endregion
-
 
 #region Local Imports
 
@@ -47,8 +46,8 @@ builder.Services.AddScoped<IStatus, StatusService>();
 builder.Services.AddScoped<IPurpose, PurposeService>();
 builder.Services.AddScoped<IDivision, DivisonService>();
 builder.Services.AddScoped<IJobTitle, JobTitleService>();
+builder.Services.AddScoped<IDocument, DocumentService>();
 builder.Services.AddScoped<IGLAccount, GLAccountService>();
-builder.Services.AddScoped<IMotivation, MotivationService>();
 builder.Services.AddScoped<ISubAccount, SubAccountService>();
 builder.Services.AddScoped<IDepartment, DepartmentService>();
 builder.Services.AddScoped<IMainAccount, MainAccountService>();

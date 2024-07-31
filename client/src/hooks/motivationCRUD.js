@@ -7,7 +7,7 @@ export function getMotivations(id) {
     const motivations = ref()
     axios({
         method: 'GET',
-        url: 'Motivations/index',
+        url: 'Documents/index',
         params: {
             requisitionId: id
         }
@@ -24,7 +24,7 @@ export function addMotivation(File, id) {
     console.log(File.append, id)
     axios({
         method: 'POST',
-        url: 'Motivations/create',
+        url: 'Documents/create',
         data: { File: File.append, requisitionId: id },
         headers: {
             'Content-Type': 'multipart/form-data'
@@ -39,7 +39,7 @@ export function deleteMotivation(motivation) {
     store.commit('setLoading')
     axios({
         method: 'DELETE',
-        url: 'Motivations/delete',
+        url: 'Documents/delete',
         data: motivation
     })
         .then((res) => store.dispatch('setStatus', res.data.message))

@@ -34,11 +34,13 @@ public partial class PettyCashPrototypeContext : IdentityDbContext<User>
 
     public virtual DbSet<Status> Statuses { get; set; }
 
-    public virtual DbSet<Motivation> Motivations { get; set; }
+    public virtual DbSet<Document> Documents { get; set; }
 
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<Motivation>();
+        modelBuilder.Entity<Receipt>();
         modelBuilder.Entity<Glaccount>(entity =>
         {
             entity.ToTable("GLAccount");
@@ -165,5 +167,6 @@ public partial class PettyCashPrototypeContext : IdentityDbContext<User>
         modelBuilder.ApplyConfiguration(new RolesSeeding());
         modelBuilder.ApplyConfiguration(new StatusSeeding());
         modelBuilder.ApplyConfiguration(new JobTitleSeeding());
+        modelBuilder.ApplyConfiguration(new DocumentSeeding());
     }
 }

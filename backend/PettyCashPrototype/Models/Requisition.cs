@@ -45,6 +45,8 @@ public partial class Requisition
 
     public bool ConfirmApplicantCode { get; set; }
 
+    public bool ConfirmChangeReceived { get; set; }
+
     public DateTime? IssueDate { get; set; }
 
     public string Stage { get; set; } = null!;
@@ -52,6 +54,8 @@ public partial class Requisition
     public string? ManagerComment { get; set; }
 
     public string? FinanceComment { get; set; }
+
+    public string? ApplicantComment { get; set; }
 
     public bool IsActive { get; set; } = true;
 
@@ -76,5 +80,5 @@ public partial class Requisition
     public virtual Status? ManagerRecommendation { get; set; }
 
     [JsonIgnore]
-    public virtual ICollection<Motivation> Motivations { get; set; } = new List<Motivation>();
+    public virtual ICollection<Document> Documents { get; set; } = new List<Document>();
 }

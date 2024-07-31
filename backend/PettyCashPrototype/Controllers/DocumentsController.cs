@@ -5,25 +5,25 @@ namespace PettyCashPrototype.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [Authorize]
-    public class MotivationsController : ControllerBase
+    public class DocumentsController : ControllerBase
     {
-        private IMotivation _motivation;
+        private IDocument _document;
         private IRequisition _requisition;
-        public MotivationsController(IMotivation motivation, IRequisition requisition)
-        { 
-            _motivation = motivation;
+        public DocumentsController(IDocument document, IRequisition requisition)
+        {
+            _document = document;
             _requisition = requisition;
         }
 
         #region GET
 
         [HttpGet, Route("index")]
-        public async Task<ActionResult<IEnumerable<Motivation>>> Index(int requisitionId = 0)
+        public async Task<ActionResult<IEnumerable<Document>>> Index(int requisitionId = 0)
         {
             try
             {
-                IEnumerable<Motivation> motivations = await _motivation.GetAll(requisitionId);
-                return Ok(motivations);
+                IEnumerable<Document> documents = await _document.GetAll(requisitionId);
+                return Ok(documents);
             }
             catch (Exception ex) { return BadRequest(ex.Message); }
         }
@@ -33,8 +33,8 @@ namespace PettyCashPrototype.Controllers
         {
             try
             {
-                Motivation motivation = await _motivation.GetOne(id);
-                return Ok(motivation);
+                Document document = await _document.GetOne(id);
+                return Ok(document);
             }
             catch (Exception ex) { return BadRequest(ex.Message); }
         }
@@ -44,13 +44,13 @@ namespace PettyCashPrototype.Controllers
         #region POST
 
         [HttpPost, Route("create")]
-        public async Task<ActionResult<Motivation>> Create(UploadFile uploadFile)
+        public async Task<ActionResult<Document>> Create(UploadFile uploadFile)
         {
             try
             {
                 var identity = (ClaimsIdentity)User.Identity!;
                 string name = identity.Claims.Where(c => c.Type == ClaimTypes.Name).Select(c => c.Value).FirstOrDefault()!;
-                string message = await _motivation.Upload(uploadFile.File, uploadFile.RequisitionId, name);
+                string message = await _document.Upload(uploadFile.File, uploadFile.RequisitionId, name);
 
                 Requisition requisition = await _requisition.GetOne(uploadFile.RequisitionId);
                 string messageFromRequisition = await _requisition.Edit(requisition, "addMotivation");
@@ -65,12 +65,12 @@ namespace PettyCashPrototype.Controllers
         #region PUT
 
         [HttpPut, Route("edit")]
-        public ActionResult Edit(Motivation motivation)
+        public ActionResult Edit(Document document)
         {
             try
             {
-                _motivation.Edit(motivation);
-                return Ok(new { message = $"{motivation.FileName} has been edited." });
+                _document.Edit(document);
+                return Ok(new { message = $"{document.FileName} has been edited." });
             }
             catch (Exception ex) { return BadRequest(ex.Message); }
         }
@@ -80,11 +80,11 @@ namespace PettyCashPrototype.Controllers
         #region DELETE
 
         [HttpDelete, Route("delete")]
-        public ActionResult Delete(Motivation motivation)
+        public ActionResult Delete(Document document)
         {
             try
             {
-                _motivation.SoftDelete(motivation);
+                _document.SoftDelete(document);
 
                 return Ok(new { message = "Motivation has been deleted" });
             }

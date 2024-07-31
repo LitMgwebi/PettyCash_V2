@@ -16,20 +16,19 @@
             {
                 if (IsWeekday() && IsWithinWorkingHours())
                 {
-                    await Task.Delay(TimeSpan.FromHours(1), cancellationToken);
-
                     using (var scope = serviceScopeFactory.CreateScope())
                     {
-                        DateTime date = DateTime.Now;
-                        DateTime midnight = date.Date;
-
                         IRequisition _requisition = scope.ServiceProvider.GetRequiredService<IRequisition>();
 
                         var requisitions = await _requisition.GetAll("tracking");
 
                         foreach(var requisition in requisitions)
                         {
+                            TimeSpan? dayAfterIssue = requisition.IssueDate!.Value.AddDays(1) - requisition.IssueDate;
+                            await Task.Delay(dayAfterIssue!.Value, cancellationToken);
                             // ***** emaill sending code goes here *****
+
+
                         }
                     }
                 }

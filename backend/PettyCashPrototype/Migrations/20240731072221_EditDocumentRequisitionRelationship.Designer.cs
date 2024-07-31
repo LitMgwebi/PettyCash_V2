@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PettyCashPrototype.Models;
 
@@ -11,9 +12,11 @@ using PettyCashPrototype.Models;
 namespace PettyCashPrototype.Migrations
 {
     [DbContext(typeof(PettyCashPrototypeContext))]
-    partial class PettyCashPrototypeContextModelSnapshot : ModelSnapshot
+    [Migration("20240731072221_EditDocumentRequisitionRelationship")]
+    partial class EditDocumentRequisitionRelationship
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -389,7 +392,7 @@ namespace PettyCashPrototype.Migrations
                     b.Property<DateTime>("DateUploaded")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("DocumentType")
+                    b.Property<string>("Discriminator")
                         .IsRequired()
                         .HasMaxLength(13)
                         .HasColumnType("nvarchar(13)");
@@ -414,7 +417,7 @@ namespace PettyCashPrototype.Migrations
 
                     b.ToTable("Document");
 
-                    b.HasDiscriminator<string>("DocumentType").HasValue("Document");
+                    b.HasDiscriminator<string>("Discriminator").HasValue("Document");
 
                     b.UseTphMappingStrategy();
                 });

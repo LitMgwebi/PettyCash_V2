@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PettyCashPrototype.Models;
 
@@ -11,9 +12,11 @@ using PettyCashPrototype.Models;
 namespace PettyCashPrototype.Migrations
 {
     [DbContext(typeof(PettyCashPrototypeContext))]
-    partial class PettyCashPrototypeContextModelSnapshot : ModelSnapshot
+    [Migration("20240731063745_ConfirmChangeReceived")]
+    partial class ConfirmChangeReceived
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -378,47 +381,6 @@ namespace PettyCashPrototype.Migrations
                         });
                 });
 
-            modelBuilder.Entity("PettyCashPrototype.Models.Document", b =>
-                {
-                    b.Property<int>("DocumentId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("DocumentId"));
-
-                    b.Property<DateTime>("DateUploaded")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("DocumentType")
-                        .IsRequired()
-                        .HasMaxLength(13)
-                        .HasColumnType("nvarchar(13)");
-
-                    b.Property<string>("FileExtension")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("FileName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("RequisitionId")
-                        .HasColumnType("int");
-
-                    b.HasKey("DocumentId");
-
-                    b.HasIndex("RequisitionId");
-
-                    b.ToTable("Document");
-
-                    b.HasDiscriminator<string>("DocumentType").HasValue("Document");
-
-                    b.UseTphMappingStrategy();
-                });
-
             modelBuilder.Entity("PettyCashPrototype.Models.Glaccount", b =>
                 {
                     b.Property<int>("GlaccountId")
@@ -684,6 +646,38 @@ namespace PettyCashPrototype.Migrations
                             IsActive = true,
                             Name = "Hospitality"
                         });
+                });
+
+            modelBuilder.Entity("PettyCashPrototype.Models.Motivation", b =>
+                {
+                    b.Property<int>("MotivationId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("MotivationId"));
+
+                    b.Property<DateTime>("DateUploaded")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("FileExtension")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FileName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("RequisitionId")
+                        .HasColumnType("int");
+
+                    b.HasKey("MotivationId");
+
+                    b.HasIndex("RequisitionId");
+
+                    b.ToTable("Motivation");
                 });
 
             modelBuilder.Entity("PettyCashPrototype.Models.Office", b =>
@@ -1190,24 +1184,6 @@ namespace PettyCashPrototype.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
-            modelBuilder.Entity("PettyCashPrototype.Models.Motivation", b =>
-                {
-                    b.HasBaseType("PettyCashPrototype.Models.Document");
-
-                    b.ToTable("Document");
-
-                    b.HasDiscriminator().HasValue("Motivation");
-                });
-
-            modelBuilder.Entity("PettyCashPrototype.Models.Receipt", b =>
-                {
-                    b.HasBaseType("PettyCashPrototype.Models.Document");
-
-                    b.ToTable("Document");
-
-                    b.HasDiscriminator().HasValue("Receipt");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -1270,17 +1246,6 @@ namespace PettyCashPrototype.Migrations
                     b.Navigation("Department");
                 });
 
-            modelBuilder.Entity("PettyCashPrototype.Models.Document", b =>
-                {
-                    b.HasOne("PettyCashPrototype.Models.Requisition", "Requisition")
-                        .WithMany("Documents")
-                        .HasForeignKey("RequisitionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Requisition");
-                });
-
             modelBuilder.Entity("PettyCashPrototype.Models.Glaccount", b =>
                 {
                     b.HasOne("PettyCashPrototype.Models.Division", "Division")
@@ -1322,6 +1287,17 @@ namespace PettyCashPrototype.Migrations
                     b.Navigation("Purpose");
 
                     b.Navigation("SubAccount");
+                });
+
+            modelBuilder.Entity("PettyCashPrototype.Models.Motivation", b =>
+                {
+                    b.HasOne("PettyCashPrototype.Models.Requisition", "Requisition")
+                        .WithMany("Motivations")
+                        .HasForeignKey("RequisitionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Requisition");
                 });
 
             modelBuilder.Entity("PettyCashPrototype.Models.Requisition", b =>
@@ -1445,7 +1421,7 @@ namespace PettyCashPrototype.Migrations
 
             modelBuilder.Entity("PettyCashPrototype.Models.Requisition", b =>
                 {
-                    b.Navigation("Documents");
+                    b.Navigation("Motivations");
                 });
 
             modelBuilder.Entity("PettyCashPrototype.Models.Status", b =>

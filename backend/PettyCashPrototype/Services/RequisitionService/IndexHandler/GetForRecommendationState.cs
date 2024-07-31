@@ -23,9 +23,9 @@
             {
                 requisitions = await db.Requisitions
                     .Include(a => a.Applicant)
-                    .Include(m => m.Motivations)
+                    .Include(m => m.Documents)
                     .Include(gl => gl.Glaccount)
-                    .Where(gl => gl.Glaccount!.NeedsMotivation == true && gl.Motivations.Count > 0)
+                    .Where(gl => gl.Glaccount!.NeedsMotivation == true && gl.Documents.Count > 0)
                     .Where(a => a.IsActive == true)
                     .Where(d => d.Applicant!.JobTitle!.JobTitleId == 7 && d.Applicant.Division!.DepartmentId == user.Division!.DepartmentId)
                     .Where(a => a.ManagerRecommendation == null && a.FinanceApproval == null)
@@ -36,10 +36,10 @@
             {
                 requisitions = await db.Requisitions
                     .Include(a => a.Applicant)
-                    .Include(m => m.Motivations)
+                    .Include(m => m.Documents)
                     .Include(gl => gl.Glaccount)
                     .Where(a => a.IsActive == true)
-                    .Where(nm => (nm.NeedsMotivation == true && nm.Motivations.Count > 0) || nm.NeedsMotivation == false)
+                    .Where(nm => (nm.NeedsMotivation == true && nm.Documents.Count > 0) || nm.NeedsMotivation == false)
                     .Where(d => d.Applicant!.DivisionId == user.DivisionId && d.Applicant!.JobTitle!.JobTitleId != 7)
                     .Where(a => a.ManagerRecommendation == null && a.FinanceApproval == null)
                     .AsNoTracking()
@@ -49,9 +49,9 @@
             {
                 requisitions = await db.Requisitions
                     .Include(a => a.Applicant)
-                    .Include(m => m.Motivations)
+                    .Include(m => m.Documents)
                     .Include(gl => gl.Glaccount)
-                    .Where(gl => gl.Glaccount!.NeedsMotivation == true && gl.Motivations.Count > 0)
+                    .Where(gl => gl.Glaccount!.NeedsMotivation == true && gl.Documents.Count > 0)
                     .Where(a => a.IsActive == true)
                     .Where(d => d.Applicant!.DivisionId == user.DivisionId)
                     .Where(a => a.ManagerRecommendation == null && a.FinanceApproval == null)

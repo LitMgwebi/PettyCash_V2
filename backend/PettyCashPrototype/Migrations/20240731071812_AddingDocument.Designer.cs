@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PettyCashPrototype.Models;
 
@@ -11,9 +12,11 @@ using PettyCashPrototype.Models;
 namespace PettyCashPrototype.Migrations
 {
     [DbContext(typeof(PettyCashPrototypeContext))]
-    partial class PettyCashPrototypeContextModelSnapshot : ModelSnapshot
+    [Migration("20240731071812_AddingDocument")]
+    partial class AddingDocument
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -389,7 +392,7 @@ namespace PettyCashPrototype.Migrations
                     b.Property<DateTime>("DateUploaded")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("DocumentType")
+                    b.Property<string>("Discriminator")
                         .IsRequired()
                         .HasMaxLength(13)
                         .HasColumnType("nvarchar(13)");
@@ -414,7 +417,7 @@ namespace PettyCashPrototype.Migrations
 
                     b.ToTable("Document");
 
-                    b.HasDiscriminator<string>("DocumentType").HasValue("Document");
+                    b.HasDiscriminator<string>("Discriminator").HasValue("Document");
 
                     b.UseTphMappingStrategy();
                 });
@@ -1194,6 +1197,11 @@ namespace PettyCashPrototype.Migrations
                 {
                     b.HasBaseType("PettyCashPrototype.Models.Document");
 
+                    b.Property<int?>("RequisitionId1")
+                        .HasColumnType("int");
+
+                    b.HasIndex("RequisitionId1");
+
                     b.ToTable("Document");
 
                     b.HasDiscriminator().HasValue("Motivation");
@@ -1203,7 +1211,16 @@ namespace PettyCashPrototype.Migrations
                 {
                     b.HasBaseType("PettyCashPrototype.Models.Document");
 
-                    b.ToTable("Document");
+                    b.Property<int?>("RequisitionId1")
+                        .HasColumnType("int");
+
+                    b.HasIndex("RequisitionId1");
+
+                    b.ToTable("Document", t =>
+                        {
+                            t.Property("RequisitionId1")
+                                .HasColumnName("Receipt_RequisitionId1");
+                        });
 
                     b.HasDiscriminator().HasValue("Receipt");
                 });
@@ -1273,7 +1290,7 @@ namespace PettyCashPrototype.Migrations
             modelBuilder.Entity("PettyCashPrototype.Models.Document", b =>
                 {
                     b.HasOne("PettyCashPrototype.Models.Requisition", "Requisition")
-                        .WithMany("Documents")
+                        .WithMany()
                         .HasForeignKey("RequisitionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -1406,6 +1423,20 @@ namespace PettyCashPrototype.Migrations
                     b.Navigation("Office");
                 });
 
+            modelBuilder.Entity("PettyCashPrototype.Models.Motivation", b =>
+                {
+                    b.HasOne("PettyCashPrototype.Models.Requisition", null)
+                        .WithMany("Motivations")
+                        .HasForeignKey("RequisitionId1");
+                });
+
+            modelBuilder.Entity("PettyCashPrototype.Models.Receipt", b =>
+                {
+                    b.HasOne("PettyCashPrototype.Models.Requisition", null)
+                        .WithMany("Receipts")
+                        .HasForeignKey("RequisitionId1");
+                });
+
             modelBuilder.Entity("PettyCashPrototype.Models.Department", b =>
                 {
                     b.Navigation("Divisions");
@@ -1445,7 +1476,9 @@ namespace PettyCashPrototype.Migrations
 
             modelBuilder.Entity("PettyCashPrototype.Models.Requisition", b =>
                 {
-                    b.Navigation("Documents");
+                    b.Navigation("Motivations");
+
+                    b.Navigation("Receipts");
                 });
 
             modelBuilder.Entity("PettyCashPrototype.Models.Status", b =>

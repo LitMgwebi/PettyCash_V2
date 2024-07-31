@@ -1,57 +1,46 @@
-﻿using PettyCashPrototype.Models;
-using PettyCashPrototype.Services.MotivationService.GetMotivations;
-using PettyCashPrototype.Services.RequisitionService.EditHandler;
-using System.Threading;
+﻿using PettyCashPrototype.Services.DocumentService.GetAllDocuments;
 
-namespace PettyCashPrototype.Services.MotivationService
+namespace PettyCashPrototype.Services.DocumentService
 {
-    public class MotivationService : IMotivation
+    public class DocumentService : IDocument
     {
         private PettyCashPrototypeContext _db;
-        public MotivationService(PettyCashPrototypeContext db) { 
+        public DocumentService(PettyCashPrototypeContext db) { 
             _db = db;
         }
 
-        public async Task<IEnumerable<Motivation>> GetAll(int requisitionId)
+        public async Task<IEnumerable<Document>> GetAll(int requisitionId)
         {
             try
             {
-                GetMotivationsHandler motivationsHandler = new GetMotivationsHandler();
-                IEnumerable<Motivation> motivations = new List<Motivation>();
+                GetDocumentsHandler documentsHandler = new GetDocumentsHandler();
+                IEnumerable<Document> documents = new List<Document>();
 
                 if(requisitionId == 0)
                 {
-                    motivationsHandler.setState(new GetAllMotivationsState());
-                    motivations = await motivationsHandler.request(_db);
+                    documentsHandler.setState(new GetAllDocumentsState(_db));
+                    documents = await documentsHandler.request();
                 } 
                 else if (requisitionId > 0)
                 {
-                    motivationsHandler.setState(new GetByRequisitionState());
-                    motivations = await motivationsHandler.request(_db, requisitionId);
+                    documentsHandler.setState(new GetAllByRequisitionState(_db, requisitionId));
+                    documents = await documentsHandler.request();
                 }
-                return motivations;
+                return documents;
             }
             catch { throw; }
         }
 
-        //public async Task<IList<Motivation>> GetAllByRequisition(int requisitionId)
-        //{
-        //    try
-        //    {
-                
-        //    }
-        //    catch { throw; }
-        //}
-
-        public async Task<Motivation> GetOne(int id)
+        public async Task<Document> GetOne(int id)
         {
             try
             {
-                Motivation motivation = await _db.Motivations
-                    .Where(a => a.IsActive == true)
-                    .Include(d => d.Requisition)
-                    .AsNoTracking()
-                    .FirstOrDefaultAsync(x => x.MotivationId == id);
+                //Motivation motivation = await _db.Motivations
+                //    .Where(a => a.IsActive == true)
+                //    .Include(d => d.Requisition)
+                //    .AsNoTracking()
+                //    .FirstOrDefaultAsync(x => x.FileId == id);
+                Motivation motivation = new Motivation();
 
                 if (motivation == null) throw new Exception("System could not retrieve the Motivation.");
 
@@ -89,7 +78,7 @@ namespace PettyCashPrototype.Services.MotivationService
                     {
                         await file.CopyToAsync(fileStream);
                     }
-                    _db.Motivations.Add(motivation);
+                    _db.Documents.Add(motivation);
 
                     int result = _db.SaveChanges();
                     if (result == 0) throw new DbUpdateException("System was unable to add the new motivation.");
@@ -103,27 +92,27 @@ namespace PettyCashPrototype.Services.MotivationService
             catch { throw; }
         }
 
-        public void Edit(Motivation motivation)
+        public void Edit(Document document)
         {
             try
             {
-                _db.Motivations.Update(motivation);
+                _db.Documents.Update(document);
                 int result = _db.SaveChanges();
 
-                if (result == 0) throw new DbUpdateException($"System could not edit ${motivation.FileName}.{motivation.FileExtension}.");
+                if (result == 0) throw new DbUpdateException($"System could not edit ${document.FileName}.{document.FileExtension}.");
             }
             catch { throw; }
         }
 
-        public void SoftDelete(Motivation motivation)
+        public void SoftDelete(Document document)
         {
             try
             {
-                motivation.IsActive = false;
-                _db.Motivations.Update(motivation);
+                document.IsActive = false;
+                _db.Documents.Update(document);
                 int result = _db.SaveChanges();
 
-                if (result == 0) throw new DbUpdateException($"System could not delete ${motivation.FileName}.{motivation.FileExtension}.");
+                if (result == 0) throw new DbUpdateException($"System could not delete ${document.FileName}.{document.FileExtension}.");
             }
             catch { throw; }
         }

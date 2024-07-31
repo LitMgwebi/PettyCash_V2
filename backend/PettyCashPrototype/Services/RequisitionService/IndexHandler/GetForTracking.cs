@@ -19,7 +19,7 @@
                     .Include(m => m.Manager)
                     .Include(i => i.Issuer)
                     .Where(a => a.IsActive == true)
-                    .Where(c => c.ManagerRecommendation != null && c.FinanceApproval != null && c.Issuer != null)
+                    .Where(c => c.ManagerRecommendation != null && c.FinanceApproval != null && c.Issuer != null && c.ConfirmChangeReceived != true)
                     .AsNoTracking()
                     .ToListAsync();
 
