@@ -217,16 +217,16 @@ import { getSubAccounts } from '@/hooks/subAccountCRUD'
 import { getMainAccounts } from '@/hooks/mainAccountCRUD'
 import { getPurposes } from '@/hooks/purposeCRUD'
 import { getDivisions } from '@/hooks/divisionCRUD'
-import { ref } from 'vue'
+import { ref, inject } from 'vue'
 
 const { offices } = getOffices()
 const { subAccounts } = getSubAccounts()
 const { mainAccounts } = getMainAccounts()
 const { purposes } = getPurposes()
 const { divisions } = getDivisions()
-
+const typeOfGLGet = inject('typeOfGLGet')
 const reloadPage = () => location.reload()
-const { glAccounts } = getGLAccounts('all')
+const { glAccounts } = getGLAccounts(typeOfGLGet.All)
 
 //#region Add Config
 

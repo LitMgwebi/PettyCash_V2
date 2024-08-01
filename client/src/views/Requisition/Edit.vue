@@ -32,7 +32,7 @@
 
 <script setup>
 import { getGLAccounts } from '@/hooks/glAccountCRUD'
-import { defineProps, ref, toRefs } from 'vue'
+import { defineProps, ref, toRefs, inject } from 'vue'
 import { editRequisition, getRequisition } from '@/hooks/requisitionCRUD'
 import router from '@/router/router'
 
@@ -40,6 +40,7 @@ const reloadPage = () => location.reload()
 
 const props = defineProps(['id'])
 const { id } = toRefs(props)
+const editRequisitionStates = inject('editRequisitionStates')
 
 const { requisition } = getRequisition(id.value)
 const { glAccounts } = getGLAccounts('division')
@@ -53,7 +54,7 @@ const { glAccounts } = getGLAccounts('division')
 // })
 
 function handleSubmit() {
-	editRequisition(requisition.value, 'edit')
+	editRequisition(requisition.value, editRequisitionStates.Edit)
 	router.push({ name: 'requisition_details', params: { id: requisition.requisitionId } })
 }
 </script>

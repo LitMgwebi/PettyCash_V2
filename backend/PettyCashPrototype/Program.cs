@@ -2,6 +2,7 @@
 
 global using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 global using PettyCashPrototype.Services.RequisitionService;
+global using PettyCashPrototype.Services.TransactionService;
 global using PettyCashPrototype.Services.MainAccountService;
 global using PettyCashPrototype.Services.SubAccountService;
 global using PettyCashPrototype.Services.DepartmentService;
@@ -12,6 +13,7 @@ global using PettyCashPrototype.Services.JobTitleService;
 global using PettyCashPrototype.Services.PurposeService;
 global using PettyCashPrototype.Services.OfficeService;
 global using PettyCashPrototype.Services.StatusService;
+global using PettyCashPrototype.Services.VaultService;
 global using PettyCashPrototype.Services.UserService;
 global using PettyCashPrototype.Services.AuthService;
 global using Microsoft.AspNetCore.Authorization;
@@ -35,12 +37,12 @@ using PettyCashPrototype.Services.NotificationService;
 #endregion
 
 var builder = WebApplication.CreateBuilder(args);
-// Add services to the container.
 
 #region Scoping Services and Mapping Config
 
 builder.Services.AddScoped<IAuth, AuthService>();
 builder.Services.AddScoped<IUser, UserService>();
+builder.Services.AddScoped<IVault, VaultService>();
 builder.Services.AddScoped<IOffice, OfficeService>();
 builder.Services.AddScoped<IStatus, StatusService>();
 builder.Services.AddScoped<IPurpose, PurposeService>();
@@ -51,6 +53,7 @@ builder.Services.AddScoped<IGLAccount, GLAccountService>();
 builder.Services.AddScoped<ISubAccount, SubAccountService>();
 builder.Services.AddScoped<IDepartment, DepartmentService>();
 builder.Services.AddScoped<IMainAccount, MainAccountService>();
+builder.Services.AddScoped<ITransaction, TransactionService>();
 builder.Services.AddScoped<IRequisition, RequisitionService>();
 builder.Services.AddHostedService<PettyCashNotification>();
 
@@ -171,5 +174,36 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
+#endregion
+
+#region Constant enum and structs
+
+public struct typesOfTransaction
+{
+    public const string Withdrawal = "Withdrawal";
+    public const string Deposit = "Deposit";
+};
+
+public struct editRequisitionStates
+{
+    public const string Recommendation = "recommendation";
+    public const string Approval = "approval";
+    public const string Edit = "edit";
+    public const string Issuing = "issuing";
+    public const string AddMotivation = "addMotivation";
+    public const string AddReceipt = "addReceipt";
+}
+
+public struct getRequisitionStates
+{
+    public const string All = "all";
+    public const string ForOne = "forOne";
+    public const string Recommendation = "recommendation";
+    public const string Approval = "approval";
+    public const string Issuing = "issuing";
+    public const string Receiving = "receiving";
+    public const string Tracking = "tracking";
+}
 
 #endregion

@@ -11,29 +11,10 @@
 					{{ requisition.glaccount.description }}
 				</p>
 
-				<div v-if="user.jobTitle == 16">
-					<div v-if="user.id == requisition.applicant.id">
-						<p v-if="requisition.applicantCode > 0">
-							Code: {{ requisition.applicantCode }}
-						</p>
-					</div>
-					<div v-else>
-						<form @submit.prevent="issueMoney">
-							<div>
-								<label>Cash to be issued: </label>
-								<input type="text" v-model="requisition.cashIssued" />
-							</div>
-							<div>
-								<label>Applicant Code: </label>
-								<input type="text" v-model="attemptCode" />
-							</div>
-
-							<!-- Grey out the button until the code and cash issued or both inputted -->
-							<div class="submit">
-								<button>Edit</button>
-							</div>
-						</form>
-					</div>
+				<div v-if="user.id == requisition.applicant.id">
+					<p v-if="requisition.applicantCode > 0">
+						Code: {{ requisition.applicantCode }}
+					</p>
 				</div>
 				<div v-if="requisition.needsMotivation == true">
 					<section class="table">
@@ -43,7 +24,12 @@
 									<span>
 										{{ document.fileName }} {{ document.dateUploaded }}
 									</span>
-									<div v-if="user.id == requisition.applicant.id">
+									<div
+										v-if="
+											user.id == requisition.applicant.id &&
+											requisition.issueId != null
+										"
+									>
 										<button @click="deleteRecord(motivation)">Delete</button>
 									</div>
 								</div>
@@ -106,6 +92,26 @@
 				</p>
 			</div>
 		</aside>
+		<aside>
+			<div v-if="user.jobTitleId == 16 && requisition.financeApproval != null">
+				<h2>Issue</h2>
+				<form @submit.prevent="issueMoney">
+					<div>
+						<label>Cash to be issued: </label>
+						<input type="text" v-model="requisition.cashIssued" required />
+					</div>
+					<div>
+						<label>Applicant Code: </label>
+						<input type="text" v-model="attemptCode" required />
+					</div>
+
+					<!-- Grey out the button until the code and cash issued or both inputted -->
+					<div class="submit">
+						<button>Issue</button>
+					</div>
+				</form>
+			</div>
+		</aside>
 		<Buttonhandler :requisition="requisition" />
 	</section>
 	<div v-else>Cannot find requisition details</div>
@@ -124,6 +130,8 @@ import router from '@/router/router'
 const props = defineProps(['id'])
 const { id } = toRefs(props)
 const user = inject('User')
+const editRequisitionStates = inject('editRequisitionStates')
+const typeOfFile = inject('typeOfFile')
 const file = ref(null)
 const attemptCode = ref(0)
 let formData = new FormData()
@@ -136,7 +144,7 @@ const { documents } = getDocuments('motivations', id.value)
 
 function saveImage() {
 	formData.append = ('file', file.value)
-	addDocument(formData, id.value, 'motivation')
+	addDocument(formData, id.value, typeOfFile.Motivation)
 }
 
 function deleteRecord(motivation) {
@@ -148,7 +156,7 @@ function formatDate(date) {
 }
 
 function issueMoney() {
-	editRequisition(requisition.value, 'issuing', attemptCode.value)
+	editRequisition(requisition.value, editRequisitionStates.Issuing, attemptCode.value)
 	router.push({ name: 'requisitions' })
 }
 

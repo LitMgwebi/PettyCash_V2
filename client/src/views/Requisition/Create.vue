@@ -41,6 +41,7 @@ import { addRequisition } from '@/hooks/requisitionCRUD'
 import router from '@/router/router'
 
 const reloadPage = () => location.reload()
+const typeOfGLGet = inject('typeOfGLGet')
 const requisition = ref({
 	glaccountId: '',
 	applicantId: '',
@@ -48,7 +49,7 @@ const requisition = ref({
 	description: '',
 	stage: ''
 })
-const { glAccounts } = getGLAccounts('division')
+const { glAccounts } = getGLAccounts(typeOfGLGet.Division)
 
 function handleSubmit() {
 	addRequisition(requisition.value)

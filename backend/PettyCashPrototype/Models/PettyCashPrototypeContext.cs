@@ -36,6 +36,10 @@ public partial class PettyCashPrototypeContext : IdentityDbContext<User>
 
     public virtual DbSet<Document> Documents { get; set; }
 
+    public virtual DbSet<Vault> Vaults { get; set; }
+
+    public virtual DbSet<Transaction> Transactions { get; set; }
+
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -168,5 +172,6 @@ public partial class PettyCashPrototypeContext : IdentityDbContext<User>
         modelBuilder.ApplyConfiguration(new StatusSeeding());
         modelBuilder.ApplyConfiguration(new JobTitleSeeding());
         modelBuilder.ApplyConfiguration(new DocumentSeeding());
+        modelBuilder.ApplyConfiguration(new VaultSeeding());
     }
 }

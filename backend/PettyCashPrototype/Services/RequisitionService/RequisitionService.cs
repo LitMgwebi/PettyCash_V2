@@ -8,14 +8,16 @@ namespace PettyCashPrototype.Services.RequisitionService
     {
         private PettyCashPrototypeContext _db;
         private readonly IUser _user;
+        private readonly ITransaction _transaction;
         private readonly IGLAccount _glAccount;
         private readonly IJobTitle _jobTitle;
-        public RequisitionService(PettyCashPrototypeContext db, IUser user, IGLAccount gLAccount, IJobTitle jobTitle)
+        public RequisitionService(PettyCashPrototypeContext db, IUser user, IGLAccount gLAccount, IJobTitle jobTitle, ITransaction transaction)
         {
             _db = db;
             _user = user;
             _glAccount = gLAccount;
             _jobTitle = jobTitle;
+            _transaction = transaction;
         }
 
         public async Task<IEnumerable<Requisition>> GetAll(string command, int divisionId, int jobTitleId, string userId, string role)
@@ -25,37 +27,37 @@ namespace PettyCashPrototype.Services.RequisitionService
                 GetRequisitionsHandler indexHandler = new GetRequisitionsHandler();
                 IEnumerable<Requisition> requisitions = new List<Requisition>();
 
-                if (command == "all")
+                if (command == getRequisitionStates.All)
                 {
                     indexHandler.setState(new GetAllState(_db));
                     requisitions = await indexHandler.request();
                 }
-                else if (command == "forOne")
+                else if (command == getRequisitionStates.ForOne)
                 {
                     indexHandler.setState(new GetForApplicantState(_db, userId));
                     requisitions = await indexHandler.request();
                 }
-                else if (command == "recommendation")
+                else if (command == getRequisitionStates.Recommendation)
                 {
                     indexHandler.setState(new GetForRecommendationState(_user, _db, userId, role));
                     requisitions = await indexHandler.request();
                 }
-                else if (command == "approval")
+                else if (command == getRequisitionStates.Approval)
                 {
                     indexHandler.setState(new GetForApprovalState(_db, divisionId, jobTitleId, _jobTitle, userId));
                     requisitions = await indexHandler.request();
                 }
-                else if (command == "issuing")
+                else if (command == getRequisitionStates.Issuing)
                 {
                     indexHandler.setState(new GetForIssuingState(_user, _db, userId));
                     requisitions = await indexHandler.request();
                 }
-                else if (command == "receiving")
+                else if (command == getRequisitionStates.Receiving)
                 {
                     indexHandler.setState(new GetForReceivingState(_db));
                     requisitions = await indexHandler.request();
                 }
-                else if (command == "tracking")
+                else if (command == getRequisitionStates.Tracking)
                 {
                     indexHandler.setState(new GetForTracking(_db));
                     requisitions = await indexHandler.request();
@@ -127,33 +129,33 @@ namespace PettyCashPrototype.Services.RequisitionService
                 EditRequisitionHandler editRequisition = new EditRequisitionHandler();
                 Requisition reviewRequisition = await GetOne(requisition.RequisitionId);
 
-                if (command == "recommendation")
+                if (command == editRequisitionStates.Recommendation)
                 {
                     editRequisition.setState(new RecommendationState(_db, reviewRequisition, requisition, userId));
                     messageResponse = await editRequisition.request();
                 }
-                else if (command == "approval")
+                else if (command == editRequisitionStates.Approval)
                 {
                     editRequisition.setState(new ApprovalState(_db, reviewRequisition, requisition, userId));
                     messageResponse = await editRequisition.request();
                 }
-                else if (command == "edit")
+                else if (command == editRequisitionStates.Edit)
                 {
                     editRequisition.setState(new WholeRequisitionState(_db, requisition));
                     messageResponse = await editRequisition.request();
                 }
-                else if (command == "issuing")
+                else if (command == editRequisitionStates.Issuing)
                 {
-                    editRequisition.setState(new IssuingState(_db, requisition, userId, attemptCode));
+                    editRequisition.setState(new IssuingState(_db, _transaction, requisition, userId, attemptCode));
                     messageResponse = await editRequisition.request();
                 }
-                else if (command == "addMotivation")
+                else if (command == editRequisitionStates.AddMotivation)
                 {
                     requisition.Stage = "Motivation has been uploaded. Requisition has been sent for recommendation.";
                     editRequisition.setState(new WholeRequisitionState(_db, requisition));
                     messageResponse = await editRequisition.request();
                 }
-                else if (command == "addReceipt")
+                else if (command == editRequisitionStates.AddReceipt)
                 {
                     requisition.Stage = "Receipt has been uploaded. Please give money back to Accounts Payable.";
                     requisition.ReceiptReceived = true;

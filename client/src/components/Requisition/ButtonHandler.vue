@@ -92,12 +92,13 @@ import router from '@/router/router'
 const props = defineProps(['requisition'])
 const { requisition } = toRefs(props)
 const user = inject('User')
+const editRequisitionStates = inject('editRequisitionStates')
 
 //#region Handling recommedation
 
 const { statuses: statusesForRecommendation } = getRecommendationStatuses()
 const handleRecommendation = (requisition) => {
-	editRequisition(requisition, 'recommendation')
+	editRequisition(requisition, editRequisitionStates.Recommendation)
 	router.push({ name: 'requisitions' })
 }
 
@@ -108,7 +109,7 @@ const handleRecommendation = (requisition) => {
 const { statuses: statusesForApproval } = getApprovalStatuses()
 
 const handleApproval = (requisition) => {
-	editRequisition(requisition, 'approval')
+	editRequisition(requisition, editRequisitionStates.Approval)
 	router.push({ name: 'requisitions' })
 }
 

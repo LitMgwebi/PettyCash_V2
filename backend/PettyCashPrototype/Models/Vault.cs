@@ -9,6 +9,7 @@ namespace PettyCashPrototype.Models
 
         public decimal CurrentAmount { get; set; }
 
+        public bool IsActive { get; set; } = true;
 
         [JsonIgnore]
         public virtual ICollection<Transaction> Transactions { get; set; } = new List<Transaction>();
