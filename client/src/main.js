@@ -21,11 +21,17 @@ const typeOfGLGet = Object.freeze({
     Division: 'division'
 })
 
+const typeOfTransaction = Object.freeze({
+    Withdrawal: 'Withdrawal',
+    Deposit: 'Deposit'
+})
+
 createApp(App)
     .provide('User', user)
     .provide('editRequisitionStates', editRequisitionStates)
     .provide('typeOfFile', typeOfFile)
     .provide('typeOfGLGet', typeOfGLGet)
+    .provide('typeOfTransaction', typeOfTransaction)
     .use(store)
     .use(middlewareSettings)
     .use(router)

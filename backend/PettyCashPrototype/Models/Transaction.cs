@@ -13,7 +13,7 @@ namespace PettyCashPrototype.Models
 
         public DateTime TransactionDate { get; set; }
 
-        public int RequisitionId { get; set; }
+        public int? RequisitionId { get; set; }
 
         public int VaultId { get; set; }
 

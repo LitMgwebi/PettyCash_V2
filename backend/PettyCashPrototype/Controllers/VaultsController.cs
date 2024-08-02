@@ -20,11 +20,11 @@
         }
 
         [HttpGet, Route("details")]
-        public async Task<ActionResult<Vault>> Details(int id)
+        public async Task<ActionResult<Vault>> Details()
         {
             try
             {
-                Vault vault = await _vault.GetOne(id);
+                Vault vault = await _vault.GetOne(1);
                 return Ok(vault);
             }
             catch (Exception ex) { return BadRequest(ex.Message); }

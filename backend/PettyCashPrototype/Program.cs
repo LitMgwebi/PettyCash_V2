@@ -56,6 +56,7 @@ builder.Services.AddScoped<IMainAccount, MainAccountService>();
 builder.Services.AddScoped<ITransaction, TransactionService>();
 builder.Services.AddScoped<IRequisition, RequisitionService>();
 builder.Services.AddHostedService<PettyCashNotification>();
+builder.Services.AddHostedService<VaultNotification>();
 
 builder.Services.AddAutoMapper(typeof(Program));
 

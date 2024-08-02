@@ -18,6 +18,7 @@ namespace PettyCashPrototype.Services.TransactionService
             {
                 IEnumerable<Transaction> transactions = await _db.Transactions
                     .Include(r => r.Requisition)
+                    .ThenInclude(a => a!.Applicant)
                     .Include(v => v.Vault)
                     .Where(x => x.IsActive == true)
                     .AsNoTracking()
@@ -49,7 +50,7 @@ namespace PettyCashPrototype.Services.TransactionService
             catch { throw; }
         }
 
-        public async Task<string> Create(int requisitionId, decimal cashAmount, string type)
+        public async Task<string> Create( decimal cashAmount, string type, int requisitionId)
         {
             try
             {
@@ -64,7 +65,7 @@ namespace PettyCashPrototype.Services.TransactionService
                 }
                 else if(type == typesOfTransaction.Deposit)
                 {
-                    createTransactionHandler.setState(new DepositState());
+                    createTransactionHandler.setState(new DepositState(_db, _vault, transaction, cashAmount));
                     message = await createTransactionHandler.request();
                 }
 

@@ -30,5 +30,19 @@
         }
 
         #endregion
+
+        #region POST
+
+        [HttpPost, Route("create")]
+        public async Task<ActionResult<Transaction>> Create(Transaction transaction)
+        {
+            try
+            {
+                string message = await _transaction.Create(transaction.Amount, typesOfTransaction.Deposit);
+                return Ok(new {message = message});
+            } catch (Exception ex) { return BadRequest(ex.Message); }
+        }
+
+        #endregion
     }
 }

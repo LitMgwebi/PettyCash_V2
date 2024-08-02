@@ -33,7 +33,7 @@
 
             if (result == 0) throw new DbUpdateException($"System could not update the requisition for {requisition.Applicant!.FullName}.");
 
-            await _transaction.Create(requisition.RequisitionId, (decimal)requisition.CashIssued!, typesOfTransaction.Withdrawal);
+            await _transaction.Create((decimal)requisition.CashIssued!, typesOfTransaction.Withdrawal, requisition.RequisitionId);
 
             return "Issuing of Petty Cash has taken place.";
         }

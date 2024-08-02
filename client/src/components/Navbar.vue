@@ -16,6 +16,7 @@
 					<router-link to="/main_accounts">Main Accounts</router-link> |
 					<router-link to="/gl_accounts">GL Accounts</router-link> |
 					<router-link to="/offices">Offices</router-link> |
+					<router-link to="/transactions">Transactions</router-link> |
 				</span>
 				<a href="#" @click.prevent="onLogout">Logout</a>
 			</span>

@@ -45,6 +45,12 @@ const routes = [
         // beforeEnter: guard
     },
     {
+        path: '/transactions',
+        name: 'transactions',
+        component: () => import('@/views/Transaction/Index.vue')
+        // beforeEnter: guard
+    },
+    {
         path: '/offices',
         name: 'offices',
         component: () => import('@/views/Office/Index.vue')
