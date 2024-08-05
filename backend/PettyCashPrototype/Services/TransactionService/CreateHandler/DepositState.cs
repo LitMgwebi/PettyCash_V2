@@ -6,12 +6,14 @@
         private IVault _vault;
         private Transaction transaction;
         private readonly decimal cashAmount;
-        public DepositState(PettyCashPrototypeContext db, IVault vault, Transaction transaction,  decimal cashAmount)
+        private readonly int requisitionId;
+        public DepositState(PettyCashPrototypeContext db, IVault vault, Transaction transaction,  decimal cashAmount, int requisitionId = 0)
         {
             this.transaction = transaction;
             this.cashAmount = cashAmount;
             _db = db;
             _vault = vault;
+            this.requisitionId = requisitionId;
         }
 
         public async Task<string> CreateTransaction()
@@ -19,7 +21,10 @@
             if (cashAmount < 1)
                 throw new Exception("Error, you cannot deposit an amount smaller than R1");
 
-            transaction.Requisition = null;
+            if (requisitionId == 0)
+                transaction.RequisitionId = null;
+            else 
+                transaction.RequisitionId = requisitionId;
             transaction.Amount = cashAmount;
             transaction.TransactionDate = DateTime.Now;
             transaction.TransactionType = typesOfTransaction.Deposit;

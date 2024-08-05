@@ -111,7 +111,8 @@ namespace PettyCashPrototype.Services.RequisitionService
                 {
                     createHandler.setState(new StandardCreateState(requisition, _db, userId));
                     message = await createHandler.request();
-                } else
+                }
+                else
                 {
                     throw new Exception("System could not resolve error within requisition creation.");
                 }
@@ -149,16 +150,26 @@ namespace PettyCashPrototype.Services.RequisitionService
                     editRequisition.setState(new IssuingState(_db, _transaction, requisition, userId, attemptCode));
                     messageResponse = await editRequisition.request();
                 }
-                else if (command == editRequisitionStates.AddMotivation)
+                else if (command == editRequisitionStates.Expenses)
                 {
-                    requisition.Stage = "Motivation has been uploaded. Requisition has been sent for recommendation.";
+                    editRequisition.setState(new ExpensesState(_db, requisition));
+                    messageResponse = await editRequisition.request();
+                }
+                else if(command == editRequisitionStates.Close)
+                {
+                    editRequisition.setState(new CloseState(_db, _transaction, requisition));
+                    messageResponse = await editRequisition.request();
+                }
+                else if (command == typesOfDocument.Receipt)
+                {
+                    requisition.Stage = "Receipt has been uploaded. Please provide change to Accounts Payable.";
+                    requisition.ReceiptReceived = true;
                     editRequisition.setState(new WholeRequisitionState(_db, requisition));
                     messageResponse = await editRequisition.request();
                 }
-                else if (command == editRequisitionStates.AddReceipt)
+                else if (command == typesOfDocument.Motivation)
                 {
-                    requisition.Stage = "Receipt has been uploaded. Please give money back to Accounts Payable.";
-                    requisition.ReceiptReceived = true;
+                    requisition.Stage = "Motivation has been uploaded. Requisition has been sent for recommendation.";
                     editRequisition.setState(new WholeRequisitionState(_db, requisition));
                     messageResponse = await editRequisition.request();
                 }

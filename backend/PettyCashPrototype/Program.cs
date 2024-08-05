@@ -186,14 +186,20 @@ public struct typesOfTransaction
     public const string Deposit = "Deposit";
 };
 
+public struct typesOfDocument
+{
+    public const string Motivation = "motivation";
+    public const string Receipt = "receipt";
+};
+
 public struct editRequisitionStates
 {
     public const string Recommendation = "recommendation";
     public const string Approval = "approval";
     public const string Edit = "edit";
     public const string Issuing = "issuing";
-    public const string AddMotivation = "addMotivation";
-    public const string AddReceipt = "addReceipt";
+    public const string Expenses = "expenses";
+    public const string Close = "close";
 }
 
 public struct getRequisitionStates

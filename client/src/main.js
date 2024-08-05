@@ -10,7 +10,9 @@ const editRequisitionStates = Object.freeze({
     Issuing: 'issuing',
     Recommendation: 'recommendation',
     Approval: 'approval',
-    Edit: 'edit'
+    Edit: 'edit',
+    Expenses: 'expenses',
+    Close: 'close'
 })
 const typeOfFile = Object.freeze({
     Motivation: 'motivation',

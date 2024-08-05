@@ -12,7 +12,7 @@
 
         public async Task<string> EditRequisition()
         {
-            if (requisition.ManagerRecommendationId == null)
+            if (requisition.ManagerRecommendationId == null || requisition.IssuerId != null)
             {
                 _db.Requisitions.Update(requisition);
                 int result = await _db.SaveChangesAsync();

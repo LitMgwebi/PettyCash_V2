@@ -1,7 +1,4 @@
-﻿using PettyCashPrototype.Models;
-using PettyCashPrototype.Services.UserService;
-
-namespace PettyCashPrototype.Services.RequisitionService.IndexHandler
+﻿namespace PettyCashPrototype.Services.RequisitionService.IndexHandler
 {
     public class GetForIssuingState: IIndexState
     {
@@ -27,7 +24,7 @@ namespace PettyCashPrototype.Services.RequisitionService.IndexHandler
                     .Include(f => f.FinanceOfficer)
                     .Include(gl => gl.Glaccount)
                     .Where(a => a.IsActive == true)
-                    .Where(a => a.ManagerRecommendation != null && a.FinanceApproval != null && a.IssuerId == null)
+                    .Where(a => a.ManagerRecommendation != null && a.FinanceApproval != null && a.ConfirmChangeReceived == false)
                     .AsNoTracking()
                     .ToListAsync();
             } else

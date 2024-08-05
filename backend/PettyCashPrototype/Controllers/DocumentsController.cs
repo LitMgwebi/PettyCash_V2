@@ -55,10 +55,7 @@ namespace PettyCashPrototype.Controllers
 
                 Requisition requisition = await _requisition.GetOne(uploadFile.RequisitionId);
 
-                if(uploadFile.command == "motivation")
-                   messageFromRequisition  = await _requisition.Edit(requisition, "addMotivation");
-                else if(uploadFile.command == "receipt")
-                    messageFromRequisition = await _requisition.Edit(requisition, "addReceipt");
+                messageFromRequisition = await _requisition.Edit(requisition, uploadFile.command);
 
                 return Ok(new { message = message });
             }

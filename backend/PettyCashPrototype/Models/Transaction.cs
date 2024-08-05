@@ -17,6 +17,8 @@ namespace PettyCashPrototype.Models
 
         public int VaultId { get; set; }
 
+        public string? Note { get; set; }
+
         public bool IsActive { get; set; } = true;
 
         [ForeignKey(nameof(RequisitionId))]

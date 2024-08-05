@@ -50,11 +50,12 @@ namespace PettyCashPrototype.Services.TransactionService
             catch { throw; }
         }
 
-        public async Task<string> Create( decimal cashAmount, string type, int requisitionId)
+        public async Task<string> Create( decimal cashAmount, string type, int requisitionId, string note)
         {
             try
             {
                 Transaction transaction = new Transaction();
+                transaction.Note = note;
                 CreateTransactionHandler createTransactionHandler = new CreateTransactionHandler();
                 string message = string.Empty;
 
@@ -65,7 +66,7 @@ namespace PettyCashPrototype.Services.TransactionService
                 }
                 else if(type == typesOfTransaction.Deposit)
                 {
-                    createTransactionHandler.setState(new DepositState(_db, _vault, transaction, cashAmount));
+                    createTransactionHandler.setState(new DepositState(_db, _vault, transaction, cashAmount, requisitionId));
                     message = await createTransactionHandler.request();
                 }
 

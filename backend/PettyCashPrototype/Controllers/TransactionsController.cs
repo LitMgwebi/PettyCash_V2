@@ -38,7 +38,7 @@
         {
             try
             {
-                string message = await _transaction.Create(transaction.Amount, typesOfTransaction.Deposit);
+                string message = await _transaction.Create(transaction.Amount, typesOfTransaction.Deposit, note: "Reimbursing Vault");
                 return Ok(new {message = message});
             } catch (Exception ex) { return BadRequest(ex.Message); }
         }

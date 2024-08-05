@@ -18,7 +18,7 @@ namespace PettyCashPrototype.Services.DocumentService
                 GetDocumentsHandler documentsHandler = new GetDocumentsHandler();
                 IEnumerable<Document> documents = new List<Document>();
 
-                if (command == "motivations")
+                if (command == "motivation")
                 {
                     if (requisitionId == 0)
                     {
@@ -30,7 +30,7 @@ namespace PettyCashPrototype.Services.DocumentService
                         documentsHandler.setState(new GetMotivationsByRequisitionState(_db, requisitionId));
                         documents = await documentsHandler.request();
                     }
-                } else if (command == "receipts")
+                } else if (command == "receipt")
                 {
                     if (requisitionId == 0)
                     {
@@ -90,12 +90,12 @@ namespace PettyCashPrototype.Services.DocumentService
 
                 if (file.Length > 0)
                 {
-                    if(command == "motivation")
+                    if(command == typesOfDocument.Motivation)
                     {
                         uploadDocumentHandler.setState(new UploadMotivationState(_db, file, name, requisitionId, fileExtension));
                         message = await uploadDocumentHandler.request();
                     } 
-                    else if (command == "receipt")
+                    else if (command == typesOfDocument.Receipt)
                     {
                         uploadDocumentHandler.setState(new UploadReceiptState(_db, file, name, requisitionId, fileExtension));
                         message = await uploadDocumentHandler.request();
