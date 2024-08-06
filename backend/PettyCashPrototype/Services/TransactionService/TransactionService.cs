@@ -63,12 +63,12 @@ namespace PettyCashPrototype.Services.TransactionService
                 if(type == typesOfTransaction.Withdrawal)
                 {
                     createTransactionHandler.setState(new WithdrawalState(_db, _vault, vault, transaction, cashAmount, requisitionId));
-                    message = createTransactionHandler.request();
+                    message = await createTransactionHandler.request();
                 }
                 else if(type == typesOfTransaction.Deposit)
                 {
                     createTransactionHandler.setState(new DepositState(_db, _vault, vault, transaction, cashAmount, requisitionId));
-                    message = createTransactionHandler.request();
+                    message = await createTransactionHandler.request();
                 }
 
                 return message;

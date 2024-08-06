@@ -5,11 +5,12 @@
 			<div v-for="transaction in transactions" :key="transaction">
 				<span>
 					{{ transaction.transactionId }}
-					- {{ transaction.amount }} - {{ transaction.transactionType }} -
+					- R{{ transaction.amount }} - {{ transaction.transactionType }} -
 					{{ transaction.transactionDate }}
 					<span v-if="transaction.requisition">
 						{{ transaction.requisition.applicant.fullName }}
 					</span>
+					<span v-else> Direct Deposit </span>
 				</span>
 			</div>
 		</section>
@@ -39,6 +40,7 @@
 import { getTransactions, addTransaction } from '@/hooks/transactionCRUD'
 import { getVault } from '@/hooks/vaultCRUD'
 import { ref, inject } from 'vue'
+import router from '@/router/router'
 
 const reloadPage = () => location.reload()
 const { transactions } = getTransactions()
@@ -52,7 +54,10 @@ const newTransaction = ref({
 	transactionType: typeOfTransaction.Deposit,
 	vaultId: vault.vaultId
 })
-const addSubmit = () => addTransaction(newTransaction.value)
+const addSubmit = () => {
+	addTransaction(newTransaction.value)
+	router.push({ name: 'transactions' })
+}
 
 //#endregion
 </script>

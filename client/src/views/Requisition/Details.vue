@@ -178,10 +178,15 @@
 							<label>Applicant Code: </label>
 							<input type="text" v-model="attemptCode" required />
 						</div>
-
+						<div v-if="requisition.cashIssued < requisition.amountRequested">
+							<textarea
+								placeholder="Please add a comment if you issue an amount lower than the amount requested."
+								v-model="requisition.issueComment"
+							></textarea>
+						</div>
 						<!-- Grey out the button until the code and cash issued or both inputted -->
 						<div class="submit">
-							<button>Issue</button>
+							<button :disabled="attemptCode.length < 5">Issue</button>
 						</div>
 					</form>
 				</div>
@@ -261,12 +266,12 @@ function issueMoney() {
 
 function confirmChange() {
 	editRequisition(requisition.value, editRequisitionStates.Close)
-	location.reload()
+	router.push({ name: 'requisition_details', params: { id: requisition.requisitionId } })
 }
 
 function addExpenses() {
 	editRequisition(requisition.value, editRequisitionStates.Expenses)
-	location.reload()
+	router.push({ name: 'requisition_details', params: { id: requisition.requisitionId } })
 }
 
 //#endregion

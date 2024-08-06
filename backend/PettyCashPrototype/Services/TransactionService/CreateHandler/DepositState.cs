@@ -18,9 +18,9 @@
             this.requisitionId = requisitionId;
         }
 
-        public string CreateTransaction()
+        public async Task<string> CreateTransaction()
         {
-            if (cashAmount < 1)
+            if (cashAmount < 0)
                 throw new Exception("Error, you cannot deposit an amount smaller than R1");
 
             if (requisitionId == 0)
@@ -34,11 +34,11 @@
             transaction.VaultId = 1;
 
             vault.CurrentAmount += transaction.Amount;
-            _vault.Edit(vault);
+            await _vault.Edit(vault);
 
             _db.Transactions.Add(transaction);
 
-            if (_db.SaveChanges() == 0)
+            if (await _db.SaveChangesAsync() == 0)
                 throw new DbUpdateException("System could not add new transaction.");
 
             return "System has successfully recorded the deposit.";

@@ -26,12 +26,12 @@
                         {
                             vault.Note = $"Replenish vault before issuing. Current balance: R{vault.CurrentAmount}.";
                             // ***** Send email to finance about the state of vault *****
-                            _vault.Edit(vault);
+                            await _vault.Edit(vault);
                         } else
                         {
                             vault.Note = "";
                             // ***** Send email to finance about the state of vault *****
-                            _vault.Edit(vault);
+                            await _vault.Edit(vault);
                         }
                     }
                 }

@@ -18,25 +18,26 @@
             this.requisitionId = requisitionId;
         }
 
-        public string CreateTransaction()
+        public async Task<string> CreateTransaction()
         {
+            if (cashAmount > vault.CurrentAmount)
+            {
+                throw new Exception($"System cannot process the withdrawal. Amount withdrawed is larger than the current amount left in the vault. Please replenish. Currently R{vault.CurrentAmount} left.");
+            }
+
             transaction.RequisitionId = requisitionId;
             transaction.Amount = cashAmount * -1;
             transaction.TransactionDate = DateTime.Now;
             transaction.TransactionType = typesOfTransaction.Withdrawal;
             transaction.VaultId = 1;
 
-            if(cashAmount > vault.CurrentAmount)
-            {
-                throw new Exception($"System cannot process the withdrawal. Amount withdrawed is larger than the current amount left in the vault. Please replenish. Currently R{vault.CurrentAmount} left.");
-            }
-
             vault.CurrentAmount += transaction.Amount;
-            _vault.Edit(vault);
+            await _vault.Edit(vault);
 
             _db.Transactions.Add(transaction);
-            if ( _db.SaveChanges() == 0)
-                throw new DbUpdateException("System could not add new transaction.");
+
+            if (await _db.SaveChangesAsync() == 0)
+                throw new DbUpdateException("System could not add the new withdrawal.");
 
             return "System has successfully recorded the withdrawal.";
         }

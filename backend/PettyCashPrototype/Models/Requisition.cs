@@ -59,6 +59,8 @@ public partial class Requisition
 
     public string? ApplicantComment { get; set; }
 
+    public string? IssueComment { get; set; }
+
     public bool IsActive { get; set; } = true;
 
     [ForeignKey(nameof(ApplicantId))]

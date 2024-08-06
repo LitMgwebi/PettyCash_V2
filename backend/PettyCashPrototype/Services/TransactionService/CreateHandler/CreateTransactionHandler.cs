@@ -6,9 +6,9 @@
 
         public void setState(ICreateTransaction state) => this.state = state;
 
-        public string request()
+        public async Task<string> request()
         {
-            string message = state.CreateTransaction();
+            string message = await state.CreateTransaction();
             return message;
         }
     }
