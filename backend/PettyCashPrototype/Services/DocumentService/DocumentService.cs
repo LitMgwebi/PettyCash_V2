@@ -87,7 +87,6 @@ namespace PettyCashPrototype.Services.DocumentService
                 {
                     throw new Exception($"File format {Path.GetExtension(file.FileName)} is invalid for this operation. Please select a PDF file.");
                 }
-
                 if (file.Length > 0)
                 {
                     if(command == typesOfDocument.Motivation)

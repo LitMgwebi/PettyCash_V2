@@ -12,7 +12,7 @@
         {
             IEnumerable<Requisition> requisitions = await db.Requisitions
                     .Include(gl => gl.Glaccount)
-                    .Where(a => a.IsActive == true)
+                    .Where(a => a.IsActive == true && a.CloseDate == null)
                     .AsNoTracking()
                     .ToListAsync();
 

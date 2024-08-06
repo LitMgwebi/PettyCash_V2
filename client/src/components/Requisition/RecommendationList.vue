@@ -23,7 +23,8 @@
 
 <script setup>
 import { getRequisitions, editRequisition } from '@/hooks/requisitionCRUD'
-import { ref } from 'vue'
+import { ref, inject } from 'vue'
 
-const { requisitions } = getRequisitions('recommendation')
+const getRequisitionStates = inject('getRequisitionStates')
+const { requisitions } = getRequisitions(getRequisitionStates.Recommendation)
 </script>

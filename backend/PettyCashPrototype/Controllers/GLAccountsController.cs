@@ -56,7 +56,7 @@ namespace PettyCashPrototype.Controllers
                 return Ok(new {message = "The new GL Account has been added to the system."});
             } catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                return BadRequest(ex);
             }
         }
 

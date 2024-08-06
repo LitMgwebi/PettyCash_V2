@@ -19,12 +19,12 @@
                 requisition.CloseDate = DateTime.Now;
                 requisition.Stage = "Change has been brought back to Accounts Payable and requisition is closed.";
 
+                await _transaction.Create((decimal)requisition.Change!, typesOfTransaction.Deposit, requisition.RequisitionId, $"{requisition.Applicant!.FullName} has brought back the change for their petty cash requisition.");
+
                 _db.Requisitions.Update(requisition);
                 int result = await _db.SaveChangesAsync();
 
                 if (result == 0) throw new DbUpdateException($"System could not edit the requisition for {requisition.Applicant!.FullName}.");
-
-                await _transaction.Create((decimal)requisition.Change!, typesOfTransaction.Deposit, requisition.RequisitionId, $"{requisition.Applicant!.FullName} has brought back the change for their petty cash requisition.");
 
                 return "Requisition has been closed.";
             }

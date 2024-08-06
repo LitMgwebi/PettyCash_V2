@@ -54,6 +54,7 @@ namespace PettyCashPrototype.Services.TransactionService
         {
             try
             {
+                Vault vault = await _vault.GetOne(1);
                 Transaction transaction = new Transaction();
                 transaction.Note = note;
                 CreateTransactionHandler createTransactionHandler = new CreateTransactionHandler();
@@ -61,13 +62,13 @@ namespace PettyCashPrototype.Services.TransactionService
 
                 if(type == typesOfTransaction.Withdrawal)
                 {
-                    createTransactionHandler.setState(new WithdrawalState(_db, _vault, transaction, cashAmount, requisitionId));
-                    message = await createTransactionHandler.request();
+                    createTransactionHandler.setState(new WithdrawalState(_db, _vault, vault, transaction, cashAmount, requisitionId));
+                    message = createTransactionHandler.request();
                 }
                 else if(type == typesOfTransaction.Deposit)
                 {
-                    createTransactionHandler.setState(new DepositState(_db, _vault, transaction, cashAmount, requisitionId));
-                    message = await createTransactionHandler.request();
+                    createTransactionHandler.setState(new DepositState(_db, _vault, vault, transaction, cashAmount, requisitionId));
+                    message = createTransactionHandler.request();
                 }
 
                 return message;

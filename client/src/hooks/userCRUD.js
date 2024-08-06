@@ -13,7 +13,7 @@ export async function login(userDetails) {
             localStorage.setItem('User', JSON.stringify(res.data.user))
             localStorage.setItem('Token', res.data.jwt.token)
             store.commit('logIn')
-            router.push('/dashboard')
+            router.push({ name: 'dashboard' })
             store.dispatch('setStatus', res.data.message)
         })
         .catch((error) => store.dispatch('setStatus', error.response.data))
@@ -43,11 +43,11 @@ export function register(userDetails) {
 export function logout() {
     store.commit('setLoading')
     try {
+        router.push({ name: 'home' })
         localStorage.removeItem('Token', null)
         localStorage.removeItem('User', null)
         store.commit('logOut')
         store.dispatch('setStatus', 'You have logged out')
-        router.push('/')
     } catch {
         store.dispatch('setStatus', 'System cannot logout. Please contact the ICT department.')
     } finally {

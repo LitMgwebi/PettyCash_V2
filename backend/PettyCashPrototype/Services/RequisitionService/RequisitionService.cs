@@ -52,6 +52,11 @@ namespace PettyCashPrototype.Services.RequisitionService
                     indexHandler.setState(new GetForIssuingState(_user, _db, userId));
                     requisitions = await indexHandler.request();
                 }
+                else if (command == getRequisitionStates.Closing)
+                {
+                    indexHandler.setState(new GetForCloseState(_user, _db, userId));
+                    requisitions = await indexHandler.request();
+                }
                 else if (command == getRequisitionStates.Receiving)
                 {
                     indexHandler.setState(new GetForReceivingState(_db));
@@ -122,7 +127,7 @@ namespace PettyCashPrototype.Services.RequisitionService
             catch { throw; }
         }
 
-        public async Task<string> Edit(Requisition requisition, string command, string userId, int attemptCode)
+        public async Task<string> Edit(Requisition requisition, string command, string userId, int attemptCode, bool forDoc)
         {
             try
             {
@@ -142,7 +147,7 @@ namespace PettyCashPrototype.Services.RequisitionService
                 }
                 else if (command == editRequisitionStates.Edit)
                 {
-                    editRequisition.setState(new WholeRequisitionState(_db, requisition));
+                    editRequisition.setState(new WholeRequisitionState(_db, requisition, _glAccount));
                     messageResponse = await editRequisition.request();
                 }
                 else if (command == editRequisitionStates.Issuing)
@@ -160,19 +165,24 @@ namespace PettyCashPrototype.Services.RequisitionService
                     editRequisition.setState(new CloseState(_db, _transaction, requisition));
                     messageResponse = await editRequisition.request();
                 }
-                else if (command == typesOfDocument.Receipt)
+                else if(forDoc == true)
                 {
-                    requisition.Stage = "Receipt has been uploaded. Please provide change to Accounts Payable.";
-                    requisition.ReceiptReceived = true;
-                    editRequisition.setState(new WholeRequisitionState(_db, requisition));
+                    editRequisition.setState(new AddDocumentState(_db, requisition, command));
                     messageResponse = await editRequisition.request();
                 }
-                else if (command == typesOfDocument.Motivation)
-                {
-                    requisition.Stage = "Motivation has been uploaded. Requisition has been sent for recommendation.";
-                    editRequisition.setState(new WholeRequisitionState(_db, requisition));
-                    messageResponse = await editRequisition.request();
-                }
+                //else if (command == typesOfDocument.Receipt)
+                //{
+                //    requisition.Stage = "Receipt has been uploaded. Please provide change to Accounts Payable.";
+                //    requisition.ReceiptReceived = true;
+                //    editRequisition.setState(new WholeRequisitionState(_db, requisition));
+                //    messageResponse = await editRequisition.request();
+                //}
+                //else if (command == typesOfDocument.Motivation)
+                //{
+                //    requisition.Stage = "Motivation has been uploaded. Requisition has been sent for recommendation.";
+                //    editRequisition.setState(new WholeRequisitionState(_db, requisition));
+                //    messageResponse = await editRequisition.request();
+                //}
                 else
                     throw new Exception("System could not resolve error within requisition editing.");
 

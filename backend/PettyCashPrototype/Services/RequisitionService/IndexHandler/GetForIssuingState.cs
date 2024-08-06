@@ -24,7 +24,7 @@
                     .Include(f => f.FinanceOfficer)
                     .Include(gl => gl.Glaccount)
                     .Where(a => a.IsActive == true)
-                    .Where(a => a.ManagerRecommendation != null && a.FinanceApproval != null && a.ConfirmChangeReceived == false)
+                    .Where(a => a.ManagerRecommendation != null && a.FinanceApproval != null && a.IssuerId == null)
                     .AsNoTracking()
                     .ToListAsync();
             } else

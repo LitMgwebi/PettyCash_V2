@@ -211,6 +211,7 @@ public struct getRequisitionStates
     public const string Issuing = "issuing";
     public const string Receiving = "receiving";
     public const string Tracking = "tracking";
+    public const string Closing = "closing";
 }
 
 #endregion

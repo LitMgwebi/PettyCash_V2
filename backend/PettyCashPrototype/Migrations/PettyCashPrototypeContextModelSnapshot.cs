@@ -1246,6 +1246,9 @@ namespace PettyCashPrototype.Migrations
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
+                    b.Property<string>("Note")
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("VaultId");
 
                     b.ToTable("Vault");

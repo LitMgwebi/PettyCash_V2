@@ -3,6 +3,9 @@
 		<aside>
 			<h4>General Details</h4>
 			<div>
+				<h4 v-if="user.id != requisition.applicant.id">
+					Applicant: {{ requisition.applicant.fullName }}
+				</h4>
 				<p>Amount Requested: {{ requisition.amountRequested }}</p>
 				<p v-if="requisition.cashIssued">Cash Issued: {{ requisition.cashIssued }}</p>
 				<p>Description: {{ requisition.description }}</p>
@@ -42,13 +45,15 @@
 									<section class="create">
 										<h3>Upload Motivation</h3>
 										<form
-											@submit.prevent="saveImage"
+											@submit.prevent="saveMotivation"
 											enctype="multipart/form-data"
 										>
 											<input
 												type="file"
+												accept="application/pdf"
 												ref="file"
 												@change="(e) => (file = e.target.files[0])"
+												required
 											/>
 											<button type="submit">Upload</button>
 										</form>
@@ -61,7 +66,7 @@
 				</div>
 
 				<!-- Add code to check if the applicant used the money or did not -->
-				<div v-if="requisition.applicantCode > 0">
+				<div v-if="requisition.applicantCode > 0 && requisition.issuerId != null">
 					<form
 						@submit.prevent="addExpenses"
 						v-if="user.id == requisition.applicant.id && requisition.change == null"
@@ -82,7 +87,6 @@
 				</div>
 
 				<div v-if="requisition.change != null">
-					hi
 					<section class="table">
 						<div v-if="receipts">
 							<div v-if="receipts.length > 0">
@@ -227,15 +231,19 @@ const { documents: receipts } = getDocuments(typeOfFile.Receipt, id.value)
 
 //#region Functions
 
-function saveImage() {
+function saveMotivation() {
+	// if (file.value[0].size < 4194304) {
 	formData.append = ('file', file.value)
 	addDocument(formData, id.value, typeOfFile.Motivation)
+	router.push({ name: 'requisition_details', params: { id: requisition.requisitionId } })
+	// }
+	// store.dispatch('setStatus', 'The input is far too large.')
 }
 
 function saveReceipt() {
 	formData.append = ('file', file.value)
 	addDocument(formData, id.value, typeOfFile.Receipt)
-	location.reload()
+	router.push({ name: 'requisition_details', params: { id: requisition.requisitionId } })
 }
 
 function deleteRecord(motivation) {
@@ -253,11 +261,12 @@ function issueMoney() {
 
 function confirmChange() {
 	editRequisition(requisition.value, editRequisitionStates.Close)
+	location.reload()
 }
 
 function addExpenses() {
 	editRequisition(requisition.value, editRequisitionStates.Expenses)
-	router.push({ name: 'requisitions' })
+	location.reload()
 }
 
 //#endregion

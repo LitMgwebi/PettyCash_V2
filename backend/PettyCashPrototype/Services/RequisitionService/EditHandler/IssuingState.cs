@@ -28,12 +28,12 @@
             requisition.ConfirmApplicantCode = true;
             requisition.Stage = "Petty Cash has been issued. Please bring back change and receipt as soon as possible.";
 
+            await _transaction.Create((decimal)requisition.CashIssued!, typesOfTransaction.Withdrawal, requisition.RequisitionId, $"Petty Cash has been issued to {requisition.Applicant!.FullName}");
+
             _db.Requisitions.Update(requisition);
             int result = await _db.SaveChangesAsync();
 
             if (result == 0) throw new DbUpdateException($"System could not update the requisition for {requisition.Applicant!.FullName}.");
-
-            await _transaction.Create((decimal)requisition.CashIssued!, typesOfTransaction.Withdrawal, requisition.RequisitionId, $"Petty Cash has been issued to {requisition.Applicant!.FullName}");
 
             return "Issuing of Petty Cash has taken place.";
         }

@@ -2,6 +2,6 @@
 {
     public interface ICreateTransaction
     {
-        public Task<string> CreateTransaction();
+        public string CreateTransaction();
     }
 }

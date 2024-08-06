@@ -74,14 +74,14 @@ namespace PettyCashPrototype.Services.GLAccountService
         {
             try
             {
-                glAccount.MainAccount = await _mainAccount.GetOne(glAccount.MainAccountId);
-                glAccount.SubAccount = await _subAccount.GetOne(glAccount.SubAccountId);
-                glAccount.Division = await _department.GetOne(glAccount.DivisionId);
-                glAccount.Purpose = await _purpose.GetOne(glAccount.PurposeId);
-                glAccount.Office = await _office.GetOne(glAccount.OfficeId);
-                glAccount.Description = $"{glAccount.MainAccount.AccountNumber}/{glAccount.SubAccount.AccountNumber}/{glAccount.Division.Name}/{glAccount.Purpose.Name}/{glAccount.Office.Name}";
+                MainAccount mainAccount = await _mainAccount.GetOne(glAccount.MainAccountId);
+                SubAccount subAccount = await _subAccount.GetOne(glAccount.SubAccountId);
+                Division division = await _department.GetOne(glAccount.DivisionId);
+                Purpose purpose = await _purpose.GetOne(glAccount.PurposeId);
+                Office office = await _office.GetOne(glAccount.OfficeId);
+                glAccount.Description = $"{mainAccount.AccountNumber}/{subAccount.AccountNumber}/{division.Name}/{purpose.Name}/{office.Name}";
 
-                glAccount.Name = $"{glAccount.Division.Description} {glAccount.MainAccount.Name} ({glAccount.SubAccount.Name})";
+                glAccount.Name = $"{division.Description} {mainAccount.Name} ({subAccount.Name})";
 
                 IEnumerable<Glaccount> glAccounts = await GetAll(command: "all");
 

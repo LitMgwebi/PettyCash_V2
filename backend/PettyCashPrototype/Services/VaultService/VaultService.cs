@@ -52,13 +52,13 @@
             catch { throw; }
         }
 
-        public async Task Edit(Vault vault)
+        public void Edit(Vault vault)
         {
 
             try
             {
                 _db.Vaults.Update(vault);
-                if (await _db.SaveChangesAsync() == 0)
+                if (_db.SaveChanges() == 0)
                     throw new DbUpdateException($"System was unable to update vault #{vault.VaultId}.");
             }
             catch { throw; }

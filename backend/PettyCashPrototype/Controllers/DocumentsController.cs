@@ -55,11 +55,11 @@ namespace PettyCashPrototype.Controllers
 
                 Requisition requisition = await _requisition.GetOne(uploadFile.RequisitionId);
 
-                messageFromRequisition = await _requisition.Edit(requisition, uploadFile.command);
+                messageFromRequisition = await _requisition.Edit(requisition, uploadFile.command, forDoc: true);
 
                 return Ok(new { message = message });
             }
-            catch (Exception ex) { return BadRequest(ex.InnerException); }
+            catch (Exception ex) { return BadRequest(ex.Message); }
         }
 
         #endregion

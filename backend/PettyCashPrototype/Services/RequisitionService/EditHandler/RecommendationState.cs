@@ -28,18 +28,18 @@
             if (reviewRequisition.ManagerRecommendation == null)
             {
                 requisition.ManagerId = userId;
-                requisition.ManagerRecommendationDate = DateTime.UtcNow;
+                requisition.ManagerRecommendationDate = DateTime.Now;
                 string message = string.Empty;
 
                 if (requisition.ManagerRecommendationId == 4)
                 {
-                    requisition.Stage = "Your requisition has been rejected.";
+                    requisition.Stage = "This requisition has been rejected.";
                     message = "The rejection has been saved to system.";
                 }
                 else if (requisition.ManagerRecommendationId == 3)
                 {
-                    requisition.Stage = "Your requisition has been recommended. Awaiting Finance Approval.";
-                    message = "The recommendation has ben saved to system";
+                    requisition.Stage = "This requisition has been recommended. Awaiting Finance Approval.";
+                    message = "The recommendation has been saved to system.";
                 }
                 _db.Requisitions.Update(requisition);
                 int result = await _db.SaveChangesAsync();

@@ -22,17 +22,17 @@
                 Random code = new Random();
                 requisition.ApplicantCode = code.Next(10000, 99999);
                 requisition.FinanceOfficerId = userId;
-                requisition.FinanceApprovalDate = DateTime.UtcNow;
+                requisition.FinanceApprovalDate = DateTime.Now;
 
                 if (requisition.FinanceApprovalId == 1)
                 {
-                    requisition.Stage = "Finance has approved this requisition. Accounts Payable will contact you for issuing";
+                    requisition.Stage = "Finance has approved this requisition. Go to Finance to retrieve the petty cash. Don't forget your applicant code.";
                     message = "The approval has been saved to the system.";
                 }
                 else if (requisition.FinanceApprovalId == 2)
                 {
-                    requisition.Stage = "Finance has declined this requisition";
-                    message = "Your choice to decline the requisition has been saved to the system.";
+                    requisition.Stage = "Finance has declined this requisition.";
+                    message = "The choice to decline the requisition has been saved to the system.";
                 }
                 _db.Requisitions.Update(requisition);
                 int result = await _db.SaveChangesAsync();

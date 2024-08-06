@@ -4,19 +4,21 @@
     {
         private PettyCashPrototypeContext _db;
         private IVault _vault;
+        private Vault vault;
         private Transaction transaction;
         private readonly decimal cashAmount;
         private readonly int requisitionId;
-        public DepositState(PettyCashPrototypeContext db, IVault vault, Transaction transaction,  decimal cashAmount, int requisitionId = 0)
+        public DepositState(PettyCashPrototypeContext db, IVault _vault, Vault vault, Transaction transaction,  decimal cashAmount, int requisitionId = 0)
         {
             this.transaction = transaction;
             this.cashAmount = cashAmount;
             _db = db;
-            _vault = vault;
+            this._vault = _vault;
+            this.vault = vault;
             this.requisitionId = requisitionId;
         }
 
-        public async Task<string> CreateTransaction()
+        public string CreateTransaction()
         {
             if (cashAmount < 1)
                 throw new Exception("Error, you cannot deposit an amount smaller than R1");
@@ -25,18 +27,18 @@
                 transaction.RequisitionId = null;
             else 
                 transaction.RequisitionId = requisitionId;
+
             transaction.Amount = cashAmount;
             transaction.TransactionDate = DateTime.Now;
             transaction.TransactionType = typesOfTransaction.Deposit;
             transaction.VaultId = 1;
 
-            Vault vault = await _vault.GetOne(transaction.VaultId);
             vault.CurrentAmount += transaction.Amount;
-            await _vault.Edit(vault);
+            _vault.Edit(vault);
 
             _db.Transactions.Add(transaction);
 
-            if (await _db.SaveChangesAsync() == 0)
+            if (_db.SaveChanges() == 0)
                 throw new DbUpdateException("System could not add new transaction.");
 
             return "System has successfully recorded the deposit.";

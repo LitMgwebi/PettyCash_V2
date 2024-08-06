@@ -27,6 +27,7 @@ import { ref } from 'vue'
 import { inject } from 'vue'
 
 const user = inject('User')
+const getRequisitionStates = inject('getRequisitionStates')
 
-const { requisitions } = getRequisitions('approval')
+const { requisitions } = getRequisitions(getRequisitionStates.Approval)
 </script>
