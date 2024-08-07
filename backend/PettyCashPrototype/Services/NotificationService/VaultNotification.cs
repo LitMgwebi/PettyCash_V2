@@ -24,14 +24,15 @@
 
                         if(vault.CurrentAmount < 6500)
                         {
-                            vault.Note = $"Replenish vault before issuing. Current balance: R{vault.CurrentAmount}.";
-                            // ***** Send email to finance about the state of vault *****
-                            await _vault.Edit(vault);
+                            //vault.Note = $"Replenish vault before issuing. Current balance: R{vault.CurrentAmount}.";
+                            //// ***** Send email to finance about the state of vault *****
+                            //await _vault.Edit(vault);
+                            System.Diagnostics.Debug.WriteLine("Money is low nigga.");
                         } else
                         {
-                            vault.Note = "";
-                            // ***** Send email to finance about the state of vault *****
-                            await _vault.Edit(vault);
+                            //vault.Note = "";
+                            //// ***** Send email to finance about the state of vault *****
+                            //await _vault.Edit(vault);
                         }
                     }
                 }

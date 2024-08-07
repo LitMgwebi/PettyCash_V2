@@ -8,6 +8,9 @@ export function getDocuments(command, id) {
     axios({
         method: 'GET',
         url: 'Documents/index',
+        headers: {
+            'Content-Type': 'multipart/form-data'
+        },
         params: {
             command,
             requisitionId: id

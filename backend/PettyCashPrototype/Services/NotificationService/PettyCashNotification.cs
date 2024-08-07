@@ -19,16 +19,24 @@
                     using (var scope = serviceScopeFactory.CreateScope())
                     {
                         IRequisition _requisition = scope.ServiceProvider.GetRequiredService<IRequisition>();
-
+                        
                         var requisitions = await _requisition.GetAll("tracking");
 
                         foreach(var requisition in requisitions)
                         {
-                            TimeSpan? dayAfterIssue = requisition.IssueDate!.Value.AddDays(1) - requisition.IssueDate;
-                            await Task.Delay(dayAfterIssue!.Value, cancellationToken);
-                            // ***** emaill sending code goes here *****
+                            if (requisition.ConfirmChangeReceived == false && requisition.IssueDate != null)
+                            {
+                                DateTime issueDate = (DateTime)requisition.IssueDate;
+                                DateTime dayAfterIssuing = issueDate.AddDays(1);
+                                // What happens after a weekend. Will the code still add one day and spazz out?
+                                if (dayAfterIssuing < DateTime.Now)
+                                {
+                                    //email to tell user that 24 hrs has passed.
 
-
+                                    await Task.Delay(TimeSpan.FromHours(1), cancellationToken);
+                                    // email a reminder to say that an hour has passed
+                                }
+                            }
                         }
                     }
                 }
