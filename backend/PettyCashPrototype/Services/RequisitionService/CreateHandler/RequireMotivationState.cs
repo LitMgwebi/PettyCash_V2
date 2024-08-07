@@ -23,7 +23,9 @@
             Is there a design pattern I could use to switch between the various potential receivers?
                 -Something that chooses based on the role of the user - The role would have to be passed down to this method for that to be operational.
 
+            This email needs to be sent to the applicant only. Stating that the applicant has created the motivation but it will not be sent for recommendation until the user uploads a motivation
              */
+
 
             _db.Requisitions.Add(requisition);
             if (await _db.SaveChangesAsync() > 0)

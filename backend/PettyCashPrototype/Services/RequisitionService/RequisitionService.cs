@@ -170,19 +170,6 @@ namespace PettyCashPrototype.Services.RequisitionService
                     editRequisition.setState(new AddDocumentState(_db, requisition, command));
                     messageResponse = await editRequisition.request();
                 }
-                //else if (command == typesOfDocument.Receipt)
-                //{
-                //    requisition.Stage = "Receipt has been uploaded. Please provide change to Accounts Payable.";
-                //    requisition.ReceiptReceived = true;
-                //    editRequisition.setState(new WholeRequisitionState(_db, requisition));
-                //    messageResponse = await editRequisition.request();
-                //}
-                //else if (command == typesOfDocument.Motivation)
-                //{
-                //    requisition.Stage = "Motivation has been uploaded. Requisition has been sent for recommendation.";
-                //    editRequisition.setState(new WholeRequisitionState(_db, requisition));
-                //    messageResponse = await editRequisition.request();
-                //}
                 else
                     throw new Exception("System could not resolve error within requisition editing.");
 

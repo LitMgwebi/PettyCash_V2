@@ -23,6 +23,10 @@
             if (attemptCode != requisition.ApplicantCode)
                 throw new Exception("Applicant code is incorrect. Please review your code then enter it again.");
 
+            /*
+             Add email code here to be sent to the applicant informing them that the money has
+             */
+
             requisition.IssueDate = DateTime.Now;
             requisition.IssuerId = userId;
             requisition.ConfirmApplicantCode = true;
