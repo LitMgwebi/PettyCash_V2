@@ -3,16 +3,14 @@
     public class GetForIssuingState: IIndexState
     {
         private readonly IUser _user = null!;
-        private readonly PettyCashPrototypeContext db;
         private readonly string userId;
 
-        public GetForIssuingState(IUser user, PettyCashPrototypeContext db, string userId) 
+        public GetForIssuingState(IUser user, string userId) 
         { 
             _user = user;
-            this.db = db;
             this.userId = userId;
         }
-        public async Task<IEnumerable<Requisition>> GetRequisitions()
+        public async Task<IEnumerable<Requisition>> GetRequisitions(PettyCashPrototypeContext db)
         {
             User user = await _user.GetUserById(userId);
             IEnumerable<Requisition> requisitions = new List<Requisition>();

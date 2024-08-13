@@ -2,17 +2,13 @@
 {
     public class CloseState : IEditState
     {
-        private PettyCashPrototypeContext _db;
-        private Requisition requisition;
         private ITransaction _transaction;
-        public CloseState(PettyCashPrototypeContext db, ITransaction transaction, Requisition requisition)
+        public CloseState(ITransaction transaction)
         {
             _transaction = transaction;
-            this.requisition = requisition;
-            _db = db;
         }
 
-        public async Task<string> EditRequisition()
+        public async Task<string> EditRequisition(PettyCashPrototypeContext _db, Requisition requisition)
         {
             if (requisition.TotalExpenses <= requisition.CashIssued)
             {

@@ -3,18 +3,14 @@
     public class ApprovalState : IEditState
     {
         private readonly Requisition reviewRequisition;
-        private readonly Requisition requisition;
         private string userId;
-        private PettyCashPrototypeContext _db;
-        public ApprovalState(PettyCashPrototypeContext db, Requisition reviewRequisition, Requisition requisition, string userId)
+        public ApprovalState(Requisition reviewRequisition, string userId)
         {
             this.reviewRequisition = reviewRequisition;
-            this.requisition = requisition;
             this.userId = userId;
-            _db = db;
         }
 
-        public async Task<string> EditRequisition()
+        public async Task<string> EditRequisition(PettyCashPrototypeContext _db, Requisition requisition)
         {
             string message = string.Empty;
             if (reviewRequisition.FinanceApproval == null)

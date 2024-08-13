@@ -1,8 +1,18 @@
 ﻿namespace PettyCashPrototype.Services.RequisitionService.CreateHandler
 {
-    public class RequireMotivationState: ICreateState
+    public class RequireMotivation: ICreateState
     {
-        public async Task<string> CreateRequisition(PettyCashPrototypeContext _db, Requisition requisition, string userId)
+        private readonly Requisition requisition;
+        private readonly PettyCashPrototypeContext _db;
+        private readonly string userId;
+
+        public RequireMotivation(Requisition requisition, PettyCashPrototypeContext db, string userId)
+        {
+            this.requisition = requisition;
+            _db = db;
+            this.userId = userId;
+        }
+        public async Task<string> CreateRequisition()
         {
             requisition.Stage = "Requisition has been stored in the system. Motivation must be uploaded before it can be sent for recommendation.";
             requisition.ApplicantId = userId;
@@ -13,9 +23,7 @@
             Is there a design pattern I could use to switch between the various potential receivers?
                 -Something that chooses based on the role of the user - The role would have to be passed down to this method for that to be operational.
 
-            This email needs to be sent to the applicant only. Stating that the applicant has created the motivation but it will not be sent for recommendation until the user uploads a motivation
              */
-
 
             _db.Requisitions.Add(requisition);
             if (await _db.SaveChangesAsync() > 0)

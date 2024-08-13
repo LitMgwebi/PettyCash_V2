@@ -2,15 +2,13 @@
 {
     public class GetForApplicantState: IIndexState
     {
-        private readonly PettyCashPrototypeContext db;
         private readonly string userId;
 
-        public GetForApplicantState(PettyCashPrototypeContext db, string userId)
+        public GetForApplicantState(string userId)
         {
-            this.db = db;
             this.userId = userId;
         }
-        public async Task<IEnumerable<Requisition>> GetRequisitions()
+        public async Task<IEnumerable<Requisition>> GetRequisitions(PettyCashPrototypeContext db)
         {
             IEnumerable<Requisition> requisitions = await db.Requisitions
                     .Include(gl => gl.Glaccount)

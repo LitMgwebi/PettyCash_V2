@@ -6,9 +6,9 @@
 
         public void setState(IEditState state) => this.state = state;
 
-        public async Task<string> request()
+        public async Task<string> request(PettyCashPrototypeContext db, Requisition requisition)
         {
-            string message = await state.EditRequisition();
+            string message = await state.EditRequisition(db, requisition);
             return message;
         }
     }

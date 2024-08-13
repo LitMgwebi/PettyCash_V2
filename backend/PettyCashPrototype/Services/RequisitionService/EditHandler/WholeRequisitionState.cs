@@ -2,17 +2,13 @@
 {
     public class WholeRequisitionState : IEditState
     {
-        private readonly Requisition requisition;
-        private PettyCashPrototypeContext _db;
         private IGLAccount _glAccount;
-        public WholeRequisitionState(PettyCashPrototypeContext db, Requisition requisition, IGLAccount gLAccount = null)
+        public WholeRequisitionState(IGLAccount gLAccount)
         {
-            this.requisition = requisition;
-            _db = db;
             _glAccount = gLAccount;
         }
 
-        public async Task<string> EditRequisition()
+        public async Task<string> EditRequisition(PettyCashPrototypeContext _db, Requisition requisition)
         {
             if (requisition.ManagerRecommendationId == null)
             {
@@ -22,7 +18,8 @@
                      and now requires them to upload the motivation
                  Else if there is no motivation needed, email will be sent to the applicant and the line manager telling them about
                      incoming requisition requiring their attention.
-                     Might need to create Chain from CFO down to BK/AA for this email so that it can be used in creating StandardRequisition
+                     
+                ****Might need to create Chain from CFO down to BK/AA for this email so that it can be used in creating StandardRequisition
                 */
                 //if (_glAccount != null || requisition.AmountRequested > 2000)
                 //{

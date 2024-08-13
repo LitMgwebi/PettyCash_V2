@@ -3,15 +3,7 @@ namespace PettyCashPrototype.Services.RequisitionService.EditHandler
 {
     public class ExpensesState: IEditState
     {
-        private PettyCashPrototypeContext _db;
-        private Requisition requisition;
-        public ExpensesState(PettyCashPrototypeContext db, Requisition requisition)
-        {
-            this.requisition = requisition;
-            _db = db;
-        }
-
-        public async Task<string> EditRequisition()
+        public async Task<string> EditRequisition(PettyCashPrototypeContext _db, Requisition requisition)
         {
             if (requisition.TotalExpenses <= requisition.CashIssued)
             {

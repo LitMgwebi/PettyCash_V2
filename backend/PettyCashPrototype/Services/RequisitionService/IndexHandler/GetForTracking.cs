@@ -2,13 +2,7 @@
 {
     public class GetForTracking: IIndexState
     {
-        private readonly PettyCashPrototypeContext db;
-
-        public GetForTracking(PettyCashPrototypeContext db)
-        {
-            this.db = db;
-        }
-        public async Task<IEnumerable<Requisition>> GetRequisitions()
+        public async Task<IEnumerable<Requisition>> GetRequisitions(PettyCashPrototypeContext db)
         {
             IEnumerable<Requisition> requisitions = await db.Requisitions
                     .Include(gl => gl.Glaccount)

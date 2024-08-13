@@ -2,13 +2,7 @@
 {
     public class GetForReceivingState: IIndexState
     {
-        private readonly PettyCashPrototypeContext db;
-
-        public GetForReceivingState(PettyCashPrototypeContext db)
-        {
-            this.db = db;
-        }
-        public async Task<IEnumerable<Requisition>> GetRequisitions()
+        public async Task<IEnumerable<Requisition>> GetRequisitions(PettyCashPrototypeContext db)
         {
             IEnumerable<Requisition> requisitions = new List<Requisition>();
 

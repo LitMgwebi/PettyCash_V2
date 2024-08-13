@@ -2,6 +2,6 @@
 {
     public interface IIndexState
     {
-        Task<IEnumerable<Requisition>> GetRequisitions();
+        Task<IEnumerable<Requisition>> GetRequisitions(PettyCashPrototypeContext db);
     }
 }

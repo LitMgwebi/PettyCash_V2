@@ -2,17 +2,13 @@
 {
     public class AddDocumentState : IEditState
     {
-        private readonly Requisition requisition;
-        private PettyCashPrototypeContext _db;
         private string type;
-        public AddDocumentState(PettyCashPrototypeContext db, Requisition requisition, string type)
+        public AddDocumentState(string type)
         {
-            this.requisition = requisition;
-            _db = db;
             this.type = type;
         }
 
-        public async Task<string> EditRequisition()
+        public async Task<string> EditRequisition(PettyCashPrototypeContext _db, Requisition requisition)
         {
             if (type == typesOfDocument.Motivation)
             {

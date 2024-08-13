@@ -2,23 +2,19 @@
 {
     public class IssuingState : IEditState
     {
-        private readonly Requisition requisition;
         private string userId;
         private ITransaction _transaction;
-        private PettyCashPrototypeContext _db;
         private readonly int attemptCode;
 
-        public IssuingState(PettyCashPrototypeContext db, ITransaction transaction, Requisition requisition, string userId, int attemptCode)
+        public IssuingState(ITransaction transaction, string userId, int attemptCode)
         {
-            this.requisition = requisition;
             this.userId = userId;
-            _db = db;
             _transaction = transaction;
             this.attemptCode = attemptCode;
         }
 
 
-        public async Task<string> EditRequisition()
+        public async Task<string> EditRequisition(PettyCashPrototypeContext _db, Requisition requisition)
         {
             if (attemptCode != requisition.ApplicantCode)
                 throw new Exception("Applicant code is incorrect. Please review your code then enter it again.");

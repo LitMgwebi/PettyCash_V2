@@ -2,6 +2,6 @@
 {
     public interface IEditState
     {
-        Task<string> EditRequisition();
+        Task<string> EditRequisition(PettyCashPrototypeContext db, Requisition requisition);
     }
 }

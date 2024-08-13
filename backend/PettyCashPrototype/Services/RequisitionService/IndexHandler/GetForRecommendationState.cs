@@ -2,19 +2,17 @@
 {
     public class GetForRecommendationState : IIndexState
     {
-        private readonly PettyCashPrototypeContext db;
         private readonly string userId;
         private readonly string role;
         private readonly IUser _user = null!;
 
-        public GetForRecommendationState(IUser user, PettyCashPrototypeContext db, string userId, string role)
+        public GetForRecommendationState(IUser user, string userId, string role)
         {
             _user = user;
-            this.db = db;
             this.userId = userId;
             this.role = role;
         }
-        public async Task<IEnumerable<Requisition>> GetRequisitions()
+        public async Task<IEnumerable<Requisition>> GetRequisitions(PettyCashPrototypeContext db)
         {
             IEnumerable<Requisition> requisitions = new List<Requisition>();
             User user = await _user.GetUserById(userId);

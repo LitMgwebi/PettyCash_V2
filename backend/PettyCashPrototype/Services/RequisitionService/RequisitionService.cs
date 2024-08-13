@@ -29,43 +29,43 @@ namespace PettyCashPrototype.Services.RequisitionService
 
                 if (command == getRequisitionStates.All)
                 {
-                    indexHandler.setState(new GetAllState(_db));
-                    requisitions = await indexHandler.request();
+                    indexHandler.setState(new GetAllState());
+                    requisitions = await indexHandler.request(_db);
                 }
                 else if (command == getRequisitionStates.ForOne)
                 {
-                    indexHandler.setState(new GetForApplicantState(_db, userId));
-                    requisitions = await indexHandler.request();
+                    indexHandler.setState(new GetForApplicantState(userId));
+                    requisitions = await indexHandler.request(_db);
                 }
                 else if (command == getRequisitionStates.Recommendation)
                 {
-                    indexHandler.setState(new GetForRecommendationState(_user, _db, userId, role));
-                    requisitions = await indexHandler.request();
+                    indexHandler.setState(new GetForRecommendationState(_user, userId, role));
+                    requisitions = await indexHandler.request(_db);
                 }
                 else if (command == getRequisitionStates.Approval)
                 {
-                    indexHandler.setState(new GetForApprovalState(_db, divisionId, jobTitleId, _jobTitle, userId));
-                    requisitions = await indexHandler.request();
+                    indexHandler.setState(new GetForApprovalState(divisionId, jobTitleId, _jobTitle, userId));
+                    requisitions = await indexHandler.request(_db);
                 }
                 else if (command == getRequisitionStates.Issuing)
                 {
-                    indexHandler.setState(new GetForIssuingState(_user, _db, userId));
-                    requisitions = await indexHandler.request();
+                    indexHandler.setState(new GetForIssuingState(_user, userId));
+                    requisitions = await indexHandler.request(_db);
                 }
                 else if (command == getRequisitionStates.Closing)
                 {
-                    indexHandler.setState(new GetForCloseState(_user, _db, userId));
-                    requisitions = await indexHandler.request();
+                    indexHandler.setState(new GetForCloseState(_user, userId));
+                    requisitions = await indexHandler.request(_db);
                 }
                 else if (command == getRequisitionStates.Receiving)
                 {
-                    indexHandler.setState(new GetForReceivingState(_db));
-                    requisitions = await indexHandler.request();
+                    indexHandler.setState(new GetForReceivingState());
+                    requisitions = await indexHandler.request(_db);
                 }
                 else if (command == getRequisitionStates.Tracking)
                 {
-                    indexHandler.setState(new GetForTracking(_db));
-                    requisitions = await indexHandler.request();
+                    indexHandler.setState(new GetForTracking());
+                    requisitions = await indexHandler.request(_db);
                 }
                 else
                     throw new NotImplementedException("Could not resolve issue when retrieving requisitions");
@@ -109,13 +109,13 @@ namespace PettyCashPrototype.Services.RequisitionService
 
                 if (glaccount.NeedsMotivation == true || requisition.AmountRequested > 2000)
                 {
-                    createHandler.setState(new RequireMotivationState(requisition, _db, userId));
-                    message = await createHandler.request();
+                    createHandler.setState(new RequireMotivationState());
+                    message = await createHandler.request(_db, requisition, userId);
                 }
                 else if (glaccount.NeedsMotivation == false)
                 {
-                    createHandler.setState(new StandardCreateState(requisition, _db, userId));
-                    message = await createHandler.request();
+                    createHandler.setState(new StandardCreateState());
+                    message = await createHandler.request(_db, requisition, userId);
                 }
                 else
                 {
@@ -137,38 +137,38 @@ namespace PettyCashPrototype.Services.RequisitionService
 
                 if (command == editRequisitionStates.Recommendation)
                 {
-                    editRequisition.setState(new RecommendationState(_db, reviewRequisition, requisition, userId));
-                    messageResponse = await editRequisition.request();
+                    editRequisition.setState(new RecommendationState(reviewRequisition, userId));
+                    messageResponse = await editRequisition.request(_db, requisition);
                 }
                 else if (command == editRequisitionStates.Approval)
                 {
-                    editRequisition.setState(new ApprovalState(_db, reviewRequisition, requisition, userId));
-                    messageResponse = await editRequisition.request();
+                    editRequisition.setState(new ApprovalState(reviewRequisition, userId));
+                    messageResponse = await editRequisition.request(_db, requisition);
                 }
                 else if (command == editRequisitionStates.Edit)
                 {
-                    editRequisition.setState(new WholeRequisitionState(_db, requisition, _glAccount));
-                    messageResponse = await editRequisition.request();
+                    editRequisition.setState(new WholeRequisitionState(_glAccount));
+                    messageResponse = await editRequisition.request(_db, requisition);
                 }
                 else if (command == editRequisitionStates.Issuing)
                 {
-                    editRequisition.setState(new IssuingState(_db, _transaction, requisition, userId, attemptCode));
-                    messageResponse = await editRequisition.request();
+                    editRequisition.setState(new IssuingState(_transaction, userId, attemptCode));
+                    messageResponse = await editRequisition.request(_db, requisition);
                 }
                 else if (command == editRequisitionStates.Expenses)
                 {
-                    editRequisition.setState(new ExpensesState(_db, requisition));
-                    messageResponse = await editRequisition.request();
+                    editRequisition.setState(new ExpensesState());
+                    messageResponse = await editRequisition.request(_db, requisition);
                 }
                 else if(command == editRequisitionStates.Close)
                 {
-                    editRequisition.setState(new CloseState(_db, _transaction, requisition));
-                    messageResponse = await editRequisition.request();
+                    editRequisition.setState(new CloseState(_transaction));
+                    messageResponse = await editRequisition.request(_db, requisition);
                 }
                 else if(forDoc == true)
                 {
-                    editRequisition.setState(new AddDocumentState(_db, requisition, command));
-                    messageResponse = await editRequisition.request();
+                    editRequisition.setState(new AddDocumentState(command));
+                    messageResponse = await editRequisition.request(_db, requisition);
                 }
                 else
                     throw new Exception("System could not resolve error within requisition editing.");
