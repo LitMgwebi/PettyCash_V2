@@ -7,6 +7,7 @@
             requisition.Stage = "Requisiton has been sent for recommendation.";
             requisition.ApplicantId = userId;
             requisition.StartDate = DateTime.Now;
+            requisition.Status = "Processing";
             requisition.NeedsMotivation = false;
             /*
             The code for emails to be sent to the applicant and the users Line Manager/GM/Bookkeeper/Accountant for recommendation, stating that this requisition has been started.
