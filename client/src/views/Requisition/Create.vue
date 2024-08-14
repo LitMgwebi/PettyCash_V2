@@ -29,7 +29,7 @@
 		</div>
 		<div class="submit">
 			<button>Add</button>
-			<button @click="reloadPage">Cancel</button>
+			<router-link :to="{ name: 'requisitions' }"> Cancel </router-link>
 		</div>
 	</form>
 </template>

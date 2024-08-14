@@ -20,7 +20,7 @@ namespace PettyCashPrototype.Services.RequisitionService
             _transaction = transaction;
         }
 
-        public async Task<IEnumerable<Requisition>> GetAll(string command, int divisionId, int jobTitleId, string userId, string role)
+        public async Task<IEnumerable<Requisition>> GetAll(string command, int divisionId, int jobTitleId, string userId, string role, int status)
         {
             try
             {
@@ -29,7 +29,7 @@ namespace PettyCashPrototype.Services.RequisitionService
 
                 if (command == getRequisitionStates.All)
                 {
-                    indexHandler.setState(new GetAllState());
+                    indexHandler.setState(new GetAllState(status));
                     requisitions = await indexHandler.request(_db);
                 }
                 else if (command == getRequisitionStates.ForOne)

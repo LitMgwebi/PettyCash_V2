@@ -9,6 +9,17 @@
 
         #region GET
 
+        [HttpGet, Route("index")]
+        public async Task<ActionResult<IEnumerable<Status>>> Index()
+        {
+            try
+            {
+                IEnumerable<Status> statuses = await _status.GetAll();
+                return Ok(statuses);
+            }
+            catch (Exception ex) { return BadRequest(ex.Message); }
+        }
+
         [HttpGet, Route("get_approved")]
         public async Task<ActionResult<IEnumerable<Status>>> IndexApproved()
         {

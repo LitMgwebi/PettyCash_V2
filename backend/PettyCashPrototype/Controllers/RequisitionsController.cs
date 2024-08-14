@@ -1,6 +1,4 @@
-﻿using PettyCashPrototype.Models;
-using PettyCashPrototype.Services.RequisitionService.EditHandler;
-using System.Security.Claims;
+﻿using System.Security.Claims;
 
 namespace PettyCashPrototype.Controllers
 {
@@ -18,7 +16,7 @@ namespace PettyCashPrototype.Controllers
         #region GET
 
         [HttpGet, Route("index")]
-        public async Task<ActionResult<IEnumerable<Requisition>>> Index(string command)
+        public async Task<ActionResult<IEnumerable<Requisition>>> Index(string command, int status)
         {
             try
             {
@@ -28,11 +26,11 @@ namespace PettyCashPrototype.Controllers
                 var jobTitleId = identity.Claims.Where(c => c.Type == "JobTitle").Select(c => c.Value).FirstOrDefault()!;
                 var userId = identity.Claims.Where(c => c.Type == ClaimTypes.Sid).Select(c => c.Value).FirstOrDefault()!;
 
-                IEnumerable<Requisition> requisitions = await _requisition.GetAll(command, int.Parse(divisionId), int.Parse(jobTitleId), userId, role);
+                IEnumerable<Requisition> requisitions = await _requisition.GetAll(command, int.Parse(divisionId), int.Parse(jobTitleId), userId, role, status);
 
                 return Ok(requisitions);
             }
-            catch (Exception ex) { return BadRequest(ex.Message); }
+            catch (Exception ex) { return BadRequest(ex); }
         }
 
 

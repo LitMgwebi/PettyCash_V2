@@ -8,20 +8,10 @@
 			</span>
 			<span v-else>
 				<router-link to="/dashboard">Dashboard</router-link> |
-				<router-link :to="{ name: 'requisitions' }">Petty Cash Requests</router-link> |
-				<span v-if="user.role == 'Finance_Admin'">
-					<router-link to="/purposes">Purposes</router-link> |
-					<router-link to="/divisions">Divisions</router-link> |
-					<router-link to="/sub_accounts">Sub-Accounts</router-link> |
-					<router-link to="/main_accounts">Main Accounts</router-link> |
-					<router-link to="/gl_accounts">GL Accounts</router-link> |
-					<router-link to="/offices">Offices</router-link> |
-					<router-link to="/transactions">Transactions</router-link> |
-				</span>
 				<a href="#" @click.prevent="onLogout">Logout</a>
 			</span>
 		</span>
-		<div v-if="loading">Loading</div>
+		<!-- <div v-if="loading">Loading</div> -->
 		<div v-if="status">{{ status }}</div>
 		<router-view />
 	</nav>

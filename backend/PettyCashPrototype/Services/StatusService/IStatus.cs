@@ -2,6 +2,7 @@
 {
     public interface IStatus
     {
+        public Task<IEnumerable<Status>> GetAll();
         public Task<IEnumerable<Status>> GetApproved();
         public Task<IEnumerable<Status>> GetRecommended();
     }

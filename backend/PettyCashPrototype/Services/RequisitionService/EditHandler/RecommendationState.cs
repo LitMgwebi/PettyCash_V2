@@ -35,6 +35,7 @@
                 else if (requisition.ManagerRecommendationId == 3)
                 {
                     requisition.Stage = "This requisition has been recommended. Awaiting Finance Approval.";
+                    requisition.CloseDate = DateTime.Now;
                     message = "The recommendation has been saved to system.";
                 }
                 _db.Requisitions.Update(requisition);

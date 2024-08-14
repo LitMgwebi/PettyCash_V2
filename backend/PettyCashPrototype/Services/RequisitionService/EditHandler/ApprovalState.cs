@@ -37,6 +37,7 @@
                 else if (requisition.FinanceApprovalId == 2)
                 {
                     requisition.Stage = "Finance has declined this requisition.";
+                    requisition.CloseDate = DateTime.Now;
                     message = "The choice to decline the requisition has been saved to the system.";
                 }
                 _db.Requisitions.Update(requisition);

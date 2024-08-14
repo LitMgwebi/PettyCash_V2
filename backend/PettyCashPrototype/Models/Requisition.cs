@@ -53,6 +53,8 @@ public partial class Requisition
 
     public string Stage { get; set; } = null!;
 
+    public string Status { get; set; } = null!;
+
     public string? ManagerComment { get; set; }
 
     public string? FinanceComment { get; set; }

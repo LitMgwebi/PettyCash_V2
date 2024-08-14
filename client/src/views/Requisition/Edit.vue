@@ -24,7 +24,11 @@
 		</div>
 		<div class="submit">
 			<button>Edit</button>
-			<button>Cancel</button>
+			<router-link
+				:to="{ name: 'requisition_details', params: { id: requisition.requisitionId } }"
+			>
+				Cancel</router-link
+			>
 		</div>
 	</form>
 	<div v-else>Cannot load information, Please contact ICT</div>

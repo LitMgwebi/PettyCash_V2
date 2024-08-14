@@ -29,3 +29,17 @@ export function getRecommendationStatuses() {
 
     return { statuses }
 }
+
+export function getAllStatuses() {
+    store.commit('setLoading')
+    const statuses = ref([])
+    axios({
+        method: 'GET',
+        url: 'Statuses/index'
+    })
+        .then((res) => (statuses.value = res.data))
+        .catch((error) => store.dispatch('setStatus', error.response.data))
+        .finally(() => store.commit('doneLoading'))
+
+    return { statuses }
+}

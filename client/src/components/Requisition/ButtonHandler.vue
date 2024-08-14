@@ -15,6 +15,13 @@
 		<span v-if="requisition.issuerId == null">
 			<button @click="deleteRecord">Delete</button>
 		</span>
+		<router-link
+			:to="{
+				name: 'applied_list'
+			}"
+		>
+			<button>Back</button>
+		</router-link>
 	</div>
 
 	<!-- used for approval -->
