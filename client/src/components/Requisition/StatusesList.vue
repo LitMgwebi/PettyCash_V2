@@ -46,6 +46,8 @@ const statusSearch = ref({
 	description: 'All'
 })
 
+// TODO Change the table to a data table
+// TODO figure out this filter thing then implement it everywhere else
 watch(statusSearch, async (newStatusSearch, oldStatusSearch) => {
 	const { requisitions } = await getRequisitions(
 		getRequisitionStates.All,

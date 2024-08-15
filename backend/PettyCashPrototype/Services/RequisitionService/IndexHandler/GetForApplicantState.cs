@@ -10,6 +10,7 @@
         }
         public async Task<IEnumerable<Requisition>> GetRequisitions(PettyCashPrototypeContext db)
         {
+            // todo: Add code here to allow for the filtering of requisitions for requisitions that are "in process", "open" and "closed"
             IEnumerable<Requisition> requisitions = await db.Requisitions
                     .Include(gl => gl.Glaccount)
                     .Where(a => a.ApplicantId == userId)

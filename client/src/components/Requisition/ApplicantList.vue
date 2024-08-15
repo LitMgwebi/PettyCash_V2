@@ -1,6 +1,9 @@
 <template>
 	<h3>Open requistions</h3>
-	<v-data-table-server :headers="headers" :items="requisitions" @click:row="openDetails">
+	<v-data-table-server :headers="headers" :items="requisitions">
+		<template v-slot:item.details="{ item }">
+			<v-btn v-on:click="routeToDetails(item)"> Details</v-btn>
+		</template>
 	</v-data-table-server>
 </template>
 
@@ -14,11 +17,10 @@ const headers = [
 	{ title: 'Requisition Id', value: 'requisitionId' },
 	{ title: 'Amount Requested (R)', value: 'amountRequested' },
 	{ title: 'Stage', value: 'stage' },
-	{ title: '', value: 'action' }
+	{ title: '', value: 'details' }
 ]
 const { requisitions } = getRequisitions(getRequisitionStates.ForOne)
-
-const openDetails = (e, { item }) => {
+const routeToDetails = (item) => {
 	router.push({ name: 'requisition_details', params: { id: item.requisitionId } })
 }
 </script>
