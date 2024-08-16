@@ -16,7 +16,8 @@
                 //requisition.Status = "Closed";
                 requisition.Stage = "Change has been brought back to Accounts Payable and requisition is closed.";
 
-                await _transaction.Create((decimal)requisition.Change!, typesOfTransaction.Deposit, requisition.RequisitionId, $"{requisition.Applicant!.FullName} has brought back the change for their petty cash requisition.");
+                if(requisition.Change > 0)
+                    await _transaction.Create((decimal)requisition.Change!, typesOfTransaction.Deposit, requisition.RequisitionId, $"{requisition.Applicant!.FullName} has brought back the change for their petty cash requisition.");
 
                 _db.Requisitions.Update(requisition);
                 int result = await _db.SaveChangesAsync();

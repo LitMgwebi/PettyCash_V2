@@ -1,88 +1,89 @@
 <template>
-	<h2>Divisions</h2>
-	<aside>
-		<section class="table">
-			<div v-for="division in divisions" :key="division">
-				<span class="module">
-					{{ division.name }}
-					<span v-if="division.description != null">
-						{{ division.description }}
-					</span>
-				</span>
-				<button @click="populateEdit(division)">Edit</button>
-				<button @click="deleteRecord(division)">Delete</button>
-			</div>
-		</section>
-	</aside>
-	<aside>
-		<section class="create">
-			<h3>Add Division</h3>
-			<form @submit.prevent="addSubmit">
-				<div>
-					<label>Name: </label>
-					<input type="text" v-model="newDivision.name" />
-				</div>
-				<div>
-					<label>Description: </label>
-					<input type="text" v-model="newDivision.description" />
-				</div>
-				<div class="dropdown">
-					<label>Departments: </label>
-					<select :disabled="departments.length == 0" v-model="newDivision.departmentId">
-						<option value="" disabled>Select a department</option>
-						<option
-							v-for="department in departments"
-							:value="department.departmentId"
-							:key="department.departmentId"
-						>
-							{{ department.name }}
-						</option>
-					</select>
-				</div>
-				<div class="submit">
-					<button>Add</button>
-					<button @click="reloadPage">Cancel</button>
-				</div>
-			</form>
-		</section>
+	<v-container>
+		<v-row> <h2>Divisions</h2></v-row>
+		<v-row>
+			<v-col>
+				<v-data-table-server :headers="headers" :items="divisions">
+					<template v-slot:[`item.edit`]="{ item }">
+						<v-btn @click="populateEdit(item)">Edit</v-btn>
+						<v-btn @click="deleteRecord(item)">Delete</v-btn>
+					</template>
+				</v-data-table-server>
+			</v-col>
+			<v-col>
+				<section class="create">
+					<h3>Add Division</h3>
+					<form @submit.prevent="addSubmit">
+						<div>
+							<label>Name: </label>
+							<input type="text" v-model="newDivision.name" />
+						</div>
+						<div>
+							<label>Description: </label>
+							<input type="text" v-model="newDivision.description" />
+						</div>
+						<div class="dropdown">
+							<label>Departments: </label>
+							<select
+								:disabled="departments.length == 0"
+								v-model="newDivision.departmentId"
+							>
+								<option value="" disabled>Select a department</option>
+								<option
+									v-for="department in departments"
+									:value="department.departmentId"
+									:key="department.departmentId"
+								>
+									{{ department.name }}
+								</option>
+							</select>
+						</div>
+						<div class="submit">
+							<button>Add</button>
+							<button @click="reloadPage">Cancel</button>
+						</div>
+					</form>
+				</section>
 
-		<section class="edit">
-			<span v-if="updatedDivision.name.length > 0">
-				<h3>Edit {{ updatedDivision.name }}</h3>
-			</span>
-			<span v-else><h3>Select Division to edit</h3></span>
-			<form @submit.prevent="editSubmit">
-				<div>
-					<label>Name: </label>
-					<input type="text" v-model="updatedDivision.name" />
-				</div>
-				<div>
-					<label>Description: </label>
-					<input type="text" v-model="updatedDivision.description" />
-				</div>
-				<div class="dropdown">
-					<label>Department: </label>
-					<select
-						:disabled="departments.length == 0"
-						v-model="updatedDivision.departmentId"
-					>
-						<option value="" disabled>Select an account</option>
-						<option
-							v-for="department in departments"
-							:value="department.departmentId"
-							:key="department.departmentId"
-						>
-							{{ department.name }}
-						</option>
-					</select>
-				</div>
-				<div class="submit">
-					<button>Edit</button>
-					<button @click="reloadPage">Cancel</button>
-				</div>
-			</form>
-		</section>
-	</aside>
+				<section class="edit">
+					<span v-if="updatedDivision.name.length > 0">
+						<h3>Edit {{ updatedDivision.name }}</h3>
+					</span>
+					<span v-else><h3>Select Division to edit</h3></span>
+					<form @submit.prevent="editSubmit">
+						<div>
+							<label>Name: </label>
+							<input type="text" v-model="updatedDivision.name" />
+						</div>
+						<div>
+							<label>Description: </label>
+							<input type="text" v-model="updatedDivision.description" />
+						</div>
+						<div class="dropdown">
+							<label>Department: </label>
+							<select
+								:disabled="departments.length == 0"
+								v-model="updatedDivision.departmentId"
+							>
+								<option value="" disabled>Select an account</option>
+								<option
+									v-for="department in departments"
+									:value="department.departmentId"
+									:key="department.departmentId"
+								>
+									{{ department.name }}
+								</option>
+							</select>
+						</div>
+						<div class="submit">
+							<button>Edit</button>
+							<button @click="reloadPage">Cancel</button>
+						</div>
+					</form>
+				</section>
+			</v-col>
+		</v-row>
+	</v-container>
 </template>
 
 <script setup>
@@ -91,9 +92,16 @@ import { getDepartments } from '@/hooks/departmentCRUD'
 import { ref } from 'vue'
 
 const reloadPage = () => location.reload()
+// TODO conifigure onMount and watch for retriving index for every GetALL
 const { divisions } = getDivisions()
 const { departments } = getDepartments()
 
+const headers = [
+	{ title: 'Title', value: 'name' },
+	{ title: 'Description', value: 'description' },
+	{ title: '', value: 'edit' },
+	{ title: '', value: 'delete' }
+]
 //#region Add Config
 
 const newDivision = ref({

@@ -1,5 +1,6 @@
 <template>
 	<h2>Motivation for #{{ id }}</h2>
+	// TODO Figure out where motivation index will be outputted
 	<aside>
 		<section class="table">
 			<div v-if="motivations">

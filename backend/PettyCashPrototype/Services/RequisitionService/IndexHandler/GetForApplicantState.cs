@@ -13,7 +13,6 @@
         public async Task<IEnumerable<Requisition>> GetRequisitions(PettyCashPrototypeContext db)
         {
             IEnumerable<Requisition> requisitions = new List<Requisition>();
-            // todo: Add code here to allow for the filtering of requisitions for requisitions that are "in process", "open" and "closed"
 
             if (status != null)
             {

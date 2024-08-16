@@ -5,7 +5,7 @@
 			<v-col>
 				<section class="table">
 					<v-data-table-server :headers="headers" :items="glAccounts">
-						<template v-slot:item.edit="{ item }">
+						<template v-slot:[`item.edit`]="{ item }">
 							<v-btn @click="populateEdit(item)">Edit</v-btn>
 							<v-btn @click="deleteRecord(item)">Delete</v-btn>
 						</template>
@@ -245,7 +245,7 @@ const { divisions } = getDivisions()
 const typeOfGLGet = inject('typeOfGLGet')
 const reloadPage = () => location.reload()
 const { glAccounts } = getGLAccounts(typeOfGLGet.All)
-
+// TODO introduce filter to this page using divisions
 const headers = [
 	{ title: 'Name', value: 'name' },
 	{ title: 'Description', value: 'description' },

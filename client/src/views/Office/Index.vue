@@ -59,6 +59,7 @@ import { getOffices, addOffice, editOffice, deleteOffice } from '@/hooks/officeC
 import { ref } from 'vue'
 
 const reloadPage = () => location.reload()
+// TODO conifigure onMount and watch for retriving index for every GetALL
 const { offices } = getOffices()
 
 const headers = [

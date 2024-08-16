@@ -1,60 +1,58 @@
 <template>
-	<h2>Purposes</h2>
-	<aside>
-		<section class="table">
-			<div v-for="purpose in purposes" :key="purpose">
-				<span class="module">
-					{{ purpose.name }}
-					<span v-if="purpose.description != null">
-						{{ purpose.description }}
+	<v-container>
+		<v-row><h2>Purposes</h2></v-row>
+		<v-row>
+			<v-col>
+				<v-data-table-server :headers="headers" :items="purposes">
+					<template v-slot:[`item.edit`]="{ item }">
+						<v-btn @click="populateEdit(item)">Edit</v-btn>
+						<v-btn @click="deleteRecord(item)">Delete</v-btn>
+					</template>
+				</v-data-table-server>
+			</v-col>
+
+			<v-col>
+				<section class="create">
+					<h3>Add Purpose</h3>
+					<form @submit.prevent="addSubmit">
+						<div>
+							<label>Name: </label>
+							<input type="text" v-model="newPurpose.name" />
+						</div>
+						<div>
+							<label>Description: </label>
+							<input type="text" v-model="newPurpose.description" />
+						</div>
+						<div class="submit">
+							<button>Add</button>
+							<button @click="reloadPage">Cancel</button>
+						</div>
+					</form>
+				</section>
+
+				<section class="edit">
+					<span v-if="updatedPurpose.name.length > 0">
+						<h3>Edit {{ updatedPurpose.name }}</h3>
 					</span>
-				</span>
-				<button @click="populateEdit(purpose)">Edit</button>
-				<button @click="deleteRecord(purpose)">Delete</button>
-			</div>
-		</section>
-	</aside>
-
-	<aside>
-		<section class="create">
-			<h3>Add Purpose</h3>
-			<form @submit.prevent="addSubmit">
-				<div>
-					<label>Name: </label>
-					<input type="text" v-model="newPurpose.name" />
-				</div>
-				<div>
-					<label>Description: </label>
-					<input type="text" v-model="newPurpose.description" />
-				</div>
-				<div class="submit">
-					<button>Add</button>
-					<button @click="reloadPage">Cancel</button>
-				</div>
-			</form>
-		</section>
-
-		<section class="edit">
-			<span v-if="updatedPurpose.name.length > 0">
-				<h3>Edit {{ updatedPurpose.name }}</h3>
-			</span>
-			<span v-else><h3>Select Purpose to edit</h3></span>
-			<form @submit.prevent="editSubmit">
-				<div>
-					<label>Name: </label>
-					<input type="text" v-model="updatedPurpose.name" />
-				</div>
-				<div>
-					<label>Description: </label>
-					<input type="text" v-model="updatedPurpose.description" />
-				</div>
-				<div class="submit">
-					<button>Edit</button>
-					<button @click="reloadPage">Cancel</button>
-				</div>
-			</form>
-		</section>
-	</aside>
+					<span v-else><h3>Select Purpose to edit</h3></span>
+					<form @submit.prevent="editSubmit">
+						<div>
+							<label>Name: </label>
+							<input type="text" v-model="updatedPurpose.name" />
+						</div>
+						<div>
+							<label>Description: </label>
+							<input type="text" v-model="updatedPurpose.description" />
+						</div>
+						<div class="submit">
+							<button>Edit</button>
+							<button @click="reloadPage">Cancel</button>
+						</div>
+					</form>
+				</section>
+			</v-col>
+		</v-row>
+	</v-container>
 </template>
 
 <script setup>
@@ -63,6 +61,12 @@ import { ref } from 'vue'
 
 const reloadPage = () => window.location.reload()
 const { purposes } = getPurposes()
+const headers = [
+	{ title: 'Name', value: 'name' },
+	{ title: 'Description', value: 'description' },
+	{ title: '', value: 'edit' },
+	{ title: '', value: 'delete' }
+]
 
 //#region Add Config
 

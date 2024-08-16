@@ -15,6 +15,7 @@
             {
                 requisitions = await db.Requisitions
                     .Include(gl => gl.Glaccount)
+                    .Include(a => a.Applicant)
                     .Include(fa => fa.FinanceApproval)
                     .Include(mr => mr.ManagerRecommendation)
                     .Where(a => a.IsActive == true && a.CloseDate == null)
@@ -27,7 +28,6 @@
                 requisitions = await db.Requisitions
                     .Include(gl => gl.Glaccount)
                     .Include(a => a.Applicant)
-                    .Include(fa => fa.FinanceApproval)
                     .Include(mr => mr.ManagerRecommendation)
                     .Where(a => a.IsActive == true && a.CloseDate == null)
                     .Where(s => s.ManagerRecommendation! == status)
