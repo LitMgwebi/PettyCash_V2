@@ -53,7 +53,7 @@ public partial class Requisition
 
     public string Stage { get; set; } = null!;
 
-    public string? Status { get; set; }
+    public int? StateId { get; set; }
 
     public string? ManagerComment { get; set; }
 
@@ -84,6 +84,9 @@ public partial class Requisition
 
     [ForeignKey(nameof(ManagerRecommendationId))]
     public virtual Status? ManagerRecommendation { get; set; }
+
+    [ForeignKey(nameof(StateId))]
+    public virtual Status? State { get; set; }
 
     [JsonIgnore]
     public virtual ICollection<Document> Documents { get; set; } = new List<Document>();

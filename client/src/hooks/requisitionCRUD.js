@@ -2,25 +2,25 @@ import store from '@/store/store.js'
 import axios from 'axios'
 import { ref } from 'vue'
 
-export function getRequisitions(command, status = 0) {
+export function getRequisitions() {
     store.commit('setLoading')
     const requisitions = ref([])
-    axios({
-        method: 'GET',
-        url: 'Requisitions/index',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        params: {
-            command,
-            status
+    async function getter(command, statusId = 0) {
+        console.log(statusId)
+        try {
+            const res = await axios({
+                method: 'GET',
+                url: 'Requisitions/index',
+                params: { command: command, statusId: statusId }
+            })
+            requisitions.value = res.data
+        } catch (error) {
+            store.dispatch('setStatus', error.response.data)
+        } finally {
+            store.commit('doneLoading')
         }
-    })
-        .then((res) => (requisitions.value = res.data))
-        .catch((error) => store.dispatch('setStatus', error.response.data))
-        .finally(() => store.commit('doneLoading'))
-
-    return { requisitions }
+    }
+    return { requisitions, getter }
 }
 
 export function getRequisition(id) {

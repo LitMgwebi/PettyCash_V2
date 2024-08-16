@@ -31,7 +31,7 @@
                 {
                     requisition.Stage = "This requisition has been rejected.";
                     requisition.CloseDate = DateTime.Now;
-                    requisition.Status = "Closed";
+                    //requisition.Status = "Closed";
                     message = "The rejection has been saved to system.";
                 }
                 else if (requisition.ManagerRecommendationId == 3)

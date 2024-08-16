@@ -13,7 +13,7 @@
             if (requisition.TotalExpenses <= requisition.CashIssued)
             {
                 requisition.CloseDate = DateTime.Now;
-                requisition.Status = "Closed";
+                //requisition.Status = "Closed";
                 requisition.Stage = "Change has been brought back to Accounts Payable and requisition is closed.";
 
                 await _transaction.Create((decimal)requisition.Change!, typesOfTransaction.Deposit, requisition.RequisitionId, $"{requisition.Applicant!.FullName} has brought back the change for their petty cash requisition.");

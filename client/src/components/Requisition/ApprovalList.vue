@@ -1,7 +1,7 @@
 <template>
 	<h3>Requests for you to approve</h3>
 	<v-data-table-server :headers="headers" :items="requisitions">
-		<template v-slot:item.details="{ item }">
+		<template v-slot:[`item.details`]="{ item }">
 			<v-btn v-on:click="routeToDetails(item)"> Details</v-btn>
 		</template>
 	</v-data-table-server>

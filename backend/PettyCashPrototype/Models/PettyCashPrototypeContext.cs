@@ -138,6 +138,10 @@ public partial class PettyCashPrototypeContext : IdentityDbContext<User>
                 .HasForeignKey(d => d.ManagerRecommendationId)
                 .HasConstraintName("FK_Requisition_Status");
 
+            entity.HasOne(d => d.State).WithMany(p => p.StatesofRequisition)
+                .HasForeignKey(d => d.StateId)
+                .HasConstraintName("FK_Requisition_Status2");
+
             entity.HasOne(d => d.Manager).WithMany(p => p.Managers)
                 .HasForeignKey(d => d.ManagerId)
                 .HasConstraintName("FK_Requisition_User2");

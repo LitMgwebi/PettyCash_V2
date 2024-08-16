@@ -1,57 +1,56 @@
 <template>
-	<h3>Requisitions</h3>
-	<div>
-		<select :disabled="statuses.length == 0" v-model="statusSearch.statusId">
-			<option value="" disabled>Choose option</option>
-			<option v-for="status in statuses" :value="status.statusId" :key="status.statusId">
-				{{ status.description }}
-			</option>
-		</select>
-	</div>
-	<div v-if="requisitions">
-		<div v-for="requisition in requisitions" :key="requisition.requisitionId">
-			<span>
-				{{ requisition.applicant.fullName }} - R{{ requisition.amountRequested }} ({{
-					requisition.glaccount.name
-				}}) - {{ requisition.description }}</span
-			>
-			<div>
-				<router-link
-					:to="{
-						name: 'requisition_details',
-						params: {
-							id: requisition.requisitionId
-						}
-					}"
-				>
-					<button>Details</button>
-				</router-link>
-			</div>
+	<v-row>
+		<h3>Requisitions</h3>
+		<div>
+			<label>Filter:</label>
+			<select :disabled="statuses.length == 0" v-model="search">
+				<option v-for="status in statuses" :value="status" :key="status">
+					{{ status.description }}
+				</option>
+			</select>
 		</div>
-	</div>
-	<div v-else>
-		<h4>Please choose an option</h4>
-	</div>
+	</v-row>
+	<v-row>
+		<v-data-table-server :headers="headers" :items="requisitions">
+			<template v-slot:[`item.details`]="{ item }">
+				<v-btn v-on:click="routeToDetails(item)"> Details</v-btn>
+			</template>
+		</v-data-table-server>
+	</v-row>
 </template>
 
 <script setup>
 import { getRequisitions, editRequisition } from '@/hooks/requisitionCRUD'
-import { ref, inject, watch } from 'vue'
+import { ref, inject, watch, onMounted } from 'vue'
 import { getAllStatuses } from '@/hooks/statusCRUD'
+import router from '@/router/router'
 
 const getRequisitionStates = inject('getRequisitionStates')
 const { statuses } = getAllStatuses()
-const statusSearch = ref({
+const { requisitions, getter } = getRequisitions()
+const search = ref({
 	statusId: 0,
-	description: 'All'
+	description: '',
+	option: '',
+	isRecommended: false,
+	isState: false,
+	isApproved: false
+})
+const headers = [
+	{ title: 'Applicant', value: 'applicant.fullName' },
+	{ title: 'Amount Requested', value: 'amountRequested' },
+	{ title: 'GL Account', value: 'glaccount.name' },
+	{ title: 'Description', value: 'description' },
+	{ title: '', value: 'details' }
+]
+onMounted(async () => {
+	await getter(getRequisitionStates.All, search.value.statusId)
+})
+watch(search, async (newSearch, oldSearch) => {
+	await getter(getRequisitionStates.All, search.value.statusId)
 })
 
-// TODO Change the table to a data table
-// TODO figure out this filter thing then implement it everywhere else
-watch(statusSearch, async (newStatusSearch, oldStatusSearch) => {
-	const { requisitions } = await getRequisitions(
-		getRequisitionStates.All,
-		statusSearch.value.statusId
-	)
-})
+const routeToDetails = (item) => {
+	router.push({ name: 'requisition_details', params: { id: item.requisitionId } })
+}
 </script>

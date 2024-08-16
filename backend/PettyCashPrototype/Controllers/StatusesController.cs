@@ -42,6 +42,17 @@
             catch (Exception ex) { return BadRequest(ex.Message); } 
         }
 
+        [HttpGet, Route("get_requisition_states")]
+        public async Task<ActionResult<IEnumerable<Status>>> IndexRequisitionStates()
+        {
+            try
+            {
+                IEnumerable<Status> statuses = await _status.GetRequisitionStates();
+                return Ok(statuses);
+            }
+            catch (Exception ex) { return BadRequest(ex.Message); }
+        }
+
 
         #endregion
     }

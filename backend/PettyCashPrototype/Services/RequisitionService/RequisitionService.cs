@@ -11,30 +11,36 @@ namespace PettyCashPrototype.Services.RequisitionService
         private readonly ITransaction _transaction;
         private readonly IGLAccount _glAccount;
         private readonly IJobTitle _jobTitle;
-        public RequisitionService(PettyCashPrototypeContext db, IUser user, IGLAccount gLAccount, IJobTitle jobTitle, ITransaction transaction)
+        private readonly IStatus _status;
+        public RequisitionService(PettyCashPrototypeContext db, IUser user, IGLAccount gLAccount, IJobTitle jobTitle, ITransaction transaction, IStatus status)
         {
             _db = db;
             _user = user;
             _glAccount = gLAccount;
             _jobTitle = jobTitle;
             _transaction = transaction;
+            _status = status;
         }
 
-        public async Task<IEnumerable<Requisition>> GetAll(string command, int divisionId, int jobTitleId, string userId, string role, int status)
+        public async Task<IEnumerable<Requisition>> GetAll(string command, int divisionId, int jobTitleId, string userId, string role, int statusId)
         {
             try
             {
                 GetRequisitionsHandler indexHandler = new GetRequisitionsHandler();
                 IEnumerable<Requisition> requisitions = new List<Requisition>();
+                Status status = new Status();
+
+                if(statusId > 0)
+                    status = await _status.GetOne(statusId);
 
                 if (command == getRequisitionStates.All)
                 {
-                    indexHandler.setState(new GetAllState(status));
+                    indexHandler.setState(new GetAllState(status!));
                     requisitions = await indexHandler.request(_db);
                 }
                 else if (command == getRequisitionStates.ForOne)
                 {
-                    indexHandler.setState(new GetForApplicantState(userId));
+                    indexHandler.setState(new GetForApplicantState(userId, status!));
                     requisitions = await indexHandler.request(_db);
                 }
                 else if (command == getRequisitionStates.Recommendation)

@@ -14,6 +14,7 @@ namespace PettyCashPrototype.Seeding.Entites
                     Description = "Approved",
                     IsApproved = true,
                     IsRecommended = false,
+                    IsState = false,
                     IsActive = true
                 },
                 new Status
@@ -23,6 +24,7 @@ namespace PettyCashPrototype.Seeding.Entites
                     Description = "Declined",
                     IsApproved = true,
                     IsRecommended = false,
+                    IsState = false,
                     IsActive = true
                 },
                 new Status
@@ -32,6 +34,7 @@ namespace PettyCashPrototype.Seeding.Entites
                     Description = "Recommended",
                     IsApproved = false,
                     IsRecommended = true,
+                    IsState = false,
                     IsActive = true
                 },
                 new Status
@@ -41,6 +44,37 @@ namespace PettyCashPrototype.Seeding.Entites
                     Description = "Rejected",
                     IsApproved = false,
                     IsRecommended = true,
+                    IsState = false,
+                    IsActive = true
+                },
+                new Status
+                {
+                    StatusId = 5,
+                    Option = "Process",
+                    Description = "In Process",
+                    IsApproved = false,
+                    IsRecommended = false,
+                    IsState = true,
+                    IsActive = true
+                },
+                new Status
+                {
+                    StatusId = 6,
+                    Option = "Open",
+                    Description = "Open",
+                    IsApproved = false,
+                    IsRecommended = false,
+                    IsState = true,
+                    IsActive = true
+                },
+                new Status
+                {
+                    StatusId = 7,
+                    Option = "Close",
+                    Description = "Closed",
+                    IsApproved = false,
+                    IsRecommended = false,
+                    IsState = true,
                     IsActive = true
                 }
                 );

@@ -11,6 +11,8 @@ public partial class Status
     public bool IsActive { get; set; } = true;
 
     public bool IsRecommended { get; set; }
+    
+    public bool IsState { get; set; }
 
     public bool IsApproved { get; set; }
 
@@ -19,6 +21,9 @@ public partial class Status
 
     [JsonIgnore]
     public virtual ICollection<Requisition> ManagerRecommendations { get; set; } = new List<Requisition>();
+
+    [JsonIgnore]
+    public virtual ICollection<Requisition> StatesofRequisition { get; set; } = new List<Requisition>();
     
     //[JsonIgnore]
     //public virtual ICollection<Requisition> Statuses { get; set; } = new List<Requisition>();

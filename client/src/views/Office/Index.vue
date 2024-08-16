@@ -4,7 +4,7 @@
 		<v-row>
 			<v-col>
 				<v-data-table-server :headers="headers" :items="offices">
-					<template v-slot:item.edit="{ item }">
+					<template v-slot:[`item.edit`]="{ item }">
 						<v-btn @click="populateEdit(item)">Edit</v-btn>
 						<v-btn @click="deleteRecord(item)">Delete</v-btn>
 					</template>

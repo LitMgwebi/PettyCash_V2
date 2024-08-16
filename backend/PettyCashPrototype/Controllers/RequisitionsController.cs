@@ -16,7 +16,7 @@ namespace PettyCashPrototype.Controllers
         #region GET
 
         [HttpGet, Route("index")]
-        public async Task<ActionResult<IEnumerable<Requisition>>> Index(string command, int status)
+        public async Task<ActionResult<IEnumerable<Requisition>>> Index([FromQuery] string command, int statusId)
         {
             try
             {
@@ -26,11 +26,11 @@ namespace PettyCashPrototype.Controllers
                 var jobTitleId = identity.Claims.Where(c => c.Type == "JobTitle").Select(c => c.Value).FirstOrDefault()!;
                 var userId = identity.Claims.Where(c => c.Type == ClaimTypes.Sid).Select(c => c.Value).FirstOrDefault()!;
 
-                IEnumerable<Requisition> requisitions = await _requisition.GetAll(command, int.Parse(divisionId), int.Parse(jobTitleId), userId, role, status);
+                IEnumerable<Requisition> requisitions = await _requisition.GetAll(command, int.Parse(divisionId), int.Parse(jobTitleId), userId, role, statusId);
 
                 return Ok(requisitions);
             }
-            catch (Exception ex) { return BadRequest(ex); }
+            catch (Exception ex) { return BadRequest(ex.Message); }
         }
 
 

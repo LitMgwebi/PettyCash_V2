@@ -30,6 +30,20 @@ export function getRecommendationStatuses() {
     return { statuses }
 }
 
+export function getStatesStatuses() {
+    store.commit('setLoading')
+    const statuses = ref([])
+    axios({
+        method: 'GET',
+        url: 'Statuses/get_requisition_states'
+    })
+        .then((res) => (statuses.value = res.data))
+        .catch((error) => store.dispatch('setStatus', error.response.data))
+        .finally(() => store.commit('doneLoading'))
+
+    return { statuses }
+}
+
 export function getAllStatuses() {
     store.commit('setLoading')
     const statuses = ref([])
