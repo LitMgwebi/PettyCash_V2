@@ -2,7 +2,7 @@
 
 namespace PettyCashPrototype.Services.TransactionService
 {
-    public class TransactionService: ITransaction
+    public class TransactionService : ITransaction
     {
         private PettyCashPrototypeContext _db;
         private IVault _vault;
@@ -12,17 +12,44 @@ namespace PettyCashPrototype.Services.TransactionService
             _vault = vault;
         }
 
-        public async Task<IEnumerable<Transaction>> GetAll()
+        public async Task<IEnumerable<Transaction>> GetAll(string type = "")
         {
             try
             {
-                IEnumerable<Transaction> transactions = await _db.Transactions
+                IEnumerable<Transaction> transactions = new List<Transaction>();
+
+                if (type == typesOfTransaction.Withdrawal)
+                {
+                    transactions = await _db.Transactions
+                    .Include(r => r.Requisition)
+                    .ThenInclude(a => a!.Applicant)
+                    .Include(v => v.Vault)
+                    .Where(x => x.IsActive == true)
+                    .Where(t => t.TransactionType == typesOfTransaction.Withdrawal)
+                    .AsNoTracking()
+                    .ToListAsync();
+                }
+                else if (type == typesOfTransaction.Deposit)
+                {
+                    transactions = await _db.Transactions
+                    .Include(r => r.Requisition)
+                    .ThenInclude(a => a!.Applicant)
+                    .Include(v => v.Vault)
+                    .Where(t => t.TransactionType == typesOfTransaction.Deposit)
+                    .Where(x => x.IsActive == true)
+                    .AsNoTracking()
+                    .ToListAsync();
+                }
+                else if (type == typesOfTransaction.All)
+                {
+                    transactions = await _db.Transactions
                     .Include(r => r.Requisition)
                     .ThenInclude(a => a!.Applicant)
                     .Include(v => v.Vault)
                     .Where(x => x.IsActive == true)
                     .AsNoTracking()
                     .ToListAsync();
+                }
 
                 if (transactions == null)
                     throw new Exception("System could not find any transactions.");
@@ -50,7 +77,7 @@ namespace PettyCashPrototype.Services.TransactionService
             catch { throw; }
         }
 
-        public async Task<string> Create( decimal cashAmount, string type, int requisitionId, string note)
+        public async Task<string> Create(decimal cashAmount, string type, int requisitionId, string note)
         {
             try
             {
@@ -60,12 +87,12 @@ namespace PettyCashPrototype.Services.TransactionService
                 CreateTransactionHandler createTransactionHandler = new CreateTransactionHandler();
                 string message = string.Empty;
 
-                if(type == typesOfTransaction.Withdrawal)
+                if (type == typesOfTransaction.Withdrawal)
                 {
                     createTransactionHandler.setState(new WithdrawalState(_db, _vault, vault, transaction, cashAmount, requisitionId));
                     message = await createTransactionHandler.request();
                 }
-                else if(type == typesOfTransaction.Deposit)
+                else if (type == typesOfTransaction.Deposit)
                 {
                     createTransactionHandler.setState(new DepositState(_db, _vault, vault, transaction, cashAmount, requisitionId));
                     message = await createTransactionHandler.request();

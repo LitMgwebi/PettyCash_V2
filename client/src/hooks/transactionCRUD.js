@@ -5,11 +5,14 @@ import { ref } from 'vue'
 export function getTransactions() {
     store.commit('setLoading')
     const transactions = ref([])
-    async function getter() {
+    async function getter(type) {
         try {
-            const res = axios({
+            const res = await axios({
                 method: 'GET',
-                url: 'Transactions/index'
+                url: 'Transactions/index',
+                params: {
+                    type
+                }
             })
             transactions.value = res.data
         } catch (error) {

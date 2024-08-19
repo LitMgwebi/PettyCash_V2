@@ -74,7 +74,6 @@ import { ref, onMounted, watch } from 'vue'
 const reloadPage = () => location.reload()
 
 const { subAccounts, getter } = getSubAccounts()
-// TODO conifigure onMount and watch for retriving index for every GetALL
 onMounted(async () => await getter())
 
 watch(async () => await getter())

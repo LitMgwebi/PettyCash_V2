@@ -10,11 +10,11 @@
         #region GET
 
         [HttpGet, Route("index")]
-        public async Task<ActionResult<IEnumerable<Transaction>>> Index()
+        public async Task<ActionResult<IEnumerable<Transaction>>> Index(string type)
         {
             try
             {
-                IEnumerable<Transaction> transactions = await _transaction.GetAll();
+                IEnumerable<Transaction> transactions = await _transaction.GetAll(type);
                 return Ok(transactions);
             } catch (Exception ex) { return BadRequest(ex.Message); }
         }

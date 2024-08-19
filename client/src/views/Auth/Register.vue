@@ -82,7 +82,7 @@ import { register } from '@/hooks/userCRUD'
 import { getOffices } from '@/hooks/officeCRUD'
 import { getDivisions } from '@/hooks/divisionCRUD'
 import { getJobTitles } from '@/hooks/jobTotleCRUD'
-import { ref } from 'vue'
+import { ref, watch, onMounted } from 'vue'
 
 const userDetails = ref({
 	firstName: '',
@@ -98,9 +98,21 @@ const userDetails = ref({
 	jobTitleId: ''
 })
 
-const { offices } = getOffices()
-const { divisions } = getDivisions()
-const { jobTitles } = getJobTitles()
+const { offices, getter: officeGetter } = getOffices()
+const { divisions, getter: divisionGetter } = getDivisions()
+const { jobTitles, getter: jobTitleGetter } = getJobTitles()
+
+onMounted(async () => {
+	await officeGetter()
+	await divisionGetter()
+	await jobTitleGetter()
+})
+
+watch(async () => {
+	await officeGetter()
+	await divisionGetter()
+	await jobTitleGetter()
+})
 
 function handleSubmit() {
 	register(userDetails.value)

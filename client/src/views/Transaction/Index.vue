@@ -1,6 +1,16 @@
 <template>
 	<v-container>
-		<v-row> <h2>Transactions</h2></v-row>
+		<v-row>
+			<h2>Transactions</h2>
+			<section>
+				<label>Filter</label>
+				<select :disabled="arrayOfTypes.length == 0" v-model="transactionFilter">
+					<option v-for="type in arrayOfTypes" :value="type" :key="type">
+						{{ type.type }}
+					</option>
+				</select>
+			</section>
+		</v-row>
 		<v-row>
 			<v-col>
 				<v-data-table-server :headers="headers" :items="transactions">
@@ -38,14 +48,29 @@ import { ref, inject, onMounted, watch } from 'vue'
 import router from '@/router/router'
 
 const reloadPage = () => location.reload()
-const { transactions, getter } = getTransactions()
+const typeOfTransaction = inject('typeOfTransaction')
+const { transactions, getter: transactionGetter } = getTransactions()
+const { vault, getter: vaultGetter } = getVault()
 
-onMounted(async () => await getter())
+const transactionFilter = ref({
+	type: 'All'
+})
+const arrayOfTypes = ref([
+	{ type: typeOfTransaction.All },
+	{ type: typeOfTransaction.Deposit },
+	{ type: typeOfTransaction.Withdrawal }
+])
 
-// TODO Filter for Withdrawal and Deposit type
-watch(async () => await getter())
+onMounted(async () => {
+	await transactionGetter(transactionFilter.value.type)
+	await vaultGetter()
+})
 
-const { vault } = getVault()
+watch(async () => {
+	await transactionGetter(transactionFilter.value.type)
+	await vaultGetter()
+})
+
 const headers = [
 	{ title: 'ID', value: 'transactionId' },
 	{ title: 'Amount', value: 'amount' },
@@ -55,7 +80,6 @@ const headers = [
 	{ title: '', value: 'edit' },
 	{ title: '', value: 'delete' }
 ]
-const typeOfTransaction = inject('typeOfTransaction')
 
 //#region Add Transaction
 

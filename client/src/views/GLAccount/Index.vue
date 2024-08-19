@@ -262,7 +262,6 @@ const { purposes, getter: purposeGetter } = getPurposes()
 const { divisions, getter: divisionGetter } = getDivisions()
 const { glAccounts, getter: glAccountGetter } = getGLAccounts(typeOfGLGet.All)
 
-// TODO introduce filter to this page using divisions
 onMounted(async () => {
 	await glAccountGetter(typeOfGLGet.All, filterDivision.value.divisionId)
 	await divisionGetter()
