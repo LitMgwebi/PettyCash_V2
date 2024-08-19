@@ -5,15 +5,20 @@ import { ref } from 'vue'
 export function getOffices() {
     store.commit('setLoading')
     const offices = ref([])
-    axios({
-        method: 'GET',
-        url: 'Offices/index'
-    })
-        .then((res) => (offices.value = res.data))
-        .catch((error) => store.dispatch('setStatus', error.response.data))
-        .finally(() => store.commit('doneLoading'))
-
-    return { offices }
+    async function getter() {
+        try {
+            const res = await axios({
+                method: 'GET',
+                url: 'Offices/index'
+            })
+            offices.value = res.data
+        } catch (error) {
+            store.dispatch('setStatus', error.response.data)
+        } finally {
+            store.commit('doneLoading')
+        }
+    }
+    return { offices, getter }
 }
 
 export const addOffice = (office) => {

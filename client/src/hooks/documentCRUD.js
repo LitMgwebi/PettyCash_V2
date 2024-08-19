@@ -2,25 +2,31 @@ import store from '@/store/store.js'
 import axios from 'axios'
 import { ref } from 'vue'
 
-export function getDocuments(command, id) {
+export function getDocuments() {
     store.commit('setLoading')
-    const documents = ref()
-    axios({
-        method: 'GET',
-        url: 'Documents/index',
-        headers: {
-            'Content-Type': 'multipart/form-data'
-        },
-        params: {
-            command,
-            requisitionId: id
+    const documents = ref([])
+    async function getter(command, id) {
+        try {
+            const res = await axios({
+                method: 'GET',
+                url: 'Documents/index',
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                },
+                params: {
+                    command,
+                    requisitionId: id
+                }
+            })
+            documents.value = res.data
+        } catch (error) {
+            store.dispatch('setStatus', error.response.data)
+        } finally {
+            store.commit('doneLoading')
         }
-    })
-        .then((res) => (documents.value = res.data))
-        .catch((error) => store.dispatch('setStatus', error.response.data))
-        .finally(() => store.commit('doneLoading'))
+    }
 
-    return { documents }
+    return { documents, getter }
 }
 
 export function addDocument(File, id, command) {

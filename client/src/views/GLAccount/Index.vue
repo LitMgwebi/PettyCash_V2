@@ -1,8 +1,17 @@
 <template>
 	<v-container>
-		<v-row><h2>GL Accounts</h2></v-row>
+		<v-row><h2>GL Accounts</h2> </v-row>
 		<v-row>
 			<v-col>
+				<section>
+					<label>Filter:</label>
+					<select :disabled="divisions.length == 0" v-model="filterDivision">
+						<option value="">All</option>
+						<option v-for="division in divisions" :value="division" :key="division">
+							{{ division.description }}
+						</option>
+					</select>
+				</section>
 				<section class="table">
 					<v-data-table-server :headers="headers" :items="glAccounts">
 						<template v-slot:[`item.edit`]="{ item }">
@@ -235,17 +244,37 @@ import { getSubAccounts } from '@/hooks/subAccountCRUD'
 import { getMainAccounts } from '@/hooks/mainAccountCRUD'
 import { getPurposes } from '@/hooks/purposeCRUD'
 import { getDivisions } from '@/hooks/divisionCRUD'
-import { ref, inject } from 'vue'
+import { ref, inject, onMounted, watch, reactive } from 'vue'
+import router from '@/router/router'
 
-const { offices } = getOffices()
-const { subAccounts } = getSubAccounts()
-const { mainAccounts } = getMainAccounts()
-const { purposes } = getPurposes()
-const { divisions } = getDivisions()
 const typeOfGLGet = inject('typeOfGLGet')
-const reloadPage = () => location.reload()
-const { glAccounts } = getGLAccounts(typeOfGLGet.All)
+const filterDivision = ref({
+	divisionId: 0,
+	name: '',
+	description: '',
+	departmentId: 0
+})
+
+const { offices, getter: officeGetter } = getOffices()
+const { subAccounts, getter: subAccountGetter } = getSubAccounts()
+const { mainAccounts, getter: mainAccountGetter } = getMainAccounts()
+const { purposes, getter: purposeGetter } = getPurposes()
+const { divisions, getter: divisionGetter } = getDivisions()
+const { glAccounts, getter: glAccountGetter } = getGLAccounts(typeOfGLGet.All)
+
 // TODO introduce filter to this page using divisions
+onMounted(async () => {
+	await glAccountGetter(typeOfGLGet.All, filterDivision.value.divisionId)
+	await divisionGetter()
+	await purposeGetter()
+	await mainAccountGetter()
+	await subAccountGetter()
+	await officeGetter()
+})
+watch(async () => await glAccountGetter(typeOfGLGet.All, filterDivision.value.divisionId))
+
+const reloadPage = () => location.reload()
+
 const headers = [
 	{ title: 'Name', value: 'name' },
 	{ title: 'Description', value: 'description' },
@@ -279,8 +308,13 @@ const updatedGLAccount = ref({
 	officeId: '',
 	needsMotivation: ''
 })
+
 const populateEdit = (glAccount) => (updatedGLAccount.value = glAccount)
-const editSubmit = () => editGLAccount(updatedGLAccount.value)
+const editSubmit = () => {
+	editGLAccount(updatedGLAccount.value)
+	location.reload()
+	router.push()
+}
 
 //#endregion
 

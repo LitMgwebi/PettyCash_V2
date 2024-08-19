@@ -5,15 +5,21 @@ import { ref } from 'vue'
 export function getDivisions() {
     store.commit('setLoading')
     const divisions = ref([])
-    axios({
-        method: 'GET',
-        url: 'Divisions/index'
-    })
-        .then((res) => (divisions.value = res.data))
-        .catch((error) => store.dispatch('setStatus', error.response.data))
-        .finally(() => store.commit('doneLoading'))
+    async function getter() {
+        try {
+            const res = await axios({
+                method: 'GET',
+                url: 'Divisions/index'
+            })
+            divisions.value = res.data
+        } catch (error) {
+            store.dispatch('setStatus', error.response.data)
+        } finally {
+            store.commit('doneLoading')
+        }
+    }
 
-    return { divisions }
+    return { divisions, getter }
 }
 
 export function addDivision(division) {

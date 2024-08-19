@@ -69,18 +69,23 @@ import {
 	deleteSubAccount,
 	addSubAccount
 } from '@/hooks/subAccountCRUD'
-import { ref } from 'vue'
+import { ref, onMounted, watch } from 'vue'
 
 const reloadPage = () => location.reload()
-const { subAccounts } = getSubAccounts()
 
+const { subAccounts, getter } = getSubAccounts()
 // TODO conifigure onMount and watch for retriving index for every GetALL
+onMounted(async () => await getter())
+
+watch(async () => await getter())
+
 const headers = [
 	{ title: 'Name', value: 'name' },
 	{ title: 'Account Number', value: 'accountNumber' },
 	{ title: '', value: 'edit' },
 	{ title: '', value: 'delete' }
 ]
+
 //#region Add Config
 
 const newSubAccount = ref({

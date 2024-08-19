@@ -1,24 +1,29 @@
 import store from '@/store/store'
 import axios from 'axios'
-import { ref, watch, watchEffect } from 'vue'
+import { ref } from 'vue'
 
-export function getGLAccounts(command) {
+export function getGLAccounts() {
     store.commit('setLoading')
     const glAccounts = ref([])
-    watchEffect(() => {
-        axios({
-            method: 'GET',
-            url: 'GLAccounts/index',
-            params: {
-                command: command
-            }
-        })
-            .then((res) => (glAccounts.value = res.data))
-            .catch((error) => store.dispatch('setStatus', error.response.data))
-            .finally(() => store.commit('doneLoading'))
-    })
+    async function getter(command, divisionId = 0) {
+        try {
+            const res = await axios({
+                method: 'GET',
+                url: 'GLAccounts/index',
+                params: {
+                    command: command,
+                    divisionId: divisionId
+                }
+            })
+            glAccounts.value = res.data
+        } catch (error) {
+            store.dispatch('setStatus', error.response.data)
+        } finally {
+            store.commit('doneLoading')
+        }
+    }
 
-    return { glAccounts }
+    return { glAccounts, getter }
 }
 
 export function addGLAccount(glAccount) {

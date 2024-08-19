@@ -17,13 +17,13 @@ namespace PettyCashPrototype.Controllers
 
         [HttpGet, Route("index")]
         [AllowAnonymous]
-        public async Task<ActionResult<IEnumerable<Glaccount>>> Index(string command)
+        public async Task<ActionResult<IEnumerable<Glaccount>>> Index(string command, int divisionId = 0)
         {
             try
             {
                 var identity = (ClaimsIdentity)User.Identity!;
                 var userId = identity.Claims.Where(c => c.Type == ClaimTypes.Sid).Select(c => c.Value).FirstOrDefault()!;
-                IEnumerable<Glaccount> glaccounts = await _glAccount.GetAll(command, userId);
+                IEnumerable<Glaccount> glaccounts = await _glAccount.GetAll(command, userId, divisionId);
                 return Ok(glaccounts);
             } catch (Exception ex)
             {

@@ -11,7 +11,8 @@ namespace PettyCashPrototype.Services.GLAccountService
         private readonly ISubAccount _subAccount;
         private readonly IPurpose _purpose;
         private readonly IOffice _office;
-        public GLAccountService(PettyCashPrototypeContext db, IDivision department, IMainAccount mainAccount, ISubAccount subAccount, IPurpose purpose, IOffice office, IUser user)
+        private readonly IDivision _division;
+        public GLAccountService(PettyCashPrototypeContext db, IDivision department, IMainAccount mainAccount, ISubAccount subAccount, IPurpose purpose, IOffice office, IUser user, IDivision division)
         {
             _db = db;
             _department = department;
@@ -20,19 +21,22 @@ namespace PettyCashPrototype.Services.GLAccountService
             _purpose = purpose;
             _office = office;
             _user = user;
+            _division = division;
         }
 
-        public async Task<IEnumerable<Glaccount>> GetAll(string command, string userId = "")
+        public async Task<IEnumerable<Glaccount>> GetAll(string command, string userId = "", int divisionId = 0)
         {
             try
             {
                 User user = new User();
+                Division division = new Division();
                 IEnumerable<Glaccount> glAccounts = new List<Glaccount>();
                 GetGLAccountsHandler getGLAccounts = new GetGLAccountsHandler();
-
+                if(divisionId > 0) 
+                    division = await _division.GetOne(divisionId);
                 if(command == "all")
                 {
-                    getGLAccounts.setState(new GetAllState());
+                    getGLAccounts.setState(new GetAllState(division));
                     glAccounts = await getGLAccounts.request(_db);
                 } else if(command == "division")
                 {

@@ -5,15 +5,21 @@ import { ref } from 'vue'
 export function getTransactions() {
     store.commit('setLoading')
     const transactions = ref([])
-    axios({
-        method: 'GET',
-        url: 'Transactions/index'
-    })
-        .then((res) => (transactions.value = res.data))
-        .catch((error) => store.dispatch('setStatus', error.response.data))
-        .finally(() => store.commit('doneLoading'))
+    async function getter() {
+        try {
+            const res = axios({
+                method: 'GET',
+                url: 'Transactions/index'
+            })
+            transactions.value = res.data
+        } catch (error) {
+            store.dispatch('setStatus', error.response.data)
+        } finally {
+            store.commit('doneLoading')
+        }
+    }
 
-    return { transactions }
+    return { transactions, getter }
 }
 
 export function getTransaction() {

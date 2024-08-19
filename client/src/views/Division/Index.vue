@@ -89,12 +89,18 @@
 <script setup>
 import { getDivisions, editDivision, addDivision, deleteDivision } from '@/hooks/divisionCRUD'
 import { getDepartments } from '@/hooks/departmentCRUD'
-import { ref } from 'vue'
+import { reactive, ref, onMounted, watch } from 'vue'
+import router from '@/router/router'
 
 const reloadPage = () => location.reload()
-// TODO conifigure onMount and watch for retriving index for every GetALL
-const { divisions } = getDivisions()
-const { departments } = getDepartments()
+const { divisions, getter: divisionGetter } = getDivisions()
+const { departments, getter: departmentGetter } = getDepartments()
+
+onMounted(async () => {
+	await divisionGetter()
+	await departmentGetter()
+})
+watch(async () => divisionGetter())
 
 const headers = [
 	{ title: 'Title', value: 'name' },
@@ -102,6 +108,7 @@ const headers = [
 	{ title: '', value: 'edit' },
 	{ title: '', value: 'delete' }
 ]
+
 //#region Add Config
 
 const newDivision = ref({
@@ -121,7 +128,9 @@ const updatedDivision = ref({
 	departmentId: ''
 })
 const populateEdit = (division) => (updatedDivision.value = division)
-const editSubmit = () => editDivision(updatedDivision.value)
+const editSubmit = () => {
+	editDivision(updatedDivision.value)
+}
 
 //#endregion
 

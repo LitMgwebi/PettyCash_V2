@@ -57,10 +57,14 @@
 
 <script setup>
 import { getPurposes, addPurpose, editPurpose, deletePurpose } from '@/hooks/purposeCRUD'
-import { ref } from 'vue'
+import { onMounted, ref, watch } from 'vue'
 
 const reloadPage = () => window.location.reload()
-const { purposes } = getPurposes()
+const { purposes, getter } = getPurposes()
+
+onMounted(async () => await getter())
+watch(async () => await getter())
+
 const headers = [
 	{ title: 'Name', value: 'name' },
 	{ title: 'Description', value: 'description' },

@@ -2,27 +2,26 @@ import axios from 'axios'
 import { ref } from 'vue'
 import store from '@/store/store'
 
-function getPurposes() {
+export function getPurposes() {
     store.commit('setLoading')
     const purposes = ref([])
-    axios({
-        method: 'GET',
-        url: 'Purposes/index'
-    })
-        .then((res) => {
+    async function getter() {
+        try {
+            const res = await axios({
+                method: 'GET',
+                url: 'Purposes/index'
+            })
             purposes.value = res.data
-        })
-        .catch((error) => {
+        } catch (error) {
             store.dispatch('setStatus', error.response.data)
-        })
-        .finally(() => {
+        } finally {
             store.commit('doneLoading')
-        })
-
-    return { purposes }
+        }
+    }
+    return { purposes, getter }
 }
 
-function editPurpose(purpose) {
+export function editPurpose(purpose) {
     store.commit('setLoading')
     axios({
         method: 'PUT',
@@ -40,7 +39,7 @@ function editPurpose(purpose) {
         })
 }
 
-function addPurpose(purpose) {
+export function addPurpose(purpose) {
     store.commit('setLoading')
     axios({
         method: 'POST',
@@ -58,7 +57,7 @@ function addPurpose(purpose) {
         })
 }
 
-function deletePurpose(purpose) {
+export function deletePurpose(purpose) {
     store.commit('setLoading')
     axios({
         method: 'DELETE',
@@ -75,5 +74,3 @@ function deletePurpose(purpose) {
             store.commit('doneLoading')
         })
 }
-
-export { getPurposes, editPurpose, addPurpose, deletePurpose }

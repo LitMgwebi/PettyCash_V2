@@ -6,7 +6,6 @@ export function getRequisitions() {
     store.commit('setLoading')
     const requisitions = ref([])
     async function getter(command, statusId = 0) {
-        console.log(statusId)
         try {
             const res = await axios({
                 method: 'GET',
@@ -23,21 +22,26 @@ export function getRequisitions() {
     return { requisitions, getter }
 }
 
-export function getRequisition(id) {
+export function getRequisition() {
     store.commit('setLoading')
-    const requisition = ref(null)
-    axios({
-        method: 'GET',
-        url: 'Requisitions/details',
-        params: {
-            id: id
+    const requisition = ref({})
+    async function getterRequisition(id) {
+        try {
+            const res = await axios({
+                method: 'GET',
+                url: 'Requisitions/details',
+                params: {
+                    id: id
+                }
+            })
+            requisition.value = res.data
+        } catch (error) {
+            store.dispatch('setStatus', error.response.data)
+        } finally {
+            store.commit('doneLoading')
         }
-    })
-        .then((res) => (requisition.value = res.data))
-        .catch((error) => store.dispatch('setStatus', error.response.data))
-        .finally(() => store.commit('doneLoading'))
-    //Refresh res.data CALL
-    return { requisition }
+    }
+    return { requisition, getterRequisition }
 }
 
 export function addRequisition(requisition) {

@@ -28,6 +28,7 @@
             }
             else
                 throw new Exception("You entered in expenses that are higher than the issued cash. Please reenter amount.");
+            //TODO System response instead of exception
         }
     }
 }

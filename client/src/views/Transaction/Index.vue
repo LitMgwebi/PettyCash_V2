@@ -34,13 +34,18 @@
 <script setup>
 import { getTransactions, addTransaction } from '@/hooks/transactionCRUD'
 import { getVault } from '@/hooks/vaultCRUD'
-import { ref, inject } from 'vue'
+import { ref, inject, onMounted, watch } from 'vue'
 import router from '@/router/router'
 
 const reloadPage = () => location.reload()
-const { transactions } = getTransactions()
-const { vault } = getVault()
+const { transactions, getter } = getTransactions()
+
+onMounted(async () => await getter())
+
 // TODO Filter for Withdrawal and Deposit type
+watch(async () => await getter())
+
+const { vault } = getVault()
 const headers = [
 	{ title: 'ID', value: 'transactionId' },
 	{ title: 'Amount', value: 'amount' },

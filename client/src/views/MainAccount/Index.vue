@@ -69,10 +69,14 @@ import {
 	deleteMainAccount,
 	addMainAccount
 } from '@/hooks/mainAccountCRUD'
-import { ref } from 'vue'
+import { onMounted, ref, watch } from 'vue'
 
 const reloadPage = () => location.reload()
-const { mainAccounts } = getMainAccounts()
+const { mainAccounts, getter } = getMainAccounts()
+
+onMounted(async () => await getter())
+watch(async () => await getter())
+
 const headers = [
 	{ title: 'Name', value: 'name' },
 	{ title: 'Account Number', value: 'accountNumber' },

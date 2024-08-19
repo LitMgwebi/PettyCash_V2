@@ -56,11 +56,13 @@
 
 <script setup>
 import { getOffices, addOffice, editOffice, deleteOffice } from '@/hooks/officeCRUD'
-import { ref } from 'vue'
+import { onMounted, ref, watch } from 'vue'
 
 const reloadPage = () => location.reload()
-// TODO conifigure onMount and watch for retriving index for every GetALL
-const { offices } = getOffices()
+const { offices, getter } = getOffices()
+
+onMounted(async () => await getter())
+watch(async () => await getter())
 
 const headers = [
 	{ title: 'Name', value: 'name' },
