@@ -5,7 +5,7 @@ import { ref } from 'vue'
 export function getApprovalStatuses() {
     store.commit('setLoading')
     const statuses = ref([])
-    async function approvalGetter() {
+    async function getter() {
         try {
             const res = await axios({
                 method: 'GET',
@@ -18,13 +18,13 @@ export function getApprovalStatuses() {
             store.commit('doneLoading')
         }
     }
-    return { statuses, approvalGetter }
+    return { statuses, getter }
 }
 
 export function getRecommendationStatuses() {
     store.commit('setLoading')
     const statuses = ref([])
-    async function recommendationGetter() {
+    async function getter() {
         try {
             const res = await axios({
                 method: 'GET',
@@ -37,13 +37,13 @@ export function getRecommendationStatuses() {
             store.commit('doneLoading')
         }
     }
-    return { statuses, recommendationGetter }
+    return { statuses, getter }
 }
 
 export function getStatesStatuses() {
     store.commit('setLoading')
     const statuses = ref([])
-    async function stateGetter() {
+    async function getter() {
         try {
             const res = await axios({
                 method: 'GET',
@@ -56,13 +56,13 @@ export function getStatesStatuses() {
             store.commit('doneLoading')
         }
     }
-    return { statuses, stateGetter }
+    return { statuses, getter }
 }
 
 export function getAllStatuses() {
     store.commit('setLoading')
     const statuses = ref([])
-    async function allGetter() {
+    async function getter() {
         try {
             const res = await axios({
                 method: 'GET',
@@ -75,5 +75,5 @@ export function getAllStatuses() {
             store.commit('doneLoading')
         }
     }
-    return { statuses, allGetter }
+    return { statuses, getter }
 }

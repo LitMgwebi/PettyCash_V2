@@ -25,7 +25,7 @@ export function getRequisitions() {
 export function getRequisition() {
     store.commit('setLoading')
     const requisition = ref({})
-    async function getterRequisition(id) {
+    async function getter(id) {
         try {
             const res = await axios({
                 method: 'GET',
@@ -41,7 +41,7 @@ export function getRequisition() {
             store.commit('doneLoading')
         }
     }
-    return { requisition, getterRequisition }
+    return { requisition, getter }
 }
 
 export function addRequisition(requisition) {

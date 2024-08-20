@@ -22,6 +22,7 @@
         {
             if (jobTitle == requiredTitle)
             {
+                // TODO During testing, make sure that managers aren't able to access their requisitions for approval
                 return await _db.Requisitions
                     .Include(a => a.Applicant)
                     .Include(gl => gl.Glaccount)

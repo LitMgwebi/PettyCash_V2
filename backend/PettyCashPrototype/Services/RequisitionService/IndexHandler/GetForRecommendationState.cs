@@ -14,6 +14,7 @@
         }
         public async Task<IEnumerable<Requisition>> GetRequisitions(PettyCashPrototypeContext db)
         {
+            // TODO Conduct a test to make sure that the user applying is not the user recommending
             IEnumerable<Requisition> requisitions = new List<Requisition>();
             User user = await _user.GetUserById(userId);
 
@@ -25,6 +26,7 @@
                     .Include(gl => gl.Glaccount)
                     .Where(nm => (nm.NeedsMotivation == true && nm.Documents.Count > 0) || nm.NeedsMotivation == false)
                     .Where(a => a.IsActive == true)
+                    .Where(u => u.Applicant!.Id != user.Id)
                     .Where(d => d.Applicant!.JobTitle!.JobTitleId == 7 && d.Applicant.Division!.DepartmentId == user.Division!.DepartmentId)
                     .Where(a => a.ManagerRecommendation == null && a.FinanceApproval == null)
                     .AsNoTracking()
@@ -37,6 +39,7 @@
                     .Include(m => m.Documents)
                     .Include(gl => gl.Glaccount)
                     .Where(a => a.IsActive == true)
+                    .Where(u => u.Applicant!.Id != user.Id)
                     .Where(nm => (nm.NeedsMotivation == true && nm.Documents.Count > 0) || nm.NeedsMotivation == false)
                     .Where(d => d.Applicant!.DivisionId == user.DivisionId && d.Applicant!.JobTitle!.JobTitleId != 7)
                     .Where(a => a.ManagerRecommendation == null && a.FinanceApproval == null)
@@ -51,6 +54,7 @@
                     .Include(gl => gl.Glaccount)
                     .Where(nm => (nm.NeedsMotivation == true && nm.Documents.Count > 0) || nm.NeedsMotivation == false)
                     .Where(a => a.IsActive == true)
+                    .Where(u => u.Applicant!.Id != user.Id)
                     .Where(d => d.Applicant!.DivisionId == user.DivisionId)
                     .Where(a => a.ManagerRecommendation == null && a.FinanceApproval == null)
                     .AsNoTracking()

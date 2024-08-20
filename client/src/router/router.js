@@ -78,34 +78,34 @@ const routes = [
             {
                 path: '/requisitions/applied',
                 name: 'applied_list',
-                component: () => import('@/components/Requisition/ApplicantList.vue')
+                component: () => import('@/components/Requisition/Lists/ApplicantList.vue')
             },
             {
                 path: '/requisitions/recommendation',
                 name: 'recommended_list',
-                component: () => import('@/components/Requisition/RecommendationList.vue')
+                component: () => import('@/components/Requisition/Lists/RecommendationList.vue')
             },
             {
                 path: '/requisitions/approval',
                 name: 'approval_list',
-                component: () => import('@/components/Requisition/ApprovalList.vue')
+                component: () => import('@/components/Requisition/Lists/ApprovalList.vue')
             },
             {
                 path: '/requisitions/issuing',
                 name: 'issuing_list',
-                component: () => import('@/components/Requisition/IssuingList.vue')
+                component: () => import('@/components/Requisition/Lists/IssuingList.vue')
             },
             {
                 path: '/requisitions/close',
                 name: 'close_list',
-                component: () => import('@/components/Requisition/CloseList.vue')
+                component: () => import('@/components/Requisition/Lists/CloseList.vue')
             }
         ]
     },
     {
         path: '/requisitions/statuses',
         name: 'requisitions_statuses',
-        component: () => import('@/components/Requisition/StatusesList.vue')
+        component: () => import('@/components/Requisition/Lists/StatusesList.vue')
     },
     {
         path: '/requisitions/details/:id',

@@ -36,7 +36,7 @@
 
 <script setup>
 import { getGLAccounts } from '@/hooks/glAccountCRUD'
-import { inject, ref } from 'vue'
+import { inject, onMounted, ref, watch } from 'vue'
 import { addRequisition } from '@/hooks/requisitionCRUD'
 import router from '@/router/router'
 
@@ -49,7 +49,15 @@ const requisition = ref({
 	description: '',
 	stage: ''
 })
-const { glAccounts } = getGLAccounts(typeOfGLGet.Division)
+const { glAccounts, getter } = getGLAccounts()
+
+watch(
+	typeOfGLGet,
+	async () => {
+		await getter(typeOfGLGet.Division)
+	},
+	{ immediate: true }
+)
 
 function handleSubmit() {
 	addRequisition(requisition.value)

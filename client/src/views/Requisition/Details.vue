@@ -1,5 +1,7 @@
 <template>
-	<section v-if="requisition">
+	<section
+		v-if="requisition.applicant != null && requisition != null && requisition.glaccount != null"
+	>
 		<aside>
 			<h4>General Details</h4>
 			<div>
@@ -19,117 +21,47 @@
 						Code: {{ requisition.applicantCode }}
 					</p>
 				</div>
-
+				<div v-if="requisition.totalExpenses != null">
+					<p>Total Expenses: {{ requisition.totalExpenses }}</p>
+					<p>Change: {{ requisition.change }}</p>
+				</div>
 				<div v-if="requisition.needsMotivation == true">
-					<section class="table">
-						<div v-if="motivations != null">
-							<div v-if="motivations.length > 0">
-								<div v-for="motivation in motivations" :key="motivation">
-									<span>
-										{{ motivation.fileName }} {{ motivation.dateUploaded }}
-									</span>
-									<div
-										v-if="
-											user.id == requisition.applicant.id &&
-											requisition.issueId != null
-										"
-									>
-										<button @click="deleteRecord(motivation)">Delete</button>
-									</div>
-								</div>
-							</div>
-							<div v-else>
-								<div v-if="user.id == requisition.applicant.id">
-									Please upload a motivation for your requisition to be sent for
-									recommendation
-									<section class="create">
-										<h3>Upload Motivation</h3>
-										<form
-											@submit.prevent="saveMotivation"
-											enctype="multipart/form-data"
-										>
-											<input
-												type="file"
-												accept="application/pdf"
-												ref="file"
-												@change="(e) => (file = e.target.files[0])"
-												required
-											/>
-											<button type="submit">Upload</button>
-										</form>
-									</section>
-								</div>
-								<div v-else>Motivation is yet to be uploaded</div>
-							</div>
-						</div>
-					</section>
+					<v-btn @click="openMotivationDialog = true">View Motivations</v-btn>
+					<v-dialog v-model="openMotivationDialog" width="auto">
+						<MotivationDialog
+							:requisition="requisition"
+							:dialog="openMotivationDialog"
+							@closeDialog="closeMotivationDialog"
+						/>
+					</v-dialog>
 				</div>
 
-				<!-- Add code to check if the applicant used the money or did not -->
-				<div v-if="requisition.applicantCode > 0 && requisition.issuerId != null">
-					<form
-						@submit.prevent="addExpenses"
-						v-if="user.id == requisition.applicant.id && requisition.change == null"
-					>
-						<div>
-							<label>What were your total expenses: </label>
-							<input type="text" v-model="requisition.totalExpenses" required />
-						</div>
-						<div>
-							<button type="submit">Save</button>
-							<button @click="reloadPage">Cancel</button>
-						</div>
-					</form>
-					<div v-else-if="requisition.totalExpenses != null">
-						<p>Total Expenses: {{ requisition.totalExpenses }}</p>
-						<p>Change: {{ requisition.change }}</p>
-					</div>
+				<!-- Checking if logged in user is the author of this requisition, also checks if the requisition's money has been issued and checks if no change has been calculated, so that total expenses can be entered -->
+				<div
+					v-if="
+						requisition.issuerId != null &&
+						user.id == requisition.applicant.id &&
+						requisition.change == null
+					"
+				>
+					<v-btn @click="openExpensesDialog = true">Add Expenses</v-btn>
+					<v-dialog v-model="openExpensesDialog" width="auto">
+						<ExpensesDialog
+							:requisition="requisition"
+							:dialog="openExpensesDialog"
+							@closeDialog="closeExpensesDialog"
+						/>
+					</v-dialog>
 				</div>
-
 				<div v-if="requisition.change != null">
-					<section class="table">
-						<div v-if="receipts">
-							<div v-if="receipts.length > 0">
-								<div v-for="receipt in receipts" :key="receipt">
-									<span> {{ receipt.fileName }} {{ receipt.dateUploaded }} </span>
-									<div
-										v-if="
-											user.id == requisition.applicant.id &&
-											requisition.confirmChangeReceived == false
-										"
-									>
-										<button @click="deleteRecord(receipt)">Delete</button>
-									</div>
-								</div>
-							</div>
-							<div v-else>
-								<div
-									v-if="
-										user.id == requisition.applicant.id &&
-										requisition.receiptReceived == false
-									"
-								>
-									Please upload all the receipts.
-									<section class="create">
-										<h3>Upload Receipt</h3>
-										<form
-											@submit.prevent="saveReceipt"
-											enctype="multipart/form-data"
-										>
-											<input
-												type="file"
-												ref="file"
-												@change="(e) => (file = e.target.files[0])"
-												multiple
-											/>
-											<button type="submit">Upload</button>
-										</form>
-									</section>
-								</div>
-								<div v-else>No Receipt has been uploaded yet</div>
-							</div>
-						</div>
-					</section>
+					<v-btn @click="openReceiptDialog = true">View Receipts</v-btn>
+					<v-dialog v-model="openReceiptDialog" width="auto">
+						<ReceiptDialog
+							:requisition="requisition"
+							:dialog="openReceiptDialog"
+							@closeDialog="closeReceiptDialog"
+						/>
+					</v-dialog>
 				</div>
 			</div>
 		</aside>
@@ -165,114 +97,45 @@
 				</p>
 			</div>
 		</aside>
-		<aside>
-			<div v-if="user.jobTitleId == 16 && requisition.financeApproval != null">
-				<div v-if="requisition.issuerId == null">
-					<h2>Issue</h2>
-					<form @submit.prevent="issueMoney">
-						<div>
-							<label>Cash to be issued: </label>
-							<input type="text" v-model="requisition.cashIssued" required />
-						</div>
-						<div>
-							<label>Applicant Code: </label>
-							<input type="text" v-model="attemptCode" required />
-						</div>
-						<div v-if="requisition.cashIssued < requisition.amountRequested">
-							<textarea
-								placeholder="Please add a comment if you issue an amount lower than the amount requested."
-								v-model="requisition.issueComment"
-							></textarea>
-						</div>
-						<!-- Grey out the button until the code and cash issued or both inputted -->
-						<div class="submit">
-							<button :disabled="attemptCode.length < 5">Issue</button>
-						</div>
-					</form>
-				</div>
-				<div v-if="requisition.change != null && requisition.closeDate == null">
-					<form @submit.prevent="confirmChange">
-						<div>Has {{ requisition.applicant.fullName }} brought back the change?</div>
-						<select v-model="requisition.confirmChangeReceived">
-							<option value="" disabled>Please Choose an option</option>
-							<option value="true">Yes</option>
-							<option value="false">No</option>
-						</select>
-						<div class="submit">
-							<button>Confirm</button>
-						</div>
-					</form>
-				</div>
-			</div>
-		</aside>
 		<Buttonhandler :requisition="requisition" />
 	</section>
 	<div v-else>Cannot find requisition details</div>
 </template>
 
 <script setup>
-import { defineProps, toRefs, inject, ref } from 'vue'
-import { getRequisition, editRequisition } from '@/hooks/requisitionCRUD'
-import { addDocument, getDocuments, deleteDocument } from '@/hooks/documentCRUD'
+import { inject, ref, watch } from 'vue'
+import { getRequisition } from '@/hooks/requisitionCRUD'
+import MotivationDialog from '@/components/Requisition/Dialogs/MotivationDialog.vue'
+import ReceiptDialog from '@/components/Requisition/Dialogs/ReceiptDialog.vue'
+import ExpensesDialog from '@/components/Requisition/Dialogs/ExpensesDialog.vue'
 import Buttonhandler from '@/components/Requisition/ButtonHandler.vue'
 import moment from 'moment'
-import router from '@/router/router'
+import { useRoute } from 'vue-router'
 
-//#region Variable Declarations
+const openMotivationDialog = ref(false)
+const closeMotivationDialog = () => (openMotivationDialog.value = false)
 
-const reloadPage = () => location.reload()
-const props = defineProps(['id'])
-const { id } = toRefs(props)
+const openReceiptDialog = ref(false)
+const closeReceiptDialog = () => (openReceiptDialog.value = false)
+
+const openExpensesDialog = ref(false)
+const closeExpensesDialog = () => (openExpensesDialog.value = false)
+
+const route = useRoute()
+const id = route.params.id
+
 const user = inject('User')
-const editRequisitionStates = inject('editRequisitionStates')
-const typeOfFile = inject('typeOfFile')
-const file = ref(null)
-const attemptCode = ref(0)
-let formData = new FormData()
-const { requisition } = getRequisition(id.value)
-const { documents: motivations } = getDocuments(typeOfFile.Motivation, id.value)
-const { documents: receipts } = getDocuments(typeOfFile.Receipt, id.value)
-//#endregion
 
-//#region Functions
+const { requisition, getter: requisitionGetter } = getRequisition()
 
-function saveMotivation() {
-	// if (file.value[0].size < 4194304) {
-	formData.append = ('file', file.value)
-	addDocument(formData, id.value, typeOfFile.Motivation)
-	router.push({ name: 'requisition_details', params: { id: requisition.requisitionId } })
-	// }
-	// store.dispatch('setStatus', 'The input is far too large.')
-}
-
-function saveReceipt() {
-	formData.append = ('file', file.value)
-	addDocument(formData, id.value, typeOfFile.Receipt)
-	router.push({ name: 'requisition_details', params: { id: requisition.requisitionId } })
-}
-
-function deleteRecord(motivation) {
-	deleteDocument(motivation)
-}
-
+watch(
+	() => route.params.id,
+	async (oldId, newId) => {
+		await requisitionGetter(id)
+	},
+	{ immediate: true }
+)
 function formatDate(date) {
 	if (date) return moment(String(date)).format('DD-MM-YYYY')
 }
-
-function issueMoney() {
-	editRequisition(requisition.value, editRequisitionStates.Issuing, attemptCode.value)
-	router.push({ name: 'requisitions' })
-}
-
-function confirmChange() {
-	editRequisition(requisition.value, editRequisitionStates.Close)
-	router.push({ name: 'requisition_details', params: { id: requisition.requisitionId } })
-}
-
-function addExpenses() {
-	editRequisition(requisition.value, editRequisitionStates.Expenses)
-	router.push({ name: 'requisition_details', params: { id: requisition.requisitionId } })
-}
-
-//#endregion
 </script>

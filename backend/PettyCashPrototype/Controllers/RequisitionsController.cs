@@ -30,7 +30,7 @@ namespace PettyCashPrototype.Controllers
 
                 return Ok(requisitions);
             }
-            catch (Exception ex) { return BadRequest(ex.Message); }
+            catch (Exception ex) { return BadRequest(ex); }
         }
 
 
@@ -68,14 +68,14 @@ namespace PettyCashPrototype.Controllers
         #region PUT
 
         [HttpPut, Route("edit")]
-        public async Task<ActionResult> Edit(RequisitionModelForEdit requisitionModel)
+        public async Task<ActionResult> Edit(RequisitionModelForEdit modelForEdit)
         {
             try
             {
                 var identity = (ClaimsIdentity)User.Identity!;
                 var userId = identity.Claims.Where(c => c.Type == ClaimTypes.Sid).Select(c => c.Value).FirstOrDefault()!;
 
-                string message = await _requisition.Edit(requisitionModel.Requisition, requisitionModel.command, userId, requisitionModel.attemptCode);
+                string message = await _requisition.Edit(modelForEdit.Requisition!, modelForEdit.command!, userId, modelForEdit.attemptCode);
                 return Ok(new { message = message });
             }
             catch (Exception ex) { return BadRequest(ex.Message); }

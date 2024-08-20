@@ -4,6 +4,7 @@
 		<div>
 			<label>Filter:</label>
 			<select :disabled="statuses.length == 0" v-model="search">
+				<option value="" disabled>Choose</option>
 				<option v-for="status in statuses" :value="status" :key="status">
 					{{ status.description }}
 				</option>
@@ -26,7 +27,7 @@ import { getAllStatuses } from '@/hooks/statusCRUD'
 import router from '@/router/router'
 
 const getRequisitionStates = inject('getRequisitionStates')
-const { statuses } = getAllStatuses()
+const { statuses, getter: statusGetter } = getAllStatuses()
 const { requisitions, getter } = getRequisitions()
 const search = ref({
 	statusId: 0,
@@ -43,12 +44,17 @@ const headers = [
 	{ title: 'Description', value: 'description' },
 	{ title: '', value: 'details' }
 ]
-onMounted(async () => {
-	await getter(getRequisitionStates.All, search.value.statusId)
-})
-watch(search, async (newSearch, oldSearch) => {
-	await getter(getRequisitionStates.All, search.value.statusId)
-})
+// onMounted(async () => {
+// 	await getter(getRequisitionStates.All, search.value.statusId)
+// })
+watch(
+	search,
+	async (newSearch, oldSearch) => {
+		await getter(getRequisitionStates.All, search.value.statusId)
+		await statusGetter()
+	},
+	{ immediate: true }
+)
 
 const routeToDetails = (item) => {
 	router.push({ name: 'requisition_details', params: { id: item.requisitionId } })

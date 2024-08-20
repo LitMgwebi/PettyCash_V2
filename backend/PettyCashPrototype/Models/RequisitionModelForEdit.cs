@@ -2,9 +2,9 @@
 {
     public class RequisitionModelForEdit
     {
-        public Requisition Requisition { get; set; } = null!;
+        public Requisition? Requisition { get; set; }
 
-        public string command { get; set; } = null!;
+        public string? command { get; set; }
 
         public int attemptCode { get; set; }
     }

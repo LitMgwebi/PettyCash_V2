@@ -56,38 +56,6 @@
 		</span>
 		<button @click="handleApproval(requisition)">Submit</button>
 	</div>
-
-	<!-- used for recommendation -->
-	<div
-		v-if="
-			((user.role == 'Manager' && user.divisionId != 6) ||
-				user.role == 'GM_Manager' ||
-				user.role == 'Senior_Employee') &&
-			requisition.managerRecommendation == null &&
-			requisition.applicant.id != user.id
-		"
-	>
-		<span class="dropdown">
-			<select
-				:disabled="statusesForRecommendation.length == 0"
-				v-model="requisition.managerRecommendationId"
-			>
-				<option value="" disabled>What is you're verdict</option>
-				<option
-					v-for="status in statusesForRecommendation"
-					:value="status.statusId"
-					:key="status.statusId"
-				>
-					{{ status.option }}
-				</option>
-			</select>
-		</span>
-		<span v-if="requisition.managerRecommendationId == 4">
-			<label>Would you like to leave a comment?: </label>
-			<textarea v-model="requisition.managerComment" />
-		</span>
-		<button @click="handleRecommendation(requisition)">Submit</button>
-	</div>
 </template>
 
 <script setup>
@@ -96,31 +64,12 @@ import { deleteRequisition, editRequisition } from '@/hooks/requisitionCRUD'
 import { getRecommendationStatuses, getApprovalStatuses } from '@/hooks/statusCRUD'
 import router from '@/router/router'
 
+// TODO intro "Back" to the page user was on
+
 const props = defineProps(['requisition'])
 const { requisition } = toRefs(props)
 const user = inject('User')
 const editRequisitionStates = inject('editRequisitionStates')
-
-//#region Handling recommedation
-
-const { statuses: statusesForRecommendation } = getRecommendationStatuses()
-const handleRecommendation = (requisition) => {
-	editRequisition(requisition, editRequisitionStates.Recommendation)
-	router.push({ name: 'requisitions' })
-}
-
-//#endregion
-
-//#region Handling approval
-
-const { statuses: statusesForApproval } = getApprovalStatuses()
-
-const handleApproval = (requisition) => {
-	editRequisition(requisition, editRequisitionStates.Approval)
-	router.push({ name: 'requisitions' })
-}
-
-//#endregion
 
 //#region Handing Deletion
 
