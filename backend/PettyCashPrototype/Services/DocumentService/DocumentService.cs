@@ -75,6 +75,7 @@ namespace PettyCashPrototype.Services.DocumentService
         {
             try
             {                
+                //TODO upload multiple files at the same time
                 UploadDocumentHandler uploadDocumentHandler = new UploadDocumentHandler();
 
                 if (file == null) throw new Exception("No file was found.");

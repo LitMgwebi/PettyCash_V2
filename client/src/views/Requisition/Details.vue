@@ -129,7 +129,7 @@ const user = inject('User')
 const { requisition, getter: requisitionGetter } = getRequisition()
 
 watch(
-	() => route.params.id,
+	requisition,
 	async (oldId, newId) => {
 		await requisitionGetter(id)
 	},

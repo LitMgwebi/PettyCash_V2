@@ -16,28 +16,22 @@
 					</v-data-table-server>
 				</div>
 				<div v-if="user.id == requisition.applicant.id">
-					<div
-						v-if="
-							user.id == requisition.applicant.id &&
-							requisition.receiptReceived == false
-						"
-					>
-						<section class="create">
-							<h3>Upload Receipt</h3>
-							<form @submit.prevent="saveReceipt" enctype="multipart/form-data">
-								<input
-									type="file"
-									ref="file"
-									@change="(e) => (file = e.target.files[0])"
-									multiple
-								/>
-								<button type="submit">Upload</button>
-							</form>
-						</section>
-					</div>
+					<section class="create">
+						<h3>Upload Receipt</h3>
+						<form @submit.prevent="saveReceipt" enctype="multipart/form-data">
+							<input
+								type="file"
+								ref="file"
+								@change="(e) => (file = e.target.files[0])"
+								multiple
+								accept="application/pdf"
+							/>
+							<button type="submit">Upload</button>
+						</form>
+					</section>
 				</div>
 				<template v-slot:actions>
-					<v-btn class="ms-auto" text="Ok" @click="closeDialog"></v-btn>
+					<v-btn class="ms-auto" text="Close" @click="closeDialog"></v-btn>
 				</template>
 			</v-card>
 		</v-dialog>
