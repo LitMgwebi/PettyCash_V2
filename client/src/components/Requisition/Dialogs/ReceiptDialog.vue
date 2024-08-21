@@ -15,7 +15,8 @@
 						</template>
 					</v-data-table-server>
 				</div>
-				<div v-if="user.id == requisition.applicant.id">
+				<!-- // TODO figure out a way to stop the uploading of documents once the requisition is closed. Both client and server sides -->
+				<div v-if="user.id == requisition.applicant.id && requisition.CloseDate == null">
 					<section class="create">
 						<h3>Upload Receipt</h3>
 						<form @submit.prevent="saveReceipt" enctype="multipart/form-data">
@@ -23,7 +24,6 @@
 								type="file"
 								ref="file"
 								@change="(e) => (file = e.target.files[0])"
-								multiple
 								accept="application/pdf"
 							/>
 							<button type="submit">Upload</button>

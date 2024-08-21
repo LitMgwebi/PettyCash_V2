@@ -13,7 +13,8 @@
             if (requisition.ManagerRecommendationId == null)
             {
                 /*
-                 An email to be sent to the user, telling them of the change and the new rules namely:
+                 // TODO
+                An email to be sent to the user, telling them of the change and the new rules namely:
                  If the a motivation is needed, email will be sent to applicant telling them that the requisition has been edited,
                      and now requires them to upload the motivation
                  Else if there is no motivation needed, email will be sent to the applicant and the line manager telling them about
@@ -24,8 +25,8 @@
                 //if (_glAccount != null || requisition.AmountRequested > 2000)
                 //{
                 Glaccount glaccount = await _glAccount!.GetOne(requisition.GlaccountId);
-                    //requisition.Glaccount = glaccount;
-                    if (glaccount.NeedsMotivation || requisition.AmountRequested > 2000)
+                requisition.Glaccount = glaccount;
+                if (glaccount.NeedsMotivation || requisition.AmountRequested > 2000)
                     {
                         requisition.NeedsMotivation = true;
                         requisition.Stage = "Requisition has been stored in the system. Motivation must be uploaded before it can be sent for recommendation.";

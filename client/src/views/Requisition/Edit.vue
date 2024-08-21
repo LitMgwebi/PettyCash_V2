@@ -36,27 +36,27 @@
 
 <script setup>
 import { getGLAccounts } from '@/hooks/glAccountCRUD'
-import { defineProps, ref, toRefs, inject } from 'vue'
+import { defineProps, ref, toRefs, inject, onMounted, watch } from 'vue'
 import { editRequisition, getRequisition } from '@/hooks/requisitionCRUD'
 import router from '@/router/router'
+import { useRoute } from 'vue-router'
 
 const reloadPage = () => location.reload()
 
-const props = defineProps(['id'])
-const { id } = toRefs(props)
+const route = useRoute()
+const id = route.params.id
 const editRequisitionStates = inject('editRequisitionStates')
 
-const { requisition } = getRequisition(id.value)
-const { glAccounts } = getGLAccounts('division')
-// // same as beforeRouteLeave option but with no access to `this`
-// onBeforeRouteLeave((to, from) => {
-//   const answer = window.confirm(
-//     'Do you really want to leave? you have unsaved changes!'
-//   )
-//   // cancel the navigation and stay on the same page
-//   if (!answer) return false
-// })
-
+const { requisition, getter: requisitionGetter } = getRequisition()
+const { glAccounts, getter: glGetter } = getGLAccounts()
+watch(
+	() => route.params.id,
+	async (oldId, newId) => {
+		await requisitionGetter(id)
+		await glGetter('division')
+	},
+	{ immediate: true }
+)
 function handleSubmit() {
 	editRequisition(requisition.value, editRequisitionStates.Edit)
 	router.push({ name: 'requisition_details', params: { id: requisition.requisitionId } })

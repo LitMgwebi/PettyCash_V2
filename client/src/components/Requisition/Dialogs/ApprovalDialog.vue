@@ -1,38 +1,34 @@
 <template>
-	<div>
-		<v-dialog v-model="dialog" width="auto">
-			<v-card max-width="400" prepend-icon="mdi-update">
-				<div>
-					<div class="dropdown">
-						<label>Choose</label>
-						<select
-							:disabled="statuses.length == 0"
-							v-model="requisition.financeApprovalID"
-						>
-							<option value="" disabled>What is you're verdict</option>
-							<option
-								v-for="status in statuses"
-								:value="status.statusId"
-								:key="status.statusId"
-							>
-								{{ status.option }}
-							</option>
-						</select>
-					</div>
-					<div>
-						<!-- <span v-if="requisition.financeApprovalID == 2"> -->
-						<label>Would you like to leave a comment?: </label>
-						<textarea v-model="requisition.financeComment" />
-						<!-- </span> -->
-					</div>
-				</div>
-				<template v-slot:actions>
-					<button @click="handleApproval(requisition)">Submit</button>
-					<v-btn class="ms-auto" text="Cancel" @click="closeDialog"></v-btn>
-				</template>
-			</v-card>
-		</v-dialog>
-	</div>
+	<v-card max-width="400" prepend-icon="mdi-update">
+		<div>
+			<div class="dropdown">
+				<label>Choose</label>
+				<select :disabled="statuses.length == 0" v-model="requisition.financeApprovalID">
+					<option value="" disabled>What is you're verdict</option>
+					<option
+						v-for="status in statuses"
+						:value="status.statusId"
+						:key="status.statusId"
+					>
+						{{ status.option }}
+					</option>
+				</select>
+			</div>
+			<div>
+				<!-- <span v-if="requisition.financeApprovalID == 2"> -->
+				<label>Comment?: </label>
+				<textarea
+					v-model="requisition.financeComment"
+					placeholder="Please enter a comment"
+				/>
+				<!-- </span> -->
+			</div>
+		</div>
+		<template v-slot:actions>
+			<button @click="handleApproval(requisition)">Submit</button>
+			<v-btn class="ms-auto" text="Cancel" @click="closeDialog"></v-btn>
+		</template>
+	</v-card>
 </template>
 
 <script setup>
@@ -47,7 +43,6 @@ const dialog = props.dialog
 const requisition = props.requisition
 
 const { statuses, getter } = getApprovalStatuses()
-
 watch(
 	statuses,
 	async (newStatus, oldStatus) => {
