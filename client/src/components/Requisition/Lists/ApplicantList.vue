@@ -59,8 +59,8 @@ const status = ref({
 const getRequisitionStates = inject('getRequisitionStates')
 const { requisitions, getter } = getRequisitions()
 const headers = [
-	{ title: 'Requisition Id', key: 'requisitionId' },
-	{ title: 'Amount Requested (R)', key: 'amountRequested' },
+	{ title: 'Id', key: 'requisitionId' },
+	{ title: 'Amount (R)', key: 'amountRequested' },
 	{ title: 'Description', key: 'description' },
 	{ title: 'Stage', key: 'stage' },
 	{ title: '', key: 'data-table-expand' }

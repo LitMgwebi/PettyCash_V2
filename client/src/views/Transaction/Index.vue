@@ -1,15 +1,19 @@
 <template>
 	<v-container>
 		<v-row>
-			<h2>Transactions</h2>
-			<section>
-				<label>Filter</label>
-				<select :disabled="arrayOfTypes.length == 0" v-model="transactionFilter">
-					<option v-for="type in arrayOfTypes" :value="type" :key="type">
-						{{ type.type }}
-					</option>
-				</select>
-			</section>
+			<v-col>
+				<h2>Transactions</h2>
+			</v-col>
+			<v-col>
+				<section>
+					<label>Filter</label>
+					<select :disabled="arrayOfTypes.length == 0" v-model="transactionFilter">
+						<option v-for="type in arrayOfTypes" :value="type" :key="type">
+							{{ type.type }}
+						</option>
+					</select>
+				</section>
+			</v-col>
 		</v-row>
 		<v-row>
 			<v-col>

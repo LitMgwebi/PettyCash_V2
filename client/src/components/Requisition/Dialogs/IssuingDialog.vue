@@ -1,6 +1,5 @@
 <template>
 	<v-card max-width="600" prepend-icon="mdi-update">
-		{{ requisition.requisitionId }}
 		<div>
 			<label>Cash to be issued: </label>
 			<input type="text" v-model="requisition.cashIssued" required />
@@ -35,7 +34,7 @@ const props = defineProps(['dialog', 'requisition'])
 const emit = defineEmits(['closeDialog'])
 const dialog = props.dialog
 const requisition = props.requisition
-const attemptCode = ref(0)
+const attemptCode = ref('')
 
 const issueMoney = (requisition) => {
 	editRequisition(requisition, editRequisitionStates.Issuing, attemptCode.value)

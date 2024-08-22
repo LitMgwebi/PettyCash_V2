@@ -30,10 +30,7 @@
 		<template v-slot:expanded-row="{ columns, item }">
 			<tr>
 				<td :colspan="columns.length">
-					<DetailsExpanded
-						:requisitionId="item.requisitionId"
-						@closeExansion="closeExansion"
-					/>
+					<DetailsExpanded :requisitionId="item.requisitionId" />
 				</td>
 			</tr>
 		</template>
@@ -52,6 +49,7 @@ const user = inject('User')
 const dialog = ref(false)
 const expanded = ref([])
 const headers = [
+	{ title: 'Id', key: 'requisitionId' },
 	{ title: 'Full Name', key: 'applicant.fullName' },
 	{ title: 'Amount Requested', key: 'amountRequested' },
 	{ title: 'GL Account', key: 'glaccount.name' },
@@ -74,5 +72,4 @@ const addRecommendation = (item) => {
 	dialog.value = true
 }
 const closeDialog = () => (dialog.value = false)
-const closeExansion = () => (expanded.value = [])
 </script>

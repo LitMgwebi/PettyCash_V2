@@ -26,42 +26,45 @@
 					<p>Total Expenses: {{ requisition.totalExpenses }}</p>
 					<p>Change: {{ requisition.change }}</p>
 				</div>
-				<div v-if="requisition.needsMotivation == true">
-					<v-btn @click="openMotivationDialog = true">View Motivations</v-btn>
-					<v-dialog v-model="openMotivationDialog" width="auto">
-						<MotivationDialog
-							:requisition="requisition"
-							:dialog="openMotivationDialog"
-							@closeDialog="closeMotivationDialog"
-						/>
-					</v-dialog>
-				</div>
 
-				<!-- Checking if logged in user is the author of this requisition, also checks if the requisition's money has been issued and checks if no change has been calculated, so that total expenses can be entered -->
-				<div
-					v-if="
-						requisition.issuerId != null &&
-						user.id == requisition.applicant.id &&
-						requisition.change == null
-					"
-				>
-					<v-btn @click="openExpensesDialog = true">Add Expenses</v-btn>
-					<v-dialog v-model="openExpensesDialog" width="auto">
-						<ExpensesDialog
-							:requisition="requisition"
-							:dialog="openExpensesDialog"
-							@closeDialog="closeExpensesDialog"
-						/>
-					</v-dialog>
-				</div>
-				<div v-if="requisition.change != null">
-					<v-btn @click="openReceiptDialog = true">View Receipts</v-btn>
-					<v-dialog v-model="openReceiptDialog" width="auto">
-						<ReceiptDialog
-							:requisition="requisition"
-							@closeDialog="closeReceiptDialog"
-						/>
-					</v-dialog>
+				<div>
+					<span v-if="requisition.needsMotivation == true">
+						<v-btn @click="openMotivationDialog = true">View Motivations</v-btn>
+						<v-dialog v-model="openMotivationDialog" width="auto">
+							<MotivationDialog
+								:requisition="requisition"
+								:dialog="openMotivationDialog"
+								@closeDialog="closeMotivationDialog"
+							/>
+						</v-dialog>
+					</span>
+
+					<!-- Checking if logged in user is the author of this requisition, also checks if the requisition's money has been issued and checks if no change has been calculated, so that total expenses can be entered -->
+					<span
+						v-if="
+							requisition.issuerId != null &&
+							user.id == requisition.applicant.id &&
+							requisition.change == null
+						"
+					>
+						<v-btn @click="openExpensesDialog = true">Add Expenses</v-btn>
+						<v-dialog v-model="openExpensesDialog" width="auto">
+							<ExpensesDialog
+								:requisition="requisition"
+								:dialog="openExpensesDialog"
+								@closeDialog="closeExpensesDialog"
+							/>
+						</v-dialog>
+					</span>
+					<span v-if="requisition.change != null">
+						<v-btn @click="openReceiptDialog = true">View Receipts</v-btn>
+						<v-dialog v-model="openReceiptDialog" width="auto">
+							<ReceiptDialog
+								:requisition="requisition"
+								@closeDialog="closeReceiptDialog"
+							/>
+						</v-dialog>
+					</span>
 				</div>
 			</div>
 		</v-col>
