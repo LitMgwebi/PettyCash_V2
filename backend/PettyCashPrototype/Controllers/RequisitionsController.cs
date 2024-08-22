@@ -85,12 +85,12 @@ namespace PettyCashPrototype.Controllers
         #region DELETE
 
         [HttpDelete, Route("delete")]
-        public ActionResult Delete(Requisition requisition)
+        public ActionResult Delete([FromForm]int requisitionId)
         {
             try
             {
-                _requisition.SoftDelete(requisition);
-                return Ok(new { messsage = $"Requisition number: {requisition.RequisitionId} has been deleted. " });
+                _requisition.SoftDelete(requisitionId);
+                return Ok(new { messsage = $"Requisition number: {requisitionId} has been deleted. " });
             }
             catch (Exception ex) { return BadRequest(ex.Message); }
         }

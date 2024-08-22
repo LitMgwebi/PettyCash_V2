@@ -110,7 +110,14 @@
 					</v-dialog>
 				</span>
 				<span v-if="requisition.issuerId == null">
-					<v-btn @click="deleteRecord">Delete</v-btn>
+					<v-btn @click="() => (openDeleteDialog = true)"> Delete</v-btn>
+					<v-dialog v-model="openDeleteDialog" width="auto">
+						<DeleteRequisitionDialog
+							:requisitionId="requisition.requisitionId"
+							@closeDialog="closeDeleteDialog"
+							@closeExansion="closeExansion"
+						/>
+					</v-dialog>
 				</span>
 			</div>
 		</v-col>
@@ -125,6 +132,7 @@ import MotivationDialog from '@/components/Requisition/Dialogs/MotivationDialog.
 import ReceiptDialog from '@/components/Requisition/Dialogs/ReceiptDialog.vue'
 import ExpensesDialog from '@/components/Requisition/Dialogs/ExpensesDialog.vue'
 import EditRequisitionDialog from '@/components/Requisition/CRUDDialogs/EditRequisitionDialog.vue'
+import DeleteRequisitionDialog from '@/components/Requisition/CRUDDialogs/DeleteRequisitionDialog.vue'
 import moment from 'moment'
 
 const props = defineProps(['requisitionId'])
@@ -144,6 +152,9 @@ const closeExpensesDialog = () => (openExpensesDialog.value = false)
 const openEditDialog = ref(false)
 const closeEditDialog = () => (openEditDialog.value = false)
 
+const openDeleteDialog = ref(false)
+const closeDeleteDialog = () => (openDeleteDialog.value = false)
+
 const closeExansion = () => emit('closeExansion')
 
 const { requisition, getter } = getRequisition()
@@ -157,9 +168,5 @@ watch(
 )
 function formatDate(date) {
 	if (date) return moment(String(date)).format('DD-MM-YYYY')
-}
-function deleteRecord() {
-	deleteRequisition(requisition.value)
-	router.push({ name: 'requisitions' })
 }
 </script>

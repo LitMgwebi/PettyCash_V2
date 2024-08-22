@@ -73,7 +73,7 @@ const routes = [
     {
         path: '/requisitions',
         name: 'requisitions',
-        component: () => import('@/views/Requisition/List.vue'),
+        component: () => import('@/views/Requisition/Index.vue'),
         children: [
             {
                 path: '/requisitions/applied',
@@ -106,23 +106,6 @@ const routes = [
         path: '/requisitions/statuses',
         name: 'requisitions_statuses',
         component: () => import('@/components/Requisition/Lists/StatusesList.vue')
-    },
-    {
-        path: '/requisitions/details/:id',
-        name: 'requisition_details',
-        component: () => import('@/views/Requisition/Details.vue'),
-        props: true
-    },
-    {
-        path: '/requisitions/edit/:id',
-        name: 'requisition_edit',
-        component: () => import('@/views/Requisition/Edit.vue'),
-        props: true
-    },
-    {
-        path: '/requisitions/create',
-        name: 'requisition_create',
-        component: () => import('@/views/Requisition/Create.vue')
     },
     {
         path: '/:catchAll(.*)',

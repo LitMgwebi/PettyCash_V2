@@ -184,13 +184,14 @@ namespace PettyCashPrototype.Services.RequisitionService
             catch { throw; }
         }
 
-        public void SoftDelete(Requisition requisition)
+        public async Task SoftDelete(int requisitionId)
         {
             try
             {
+                Requisition requisition = await GetOne(requisitionId);
                 requisition.IsActive = false;
                 _db.Requisitions.Update(requisition);
-                int result = _db.SaveChanges();
+                int result = await _db.SaveChangesAsync();
 
                 if (result == 0) throw new DbUpdateException($"System could not delete the requested requisition.");
             }

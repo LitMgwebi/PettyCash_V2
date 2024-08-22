@@ -47,7 +47,6 @@ import { inject, ref, watch } from 'vue'
 
 const dialog = ref(false)
 const expanded = ref([])
-const closeDialog = () => (dialog.value = false)
 const { statuses, getter: statusGetter } = getStatesStatuses()
 const status = ref({
 	statusId: 5,
@@ -62,6 +61,7 @@ const { requisitions, getter } = getRequisitions()
 const headers = [
 	{ title: 'Requisition Id', key: 'requisitionId' },
 	{ title: 'Amount Requested (R)', key: 'amountRequested' },
+	{ title: 'Description', key: 'description' },
 	{ title: 'Stage', key: 'stage' },
 	{ title: '', key: 'data-table-expand' }
 ]
@@ -76,4 +76,5 @@ watch(
 )
 
 const closeExansion = () => (expanded.value = [])
+const closeDialog = () => (dialog.value = false)
 </script>

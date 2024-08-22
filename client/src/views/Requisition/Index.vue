@@ -5,20 +5,6 @@
 	<v-row>
 		<v-sheet elevation="8" class="mx-auto">
 			<v-slide-group center-active show-arrows>
-				<!-- <v-slide-group-item
-					v-if="
-						user.role != 'GM_Manager' &&
-						!(
-							(user.role == 'Manager' || user.role == 'Senior_Employee') &&
-							user.divisionId == 6
-						)
-					"
-				>
-					<router-link :to="{ name: 'requisition_create' }">
-						<v-card title="Create A Requisition"> </v-card>
-					</router-link>
-				</v-slide-group-item> -->
-
 				<v-slide-group-item
 					v-if="
 						user.role != 'Executive' &&
@@ -79,7 +65,7 @@
 </template>
 
 <script setup>
-import { inject, ref } from 'vue'
+import { inject } from 'vue'
 
 const user = inject('User')
 </script>

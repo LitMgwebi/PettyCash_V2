@@ -1,5 +1,4 @@
 <template>
-	<!-- <h3>Requests for you to approve</h3> -->
 	<v-data-table-server :headers="headers" :items="requisitions">
 		<template v-slot:top>
 			<v-dialog v-model="dialog" width="auto">

@@ -35,7 +35,7 @@
 
 <script setup>
 import { getGLAccounts } from '@/hooks/glAccountCRUD'
-import { defineProps, inject, onMounted } from 'vue'
+import { defineProps, inject, onMounted, defineEmits } from 'vue'
 import { editRequisition, getRequisition } from '@/hooks/requisitionCRUD'
 
 const props = defineProps(['requisitionId'])
