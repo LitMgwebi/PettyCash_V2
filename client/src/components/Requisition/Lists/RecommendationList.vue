@@ -44,7 +44,7 @@ const headers = [
 	{ title: '', value: 'actions' }
 ]
 const { requisitions, getter } = getRequisitions()
-
+// TODO find a way to get rid of the Details page and just output information in the Data table with Expandable rows
 watch(
 	requisitions,
 	async (oldRequisitions, newRequisitions) => {

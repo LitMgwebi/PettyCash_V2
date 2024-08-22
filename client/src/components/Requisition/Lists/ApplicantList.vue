@@ -1,6 +1,5 @@
 <template>
 	<v-row>
-		<h3>Open requistions</h3>
 		<div>
 			<label>Filter:</label>
 			<select :disabled="statuses.length == 0" v-model="status">
@@ -12,9 +11,28 @@
 		</div>
 	</v-row>
 	<v-row>
-		<v-data-table-server :headers="headers" :items="requisitions">
-			<template v-slot:[`item.details`]="{ item }">
-				<v-btn v-on:click="routeToDetails(item)"> Details</v-btn>
+		<v-data-table-server
+			v-model:expanded="expanded"
+			:headers="headers"
+			:items="requisitions"
+			item-value="requisitionId"
+			show-expand
+		>
+			<template v-slot:top>
+				<v-btn @click="dialog = true">Add Item</v-btn>
+				<v-dialog v-model="dialog" max-width="500px">
+					<CreateRequisitionDialog @closeDialog="closeDialog" />
+				</v-dialog>
+			</template>
+			<template v-slot:expanded-row="{ columns, item }">
+				<tr>
+					<td :colspan="columns.length">
+						<DetailsExpanded
+							:requisitionId="item.requisitionId"
+							@closeExansion="closeExansion"
+						/>
+					</td>
+				</tr>
 			</template>
 		</v-data-table-server>
 	</v-row>
@@ -22,12 +40,13 @@
 
 <script setup>
 import { getRequisitions } from '@/hooks/requisitionCRUD'
-import router from '@/router/router'
-import MotivationDialog from '@/components/Requisition/Dialogs/MotivationDialog.vue'
+import CreateRequisitionDialog from '@/components/Requisition/CRUDDialogs/CreateRequisitionDialog.vue'
+import DetailsExpanded from '@/components/Requisition/CRUDDialogs/DetailsExpanded.vue'
 import { getStatesStatuses } from '@/hooks/statusCRUD'
-import { inject, onMounted, ref, watch } from 'vue'
+import { inject, ref, watch } from 'vue'
 
 const dialog = ref(false)
+const expanded = ref([])
 const closeDialog = () => (dialog.value = false)
 const { statuses, getter: statusGetter } = getStatesStatuses()
 const status = ref({
@@ -41,23 +60,20 @@ const status = ref({
 const getRequisitionStates = inject('getRequisitionStates')
 const { requisitions, getter } = getRequisitions()
 const headers = [
-	{ title: 'Requisition Id', value: 'requisitionId' },
-	{ title: 'Amount Requested (R)', value: 'amountRequested' },
-	{ title: 'Stage', value: 'stage' },
-	{ title: 'Actions', value: 'details' },
-	{ title: '', value: 'expenses' }
+	{ title: 'Requisition Id', key: 'requisitionId' },
+	{ title: 'Amount Requested (R)', key: 'amountRequested' },
+	{ title: 'Stage', key: 'stage' },
+	{ title: '', key: 'data-table-expand' }
 ]
 
 watch(
-	status,
-	async (oldStatus, newStatus) => {
+	requisitions,
+	async () => {
 		await getter(getRequisitionStates.ForOne, status.value.statusId)
 		await statusGetter()
 	},
 	{ immediate: true }
 )
 
-const routeToDetails = (item) => {
-	router.push({ name: 'requisition_details', params: { id: item.requisitionId } })
-}
+const closeExansion = () => (expanded.value = [])
 </script>

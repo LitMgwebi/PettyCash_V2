@@ -5,7 +5,7 @@
 	<v-row>
 		<v-sheet elevation="8" class="mx-auto">
 			<v-slide-group center-active show-arrows>
-				<v-slide-group-item
+				<!-- <v-slide-group-item
 					v-if="
 						user.role != 'GM_Manager' &&
 						!(
@@ -17,7 +17,7 @@
 					<router-link :to="{ name: 'requisition_create' }">
 						<v-card title="Create A Requisition"> </v-card>
 					</router-link>
-				</v-slide-group-item>
+				</v-slide-group-item> -->
 
 				<v-slide-group-item
 					v-if="

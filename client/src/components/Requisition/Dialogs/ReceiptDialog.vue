@@ -1,41 +1,37 @@
 <template>
-	<div>
-		<v-dialog v-model="dialog" width="auto">
-			<v-card max-width="400" prepend-icon="mdi-update">
-				<div>
-					<v-data-table-server :headers="headers" :items="receipts">
-						<template
-							v-slot:[`item.delete`]="{ item }"
-							v-if="
-								user.id == requisition.applicant.id &&
-								requisition.confirmChangeReceived == false
-							"
-						>
-							<v-btn v-on:click="deleteReceipt(item)">Delete</v-btn>
-						</template>
-					</v-data-table-server>
-				</div>
-				<!-- // TODO figure out a way to stop the uploading of documents once the requisition is closed. Both client and server sides -->
-				<div v-if="user.id == requisition.applicant.id && requisition.CloseDate == null">
-					<section class="create">
-						<h3>Upload Receipt</h3>
-						<form @submit.prevent="saveReceipt" enctype="multipart/form-data">
-							<input
-								type="file"
-								ref="file"
-								@change="(e) => (file = e.target.files[0])"
-								accept="application/pdf"
-							/>
-							<button type="submit">Upload</button>
-						</form>
-					</section>
-				</div>
-				<template v-slot:actions>
-					<v-btn class="ms-auto" text="Close" @click="closeDialog"></v-btn>
+	<v-card max-width="400" prepend-icon="mdi-update">
+		<div>
+			<v-data-table-server :headers="headers" :items="receipts">
+				<template
+					v-slot:[`item.delete`]="{ item }"
+					v-if="
+						user.id == requisition.applicant.id &&
+						requisition.confirmChangeReceived == false
+					"
+				>
+					<v-btn v-on:click="deleteReceipt(item)">Delete</v-btn>
 				</template>
-			</v-card>
-		</v-dialog>
-	</div>
+			</v-data-table-server>
+		</div>
+		<!-- // TODO figure out a way to stop the uploading of documents once the requisition is closed. Both client and server sides -->
+		<div v-if="user.id == requisition.applicant.id && requisition.CloseDate == null">
+			<section class="create">
+				<h3>Upload Receipt</h3>
+				<form @submit.prevent="saveReceipt" enctype="multipart/form-data">
+					<input
+						type="file"
+						ref="file"
+						@change="(e) => (file = e.target.files[0])"
+						accept="application/pdf"
+					/>
+					<button type="submit">Upload</button>
+				</form>
+			</section>
+		</div>
+		<template v-slot:actions>
+			<v-btn class="ms-auto" text="Close" @click="closeDialog"></v-btn>
+		</template>
+	</v-card>
 </template>
 
 <script setup>
@@ -49,8 +45,7 @@ const typeOfFile = inject('typeOfFile')
 const user = inject('User')
 const formData = new FormData()
 const file = ref(null)
-const props = defineProps(['dialog', 'requisition'])
-const dialog = props.dialog
+const props = defineProps(['requisition'])
 const requisition = props.requisition
 const headers = [
 	{ title: 'Full Name', value: 'fileName' },
