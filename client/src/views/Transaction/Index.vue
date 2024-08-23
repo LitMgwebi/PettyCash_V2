@@ -62,6 +62,7 @@ const transactionFilter = ref({
 const arrayOfTypes = ref([
 	{ type: typeOfTransaction.All },
 	{ type: typeOfTransaction.Deposit },
+	{ type: typeOfTransaction.Change },
 	{ type: typeOfTransaction.Withdrawal }
 ])
 

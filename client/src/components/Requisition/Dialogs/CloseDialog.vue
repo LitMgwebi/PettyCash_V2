@@ -17,6 +17,8 @@
 import { defineProps, defineEmits, inject, watch, ref } from 'vue'
 import { editRequisition } from '@/hooks/requisitionCRUD'
 
+//TODO change the drop down list to yes and cancel buttons || or a radio button with cancel and confirm buttons
+
 const editRequisitionStates = inject('editRequisitionStates')
 const props = defineProps(['dialog', 'requisition'])
 const emit = defineEmits(['closeDialog'])

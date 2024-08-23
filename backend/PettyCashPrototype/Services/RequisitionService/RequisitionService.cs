@@ -189,11 +189,17 @@ namespace PettyCashPrototype.Services.RequisitionService
             try
             {
                 Requisition requisition = await GetOne(requisitionId);
-                requisition.IsActive = false;
-                _db.Requisitions.Update(requisition);
-                int result = await _db.SaveChangesAsync();
 
-                if (result == 0) throw new DbUpdateException($"System could not delete the requested requisition.");
+                if (requisition.IssuerId == null)
+                {
+                    requisition.IsActive = false;
+                    _db.Requisitions.Update(requisition);
+                    int result = await _db.SaveChangesAsync();
+
+                    if (result == 0) throw new DbUpdateException($"System could not delete the requested requisition.");
+                }
+                else
+                    throw new Exception("You cannot delete a requisition once the money has been issued.");
             }
             catch { throw; }
         }

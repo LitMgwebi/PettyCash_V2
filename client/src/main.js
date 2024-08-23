@@ -35,7 +35,8 @@ const typeOfGLGet = Object.freeze({
 const typeOfTransaction = Object.freeze({
     Withdrawal: 'Withdrawal',
     Deposit: 'Deposit',
-    All: 'All'
+    All: 'All',
+    Change: 'Change'
 })
 const getRequisitionStates = Object.freeze({
     All: 'all',

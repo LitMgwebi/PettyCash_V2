@@ -42,7 +42,7 @@ const expanded = ref([])
 const headers = [
 	{ title: 'Id', key: 'requisitionId' },
 	{ title: 'Full Name', key: 'applicant.fullName' },
-	{ title: 'Amount Requested', key: 'amountRequested' },
+	{ title: 'Change', key: 'change' },
 	{ title: 'GL Account', key: 'glaccount.name' },
 	{ title: 'Description', key: 'description' },
 	{ title: '', key: 'actions' },

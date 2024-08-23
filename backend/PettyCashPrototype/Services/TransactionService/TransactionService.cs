@@ -40,6 +40,17 @@ namespace PettyCashPrototype.Services.TransactionService
                     .AsNoTracking()
                     .ToListAsync();
                 }
+                else if (type == typesOfTransaction.Change)
+                {
+                    transactions = await _db.Transactions
+                    .Include(r => r.Requisition)
+                    .ThenInclude(a => a!.Applicant)
+                    .Include(v => v.Vault)
+                    .Where(t => t.TransactionType == typesOfTransaction.Change)
+                    .Where(x => x.IsActive == true)
+                    .AsNoTracking()
+                    .ToListAsync();
+                }
                 else if (type == typesOfTransaction.All)
                 {
                     transactions = await _db.Transactions
@@ -97,6 +108,13 @@ namespace PettyCashPrototype.Services.TransactionService
                     createTransactionHandler.setState(new DepositState(_db, _vault, vault, transaction, cashAmount, requisitionId));
                     message = await createTransactionHandler.request();
                 }
+                else if (type == typesOfTransaction.Change)
+                {
+                    createTransactionHandler.setState(new ChangeState(_db, _vault, vault, transaction, cashAmount, requisitionId));
+                    message = await createTransactionHandler.request();
+                }
+                else
+                    throw new Exception("System was unable to resolve type of transaction. Please contact ICT.");
 
                 return message;
             }
