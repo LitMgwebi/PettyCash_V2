@@ -1,7 +1,9 @@
 <template>
 	<v-container>
-		<v-row><h2>GL Accounts</h2> </v-row>
 		<v-row>
+			<v-col>
+				<h2>GL Accounts</h2>
+			</v-col>
 			<v-col>
 				<section>
 					<label>Filter:</label>
@@ -12,241 +14,43 @@
 						</option>
 					</select>
 				</section>
-				<section class="table">
-					<v-data-table-server :headers="headers" :items="glAccounts">
-						<template v-slot:[`item.edit`]="{ item }">
-							<v-btn @click="populateEdit(item)">Edit</v-btn>
-							<v-btn @click="deleteRecord(item)">Delete</v-btn>
-						</template>
-					</v-data-table-server>
-				</section>
 			</v-col>
-
-			<v-col>
-				<section class="create">
-					<h3>Add GL Account</h3>
-					<form @submit.prevent="addSubmit">
-						<!-- <div>
-					<label>Name: </label>
-					<input type="text" v-model="newGLAccount.name" />
-				</div> -->
-						<div class="dropdown">
-							<label>Main Accounts: </label>
-							<select
-								:disabled="mainAccounts.length == 0"
-								v-model="newGLAccount.mainAccountId"
-							>
-								<option value="" disabled>Select an account</option>
-								<option
-									v-for="mainAccount in mainAccounts"
-									:value="mainAccount.mainAccountId"
-									:key="mainAccount.mainAccountId"
-								>
-									{{ mainAccount.name }}
-								</option>
-							</select>
-						</div>
-						<div class="dropdown">
-							<label>Sub Accounts: </label>
-							<select
-								:disabled="subAccounts.length == 0"
-								v-model="newGLAccount.subAccountId"
-							>
-								<option value="" disabled>Select a sub account</option>
-								<option
-									v-for="subAccount in subAccounts"
-									:value="subAccount.subAccountId"
-									:key="subAccount.subAccountId"
-								>
-									{{ subAccount.name }}
-								</option>
-							</select>
-						</div>
-						<div class="dropdown">
-							<label>Divisions: </label>
-							<select
-								:disabled="divisions.length == 0"
-								v-model="newGLAccount.divisionId"
-							>
-								<option value="" disabled>Select a division</option>
-								<option
-									v-for="division in divisions"
-									:value="division.divisionId"
-									:key="division.divisionId"
-								>
-									{{ division.description }}
-								</option>
-							</select>
-						</div>
-						<div class="dropdown">
-							<label>Purposes: </label>
-							<select
-								:disabled="purposes.length == 0"
-								v-model="newGLAccount.purposeId"
-							>
-								<option value="" disabled>Select an office</option>
-								<option
-									v-for="purpose in purposes"
-									:value="purpose.purposeId"
-									:key="purpose.purposeId"
-								>
-									{{ purpose.description }}
-								</option>
-							</select>
-						</div>
-						<div class="dropdown">
-							<label>Offices: </label>
-							<select :disabled="offices.length == 0" v-model="newGLAccount.officeId">
-								<option value="" disabled>Select an office</option>
-								<option
-									v-for="office in offices"
-									:value="office.officeId"
-									:key="office.officeId"
-								>
-									{{ office.description }}
-								</option>
-							</select>
-						</div>
-						<div class="dropdown">
-							<label>Does this account need Motivation?: </label>
-							<select
-								:disabled="newGLAccount.length != null"
-								v-model="newGLAccount.needsMotivation"
-							>
-								<option value="" disabled>Please select</option>
-								<option :value="true">Yes</option>
-								<option :value="false">No</option>
-							</select>
-						</div>
-						<div class="submit">
-							<button>Add</button>
-							<button @click="reloadPage">Cancel</button>
-						</div>
-					</form>
-				</section>
-
-				<section class="edit">
-					<span v-if="updatedGLAccount.name.length > 0">
-						<h3>Edit {{ updatedGLAccount.name }}</h3>
-					</span>
-					<span v-else><h3>Select GL Account to edit</h3></span>
-					<form @submit.prevent="editSubmit">
-						<!-- <div>
-					<label>Name: </label>
-					<input type="text" v-model="updatedGLAccount.name" />
-				</div> -->
-						<div class="dropdown">
-							<label>Main Accounts: </label>
-							<select
-								:disabled="mainAccounts.length == 0"
-								v-model="updatedGLAccount.mainAccountId"
-							>
-								<option value="" disabled>Select an account</option>
-								<option
-									v-for="mainAccount in mainAccounts"
-									:value="mainAccount.mainAccountId"
-									:key="mainAccount.mainAccountId"
-								>
-									{{ mainAccount.name }}
-								</option>
-							</select>
-						</div>
-						<div class="dropdown">
-							<label>Sub Accounts: </label>
-							<select
-								:disabled="subAccounts.length == 0"
-								v-model="updatedGLAccount.subAccountId"
-							>
-								<option value="" disabled>Select a sub account</option>
-								<option
-									v-for="subAccount in subAccounts"
-									:value="subAccount.subAccountId"
-									:key="subAccount.subAccountId"
-								>
-									{{ subAccount.name }}
-								</option>
-							</select>
-						</div>
-						<div class="dropdown">
-							<label>Divisions: </label>
-							<select
-								:disabled="divisions.length == 0"
-								v-model="updatedGLAccount.divisionId"
-							>
-								<option value="" disabled>Select a division</option>
-								<option
-									v-for="division in divisions"
-									:value="division.divisionId"
-									:key="division.divisionId"
-								>
-									{{ division.description }}
-								</option>
-							</select>
-						</div>
-						<div class="dropdown">
-							<label>Purposes: </label>
-							<select
-								:disabled="purposes.length == 0"
-								v-model="updatedGLAccount.purposeId"
-							>
-								<option value="" disabled>Select an office</option>
-								<option
-									v-for="purpose in purposes"
-									:value="purpose.purposeId"
-									:key="purpose.purposeId"
-								>
-									{{ purpose.description }}
-								</option>
-							</select>
-						</div>
-						<div class="dropdown">
-							<label>Offices: </label>
-							<select
-								:disabled="offices.length == 0"
-								v-model="updatedGLAccount.officeId"
-							>
-								<option value="" disabled>Select an office</option>
-								<option
-									v-for="office in offices"
-									:value="office.officeId"
-									:key="office.officeId"
-								>
-									{{ office.description }}
-								</option>
-							</select>
-						</div>
-						<div class="dropdown">
-							<label>Does this account need Motivation?: </label>
-							<select
-								:disabled="updatedGLAccount.length != null"
-								v-model="updatedGLAccount.needsMotivation"
-							>
-								<option value="" disabled>Please select</option>
-								<option :value="true">Yes</option>
-								<option :value="false">No</option>
-							</select>
-						</div>
-						<div class="submit">
-							<button>Edit</button>
-							<button @click="reloadPage">Cancel</button>
-						</div>
-					</form>
-				</section>
-			</v-col>
+		</v-row>
+		<v-row>
+			<v-data-table-server
+				v-model:expanded="expanded"
+				:headers="headers"
+				:items="glAccounts"
+				item-value="glaccountId"
+				show-expand
+			>
+				<template v-slot:top>
+					<v-btn @click="dialog = true">Add GL Account</v-btn>
+					<v-dialog v-model="dialog" max-width="500px">
+						<AddDialog @closeDialog="closeDialog" />
+					</v-dialog>
+				</template>
+				<template v-slot:expanded-row="{ columns, item }">
+					<tr>
+						<td :colspan="columns.length">
+							<DetailsExpanded :glaccountId="item.glaccountId" />
+						</td>
+					</tr>
+				</template>
+			</v-data-table-server>
 		</v-row>
 	</v-container>
 </template>
 
 <script setup>
-import { getGLAccounts, editGLAccount, addGLAccount, deleteGLAccount } from '@/hooks/glAccountCRUD'
-import { getOffices } from '@/hooks/officeCRUD'
-import { getSubAccounts } from '@/hooks/subAccountCRUD'
-import { getMainAccounts } from '@/hooks/mainAccountCRUD'
-import { getPurposes } from '@/hooks/purposeCRUD'
+import { getGLAccounts } from '@/hooks/glAccountCRUD'
 import { getDivisions } from '@/hooks/divisionCRUD'
-import { ref, inject, onMounted, watch, reactive } from 'vue'
-import router from '@/router/router'
+import AddDialog from '@/components/GLAccount/AddDialog.vue'
+import DetailsExpanded from '@/components/GLAccount/DetailsExpanded.vue'
+import { ref, inject, onMounted, watch } from 'vue'
 
+const dialog = ref(false)
+const expanded = ref([])
 const typeOfGLGet = inject('typeOfGLGet')
 const filterDivision = ref({
 	divisionId: 0,
@@ -254,72 +58,24 @@ const filterDivision = ref({
 	description: '',
 	departmentId: 0
 })
+const headers = [
+	{ title: 'Id', key: 'glaccountId' },
+	{ title: 'Name', key: 'name' },
+	{ title: 'Description', key: 'description' },
+	{ title: '', key: 'data-table-expand' }
+]
 
-const { offices, getter: officeGetter } = getOffices()
-const { subAccounts, getter: subAccountGetter } = getSubAccounts()
-const { mainAccounts, getter: mainAccountGetter } = getMainAccounts()
-const { purposes, getter: purposeGetter } = getPurposes()
 const { divisions, getter: divisionGetter } = getDivisions()
 const { glAccounts, getter: glAccountGetter } = getGLAccounts(typeOfGLGet.All)
 
-onMounted(async () => {
-	await glAccountGetter(typeOfGLGet.All, filterDivision.value.divisionId)
-	await divisionGetter()
-	await purposeGetter()
-	await mainAccountGetter()
-	await subAccountGetter()
-	await officeGetter()
-})
-watch(async () => await glAccountGetter(typeOfGLGet.All, filterDivision.value.divisionId))
+watch(
+	glAccounts,
+	async () => await glAccountGetter(typeOfGLGet.All, filterDivision.value.divisionId),
+	{ immediate: true }
+)
 
-const reloadPage = () => location.reload()
+onMounted(async () => await divisionGetter())
 
-const headers = [
-	{ title: 'Name', value: 'name' },
-	{ title: 'Description', value: 'description' },
-	{ title: '', value: 'edit' },
-	{ title: '', value: 'delete' }
-]
-
-//#region Add Config
-
-const newGLAccount = ref({
-	name: '',
-	mainAccountId: '',
-	subAccountId: '',
-	divisionId: '',
-	purposeId: '',
-	officeId: '',
-	needsMotivation: false
-})
-const addSubmit = () => addGLAccount(newGLAccount.value)
-
-//#endregion
-
-//#region Edit Config
-
-const updatedGLAccount = ref({
-	name: '',
-	mainAccountId: '',
-	subAccountId: '',
-	divisionId: '',
-	purposeId: '',
-	officeId: '',
-	needsMotivation: ''
-})
-
-const populateEdit = (glAccount) => (updatedGLAccount.value = glAccount)
-const editSubmit = () => {
-	editGLAccount(updatedGLAccount.value)
-	location.reload()
-	router.push()
-}
-
-//#endregion
-
-//#region Delete Config
-
-const deleteRecord = (glAccount) => deleteGLAccount(glAccount)
-
-//#endregion
+const closeExansion = () => (expanded.value = [])
+const closeDialog = () => (dialog.value = false)
 </script>

@@ -10,6 +10,9 @@
 				<router-link to="/transactions">
 					<v-card title="Transactions"> </v-card>
 				</router-link>
+				<router-link to="/gl_accounts">
+					<v-card title="GL Accounts"> </v-card>
+				</router-link>
 				<router-link :to="{ name: 'requisitions_statuses' }">
 					<v-card title="Requisitions"> </v-card>
 				</router-link>
@@ -39,6 +42,6 @@
 </template>
 
 <script setup>
-import { inject, ref } from 'vue'
+import { inject } from 'vue'
 const user = inject('User')
 </script>

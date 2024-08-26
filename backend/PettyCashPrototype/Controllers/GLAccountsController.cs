@@ -4,7 +4,7 @@ namespace PettyCashPrototype.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(Roles = "Finance_Admin")]
+    [Authorize(Roles = "Finance_Admin, ICT_Admin")]
     public class GLAccountsController : ControllerBase
     {
         private readonly IGLAccount _glAccount;
@@ -16,7 +16,6 @@ namespace PettyCashPrototype.Controllers
         #region GET
 
         [HttpGet, Route("index")]
-        [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<Glaccount>>> Index(string command, int divisionId = 0)
         {
             try
@@ -48,6 +47,7 @@ namespace PettyCashPrototype.Controllers
         #region POST
 
         [HttpPost, Route("create")]
+        [Authorize(Roles = "ICT_Admin")]
         public async Task<ActionResult<Glaccount>> Create(Glaccount glAccount)
         {
             try
@@ -65,6 +65,7 @@ namespace PettyCashPrototype.Controllers
         #region PUT
 
         [HttpPut, Route("edit")]
+        [Authorize(Roles = "ICT_Admin")]
         public async Task<ActionResult> Edit(Glaccount glAccount)
         {
             try
@@ -82,6 +83,7 @@ namespace PettyCashPrototype.Controllers
         #region DELETE
 
         [HttpDelete, Route("delete")]
+        [Authorize(Roles = "ICT_Admin")]
         public ActionResult Delete(Glaccount glAccount)
         {
             try
