@@ -16,6 +16,7 @@
                 requisitions = await db.Requisitions
                     .Include(gl => gl.Glaccount)
                     .Include(a => a.Applicant)
+                    .Include(i => i.Issuer)
                     .Include(fa => fa.FinanceApproval)
                     .Include(mr => mr.ManagerRecommendation)
                     .Where(a => a.IsActive == true && a.CloseDate == null)
@@ -28,6 +29,7 @@
                 requisitions = await db.Requisitions
                     .Include(gl => gl.Glaccount)
                     .Include(a => a.Applicant)
+                    .Include(i => i.Issuer)
                     .Include(mr => mr.ManagerRecommendation)
                     .Where(a => a.IsActive == true && a.CloseDate == null)
                     .Where(s => s.ManagerRecommendation! == status)
@@ -36,39 +38,15 @@
             }
             else if(status.IsState == true)
             {
-                if (status.Option == "Process")
-                {
-                    requisitions = await db.Requisitions
+                requisitions = await db.Requisitions
                     .Include(gl => gl.Glaccount)
-                        .Include(a => a.Applicant)
-                        .Where(a => a.IsActive == true)
-                        .Where(c => c.ManagerRecommendationId == null)
-                        .AsNoTracking()
-                        .ToListAsync();
-                } else if (status.Option == "Close")
-                {
-                    requisitions = await db.Requisitions
-                        .Include(gl => gl.Glaccount)
-                        .Include(i => i.Issuer)
-                        .Include(a => a.FinanceApproval)
-                        .Include(a => a.ManagerRecommendation)
-                        .Include(a => a.Applicant)
-                        .Where(a => a.IsActive == true)
-                        .Where(c => c.CloseDate != null)
-                        .AsNoTracking()
-                        .ToListAsync();
-                } else if (status.Option == "Open")
-                {
-                    requisitions = await db.Requisitions
-                        .Include(gl => gl.Glaccount)
-                        .Include(a => a.FinanceApproval)
-                        .Include(a => a.ManagerRecommendation)
-                        .Include(a => a.Applicant)
-                        .Where(a => a.IsActive == true)
-                        .Where(c => c.FinanceApprovalId != null && c.CloseDate == null)
-                        .AsNoTracking()
-                        .ToListAsync();
-                }
+                    .Include(a => a.Applicant)
+                    .Include(mr => mr.ManagerRecommendation)
+                    .Include(i => i.Issuer)
+                    .Where(a => a.IsActive == true)
+                    .Where(s => s.State! == status)
+                    .AsNoTracking()
+                    .ToListAsync();
             }
             return requisitions;
         }

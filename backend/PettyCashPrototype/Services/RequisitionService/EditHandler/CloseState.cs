@@ -13,6 +13,8 @@
             if (requisition.TotalExpenses <= requisition.CashIssued)
             {
                 requisition.CloseDate = DateTime.Now;
+                requisition.ConfirmChangeReceived = true;
+                requisition.StateId = 9;
                 //requisition.Status = "Closed";
                 requisition.Stage = "Change has been brought back to Accounts Payable and requisition is closed.";
 

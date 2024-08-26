@@ -91,13 +91,13 @@ namespace PettyCashPrototype.Services.RequisitionService
                     .Include(f => f.FinanceApproval)
                     .Include(m => m.Manager)
                     .Include(f => f.FinanceOfficer)
+                    .Include(f => f.Issuer)
+                    .Include(f => f.State)
                     .Include(z => z.Applicant)
                     .Include(gl => gl.Glaccount)
                     .Where(a => a.IsActive == true)
                     .AsNoTracking()
                     .FirstOrDefaultAsync(i => i.RequisitionId == id);
-
-                //requisition!.Motivations = await _motivation.GetAllByRequisition(id);
 
                 if (requisition == null) throw new Exception("System could not retrieve the Requisition requested.");
                 return requisition;

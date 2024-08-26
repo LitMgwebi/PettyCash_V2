@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PettyCashPrototype.Models;
 
@@ -11,9 +12,11 @@ using PettyCashPrototype.Models;
 namespace PettyCashPrototype.Migrations
 {
     [DbContext(typeof(PettyCashPrototypeContext))]
-    partial class PettyCashPrototypeContextModelSnapshot : ModelSnapshot
+    [Migration("20240826095109_AddingNewStatus")]
+    partial class AddingNewStatus
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1009,16 +1012,6 @@ namespace PettyCashPrototype.Migrations
                         new
                         {
                             StatusId = 6,
-                            Description = "Open",
-                            IsActive = true,
-                            IsApproved = false,
-                            IsRecommended = false,
-                            IsState = true,
-                            Option = "Open"
-                        },
-                        new
-                        {
-                            StatusId = 7,
                             Description = "Issued",
                             IsActive = true,
                             IsApproved = false,
@@ -1028,17 +1021,17 @@ namespace PettyCashPrototype.Migrations
                         },
                         new
                         {
-                            StatusId = 8,
-                            Description = "Returned",
+                            StatusId = 7,
+                            Description = "Open",
                             IsActive = true,
                             IsApproved = false,
                             IsRecommended = false,
                             IsState = true,
-                            Option = "Return"
+                            Option = "Open"
                         },
                         new
                         {
-                            StatusId = 9,
+                            StatusId = 8,
                             Description = "Closed",
                             IsActive = true,
                             IsApproved = false,

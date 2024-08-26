@@ -71,19 +71,19 @@
 		<v-col>
 			<h4>Authorization:</h4>
 			<p>{{ requisition.stage }}</p>
-			<div v-if="requisition.managerRecommendation != null">
+			<div v-if="requisition.manager != null">
 				<p>
 					{{ requisition.managerRecommendation.description }} By:
 					{{ requisition.manager.fullName }}
 				</p>
 				<p>Status: {{ requisition.managerRecommendation.description }}</p>
-				<p v-if="requisition.managerComment">Note: {{ requisition.managerComment }}</p>
+				<p v-if="requisition.managerComment">Comment: {{ requisition.managerComment }}</p>
 				<p>
 					Date {{ requisition.managerRecommendation.description }}:
 					{{ formatDate(requisition.managerRecommendationDate) }}
 				</p>
 			</div>
-			<div v-if="requisition.financeApproval != null">
+			<div v-if="requisition.financeOfficer != null">
 				<p>
 					{{ requisition.financeApproval.description }} By:
 					{{ requisition.financeOfficer.fullName }}
@@ -91,13 +91,17 @@
 				<span
 					><p>Status: {{ requisition.financeApproval.description }}</p>
 					<p v-if="requisition.financeComment">
-						- {{ requisition.financeComment }}
+						Comment: {{ requisition.financeComment }}
 					</p></span
 				>
 				<p>
 					Date {{ requisition.financeApproval.description }}:
 					{{ formatDate(requisition.financeApprovalDate) }}
 				</p>
+			</div>
+			<div v-if="requisition.issuer != null">
+				<p>Issued By: {{ requisition.issuer.fullName }}</p>
+				<p>Issued On: {{ formatDate(requisition.issueDate) }}</p>
 			</div>
 		</v-col>
 		<v-col v-if="user.id == requisition.applicant.id">
@@ -112,7 +116,7 @@
 						/>
 					</v-dialog>
 				</span>
-				<span v-if="requisition.issuerId == null">
+				<span v-if="requisition.issuerId == null && requisition.closeDate == null">
 					<v-btn @click="() => (openDeleteDialog = true)"> Delete</v-btn>
 					<v-dialog v-model="openDeleteDialog" width="auto">
 						<DeleteRequisitionDialog

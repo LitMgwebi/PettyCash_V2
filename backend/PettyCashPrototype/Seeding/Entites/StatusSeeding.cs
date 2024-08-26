@@ -70,6 +70,26 @@ namespace PettyCashPrototype.Seeding.Entites
                 new Status
                 {
                     StatusId = 7,
+                    Option = "Issue",
+                    Description = "Issued",
+                    IsApproved = false,
+                    IsRecommended = false,
+                    IsState = true,
+                    IsActive = true
+                },
+                new Status
+                {
+                    StatusId = 8,
+                    Option = "Return",
+                    Description = "Returned",
+                    IsApproved = false,
+                    IsRecommended = false,
+                    IsState = true,
+                    IsActive = true
+                },
+                new Status
+                {
+                    StatusId = 9,
                     Option = "Close",
                     Description = "Closed",
                     IsApproved = false,

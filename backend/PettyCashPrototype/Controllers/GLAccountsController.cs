@@ -16,6 +16,7 @@ namespace PettyCashPrototype.Controllers
         #region GET
 
         [HttpGet, Route("index")]
+        [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<Glaccount>>> Index(string command, int divisionId = 0)
         {
             try

@@ -18,18 +18,20 @@
 
                 if (result == 0) throw new DbUpdateException($"System could not update requisition #{requisition.RequisitionId} to acknowledge the motivation being uploaded.");
 
-                return "Motivation has been uploaded successfully.";
+                return " and requisition details have been updated with motivation information.";
             }
             else if (type == typesOfDocument.Receipt)
             {
                 requisition.Stage = "Receipt has been uploaded. Please provide change to Accounts Payable.";
+                // TODO for some reason the stateId isn't updating when a receipt in uploaded
+                requisition.StateId = 8;
                 requisition.ReceiptReceived = true;
                 _db.Requisitions.Update(requisition);
                 int result = await _db.SaveChangesAsync();
 
                 if (result == 0) throw new DbUpdateException($"System could not update requisition #{requisition.RequisitionId} to acknowledge the receipt/s being uploaded.");
 
-                return "Receipt/s uploaded successfully.";
+                return " and requisition details have been updated with receipt information.";
             }
             else
                 throw new Exception("System requires correct command to upload document.");

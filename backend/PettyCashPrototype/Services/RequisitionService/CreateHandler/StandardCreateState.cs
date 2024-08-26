@@ -7,6 +7,7 @@
             requisition.Stage = "Requisiton has been sent for recommendation.";
             requisition.ApplicantId = userId;
             requisition.StartDate = DateTime.Now;
+            requisition.StateId = 5;
             //requisition.Status = "Processing";
             requisition.NeedsMotivation = false;
             /*

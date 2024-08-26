@@ -7,6 +7,7 @@
             requisition.Stage = "Requisition has been stored in the system. Motivation must be uploaded before it can be sent for recommendation.";
             requisition.ApplicantId = userId;
             requisition.StartDate = DateTime.Now;
+            requisition.StateId = 5;
             //requisition.Status = "Processing";
             requisition.NeedsMotivation = true;
             /*

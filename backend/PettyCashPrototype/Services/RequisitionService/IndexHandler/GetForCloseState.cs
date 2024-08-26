@@ -20,6 +20,7 @@
                     .Include(a => a.Applicant)
                     .Include(m => m.Manager)
                     .Include(f => f.FinanceOfficer)
+                    .Include(i => i.Issuer)
                     .Include(gl => gl.Glaccount)
                     .Where(a => a.IsActive == true)
                     .Where(a => 

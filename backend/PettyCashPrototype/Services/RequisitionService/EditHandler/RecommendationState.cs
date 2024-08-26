@@ -31,6 +31,7 @@
                 {
                     requisition.Stage = "This requisition has been rejected.";
                     requisition.CloseDate = DateTime.Now;
+                    requisition.StateId = 9;
                     //requisition.Status = "Closed";
                     message = "The rejection has been saved to system.";
                 }

@@ -17,9 +17,7 @@
 			</textarea>
 		</div>
 		<template v-slot:actions>
-			<button :disabled="attemptCode.length < 5" @click="issueMoney(requisition)">
-				Issue
-			</button>
+			<v-btn @click="issueMoney(requisition)"> Issue </v-btn>
 			<v-btn class="ms-auto" text="Cancel" @click="closeDialog"></v-btn>
 		</template>
 	</v-card>

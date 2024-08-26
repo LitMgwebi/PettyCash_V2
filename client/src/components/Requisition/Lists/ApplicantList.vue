@@ -3,7 +3,7 @@
 		<div>
 			<label>Filter:</label>
 			<select :disabled="statuses.length == 0" v-model="status">
-				<option value="" disabled>Choose</option>
+				<option value="" selected disabled>Choose</option>
 				<option v-for="status in statuses" :value="status" :key="status">
 					{{ status.description }}
 				</option>
