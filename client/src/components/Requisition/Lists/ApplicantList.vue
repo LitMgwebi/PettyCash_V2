@@ -63,7 +63,7 @@ const headers = [
 	{ title: 'Amount (R)', key: 'amountRequested' },
 	{ title: 'Description', key: 'description' },
 	{ title: 'Stage', key: 'stage' },
-	{ title: '', key: 'data-table-expand' }
+	{ title: 'Actions', key: 'data-table-expand' }
 ]
 
 watch(

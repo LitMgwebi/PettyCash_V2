@@ -128,6 +128,7 @@ namespace PettyCashPrototype.Services.DocumentService
         {
             try
             {
+                // TODO must check if the requisition in question has the necessary documents. If it doesn't then change stage and possibly state of the requisition
                 document.IsActive = false;
                 _db.Documents.Update(document);
                 int result = _db.SaveChanges();

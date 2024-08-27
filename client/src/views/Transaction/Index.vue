@@ -29,7 +29,7 @@
 					<template v-slot:item="{ item }">
 						<tr>
 							<td>{{ item.transactionId }}</td>
-							<td>{{ item.amount }}</td>
+							<td>{{ formatAmount(item.amount) }}</td>
 							<td>{{ item.transactionType }}</td>
 							<td>{{ formatDate(item.transactionDate) }}</td>
 							<td v-if="item.requisition != null">
@@ -48,7 +48,7 @@
 			<v-col>
 				<aside v-if="vault">
 					<h3>Vault</h3>
-					<div>Current Amount: {{ vault.currentAmount }}</div>
+					<div>Current Amount: {{ formatAmount(vault.currentAmount) }}</div>
 				</aside>
 				<aside>
 					<section class="create">
@@ -93,10 +93,14 @@ const arrayOfTypes = ref([
 	{ type: typeOfTransaction.Withdrawal }
 ])
 
-watch(async () => {
-	await transactionGetter(transactionFilter.value.type)
-	await vaultGetter()
-})
+watch(
+	transactions,
+	async (oldTransactions, newTransactions) => {
+		await transactionGetter(transactionFilter.value.type)
+		await vaultGetter()
+	},
+	{ immediate: true }
+)
 
 const headers = [
 	{ title: 'ID', key: 'transactionId' },
@@ -104,8 +108,6 @@ const headers = [
 	{ title: 'Type', key: 'transactionType' },
 	{ title: 'Date', key: 'transactionDate' },
 	{ title: 'User', key: '' }
-	// TODO Find a way to output the user who initiated transaction
-	// { title: 'User', value: 'requisition.applicant.fullName' }
 ]
 
 const newTransaction = ref({
@@ -124,5 +126,13 @@ const viewRequisition = (item) => {
 function formatDate(date) {
 	if (date) return moment(String(date)).format('DD-MM-YYYY')
 }
+
+function formatAmount(num) {
+	return new Intl.NumberFormat('en-ZA', {
+		style: 'currency',
+		currency: 'ZAR'
+	}).format(num)
+}
+
 const closeDialog = () => (dialog.value = false)
 </script>

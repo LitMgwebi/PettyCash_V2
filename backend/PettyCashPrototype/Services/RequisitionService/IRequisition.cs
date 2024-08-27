@@ -6,6 +6,6 @@
         public Task<Requisition> GetOne(int id);
         public Task<string> Create(Requisition requisition, string userId);
         public Task<string> Edit(Requisition requisition, string command, string userId = "", int attemptCode = 0, bool forDoc = false);
-        public Task SoftDelete(int requisitionId);
+        public Task SoftDelete(Requisition requisition);
     }
 }

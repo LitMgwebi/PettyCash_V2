@@ -184,14 +184,17 @@ namespace PettyCashPrototype.Services.RequisitionService
             catch { throw; }
         }
 
-        public async Task SoftDelete(int requisitionId)
+        public async Task SoftDelete(Requisition requisition)
         {
             try
             {
-                Requisition requisition = await GetOne(requisitionId);
-
-                if (requisition.IssuerId == null)
+                //Requisition requisition = await GetOne(requisitionId);
+                // TODO Ask Tsholo id deletion should happen before finance check or money issuing
+                // TODO Delete is not working. Fix
+                if (requisition.FinanceApproval == null)
                 {
+                    requisition.CloseDate = DateTime.Now;
+                    requisition.StateId = 10;
                     requisition.IsActive = false;
                     _db.Requisitions.Update(requisition);
                     int result = await _db.SaveChangesAsync();

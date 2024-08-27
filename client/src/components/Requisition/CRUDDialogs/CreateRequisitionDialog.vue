@@ -29,7 +29,7 @@
 				</div>
 			</v-container>
 			<template v-slot:actions>
-				<button type="submit">Create</button>
+				<v-btn type="submit">Create</v-btn>
 				<v-btn class="ms-auto" text="Cancel" @click="closeDialog"></v-btn>
 			</template>
 		</v-card>

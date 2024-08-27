@@ -96,6 +96,16 @@ namespace PettyCashPrototype.Seeding.Entites
                     IsRecommended = false,
                     IsState = true,
                     IsActive = true
+                },
+                new Status
+                {
+                    StatusId = 10,
+                    Option = "Delete",
+                    Description = "Deleted",
+                    IsApproved = false,
+                    IsRecommended = false,
+                    IsState = true,
+                    IsActive = true
                 }
                 );
         }
