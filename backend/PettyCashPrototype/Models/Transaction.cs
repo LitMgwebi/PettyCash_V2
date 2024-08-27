@@ -15,6 +15,8 @@ namespace PettyCashPrototype.Models
 
         public int? RequisitionId { get; set; }
 
+        public string? DepositorId {  get; set; }
+
         public int VaultId { get; set; }
 
         public string? Note { get; set; }
@@ -23,6 +25,9 @@ namespace PettyCashPrototype.Models
 
         [ForeignKey(nameof(RequisitionId))]
         public virtual Requisition? Requisition { get; set; }
+
+        [ForeignKey(nameof(DepositorId))]
+        public virtual User? Depositor { get; set; }
 
         [ForeignKey(nameof(VaultId))]
         public virtual Vault? Vault { get; set; }

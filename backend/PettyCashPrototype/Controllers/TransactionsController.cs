@@ -1,4 +1,6 @@
-﻿namespace PettyCashPrototype.Controllers
+﻿using System.Security.Claims;
+
+namespace PettyCashPrototype.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -38,9 +40,11 @@
         {
             try
             {
-                string message = await _transaction.Create(transaction.Amount, typesOfTransaction.Deposit, note: "Reimbursing Vault");
+                var identity = (ClaimsIdentity)User.Identity!;
+                var userId = identity.Claims.Where(c => c.Type == ClaimTypes.Sid).Select(c => c.Value).FirstOrDefault()!;
+                string message = await _transaction.Create(transaction.Amount, typesOfTransaction.Deposit, note: "Reimbursing Vault", userId: userId);
                 return Ok(new {message = message});
-            } catch (Exception ex) { return BadRequest(ex.Message); }
+            } catch (Exception ex) { return BadRequest(ex); }
         }
 
         #endregion

@@ -18,6 +18,31 @@
 		<v-row>
 			<v-col>
 				<v-data-table-server :headers="headers" :items="transactions">
+					<template v-slot:top>
+						<v-dialog v-model="dialog" max-width="500px">
+							<RequisitionDialog
+								:requisitionId="selectedId"
+								@closeDialog="closeDialog"
+							/>
+						</v-dialog>
+					</template>
+					<template v-slot:item="{ item }">
+						<tr>
+							<td>{{ item.transactionId }}</td>
+							<td>{{ item.amount }}</td>
+							<td>{{ item.transactionType }}</td>
+							<td>{{ formatDate(item.transactionDate) }}</td>
+							<td v-if="item.requisition != null">
+								<button @click="viewRequisition(item)">
+									{{ item.requisition.applicant.fullName }}
+								</button>
+							</td>
+							<td v-else-if="item.depositor != null">
+								{{ item.depositor.fullName }}
+							</td>
+							<td v-else>Uknown</td>
+						</tr>
+					</template>
 				</v-data-table-server>
 			</v-col>
 			<v-col>
@@ -47,11 +72,13 @@
 
 <script setup>
 import { getTransactions, addTransaction } from '@/hooks/transactionCRUD'
+import RequisitionDialog from '@/components/Transaction/RequisitionDialog.vue'
 import { getVault } from '@/hooks/vaultCRUD'
-import { ref, inject, onMounted, watch } from 'vue'
-import router from '@/router/router'
+import { ref, inject, watch } from 'vue'
+import moment from 'moment'
 
-const reloadPage = () => location.reload()
+const dialog = ref(false)
+const selectedId = ref()
 const typeOfTransaction = inject('typeOfTransaction')
 const { transactions, getter: transactionGetter } = getTransactions()
 const { vault, getter: vaultGetter } = getVault()
@@ -66,27 +93,20 @@ const arrayOfTypes = ref([
 	{ type: typeOfTransaction.Withdrawal }
 ])
 
-onMounted(async () => {
-	await transactionGetter(transactionFilter.value.type)
-	await vaultGetter()
-})
-
 watch(async () => {
 	await transactionGetter(transactionFilter.value.type)
 	await vaultGetter()
 })
 
 const headers = [
-	{ title: 'ID', value: 'transactionId' },
-	{ title: 'Amount', value: 'amount' },
-	{ title: 'Transaction Type', value: 'transactionType' },
+	{ title: 'ID', key: 'transactionId' },
+	{ title: 'Amount', key: 'amount' },
+	{ title: 'Type', key: 'transactionType' },
+	{ title: 'Date', key: 'transactionDate' },
+	{ title: 'User', key: '' }
 	// TODO Find a way to output the user who initiated transaction
-	// { title: 'User', value: 'requisition.applicant.fullName' },
-	{ title: '', value: 'edit' },
-	{ title: '', value: 'delete' }
+	// { title: 'User', value: 'requisition.applicant.fullName' }
 ]
-
-//#region Add Transaction
 
 const newTransaction = ref({
 	amount: 0,
@@ -95,8 +115,14 @@ const newTransaction = ref({
 })
 const addSubmit = () => {
 	addTransaction(newTransaction.value)
-	router.push({ name: 'transactions' })
+}
+const viewRequisition = (item) => {
+	selectedId.value = item.requisitionId
+	dialog.value = true
 }
 
-//#endregion
+function formatDate(date) {
+	if (date) return moment(String(date)).format('DD-MM-YYYY')
+}
+const closeDialog = () => (dialog.value = false)
 </script>

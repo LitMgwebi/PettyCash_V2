@@ -33,6 +33,9 @@ public partial class User: IdentityUser
 
     [JsonIgnore]
     public virtual ICollection<Requisition> Managers { get; set; } = new List<Requisition>();
+
+    [JsonIgnore]
+    public virtual ICollection<Transaction> Transactions { get; set; } = new List<Transaction>();
     
     //[JsonIgnore]
     //public IList<UserRole>? UserRoles { get; set; }

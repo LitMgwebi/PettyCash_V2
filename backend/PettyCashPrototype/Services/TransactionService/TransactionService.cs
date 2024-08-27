@@ -21,6 +21,7 @@ namespace PettyCashPrototype.Services.TransactionService
                 if (type == typesOfTransaction.Withdrawal)
                 {
                     transactions = await _db.Transactions
+                    .Include(d => d.Depositor)
                     .Include(r => r.Requisition)
                     .ThenInclude(a => a!.Applicant)
                     .Include(v => v.Vault)
@@ -32,6 +33,7 @@ namespace PettyCashPrototype.Services.TransactionService
                 else if (type == typesOfTransaction.Deposit)
                 {
                     transactions = await _db.Transactions
+                    .Include(d => d.Depositor)
                     .Include(r => r.Requisition)
                     .ThenInclude(a => a!.Applicant)
                     .Include(v => v.Vault)
@@ -43,6 +45,7 @@ namespace PettyCashPrototype.Services.TransactionService
                 else if (type == typesOfTransaction.Change)
                 {
                     transactions = await _db.Transactions
+                    .Include(d => d.Depositor)
                     .Include(r => r.Requisition)
                     .ThenInclude(a => a!.Applicant)
                     .Include(v => v.Vault)
@@ -54,6 +57,7 @@ namespace PettyCashPrototype.Services.TransactionService
                 else if (type == typesOfTransaction.All)
                 {
                     transactions = await _db.Transactions
+                    .Include(d => d.Depositor)
                     .Include(r => r.Requisition)
                     .ThenInclude(a => a!.Applicant)
                     .Include(v => v.Vault)
@@ -75,7 +79,9 @@ namespace PettyCashPrototype.Services.TransactionService
             try
             {
                 Transaction transaction = await _db.Transactions
+                    .Include(d => d.Depositor)
                     .Include(r => r.Requisition)
+                    .ThenInclude(a => a.Applicant)
                     .Include(v => v.Vault)
                     .Where(x => x.IsActive == true)
                     .AsNoTracking()
@@ -88,7 +94,7 @@ namespace PettyCashPrototype.Services.TransactionService
             catch { throw; }
         }
 
-        public async Task<string> Create(decimal cashAmount, string type, int requisitionId, string note)
+        public async Task<string> Create(decimal cashAmount, string type, int requisitionId, string note, string userId)
         {
             try
             {
@@ -105,7 +111,7 @@ namespace PettyCashPrototype.Services.TransactionService
                 }
                 else if (type == typesOfTransaction.Deposit)
                 {
-                    createTransactionHandler.setState(new DepositState(_db, _vault, vault, transaction, cashAmount, requisitionId));
+                    createTransactionHandler.setState(new DepositState(_db, _vault, vault, transaction, cashAmount, userId, requisitionId));
                     message = await createTransactionHandler.request();
                 }
                 else if (type == typesOfTransaction.Change)

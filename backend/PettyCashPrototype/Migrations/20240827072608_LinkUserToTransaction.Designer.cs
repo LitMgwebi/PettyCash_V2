@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PettyCashPrototype.Models;
 
@@ -11,9 +12,11 @@ using PettyCashPrototype.Models;
 namespace PettyCashPrototype.Migrations
 {
     [DbContext(typeof(PettyCashPrototypeContext))]
-    partial class PettyCashPrototypeContextModelSnapshot : ModelSnapshot
+    [Migration("20240827072608_LinkUserToTransaction")]
+    partial class LinkUserToTransaction
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -267,7 +270,7 @@ namespace PettyCashPrototype.Migrations
 
                     b.HasKey("DepartmentId");
 
-                    b.ToTable("Department", (string)null);
+                    b.ToTable("Department");
 
                     b.HasData(
                         new
@@ -333,7 +336,7 @@ namespace PettyCashPrototype.Migrations
 
                     b.HasIndex("DepartmentId");
 
-                    b.ToTable("Division", (string)null);
+                    b.ToTable("Division");
 
                     b.HasData(
                         new
@@ -412,7 +415,7 @@ namespace PettyCashPrototype.Migrations
 
                     b.HasIndex("RequisitionId");
 
-                    b.ToTable("Document", (string)null);
+                    b.ToTable("Document");
 
                     b.HasDiscriminator<string>("DocumentType").HasValue("Document");
 
@@ -491,7 +494,7 @@ namespace PettyCashPrototype.Migrations
 
                     b.HasKey("JobTitleId");
 
-                    b.ToTable("JobTitle", (string)null);
+                    b.ToTable("JobTitle");
 
                     b.HasData(
                         new
@@ -1204,7 +1207,7 @@ namespace PettyCashPrototype.Migrations
 
                     b.HasIndex("VaultId");
 
-                    b.ToTable("Transaction", (string)null);
+                    b.ToTable("Transaction");
                 });
 
             modelBuilder.Entity("PettyCashPrototype.Models.User", b =>
@@ -1321,7 +1324,7 @@ namespace PettyCashPrototype.Migrations
 
                     b.HasKey("VaultId");
 
-                    b.ToTable("Vault", (string)null);
+                    b.ToTable("Vault");
 
                     b.HasData(
                         new
@@ -1336,7 +1339,7 @@ namespace PettyCashPrototype.Migrations
                 {
                     b.HasBaseType("PettyCashPrototype.Models.Document");
 
-                    b.ToTable("Document", (string)null);
+                    b.ToTable("Document");
 
                     b.HasDiscriminator().HasValue("Motivation");
                 });
@@ -1345,7 +1348,7 @@ namespace PettyCashPrototype.Migrations
                 {
                     b.HasBaseType("PettyCashPrototype.Models.Document");
 
-                    b.ToTable("Document", (string)null);
+                    b.ToTable("Document");
 
                     b.HasDiscriminator().HasValue("Receipt");
                 });

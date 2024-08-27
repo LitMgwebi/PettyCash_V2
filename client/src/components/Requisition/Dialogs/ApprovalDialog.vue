@@ -37,9 +37,8 @@ import { getApprovalStatuses } from '@/hooks/statusCRUD'
 import { editRequisition } from '@/hooks/requisitionCRUD'
 
 const editRequisitionStates = inject('editRequisitionStates')
-const props = defineProps(['dialog', 'requisition'])
+const props = defineProps(['requisition'])
 const emit = defineEmits(['closeDialog'])
-const dialog = props.dialog
 const requisition = props.requisition
 
 const { statuses, getter } = getApprovalStatuses()

@@ -13,6 +13,8 @@
 				<p v-if="requisition.cashIssued">Cash Issued: {{ requisition.cashIssued }}</p>
 				<p>Description: {{ requisition.description }}</p>
 				<p>Date Requested: {{ formatDate(requisition.startDate) }}</p>
+
+				<p v-if="requisition.closeDate">Date Closed: {{ requisition.closeDate }}</p>
 				<p>
 					GL Account: {{ requisition.glaccount.name }} -
 					{{ requisition.glaccount.description }}
@@ -33,7 +35,6 @@
 						<v-dialog v-model="openMotivationDialog" width="auto">
 							<MotivationDialog
 								:requisition="requisition"
-								:dialog="openMotivationDialog"
 								@closeDialog="closeMotivationDialog"
 							/>
 						</v-dialog>

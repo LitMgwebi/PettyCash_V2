@@ -13,8 +13,7 @@
 				</template>
 			</v-data-table-server>
 		</div>
-		<!-- // TODO figure out a way to stop the uploading of documents once the requisition is closed. Both client and server sides -->
-		<div v-if="user.id == requisition.applicant.id && requisition.CloseDate == null">
+		<div v-if="user.id == requisition.applicant.id && requisition.closeDate == null">
 			<section class="create">
 				<h3>Upload Receipt</h3>
 				<form @submit.prevent="saveReceipt" enctype="multipart/form-data">
@@ -54,9 +53,7 @@ const headers = [
 ]
 
 watch(
-	() => {
-		props.requisition
-	},
+	receipts,
 	async (oldRequisition, newRequisition) => {
 		await getter(typeOfFile.Receipt, requisition.requisitionId)
 	},
