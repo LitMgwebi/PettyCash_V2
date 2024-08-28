@@ -10,33 +10,7 @@
         public async Task<IEnumerable<Requisition>> GetRequisitions(PettyCashPrototypeContext db)
         {
             IEnumerable<Requisition> requisitions = new List<Requisition>();
-
-            if (status.IsApproved)
-            {
-                requisitions = await db.Requisitions
-                    .Include(gl => gl.Glaccount)
-                    .Include(a => a.Applicant)
-                    .Include(i => i.Issuer)
-                    .Include(fa => fa.FinanceApproval)
-                    .Include(mr => mr.ManagerRecommendation)
-                    .Where(a => a.IsActive == true && a.CloseDate == null)
-                    .Where(s => s.FinanceApproval! == status)
-                    .AsNoTracking()
-                    .ToListAsync();
-            }
-            else if (status.IsRecommended == true)
-            {
-                requisitions = await db.Requisitions
-                    .Include(gl => gl.Glaccount)
-                    .Include(a => a.Applicant)
-                    .Include(i => i.Issuer)
-                    .Include(mr => mr.ManagerRecommendation)
-                    .Where(a => a.IsActive == true && a.CloseDate == null)
-                    .Where(s => s.ManagerRecommendation! == status)
-                    .AsNoTracking()
-                    .ToListAsync();
-            }
-            else if(status.IsState == true)
+            if (status != null)
             {
                 requisitions = await db.Requisitions
                     .Include(gl => gl.Glaccount)
@@ -48,6 +22,37 @@
                     .AsNoTracking()
                     .ToListAsync();
             }
+            else
+                throw new Exception("System could not handle status, please contact ICT.");
+            //if (status.IsApproved)
+            //{
+            //    requisitions = await db.Requisitions
+            //        .Include(gl => gl.Glaccount)
+            //        .Include(a => a.Applicant)
+            //        .Include(i => i.Issuer)
+            //        .Include(fa => fa.FinanceApproval)
+            //        .Include(mr => mr.ManagerRecommendation)
+            //        .Where(a => a.IsActive == true && a.CloseDate == null)
+            //        .Where(s => s.FinanceApproval! == status)
+            //        .AsNoTracking()
+            //        .ToListAsync();
+            //}
+            //else if (status.IsRecommended == true)
+            //{
+            //    requisitions = await db.Requisitions
+            //        .Include(gl => gl.Glaccount)
+            //        .Include(a => a.Applicant)
+            //        .Include(i => i.Issuer)
+            //        .Include(mr => mr.ManagerRecommendation)
+            //        .Where(a => a.IsActive == true && a.CloseDate == null)
+            //        .Where(s => s.ManagerRecommendation! == status)
+            //        .AsNoTracking()
+            //        .ToListAsync();
+            //}
+            //else if(status.IsState == true)
+            //{
+                
+            //}
             return requisitions;
         }
     }

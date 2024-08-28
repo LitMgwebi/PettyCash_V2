@@ -43,7 +43,9 @@ const getRequisitionStates = Object.freeze({
     ForOne: 'forOne',
     Recommendation: 'recommendation',
     Approval: 'approval',
-    Issuing: 'issuing',
+    Opened: 'open',
+    Issued: 'issue',
+    Returned: 'return',
     Receiving: 'receiving',
     Tracking: 'tracking',
     Closing: 'closing'

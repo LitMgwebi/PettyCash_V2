@@ -30,7 +30,7 @@
                             .Where(a => a.IsActive == true)
                             .Where(m => m.ManagerRecommendation != null && m.ManagerRecommendation.Description == "Recommended")
                             .Where(a => a.FinanceApproval == null)
-                            .Where(am => am.AmountRequested > 1000)
+                            .Where(am => am.AmountRequested >= 1000)
                     .AsNoTracking()
                             .ToListAsync();
             }

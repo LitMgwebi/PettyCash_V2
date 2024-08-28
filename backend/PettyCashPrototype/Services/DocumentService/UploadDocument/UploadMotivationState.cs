@@ -40,7 +40,7 @@
                 int result = _db.SaveChanges();
                 if (result == 0) throw new DbUpdateException("System was unable to add the new motivation.");
 
-                return "The motivation has been uploaded successfully.";
+                return "The motivation has been uploaded successfully";
             } else
                 throw new Exception("The motivation you uploaded is too large, please constrict size to 5 MB");
         }

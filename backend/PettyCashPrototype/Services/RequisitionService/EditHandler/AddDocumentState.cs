@@ -23,7 +23,8 @@
             else if (type == typesOfDocument.Receipt)
             {
                 requisition.Stage = "Receipt has been uploaded. Please provide change to Accounts Payable.";
-                // TODO for some reason the stateId isn't updating when a receipt in uploaded
+                // TODO Find away to be able to upload multiple receipts
+                requisition.State = null;
                 requisition.StateId = 8;
                 requisition.ReceiptReceived = true;
                 _db.Requisitions.Update(requisition);

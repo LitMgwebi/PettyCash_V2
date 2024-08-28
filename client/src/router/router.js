@@ -91,14 +91,19 @@ const routes = [
                 component: () => import('@/components/Requisition/Lists/ApprovalList.vue')
             },
             {
-                path: '/requisitions/issuing',
-                name: 'issuing_list',
-                component: () => import('@/components/Requisition/Lists/IssuingList.vue')
+                path: '/requisitions/opened',
+                name: 'opened_list',
+                component: () => import('@/components/Requisition/Lists/OpenedList.vue')
             },
             {
-                path: '/requisitions/close',
-                name: 'close_list',
-                component: () => import('@/components/Requisition/Lists/CloseList.vue')
+                path: '/requisitions/issued',
+                name: 'issued_list',
+                component: () => import('@/components/Requisition/Lists/IssuedList.vue')
+            },
+            {
+                path: '/requisitions/returned',
+                name: 'returned_list',
+                component: () => import('@/components/Requisition/Lists/ReturnedList.vue')
             }
         ]
     },

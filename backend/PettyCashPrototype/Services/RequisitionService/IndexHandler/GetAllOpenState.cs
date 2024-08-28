@@ -1,12 +1,12 @@
 ﻿namespace PettyCashPrototype.Services.RequisitionService.IndexHandler
 {
-    public class GetForCloseState : IIndexState
+    public class GetAllOpenState: IIndexState
     {
         private readonly IUser _user = null!;
         private readonly string userId;
 
-        public GetForCloseState(IUser user, string userId)
-        {
+        public GetAllOpenState(IUser user, string userId) 
+        { 
             _user = user;
             this.userId = userId;
         }
@@ -20,20 +20,12 @@
                     .Include(a => a.Applicant)
                     .Include(m => m.Manager)
                     .Include(f => f.FinanceOfficer)
-                    .Include(i => i.Issuer)
                     .Include(gl => gl.Glaccount)
                     .Where(a => a.IsActive == true)
-                    .Where(a => 
-                        a.ManagerRecommendation != null && 
-                        a.FinanceApproval != null && 
-                        a.IssuerId != null &&  
-                        a.ReceiptReceived == true && 
-                        a.CloseDate == null
-                    )
+                    .Where(a => a.StateId == 6)
                     .AsNoTracking()
                     .ToListAsync();
-            }
-            else
+            } else
             {
                 throw new Exception("You have to be an Accounts Payable to view the requisitions that require issuing.");
             }

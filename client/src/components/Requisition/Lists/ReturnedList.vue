@@ -51,7 +51,7 @@ const headers = [
 const { requisitions, getter } = getRequisitions()
 watch(
 	requisitions,
-	async (oldRequisitions, newRequisitions) => await getter(getRequisitionStates.Closing),
+	async (oldRequisitions, newRequisitions) => await getter(getRequisitionStates.Returned),
 	{ immediate: true }
 )
 

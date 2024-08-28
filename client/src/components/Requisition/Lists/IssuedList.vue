@@ -1,4 +1,5 @@
 <template>
+	<!-- TODO Date filter -->
 	<v-data-table-server
 		v-model:expanded="expanded"
 		:headers="headers"
@@ -6,18 +7,6 @@
 		item-value="requisitionId"
 		show-expand
 	>
-		<template v-slot:top>
-			<v-dialog v-model="dialog" width="auto">
-				<IssuingDialog
-					:requisition="selectedRecord"
-					:dialog="dialog"
-					@closeDialog="closeDialog"
-				/>
-			</v-dialog>
-		</template>
-		<template v-slot:[`item.actions`]="{ item }">
-			<v-btn @click="addIssuing(item)">Action</v-btn>
-		</template>
 		<template v-slot:expanded-row="{ columns, item }">
 			<tr>
 				<td :colspan="columns.length">
@@ -30,7 +19,7 @@
 
 <script setup>
 import { getRequisitions, editRequisition } from '@/hooks/requisitionCRUD'
-import IssuingDialog from '@/components/Requisition/Dialogs/IssuingDialog.vue'
+import OpenedDialog from '@/components/Requisition/Dialogs/OpenedDialog.vue'
 import DetailsExpanded from '@/components/Requisition/CRUDDialogs/DetailsExpanded.vue'
 import { ref, inject, watch } from 'vue'
 
@@ -44,14 +33,13 @@ const headers = [
 	{ title: 'Name', key: 'applicant.fullName' },
 	{ title: 'Amount(R)', key: 'amountRequested' },
 	{ title: 'Description', key: 'description' },
-	{ title: '', key: 'actions' },
 	{ title: '', key: 'data-table-expand' }
 ]
 const { requisitions, getter } = getRequisitions()
 
 watch(
 	requisitions,
-	async (oldRequisitions, newRequisitions) => await getter(getRequisitionStates.Issuing),
+	async (oldRequisitions, newRequisitions) => await getter(getRequisitionStates.Issued),
 	{ immediate: true }
 )
 

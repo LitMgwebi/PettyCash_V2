@@ -130,7 +130,7 @@
 			</div>
 		</v-col>
 	</v-row>
-	<v-row v-else>Cannot find requisition details</v-row>
+	<v-row v-else>Requisition loading...</v-row>
 </template>
 
 <script setup>

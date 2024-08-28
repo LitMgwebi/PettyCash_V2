@@ -53,14 +53,19 @@ namespace PettyCashPrototype.Services.RequisitionService
                     indexHandler.setState(new GetForApprovalState(divisionId, jobTitleId, _jobTitle, userId));
                     requisitions = await indexHandler.request(_db);
                 }
-                else if (command == getRequisitionStates.Issuing)
+                else if (command == getRequisitionStates.Opened)
                 {
-                    indexHandler.setState(new GetForIssuingState(_user, userId));
+                    indexHandler.setState(new GetAllOpenState(_user, userId));
                     requisitions = await indexHandler.request(_db);
                 }
-                else if (command == getRequisitionStates.Closing)
+                else if (command == getRequisitionStates.Issued)
                 {
-                    indexHandler.setState(new GetForCloseState(_user, userId));
+                    indexHandler.setState(new GetAllIssuedState(_user, userId));
+                    requisitions = await indexHandler.request(_db);
+                }
+                else if (command == getRequisitionStates.Returned)
+                {
+                    indexHandler.setState(new GetAllReturnedState(_user, userId));
                     requisitions = await indexHandler.request(_db);
                 }
                 else if (command == getRequisitionStates.Receiving)
@@ -113,7 +118,7 @@ namespace PettyCashPrototype.Services.RequisitionService
                 CreateRequisitionHandler createHandler = new CreateRequisitionHandler();
                 string message = string.Empty;
 
-                if (glaccount.NeedsMotivation == true || requisition.AmountRequested > 2000)
+                if (glaccount.NeedsMotivation == true || requisition.AmountRequested >= 2000)
                 {
                     createHandler.setState(new RequireMotivationState());
                     message = await createHandler.request(_db, requisition, userId);

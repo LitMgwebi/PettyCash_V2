@@ -45,13 +45,19 @@
 				</v-slide-group-item>
 
 				<v-slide-group-item v-if="user.jobTitleId == 16">
-					<router-link :to="{ name: 'issuing_list' }">
-						<v-card title="Requisitions requiring issuing"></v-card>
+					<router-link :to="{ name: 'opened_list' }">
+						<v-card title="Opened Requisitions"></v-card>
 					</router-link>
 				</v-slide-group-item>
 
 				<v-slide-group-item v-if="user.jobTitleId == 16">
-					<router-link :to="{ name: 'close_list' }">
+					<router-link :to="{ name: 'issued_list' }">
+						<v-card title="Issued Requisitions"></v-card>
+					</router-link>
+				</v-slide-group-item>
+
+				<v-slide-group-item v-if="user.jobTitleId == 16">
+					<router-link :to="{ name: 'returned_list' }">
 						<v-card title="Requisitions requiring closing"></v-card>
 					</router-link>
 				</v-slide-group-item>

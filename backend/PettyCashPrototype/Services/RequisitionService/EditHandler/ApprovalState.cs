@@ -40,7 +40,8 @@
                 {
                     requisition.Stage = "Finance has declined this requisition.";
                     requisition.CloseDate = DateTime.Now;
-                    requisition.StateId = 9;
+                    requisition.State = null;
+                    requisition.StateId = requisition.FinanceApprovalId;
                     //requisition.Status = "Closed";
                     message = "The choice to decline the requisition has been saved to the system.";
                 }

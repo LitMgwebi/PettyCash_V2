@@ -26,7 +26,7 @@
                 //{
                 Glaccount glaccount = await _glAccount!.GetOne(requisition.GlaccountId);
                 requisition.Glaccount = glaccount;
-                if (glaccount.NeedsMotivation || requisition.AmountRequested > 2000)
+                if (glaccount.NeedsMotivation || requisition.AmountRequested >= 2000)
                     {
                         requisition.NeedsMotivation = true;
                         requisition.Stage = "Requisition has been stored in the system. Motivation must be uploaded before it can be sent for recommendation.";

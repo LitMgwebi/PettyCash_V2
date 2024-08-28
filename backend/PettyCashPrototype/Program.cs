@@ -33,6 +33,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using PettyCashPrototype.Services.NotificationService;
+using System.Drawing;
 
 #endregion
 
@@ -210,10 +211,12 @@ public struct getRequisitionStates
     public const string ForOne = "forOne";
     public const string Recommendation = "recommendation";
     public const string Approval = "approval";
-    public const string Issuing = "issuing";
+    public const string Opened = "open";
+    public const string Issued = "issue";
     public const string Receiving = "receiving";
     public const string Tracking = "tracking";
     public const string Closing = "closing";
+    public const string Returned = "return";
 }
 
 #endregion

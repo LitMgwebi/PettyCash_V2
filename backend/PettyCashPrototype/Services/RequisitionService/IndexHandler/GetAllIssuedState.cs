@@ -1,12 +1,12 @@
 ﻿namespace PettyCashPrototype.Services.RequisitionService.IndexHandler
 {
-    public class GetForIssuingState: IIndexState
+    public class GetAllIssuedState: IIndexState
     {
         private readonly IUser _user = null!;
         private readonly string userId;
 
-        public GetForIssuingState(IUser user, string userId) 
-        { 
+        public GetAllIssuedState(IUser user, string userId)
+        {
             _user = user;
             this.userId = userId;
         }
@@ -22,10 +22,11 @@
                     .Include(f => f.FinanceOfficer)
                     .Include(gl => gl.Glaccount)
                     .Where(a => a.IsActive == true)
-                    .Where(a => a.StateId == 6)
+                    .Where(a => a.StateId == 7)
                     .AsNoTracking()
                     .ToListAsync();
-            } else
+            }
+            else
             {
                 throw new Exception("You have to be an Accounts Payable to view the requisitions that require issuing.");
             }
