@@ -5,12 +5,12 @@ import { ref } from 'vue'
 export function getRequisitions() {
     store.commit('setLoading')
     const requisitions = ref([])
-    async function getter(command, statusId = 0) {
+    async function getter(command, statusId = 0, issuedState = '') {
         try {
             const res = await axios({
                 method: 'GET',
                 url: 'Requisitions/index',
-                params: { command: command, statusId: statusId }
+                params: { command: command, statusId: statusId, issuedState: issuedState }
             })
             requisitions.value = res.data
         } catch (error) {

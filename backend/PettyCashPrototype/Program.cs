@@ -219,4 +219,10 @@ public struct getRequisitionStates
     public const string Returned = "return";
 }
 
+public struct issuedRequisitionState
+{
+    public const string Green = "green";
+    public const string Red = "red";
+}
+
 #endregion

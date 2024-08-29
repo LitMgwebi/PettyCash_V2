@@ -50,7 +50,10 @@ const getRequisitionStates = Object.freeze({
     Tracking: 'tracking',
     Closing: 'closing'
 })
-
+const issuedRequisitionState = Object.freeze({
+    Red: 'red',
+    Green: 'green'
+})
 //#endregion
 
 createApp(App)
@@ -60,6 +63,7 @@ createApp(App)
     .provide('typeOfFile', typeOfFile)
     .provide('typeOfGLGet', typeOfGLGet)
     .provide('typeOfTransaction', typeOfTransaction)
+    .provide('issuedRequisitionState', issuedRequisitionState)
     .use(store)
     .use(middlewareSettings)
     .use(router)
