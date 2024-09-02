@@ -70,7 +70,7 @@ function closeDialog() {
 
 function deleteReceipt(receipt) {
 	deleteDocument(receipt)
-	closeDialog()
+	// closeDialog()
 }
 
 function saveReceipt() {

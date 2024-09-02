@@ -14,7 +14,6 @@
         }
         public async Task<IEnumerable<Requisition>> GetRequisitions(PettyCashPrototypeContext db)
         {
-            // TODO Conduct a test to make sure that the user applying is not the user recommending
             IEnumerable<Requisition> requisitions = new List<Requisition>();
             User user = await _user.GetUserById(userId);
 

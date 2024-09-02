@@ -171,6 +171,11 @@ namespace PettyCashPrototype.Services.RequisitionService
                     editRequisition.setState(new ExpensesState());
                     messageResponse = await editRequisition.request(_db, requisition);
                 }
+                else if (command == editRequisitionStates.Return)
+                {
+                    editRequisition.setState(new ReturnedState());
+                    messageResponse = await editRequisition.request(_db, requisition);
+                }
                 else if(command == editRequisitionStates.Close)
                 {
                     editRequisition.setState(new CloseState(_transaction));

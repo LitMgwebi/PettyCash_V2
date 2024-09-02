@@ -29,7 +29,6 @@
                     .ToListAsync();
                 //if (status.Description == "In Process")
                 //{
-                //    //TODO Test if the "In process" state is reflected properly
                 //    requisitions = await db.Requisitions
                 //        .Include(gl => gl.Glaccount)
                 //        .Where(a => a.ApplicantId == userId)

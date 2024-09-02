@@ -22,6 +22,7 @@ const editRequisitionStates = Object.freeze({
     Approval: 'approval',
     Edit: 'edit',
     Expenses: 'expenses',
+    Return: 'return',
     Close: 'close'
 })
 const typeOfFile = Object.freeze({

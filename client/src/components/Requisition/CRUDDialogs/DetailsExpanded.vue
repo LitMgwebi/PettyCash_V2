@@ -42,13 +42,9 @@
 
 					<!-- Checking if logged in user is the author of this requisition, also checks if the requisition's money has been issued and checks if no change has been calculated, so that total expenses can be entered -->
 					<span
-						v-if="
-							requisition.issuerId != null &&
-							user.id == requisition.applicant.id &&
-							requisition.change == null
-						"
+						v-if="requisition.issuerId != null && user.id == requisition.applicant.id"
 					>
-						<v-btn @click="openExpensesDialog = true">Add Expenses</v-btn>
+						<v-btn @click="openExpensesDialog = true">Expenses</v-btn>
 						<v-dialog v-model="openExpensesDialog" width="auto">
 							<ExpensesDialog
 								:requisition="requisition"
@@ -127,6 +123,9 @@
 						/>
 					</v-dialog>
 				</span>
+				<span v-if="(requisition.receiptReceived = true) && requisition.stateId == 7">
+					<v-btn @click="submitReceiptInformation()"> Submit receipt </v-btn>
+				</span>
 			</div>
 		</v-col>
 	</v-row>
@@ -135,7 +134,7 @@
 
 <script setup>
 import { inject, ref, watch, defineEmits, defineProps } from 'vue'
-import { getRequisition } from '@/hooks/requisitionCRUD'
+import { editRequisition, getRequisition } from '@/hooks/requisitionCRUD'
 import MotivationDialog from '@/components/Requisition/Dialogs/MotivationDialog.vue'
 import ReceiptDialog from '@/components/Requisition/Dialogs/ReceiptDialog.vue'
 import ExpensesDialog from '@/components/Requisition/Dialogs/ExpensesDialog.vue'
@@ -147,6 +146,7 @@ const props = defineProps(['requisitionId'])
 const emit = defineEmits(['closeExansion'])
 const id = props.requisitionId
 const user = inject('User')
+const editRequisitionStates = inject('editRequisitionStates')
 
 const openMotivationDialog = ref(false)
 const closeMotivationDialog = () => (openMotivationDialog.value = false)
@@ -166,6 +166,11 @@ const closeDeleteDialog = () => (openDeleteDialog.value = false)
 const closeExansion = () => emit('closeExansion')
 
 const { requisition, getter } = getRequisition()
+
+function submitReceiptInformation() {
+	// console.log(requisition)
+	editRequisition(requisition.value, editRequisitionStates.Return)
+}
 
 watch(
 	requisition,

@@ -22,11 +22,8 @@
             }
             else if (type == typesOfDocument.Receipt)
             {
-                requisition.Stage = "Receipt has been uploaded. Please provide change to Accounts Payable.";
-                // TODO Find away to be able to upload multiple receipts
-                requisition.State = null;
-                requisition.StateId = 8;
-                requisition.ReceiptReceived = true;
+                requisition.Stage = "Receipt has been uploaded.";
+                
                 _db.Requisitions.Update(requisition);
                 int result = await _db.SaveChangesAsync();
 

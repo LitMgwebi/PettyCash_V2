@@ -1,5 +1,4 @@
 <template>
-	<!-- TODO Date filter -->
 	<v-container>
 		<v-row>
 			<v-col>

@@ -2,10 +2,10 @@
 	<v-card max-width="400" prepend-icon="mdi-update">
 		<div>
 			<label>Total expenses: </label>
-			<input type="text" v-model="requisition.totalExpenses" required />
+			<input type="text" v-model="requisition.totalExpenses" />
 		</div>
 		<template v-slot:actions>
-			<button @click="addExpenses(requisition)">Save</button>
+			<button @click="editExpenses(requisition)">Save</button>
 			<v-btn class="ms-auto" text="Close" @click="closeDialog"></v-btn>
 		</template>
 	</v-card>
@@ -21,7 +21,7 @@ const emit = defineEmits(['closeDialog'])
 const dialog = props.dialog
 const requisition = props.requisition
 
-function addExpenses(requisition) {
+function editExpenses(requisition) {
 	editRequisition(requisition, editRequisitionStates.Expenses)
 	closeDialog()
 }

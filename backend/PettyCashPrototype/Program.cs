@@ -202,6 +202,7 @@ public struct editRequisitionStates
     public const string Edit = "edit";
     public const string Issuing = "issuing";
     public const string Expenses = "expenses";
+    public const string Return = "return";
     public const string Close = "close";
 }
 
