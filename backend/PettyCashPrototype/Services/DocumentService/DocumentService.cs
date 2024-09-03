@@ -1,14 +1,19 @@
-﻿using PettyCashPrototype.Services.DocumentService.GetAllDocuments;
+﻿using PettyCashPrototype.Models;
+using PettyCashPrototype.Services.DocumentService.DeleteDocument;
+using PettyCashPrototype.Services.DocumentService.GetAllDocuments;
 using PettyCashPrototype.Services.DocumentService.GetOneDocument;
 using PettyCashPrototype.Services.DocumentService.UploadDocument;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace PettyCashPrototype.Services.DocumentService
 {
     public class DocumentService : IDocument
     {
         private PettyCashPrototypeContext _db;
-        public DocumentService(PettyCashPrototypeContext db) { 
+        private IRequisition _requisition;
+        public DocumentService(PettyCashPrototypeContext db, IRequisition requisition) { 
             _db = db;
+            _requisition = requisition;
         }
 
         public async Task<IEnumerable<Document>> GetAll(string command, int requisitionId)
@@ -91,12 +96,12 @@ namespace PettyCashPrototype.Services.DocumentService
                 {
                     if(command == typesOfDocument.Motivation)
                     {
-                        uploadDocumentHandler.setState(new UploadMotivationState(_db, file, name, requisitionId, fileExtension));
+                        uploadDocumentHandler.setState(new UploadMotivationState(_db, _requisition, file, name, requisitionId, fileExtension));
                         message = await uploadDocumentHandler.request();
                     } 
                     else if (command == typesOfDocument.Receipt)
                     {
-                        uploadDocumentHandler.setState(new UploadReceiptState(_db, file, name, requisitionId, fileExtension));
+                        uploadDocumentHandler.setState(new UploadReceiptState(_db, _requisition, file, name, requisitionId, fileExtension));
                         message = await uploadDocumentHandler.request();
                     }
                     else 
@@ -124,16 +129,29 @@ namespace PettyCashPrototype.Services.DocumentService
             catch { throw; }
         }
 
-        public void SoftDelete(Document document)
+        public async Task<string> SoftDelete(Document document, string typeOfDocument)
         {
             try
             {
                 // TODO must check if the requisition in question has the necessary documents. If it doesn't then change stage and possibly state of the requisition
-                document.IsActive = false;
-                _db.Documents.Update(document);
-                int result = _db.SaveChanges();
+                //Document document = await GetOne("motivations", documentId);
+                DeleteDocumentHandler deleteDocumentHandler = new DeleteDocumentHandler();
+                string message = string.Empty;
 
-                if (result == 0) throw new DbUpdateException($"System could not delete ${document.FileName}.{document.FileExtension}.");
+                if (typeOfDocument == typesOfDocument.Motivation)
+                {
+                    deleteDocumentHandler.setState(new DeleteMotivationState());
+                    message = await deleteDocumentHandler.request(_db, _requisition, document);
+                }
+                else if (typeOfDocument == typesOfDocument.Receipt)
+                {
+                    deleteDocumentHandler.setState(new DeleteReceiptState());
+                    message = await deleteDocumentHandler.request(_db, _requisition, document);
+                }
+                else
+                    throw new Exception("Could not recognize command given for deleting document.");
+
+                return message;
             }
             catch { throw; }
         }

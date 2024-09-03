@@ -48,12 +48,15 @@ export function addDocument(File, id, command) {
         .finally(() => store.commit('doneLoading'))
 }
 
-export function deleteDocument(document) {
+export function deleteDocument(document, command) {
     store.commit('setLoading')
     axios({
-        method: 'DELETE',
+        method: 'PUT',
         url: 'Documents/delete',
-        data: document
+        data: {
+            document: document,
+            command: command
+        }
     })
         .then((res) => store.dispatch('setStatus', res.data.message))
         .catch((error) => store.dispatch('setStatus', error.response.data))

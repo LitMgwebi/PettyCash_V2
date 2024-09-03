@@ -4,7 +4,7 @@ namespace PettyCashPrototype.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    //[Authorize]
+    [Authorize]
     public class RequisitionsController : ControllerBase
     {
         private IRequisition _requisition;
@@ -84,14 +84,14 @@ namespace PettyCashPrototype.Controllers
 
         #region DELETE
 
-        [HttpDelete, Route("delete")]
-        public async Task<ActionResult> Delete(int id)
+        [HttpPut, Route("delete")]
+        public async Task<ActionResult> Delete([FromBody]int requisitionId)
         {
             try
             {
-                Requisition requisition = await _requisition.GetOne(id);
+                Requisition requisition = await _requisition.GetOne(requisitionId);
                 await _requisition.SoftDelete(requisition);
-                return Ok(new { messsage = $"Requisition number: {id} has been deleted. " });
+                return Ok(new { messsage = $"Requisition number: {requisition.RequisitionId} has been deleted. " });
             }
             catch (Exception ex) { return BadRequest(ex.Message); }
         }

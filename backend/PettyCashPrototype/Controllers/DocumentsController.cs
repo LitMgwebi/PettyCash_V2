@@ -81,14 +81,14 @@ namespace PettyCashPrototype.Controllers
 
         #region DELETE
 
-        [HttpDelete, Route("delete")]
-        public ActionResult Delete(Document document)
+        [HttpPut, Route("delete")]
+        public async Task<ActionResult> Delete([FromBody]DeleteDocumentViewModel viewModel)
         {
             try
             {
-                _document.SoftDelete(document);
+                string message = await _document.SoftDelete(viewModel.document, viewModel.command);
 
-                return Ok(new { message = "Motivation has been deleted" });
+                return Ok(new { message });
             }
             catch (Exception ex) { return BadRequest(ex.Message); }
         }

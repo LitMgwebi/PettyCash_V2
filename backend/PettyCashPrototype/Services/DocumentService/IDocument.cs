@@ -6,6 +6,6 @@
         public Task<Document> GetOne(string command, int documentId);
         public Task<string> Upload(string command, IFormFile file, int id, string name);
         public void Edit(Document document);
-        public void SoftDelete(Document document);
+        public Task<string> SoftDelete(Document document, string typeOfDocument);
     }
 }

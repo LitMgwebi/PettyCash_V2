@@ -117,7 +117,7 @@
 					<v-btn @click="() => (openDeleteDialog = true)"> Delete</v-btn>
 					<v-dialog v-model="openDeleteDialog" width="auto">
 						<DeleteRequisitionDialog
-							:requisition="requisition"
+							:requisitionId="requisition.requisitionId"
 							@closeDialog="closeDeleteDialog"
 							@closeExansion="closeExansion"
 						/>
@@ -168,7 +168,6 @@ const closeExansion = () => emit('closeExansion')
 const { requisition, getter } = getRequisition()
 
 function submitReceiptInformation() {
-	// console.log(requisition)
 	editRequisition(requisition.value, editRequisitionStates.Return)
 }
 

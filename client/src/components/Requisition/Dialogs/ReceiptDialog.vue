@@ -4,17 +4,14 @@
 			<v-data-table-server :headers="headers" :items="receipts">
 				<template
 					v-slot:[`item.delete`]="{ item }"
-					v-if="
-						user.id == requisition.applicant.id &&
-						requisition.confirmChangeReceived == false
-					"
+					v-if="user.id == requisition.applicant.id && requisition.stateId == 7"
 				>
 					<v-btn v-on:click="deleteReceipt(item)">Delete</v-btn>
 				</template>
 			</v-data-table-server>
 		</div>
 		<!-- // TODO figure out a way to stop the uploading of documents once the requisition is closed. Both client and server sides -->
-		<div v-if="user.id == requisition.applicant.id && requisition.CloseDate == null">
+		<div v-if="user.id == requisition.applicant.id && requisition.stateId == 7">
 			<section class="create">
 				<h3>Upload Receipt</h3>
 				<form @submit.prevent="saveReceipt" enctype="multipart/form-data">
@@ -23,6 +20,7 @@
 						ref="file"
 						@change="(e) => (file = e.target.files[0])"
 						accept="application/pdf"
+						required
 					/>
 					<button type="submit">Upload</button>
 				</form>
@@ -69,7 +67,7 @@ function closeDialog() {
 }
 
 function deleteReceipt(receipt) {
-	deleteDocument(receipt)
+	deleteDocument(receipt, typeOfFile.Receipt)
 	// closeDialog()
 }
 

@@ -75,7 +75,7 @@ function closeDialog() {
 }
 
 function deleteMotivation(motivation) {
-	deleteDocument(motivation)
+	deleteDocument(motivation, typeOfFile.Motivation)
 	closeDialog()
 }
 
