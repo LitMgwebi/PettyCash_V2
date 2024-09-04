@@ -28,6 +28,9 @@
 				Action
 			</v-btn>
 		</template>
+		<template v-slot:[`item.amountRequested`]="{ item }">
+			<td>{{ formatAmount(item.amountRequested) }}</td>
+		</template>
 		<template v-slot:expanded-row="{ columns, item }">
 			<tr>
 				<td :colspan="columns.length">
@@ -63,7 +66,12 @@ watch(
 	async (oldRequisitions, newRequisitions) => await getter(getRequisitionStates.Approval),
 	{ immediate: true }
 )
-
+function formatAmount(num) {
+	return new Intl.NumberFormat('en-ZA', {
+		style: 'currency',
+		currency: 'ZAR'
+	}).format(num)
+}
 const addApproval = (item) => {
 	selectedRecord.value = item
 	dialog.value = true

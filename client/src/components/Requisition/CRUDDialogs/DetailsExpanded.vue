@@ -9,7 +9,7 @@
 				<h4 v-if="user.id != requisition.applicant.id">
 					Applicant: {{ requisition.applicant.fullName }}
 				</h4>
-				<p>Amount Requested: {{ requisition.amountRequested }}</p>
+				<p>Amount Requested: {{ formatAmount(requisition.amountRequested) }}</p>
 				<p v-if="requisition.cashIssued">Cash Issued: {{ requisition.cashIssued }}</p>
 				<p>Description: {{ requisition.description }}</p>
 				<p>Date Requested: {{ formatDate(requisition.startDate) }}</p>
@@ -25,8 +25,8 @@
 					</p>
 				</div>
 				<div v-if="requisition.totalExpenses != null">
-					<p>Total Expenses: {{ requisition.totalExpenses }}</p>
-					<p>Change: {{ requisition.change }}</p>
+					<p>Total Expenses: {{ formatAmount(requisition.totalExpenses) }}</p>
+					<p>Change: {{ formatAmount(requisition.change) }}</p>
 				</div>
 
 				<div>
@@ -180,5 +180,11 @@ watch(
 )
 function formatDate(date) {
 	if (date) return moment(String(date)).format('DD-MM-YYYY')
+}
+function formatAmount(num) {
+	return new Intl.NumberFormat('en-ZA', {
+		style: 'currency',
+		currency: 'ZAR'
+	}).format(num)
 }
 </script>

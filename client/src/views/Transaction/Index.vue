@@ -126,7 +126,6 @@ const viewRequisition = (item) => {
 function formatDate(date) {
 	if (date) return moment(String(date)).format('DD-MM-YYYY')
 }
-
 function formatAmount(num) {
 	return new Intl.NumberFormat('en-ZA', {
 		style: 'currency',

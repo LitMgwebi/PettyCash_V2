@@ -5,7 +5,7 @@
 		<v-card-actions>
 			<v-spacer></v-spacer>
 			<v-btn color="blue-darken-1" variant="text" @click="closeDialog()">Cancel</v-btn>
-			<v-btn color="blue-darken-1" variant="text" @click="deleteRecord()">Yes</v-btn>
+			<v-btn color="blue-darken-1" variant="text" @click="deleteRecord()">Confirm</v-btn>
 			<v-spacer></v-spacer>
 		</v-card-actions>
 	</v-card>

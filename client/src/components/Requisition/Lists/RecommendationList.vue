@@ -34,6 +34,9 @@
 				</td>
 			</tr>
 		</template>
+		<template v-slot:[`item.amountRequested`]="{ item }">
+			<td>{{ formatAmount(item.amountRequested) }}</td>
+		</template>
 	</v-data-table-server>
 </template>
 
@@ -66,7 +69,12 @@ watch(
 	},
 	{ immediate: true }
 )
-
+function formatAmount(num) {
+	return new Intl.NumberFormat('en-ZA', {
+		style: 'currency',
+		currency: 'ZAR'
+	}).format(num)
+}
 const addRecommendation = (item) => {
 	selectedRecord.value = item
 	dialog.value = true

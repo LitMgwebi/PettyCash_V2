@@ -15,6 +15,9 @@
 				/>
 			</v-dialog>
 		</template>
+		<template v-slot:[`item.amountRequested`]="{ item }">
+			<td>{{ formatAmount(item.amountRequested) }}</td>
+		</template>
 		<template v-slot:[`item.actions`]="{ item }">
 			<v-btn @click="addIssuing(item)">Action</v-btn>
 		</template>
@@ -59,6 +62,11 @@ const addIssuing = (item) => {
 	selectedRecord.value = item
 	dialog.value = true
 }
-
+function formatAmount(num) {
+	return new Intl.NumberFormat('en-ZA', {
+		style: 'currency',
+		currency: 'ZAR'
+	}).format(num)
+}
 const closeDialog = () => (dialog.value = false)
 </script>

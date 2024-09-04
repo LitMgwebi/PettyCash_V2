@@ -10,7 +10,6 @@
 				</template>
 			</v-data-table-server>
 		</div>
-		<!-- // TODO figure out a way to stop the uploading of documents once the requisition is closed. Both client and server sides -->
 		<div v-if="user.id == requisition.applicant.id && requisition.stateId == 7">
 			<section class="create">
 				<h3>Upload Receipt</h3>

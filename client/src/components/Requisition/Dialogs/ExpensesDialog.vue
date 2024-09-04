@@ -14,7 +14,7 @@
 <script setup>
 import { defineEmits, defineProps, inject } from 'vue'
 import { editRequisition } from '@/hooks/requisitionCRUD'
-// TODO change the dialog box and list to resemble the one on recommendation to fix bug
+
 const editRequisitionStates = inject('editRequisitionStates')
 const props = defineProps(['dialog', 'requisition'])
 const emit = defineEmits(['closeDialog'])
