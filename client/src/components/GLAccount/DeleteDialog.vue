@@ -1,8 +1,8 @@
 <template>
 	<v-card v-if="glaccount != null">
-		<v-card-title class="text-h5"
-			>Are you sure you want to delete this {{ glAccount.name }}?</v-card-title
-		>
+		<v-card-title class="text-h5">
+			Are you sure you want to delete this {{ glAccount.name }}?
+		</v-card-title>
 		<v-card-actions>
 			<v-spacer></v-spacer>
 			<v-btn color="blue-darken-1" variant="text" @click="closeDialog()">Cancel</v-btn>

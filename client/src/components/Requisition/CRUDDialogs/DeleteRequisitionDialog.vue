@@ -1,5 +1,5 @@
 <template>
-	<v-card>
+	<v-card v-if="requisition != null">
 		<v-card-title class="text-h5">Are you sure you want to delete this item?</v-card-title>
 		<!-- <v-card-body>{{ requisition.requisitionId }}</v-card-body> -->
 		<v-card-actions>
@@ -15,13 +15,11 @@
 import { defineProps, defineEmits } from 'vue'
 import { deleteRequisition } from '@/hooks/requisitionCRUD'
 
-const props = defineProps(['requisitionId'])
+const props = defineProps(['requisition'])
 const emit = defineEmits(['closeDialog'])
-const id = props.requisitionId
-
-// TODO figure out why delete is not able to send data to api
+const requisition = props.requisition
 function deleteRecord() {
-	deleteRequisition(id)
+	deleteRequisition(requisition)
 	closeDialog()
 }
 

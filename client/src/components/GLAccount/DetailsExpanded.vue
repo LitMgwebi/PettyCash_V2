@@ -23,7 +23,7 @@
 			<span>
 				<v-btn @click="() => (openDeleteDialog = true)"> Delete</v-btn>
 				<v-dialog v-model="openDeleteDialog" width="auto">
-					<DeletDialog
+					<DeleteDialog
 						:glaccount="glAccount"
 						@closeDialog="closeDeleteDialog"
 						@closeExansion="closeExansion"
@@ -39,7 +39,7 @@
 import { inject, watch, ref, defineEmits, defineProps } from 'vue'
 import { getGLAccount } from '@/hooks/glAccountCRUD.js'
 import EditDialog from '@/components/GLAccount/EditDialog.vue'
-import DeletDialog from '@/components/GLAccount/DeleteDialog.vue'
+import DeleteDialog from '@/components/GLAccount/DeleteDialog.vue'
 
 const props = defineProps(['glaccountId'])
 const emit = defineEmits(['closeExansion'])

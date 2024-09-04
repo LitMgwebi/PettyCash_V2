@@ -198,9 +198,6 @@ namespace PettyCashPrototype.Services.RequisitionService
         {
             try
             {
-                //Requisition requisition = await GetOne(requisitionId);
-                // TODO Ask Tsholo id deletion should happen before finance check or money issuing
-                // TODO Delete is not working. Fix
                 if (requisition.FinanceApproval == null)
                 {
                     requisition.CloseDate = DateTime.Now;

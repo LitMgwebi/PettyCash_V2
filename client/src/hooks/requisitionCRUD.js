@@ -72,12 +72,12 @@ export function editRequisition(requisition, command, attemptCode = 0) {
         .finally(() => store.commit('doneLoading'))
 }
 
-export function deleteRequisition(id) {
+export function deleteRequisition(requisition) {
     store.commit('setLoading')
     axios({
-        method: 'PUT',
+        method: 'DELETE',
         url: 'Requisitions/delete',
-        data: { requisitionId: id }
+        data: requisition
     })
         .then((res) => store.dispatch('setStatus', res.data.message))
         .catch((error) => store.dispatch('setStatus', error.response.data))

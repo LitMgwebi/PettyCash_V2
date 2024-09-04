@@ -117,7 +117,7 @@
 					<v-btn @click="() => (openDeleteDialog = true)"> Delete</v-btn>
 					<v-dialog v-model="openDeleteDialog" width="auto">
 						<DeleteRequisitionDialog
-							:requisitionId="requisition.requisitionId"
+							:requisition="requisition"
 							@closeDialog="closeDeleteDialog"
 							@closeExansion="closeExansion"
 						/>
