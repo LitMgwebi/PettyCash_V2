@@ -7,16 +7,15 @@
 		</v-row>
 		<v-row>
 			<v-data-table-server
-				v-model:items-per-page="itemsPerPage"
+				v-model:items-per-page="options.itemsPerPage"
+				v-model:page="options.page"
 				v-model:expanded="expanded"
 				:headers="headers"
-				:items="glAccounts"
+				:items="paginatedItems"
 				:items-length="totalItems"
-				:loading="loading"
 				item-value="glaccountId"
 				:search="filterDivision"
 				show-expand
-				@update:options="loadItems"
 			>
 				<template v-slot:top>
 					<v-row>
@@ -62,17 +61,22 @@ import { ref, inject, onMounted, watch } from 'vue'
 
 const user = inject('User')
 const dialog = ref(false)
-const glAccounts = ref([])
-const totalItems = ref([])
-const loading = ref(true)
-const itemsPerPage = ref(5)
 const expanded = ref([])
 const typeOfGLGet = inject('typeOfGLGet')
+const paginatedItems = ref([]) // Data to show in the table
+const totalItems = ref(0)
+const loading = ref(false)
 const filterDivision = ref({
 	divisionId: 0,
 	name: 'All',
 	description: '',
 	departmentId: 0
+})
+const options = ref({
+	page: 1,
+	itemsPerPage: 5,
+	sortBy: [],
+	sortDesc: []
 })
 const headers = [
 	{ title: 'Id', key: 'glaccountId' },
@@ -82,42 +86,39 @@ const headers = [
 ]
 
 const { divisions, getter: divisionGetter } = getDivisions()
+const { glAccounts, getter: glAccountGetter } = getGLAccounts()
 onMounted(async () => await divisionGetter())
 
-// watch(glAccounts, async () => {}, { immediate: true })
-async function loadItems({ page, itemsPerPage, sortBy }) {
-	loading.value = true
-	const { items, total } = await TableConfig({
-		page,
-		itemsPerPage,
-		sortBy,
-		search: filterDivision
-	})
-	glAccounts.value = items
-	totalItems.value = total
-	loading.value = false
-}
-const TableConfig = async ({ page, itemsPerPage, sortBy, search }) => {
-	const { glAccounts, getter: glAccountGetter } = getGLAccounts(typeOfGLGet.All)
-	await glAccountGetter(typeOfGLGet.All, search.value.divisionId)
-	const start = (page - 1) * itemsPerPage
-	const end = start + itemsPerPage
-	const items = glAccounts.value.slice()
+watch(
+	glAccounts,
+	async () => {
+		await glAccountGetter(typeOfGLGet.All, filterDivision.value.divisionId)
+		updateTableData()
+	},
+	{ deep: true, immediate: true }
+)
 
-	if (sortBy.length) {
-		const sortKey = sortBy[0].key
-		const sortOrder = sortBy[0].order
-		items.sort((a, b) => {
-			const aValue = a[sortKey]
-			const bValue = b[sortKey]
-			return sortOrder === 'desc' ? bValue - aValue : aValue - bValue
+const updateTableData = () => {
+	let sortedItems = [...glAccounts.value]
+	totalItems.value = glAccounts.value.length
+	// Handle sorting
+	if (options.value.sortBy.length > 0) {
+		const sortKey = options.value.sortBy[0]
+		const sortDesc = options.value.sortDesc[0]
+
+		sortedItems.sort((a, b) => {
+			if (a[sortKey] < b[sortKey]) return sortDesc ? 1 : -1
+			if (a[sortKey] > b[sortKey]) return sortDesc ? -1 : 1
+			return 0
 		})
 	}
 
-	const paginated = items.slice(start, end)
-
-	return { items: paginated, total: items.length }
+	// Handle pagination
+	const start = (options.value.page - 1) * options.value.itemsPerPage
+	const end = start + options.value.itemsPerPage
+	paginatedItems.value = sortedItems.slice(start, end)
 }
+
 const closeExansion = () => (expanded.value = [])
 const closeDialog = () => (dialog.value = false)
 </script>

@@ -45,7 +45,6 @@ const props = defineProps(['glaccountId'])
 const emit = defineEmits(['closeExansion'])
 const id = props.glaccountId
 const user = inject('User')
-console.log(id)
 
 const openEditDialog = ref(false)
 const closeEditDialog = () => (openEditDialog.value = false)
