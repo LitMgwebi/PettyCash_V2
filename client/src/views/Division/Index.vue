@@ -3,7 +3,13 @@
 		<v-row> <h2>Divisions</h2></v-row>
 		<v-row>
 			<v-col>
-				<v-data-table-server :headers="headers" :items="divisions">
+				<v-data-table-server
+					v-model:items-per-page="options.itemsPerPage"
+					v-model:page="options.page"
+					:headers="headers"
+					:items="paginatedItems"
+					:items-length="totalItems"
+				>
 					<template v-slot:[`item.edit`]="{ item }">
 						<v-btn @click="populateEdit(item)">Edit</v-btn>
 						<v-btn @click="deleteRecord(item)">Delete</v-btn>
@@ -89,18 +95,25 @@
 <script setup>
 import { getDivisions, editDivision, addDivision, deleteDivision } from '@/hooks/divisionCRUD'
 import { getDepartments } from '@/hooks/departmentCRUD'
-import { reactive, ref, onMounted, watch } from 'vue'
+import { ref, onMounted, watch } from 'vue'
 import router from '@/router/router'
 
-const reloadPage = () => location.reload()
+const paginatedItems = ref([]) // Data to show in the table
+const totalItems = ref(0)
 const { divisions, getter: divisionGetter } = getDivisions()
 const { departments, getter: departmentGetter } = getDepartments()
 
 onMounted(async () => {
-	await divisionGetter()
 	await departmentGetter()
 })
-watch(async () => divisionGetter())
+watch(
+	divisions,
+	async () => {
+		await divisionGetter()
+		updateTableData()
+	},
+	{ immediate: true, deep: true }
+)
 
 const headers = [
 	{ title: 'Title', value: 'name' },
@@ -108,6 +121,37 @@ const headers = [
 	{ title: '', value: 'edit' },
 	{ title: '', value: 'delete' }
 ]
+const options = ref({
+	page: 1,
+	itemsPerPage: 5,
+	sortBy: [],
+	sortDesc: []
+})
+
+//#region pagination and ordering
+
+const updateTableData = () => {
+	let sortedItems = [...divisions.value]
+	totalItems.value = divisions.value.length
+	// Handle sorting
+	if (options.value.sortBy.length > 0) {
+		const sortKey = options.value.sortBy[0]
+		const sortDesc = options.value.sortDesc[0]
+
+		sortedItems.sort((a, b) => {
+			if (a[sortKey] < b[sortKey]) return sortDesc ? 1 : -1
+			if (a[sortKey] > b[sortKey]) return sortDesc ? -1 : 1
+			return 0
+		})
+	}
+
+	// Handle pagination
+	const start = (options.value.page - 1) * options.value.itemsPerPage
+	const end = start + options.value.itemsPerPage
+	paginatedItems.value = sortedItems.slice(start, end)
+}
+
+//#endregion
 
 //#region Add Config
 
@@ -116,7 +160,10 @@ const newDivision = ref({
 	description: '',
 	departmentId: ''
 })
-const addSubmit = () => addDivision(newDivision.value)
+const addSubmit = () => {
+	addDivision(newDivision.value)
+	emptyNewDivision()
+}
 
 //#endregion
 
@@ -130,6 +177,8 @@ const updatedDivision = ref({
 const populateEdit = (division) => (updatedDivision.value = division)
 const editSubmit = () => {
 	editDivision(updatedDivision.value)
+	updatedDivision.value.name = ''
+	updatedDivision.value.description = ''
 }
 
 //#endregion

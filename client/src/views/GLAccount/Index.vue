@@ -65,7 +65,6 @@ const expanded = ref([])
 const typeOfGLGet = inject('typeOfGLGet')
 const paginatedItems = ref([]) // Data to show in the table
 const totalItems = ref(0)
-const loading = ref(false)
 const filterDivision = ref({
 	divisionId: 0,
 	name: 'All',

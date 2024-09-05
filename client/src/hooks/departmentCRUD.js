@@ -7,13 +7,13 @@ export function getDepartments() {
     const departments = ref([])
     async function getter() {
         try {
-            res = await axios({
+            const res = await axios({
                 method: 'GET',
                 url: 'Departments/index'
             })
             departments.value = res.data
         } catch (error) {
-            store.dispatch('setStatus', error.response.data)
+            store.dispatch('setStatus', error)
         } finally {
             store.commit('doneLoading')
         }
