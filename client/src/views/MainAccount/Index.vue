@@ -77,8 +77,8 @@ import {
 } from '@/hooks/mainAccountCRUD'
 import { ref, watch } from 'vue'
 
-const paginatedItems = ref([]) // Data to show in the table
-const totalItems = ref(0)
+//#region GET call
+
 const { mainAccounts, getter } = getMainAccounts()
 
 watch(
@@ -90,6 +90,12 @@ watch(
 	{ immediate: true, deep: true }
 )
 
+//#endregion
+
+//#region pagination and ordering
+
+const paginatedItems = ref([]) // Data to show in the table
+const totalItems = ref(0)
 const headers = [
 	{ title: 'Name', value: 'name' },
 	{ title: 'Account Number', value: 'accountNumber' },
@@ -102,8 +108,6 @@ const options = ref({
 	sortBy: [],
 	sortDesc: []
 })
-
-//#region pagination and ordering
 
 const updateTableData = () => {
 	let sortedItems = [...mainAccounts.value]

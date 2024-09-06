@@ -109,7 +109,7 @@
 						<EditRequisitionDialog
 							:requisitionId="requisition.requisitionId"
 							@closeDialog="closeEditDialog"
-							@closeExansion="closeExansion"
+							@closeExpansion="closeExpansion"
 						/>
 					</v-dialog>
 				</span>
@@ -119,11 +119,11 @@
 						<DeleteRequisitionDialog
 							:requisition="requisition"
 							@closeDialog="closeDeleteDialog"
-							@closeExansion="closeExansion"
+							@closeExpansion="closeExpansion"
 						/>
 					</v-dialog>
 				</span>
-				<span v-if="(requisition.receiptReceived = true) && requisition.stateId == 7">
+				<span v-if="requisition.receiptReceived == true && requisition.stateId == 7">
 					<v-btn @click="submitReceiptInformation()"> Submit receipt </v-btn>
 				</span>
 			</div>
@@ -163,7 +163,7 @@ const closeEditDialog = () => (openEditDialog.value = false)
 const openDeleteDialog = ref(false)
 const closeDeleteDialog = () => (openDeleteDialog.value = false)
 
-const closeExansion = () => emit('closeExansion')
+const closeExpansion = () => emit('closeExpansion')
 
 const { requisition, getter } = getRequisition()
 

@@ -11,6 +11,9 @@ import * as directives from 'vuetify/directives'
 
 const user = JSON.parse(localStorage.getItem('User'))
 const vuetify = createVuetify({
+    theme: {
+        defaultTheme: 'light'
+    },
     components,
     directives
 })

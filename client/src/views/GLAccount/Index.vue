@@ -60,29 +60,16 @@ import DetailsExpanded from '@/components/GLAccount/DetailsExpanded.vue'
 import { ref, inject, onMounted, watch } from 'vue'
 
 const user = inject('User')
-const dialog = ref(false)
-const expanded = ref([])
+
+//#region GET call
+
 const typeOfGLGet = inject('typeOfGLGet')
-const paginatedItems = ref([]) // Data to show in the table
-const totalItems = ref(0)
 const filterDivision = ref({
 	divisionId: 0,
 	name: 'All',
 	description: '',
 	departmentId: 0
 })
-const options = ref({
-	page: 1,
-	itemsPerPage: 5,
-	sortBy: [],
-	sortDesc: []
-})
-const headers = [
-	{ title: 'Id', key: 'glaccountId' },
-	{ title: 'Name', key: 'name' },
-	{ title: 'Description', key: 'description' },
-	{ title: '', key: 'data-table-expand' }
-]
 
 const { divisions, getter: divisionGetter } = getDivisions()
 const { glAccounts, getter: glAccountGetter } = getGLAccounts()
@@ -96,6 +83,25 @@ watch(
 	},
 	{ deep: true, immediate: true }
 )
+
+//#endregion
+
+//#region Pagination and sorting datatble
+
+const paginatedItems = ref([]) // Data to show in the table
+const totalItems = ref(0)
+const options = ref({
+	page: 1,
+	itemsPerPage: 5,
+	sortBy: [],
+	sortDesc: []
+})
+const headers = [
+	{ title: 'Id', key: 'glaccountId' },
+	{ title: 'Name', key: 'name' },
+	{ title: 'Description', key: 'description' },
+	{ title: '', key: 'data-table-expand' }
+]
 
 const updateTableData = () => {
 	let sortedItems = [...glAccounts.value]
@@ -118,6 +124,14 @@ const updateTableData = () => {
 	paginatedItems.value = sortedItems.slice(start, end)
 }
 
+//#endregion
+
+//#region Dialog and Expansion config
+
+const dialog = ref(false)
+const expanded = ref([])
 const closeExansion = () => (expanded.value = [])
 const closeDialog = () => (dialog.value = false)
+
+//#endregion
 </script>

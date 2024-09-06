@@ -9,7 +9,6 @@
                 requisition.Stage = "The receipts and total expenses for this requisition have been recorded. Please provide change to Accounts Payable.";
                 requisition.State = null;
                 requisition.StateId = 8;
-                requisition.ReceiptReceived = true;
 
                 _db.Requisitions.Update(requisition);
                 int result = await _db.SaveChangesAsync();

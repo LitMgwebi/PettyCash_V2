@@ -162,7 +162,8 @@ const newDivision = ref({
 })
 const addSubmit = () => {
 	addDivision(newDivision.value)
-	emptyNewDivision()
+	newDivision.value.name = ''
+	newDivision.value.description = ''
 }
 
 //#endregion

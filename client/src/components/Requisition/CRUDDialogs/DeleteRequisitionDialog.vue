@@ -25,6 +25,6 @@ function deleteRecord() {
 
 function closeDialog() {
 	emit('closeDialog', false)
-	emit('closeExansion')
+	emit('closeExpansion')
 }
 </script>

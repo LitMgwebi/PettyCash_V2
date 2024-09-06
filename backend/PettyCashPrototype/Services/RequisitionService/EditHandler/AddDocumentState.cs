@@ -23,7 +23,8 @@
             else if (type == typesOfDocument.Receipt)
             {
                 requisition.Stage = "Receipt has been uploaded.";
-                
+                requisition.ReceiptReceived = true;
+
                 _db.Requisitions.Update(requisition);
                 int result = await _db.SaveChangesAsync();
 

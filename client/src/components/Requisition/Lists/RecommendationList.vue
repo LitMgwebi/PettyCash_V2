@@ -1,8 +1,11 @@
 <template>
 	<v-data-table-server
 		v-model:expanded="expanded"
+		v-model:items-per-page="options.itemsPerPage"
+		v-model:page="options.page"
 		:headers="headers"
-		:items="requisitions"
+		:items="paginatedItems"
+		:items-length="totalItems"
 		item-value="requisitionId"
 		show-expand
 	>
@@ -46,11 +49,29 @@ import RecommendationDialog from '@/components/Requisition/Dialogs/Recommendatio
 import DetailsExpanded from '@/components/Requisition/CRUDDialogs/DetailsExpanded.vue'
 import { ref, inject, watch } from 'vue'
 
-const getRequisitionStates = inject('getRequisitionStates')
-const selectedRecord = ref({})
 const user = inject('User')
-const dialog = ref(false)
-const expanded = ref([])
+
+//#region GET call
+
+const getRequisitionStates = inject('getRequisitionStates')
+
+const { requisitions, getter } = getRequisitions()
+
+watch(
+	requisitions,
+	async (oldRequisitions, newRequisitions) => {
+		await getter(getRequisitionStates.Recommendation)
+		updateTableData()
+	},
+	{ immediate: true, deep: true }
+)
+
+//#endregion
+
+//#region pagination and ordering
+
+const paginatedItems = ref([]) // Data to show in the table
+const totalItems = ref(0)
 const headers = [
 	{ title: 'Id', key: 'requisitionId' },
 	{ title: 'Full Name', key: 'applicant.fullName' },
@@ -60,24 +81,62 @@ const headers = [
 	{ title: '', key: 'actions' },
 	{ title: '', key: 'data-table-expand' }
 ]
-const { requisitions, getter } = getRequisitions()
+const options = ref({
+	page: 1,
+	itemsPerPage: 5,
+	sortBy: [],
+	sortDesc: []
+})
 
-watch(
-	requisitions,
-	async (oldRequisitions, newRequisitions) => {
-		await getter(getRequisitionStates.Recommendation)
-	},
-	{ immediate: true }
-)
+const updateTableData = () => {
+	let sortedItems = [...requisitions.value]
+	totalItems.value = requisitions.value.length
+	// Handle sorting
+	if (options.value.sortBy.length > 0) {
+		const sortKey = options.value.sortBy[0]
+		const sortDesc = options.value.sortDesc[0]
+
+		sortedItems.sort((a, b) => {
+			if (a[sortKey] < b[sortKey]) return sortDesc ? 1 : -1
+			if (a[sortKey] > b[sortKey]) return sortDesc ? -1 : 1
+			return 0
+		})
+	}
+
+	// Handle pagination
+	const start = (options.value.page - 1) * options.value.itemsPerPage
+	const end = start + options.value.itemsPerPage
+	paginatedItems.value = sortedItems.slice(start, end)
+}
+
+//#endregion
+
+//#region Formatting information
+
 function formatAmount(num) {
 	return new Intl.NumberFormat('en-ZA', {
 		style: 'currency',
 		currency: 'ZAR'
 	}).format(num)
 }
+
+//#endregion
+
+//#region Add Recommendation
+
+const selectedRecord = ref({})
 const addRecommendation = (item) => {
 	selectedRecord.value = item
 	dialog.value = true
 }
+
+//#endregion
+
+//#region Dialog and Expansion config
+
+const expanded = ref([])
+const dialog = ref(false)
 const closeDialog = () => (dialog.value = false)
+
+//#endregion
 </script>

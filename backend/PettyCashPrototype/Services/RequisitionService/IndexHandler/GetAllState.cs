@@ -1,6 +1,6 @@
 ﻿namespace PettyCashPrototype.Services.RequisitionService.IndexHandler
 {
-    public class GetAllState: IIndexState
+    public class GetAllState : IIndexState
     {
         private Status status;
         public GetAllState(Status status)
@@ -12,15 +12,29 @@
             IEnumerable<Requisition> requisitions = new List<Requisition>();
             if (status != null)
             {
-                requisitions = await db.Requisitions
+                if (status.StatusId == 0)
+                {
+                    requisitions = await db.Requisitions
                     .Include(gl => gl.Glaccount)
                     .Include(a => a.Applicant)
                     .Include(mr => mr.ManagerRecommendation)
                     .Include(i => i.Issuer)
                     .Where(a => a.IsActive == true)
-                    .Where(s => s.State! == status)
                     .AsNoTracking()
                     .ToListAsync();
+                }
+                else
+                {
+                    requisitions = await db.Requisitions
+                        .Include(gl => gl.Glaccount)
+                        .Include(a => a.Applicant)
+                        .Include(mr => mr.ManagerRecommendation)
+                        .Include(i => i.Issuer)
+                        .Where(a => a.IsActive == true)
+                        .Where(s => s.State! == status)
+                        .AsNoTracking()
+                        .ToListAsync();
+                }
             }
             else
                 throw new Exception("System could not handle status, please contact ICT.");
@@ -51,7 +65,7 @@
             //}
             //else if(status.IsState == true)
             //{
-                
+
             //}
             return requisitions;
         }

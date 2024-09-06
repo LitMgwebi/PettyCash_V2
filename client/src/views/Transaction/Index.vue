@@ -4,20 +4,16 @@
 			<v-col>
 				<h2>Transactions</h2>
 			</v-col>
-			<v-col>
-				<section>
-					<label>Filter</label>
-					<select :disabled="arrayOfTypes.length == 0" v-model="transactionFilter">
-						<option v-for="type in arrayOfTypes" :value="type" :key="type">
-							{{ type.type }}
-						</option>
-					</select>
-				</section>
-			</v-col>
 		</v-row>
 		<v-row>
 			<v-col>
-				<v-data-table-server :headers="headers" :items="transactions">
+				<v-data-table-server
+					v-model:items-per-page="options.itemsPerPage"
+					v-model:page="options.page"
+					:headers="headers"
+					:items="paginatedItems"
+					:items-length="totalItems"
+				>
 					<template v-slot:top>
 						<v-dialog v-model="dialog" max-width="500px">
 							<RequisitionDialog
@@ -25,6 +21,17 @@
 								@closeDialog="closeDialog"
 							/>
 						</v-dialog>
+						<v-col>
+							<label>Filter</label>
+							<select
+								:disabled="arrayOfTypes.length == 0"
+								v-model="transactionFilter"
+							>
+								<option v-for="type in arrayOfTypes" :value="type" :key="type">
+									{{ type.type }}
+								</option>
+							</select>
+						</v-col>
 					</template>
 					<template v-slot:item="{ item }">
 						<tr>
@@ -77,9 +84,12 @@ import { getVault } from '@/hooks/vaultCRUD'
 import { ref, inject, watch } from 'vue'
 import moment from 'moment'
 
+const paginatedItems = ref([]) // Data to show in the table
+const totalItems = ref(0)
 const dialog = ref(false)
 const selectedId = ref()
 const typeOfTransaction = inject('typeOfTransaction')
+
 const { transactions, getter: transactionGetter } = getTransactions()
 const { vault, getter: vaultGetter } = getVault()
 
@@ -98,9 +108,12 @@ watch(
 	async (oldTransactions, newTransactions) => {
 		await transactionGetter(transactionFilter.value.type)
 		await vaultGetter()
+		updateTableData()
 	},
-	{ immediate: true }
+	{ immediate: true, deep: true }
 )
+
+//#region pagination and ordering datatable
 
 const headers = [
 	{ title: 'ID', key: 'transactionId' },
@@ -109,19 +122,61 @@ const headers = [
 	{ title: 'Date', key: 'transactionDate' },
 	{ title: 'User', key: '' }
 ]
+const options = ref({
+	page: 1,
+	itemsPerPage: 5,
+	sortBy: [],
+	sortDesc: []
+})
+
+const updateTableData = () => {
+	let sortedItems = [...transactions.value]
+	totalItems.value = transactions.value.length
+	// Handle sorting
+	if (options.value.sortBy.length > 0) {
+		const sortKey = options.value.sortBy[0]
+		const sortDesc = options.value.sortDesc[0]
+
+		sortedItems.sort((a, b) => {
+			if (a[sortKey] < b[sortKey]) return sortDesc ? 1 : -1
+			if (a[sortKey] > b[sortKey]) return sortDesc ? -1 : 1
+			return 0
+		})
+	}
+
+	// Handle pagination
+	const start = (options.value.page - 1) * options.value.itemsPerPage
+	const end = start + options.value.itemsPerPage
+	paginatedItems.value = sortedItems.slice(start, end)
+}
+
+//#endregion
+
+//#region Make new Transaction
+
+const addSubmit = () => {
+	addTransaction(newTransaction.value)
+}
 
 const newTransaction = ref({
 	amount: 0,
 	transactionType: typeOfTransaction.Deposit,
 	vaultId: vault.vaultId
 })
-const addSubmit = () => {
-	addTransaction(newTransaction.value)
-}
+
+//#endregion
+
+//#region Handling requisition dialog
+
 const viewRequisition = (item) => {
 	selectedId.value = item.requisitionId
 	dialog.value = true
 }
+const closeDialog = () => (dialog.value = false)
+
+//#endregion
+
+//#region Formatting data output
 
 function formatDate(date) {
 	if (date) return moment(String(date)).format('DD-MM-YYYY')
@@ -133,5 +188,5 @@ function formatAmount(num) {
 	}).format(num)
 }
 
-const closeDialog = () => (dialog.value = false)
+//#endregion
 </script>

@@ -27,6 +27,7 @@ namespace PettyCashPrototype.Services.TransactionService
                     .Include(v => v.Vault)
                     .Where(x => x.IsActive == true)
                     .Where(t => t.TransactionType == typesOfTransaction.Withdrawal)
+                    .OrderByDescending(o => o.TransactionDate)
                     .AsNoTracking()
                     .ToListAsync();
                 }
@@ -39,6 +40,7 @@ namespace PettyCashPrototype.Services.TransactionService
                     .Include(v => v.Vault)
                     .Where(t => t.TransactionType == typesOfTransaction.Deposit)
                     .Where(x => x.IsActive == true)
+                    .OrderByDescending(o => o.TransactionDate)
                     .AsNoTracking()
                     .ToListAsync();
                 }
@@ -51,6 +53,7 @@ namespace PettyCashPrototype.Services.TransactionService
                     .Include(v => v.Vault)
                     .Where(t => t.TransactionType == typesOfTransaction.Change)
                     .Where(x => x.IsActive == true)
+                    .OrderByDescending(o => o.TransactionDate)
                     .AsNoTracking()
                     .ToListAsync();
                 }
@@ -62,6 +65,7 @@ namespace PettyCashPrototype.Services.TransactionService
                     .ThenInclude(a => a!.Applicant)
                     .Include(v => v.Vault)
                     .Where(x => x.IsActive == true)
+                    .OrderByDescending(o => o.TransactionDate)
                     .AsNoTracking()
                     .ToListAsync();
                 }
