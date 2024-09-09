@@ -5,7 +5,7 @@
 			<input type="text" v-model="requisition.totalExpenses" />
 		</div>
 		<template v-slot:actions>
-			<button @click="editExpenses(requisition)">Save</button>
+			<button v-if="requisition.stateId == 7" @click="editExpenses(requisition)">Save</button>
 			<v-btn class="ms-auto" text="Close" @click="closeDialog"></v-btn>
 		</template>
 	</v-card>

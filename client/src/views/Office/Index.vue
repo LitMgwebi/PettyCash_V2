@@ -1,6 +1,10 @@
 <template>
 	<v-container>
-		<v-row> <h2>Offices</h2> </v-row>
+		<v-row>
+			<v-col>
+				<h2>Offices</h2>
+			</v-col>
+		</v-row>
 		<v-row>
 			<v-col>
 				<v-data-table-server
@@ -28,9 +32,9 @@
 							<label>Description: </label>
 							<input type="text" v-model="newOffice.description" />
 						</div>
-						<div class="submit">
-							<button>Add</button>
-							<button @click="reloadPage">Cancel</button>
+						<div>
+							<v-btn type="submit">Add</v-btn>
+							<v-btn @click="emptyAddInputs()">Cancel</v-btn>
 						</div>
 					</form>
 				</section>
@@ -49,9 +53,9 @@
 							<label>Description: </label>
 							<input type="text" v-model="updatedOffice.description" />
 						</div>
-						<div class="submit">
-							<button>Edit</button>
-							<button @click="reloadPage">Cancel</button>
+						<div>
+							<v-btn type="submit">Edit</v-btn>
+							<v-btn @click="emptyEditInputs()">Cancel</v-btn>
 						</div>
 					</form>
 				</section>
@@ -64,8 +68,8 @@
 import { getOffices, addOffice, editOffice, deleteOffice } from '@/hooks/officeCRUD'
 import { ref, watch } from 'vue'
 
-const paginatedItems = ref([]) // Data to show in the table
-const totalItems = ref(0)
+//#region Get call
+
 const { offices, getter } = getOffices()
 
 watch(
@@ -76,6 +80,13 @@ watch(
 	},
 	{ immediate: true, deep: true }
 )
+
+//#endregion
+
+//#region pagination and ordering
+
+const paginatedItems = ref([]) // Data to show in the table
+const totalItems = ref(0)
 
 const headers = [
 	{ title: 'Name', value: 'name' },
@@ -89,9 +100,6 @@ const options = ref({
 	sortBy: [],
 	sortDesc: []
 })
-
-//#region pagination and ordering
-
 const updateTableData = () => {
 	let sortedItems = [...offices.value]
 	totalItems.value = offices.value.length
@@ -121,10 +129,13 @@ const newOffice = ref({
 	name: '',
 	description: ''
 })
-const addSubmit = () => {
-	addOffice(newOffice.value)
+function emptyAddInputs() {
 	newOffice.value.name = ''
 	newOffice.value.description = ''
+}
+const addSubmit = () => {
+	addOffice(newOffice.value)
+	emptyAddInputs()
 }
 
 //#endregion
@@ -135,11 +146,14 @@ const updatedOffice = ref({
 	name: '',
 	description: ''
 })
+function emptyEditInputs() {
+	updatedOffice.value.name = ''
+	updatedOffice.value.description = ''
+}
 const populateEdit = (office) => (updatedOffice.value = office)
 const editSubmit = () => {
 	editOffice(updatedOffice.value)
-	updatedOffice.value.name = ''
-	updatedOffice.value.description = ''
+	emptyEditInputs()
 }
 
 //#endregion

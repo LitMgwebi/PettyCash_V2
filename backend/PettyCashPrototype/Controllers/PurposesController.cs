@@ -2,6 +2,7 @@
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class PurposesController : ControllerBase
     {
         private readonly IPurpose _purpose;

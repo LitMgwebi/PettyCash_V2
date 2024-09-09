@@ -1,6 +1,10 @@
 <template>
 	<v-container>
-		<v-row> <h2>Main Accounts</h2></v-row>
+		<v-row>
+			<v-col>
+				<h2>Main Accounts</h2>
+			</v-col>
+		</v-row>
 		<v-row>
 			<v-col>
 				<v-data-table-server
@@ -32,9 +36,9 @@
 							<label>Description: </label>
 							<input type="text" v-model="newMainAccount.description" />
 						</div>
-						<div class="submit">
-							<button>Add</button>
-							<button @click="reloadPage">Cancel</button>
+						<div>
+							<v-btn type="submit">Add</v-btn>
+							<v-btn @click="emptyAddInputs()">Cancel</v-btn>
 						</div>
 					</form>
 				</section>
@@ -57,9 +61,9 @@
 							<label>Description: </label>
 							<input type="text" v-model="updatedMainAccount.description" />
 						</div>
-						<div class="submit">
-							<button>Edit</button>
-							<button @click="reloadPage">Cancel</button>
+						<div>
+							<v-btn type="submit">Edit</v-btn>
+							<v-btn @click="emptyEditInputs()">Cancel</v-btn>
 						</div>
 					</form>
 				</section>
@@ -139,11 +143,14 @@ const newMainAccount = ref({
 	accountNumber: '',
 	description: ''
 })
-const addSubmit = () => {
-	addMainAccount(newMainAccount.value)
+const emptyAddInputs = () => {
 	newMainAccount.value.name = ''
 	newMainAccount.value.accountNumber = ''
 	newMainAccount.value.description = ''
+}
+const addSubmit = () => {
+	addMainAccount(newMainAccount.value)
+	emptyAddInputs()
 }
 
 //#endregion
@@ -155,12 +162,15 @@ const updatedMainAccount = ref({
 	accountNumber: '',
 	description: ''
 })
-const populateEdit = (mainAccount) => (updatedMainAccount.value = mainAccount)
-const editSubmit = () => {
-	editMainAccount(updatedMainAccount.value)
+const emptyEditInputs = () => {
 	updatedMainAccount.value.name = ''
 	updatedMainAccount.value.accountNumber = ''
 	updatedMainAccount.value.description = ''
+}
+const populateEdit = (mainAccount) => (updatedMainAccount.value = mainAccount)
+const editSubmit = () => {
+	editMainAccount(updatedMainAccount.value)
+	emptyEditInputs()
 }
 
 //#endregion

@@ -2,6 +2,7 @@
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class StatusesController : ControllerBase
     {
         private readonly IStatus _status;

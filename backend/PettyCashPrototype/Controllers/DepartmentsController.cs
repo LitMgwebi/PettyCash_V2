@@ -2,6 +2,7 @@
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class DepartmentsController : ControllerBase
     {
         private readonly IDepartment _department;

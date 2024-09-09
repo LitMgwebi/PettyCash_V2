@@ -2,6 +2,7 @@
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class OfficesController : ControllerBase
     {
         private readonly IOffice _office;

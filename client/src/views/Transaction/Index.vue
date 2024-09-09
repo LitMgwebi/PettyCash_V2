@@ -65,9 +65,9 @@
 								<label>Amount: </label>
 								<input type="text" v-model="newTransaction.amount" />
 							</div>
-							<div class="submit">
-								<button>Deposit</button>
-								<button @click="reloadPage">Cancel</button>
+							<div>
+								<v-btn type="submit">Deposit</v-btn>
+								<v-btn @click="() => (newTransaction.amount = 0)"> Cancel </v-btn>
 							</div>
 						</form>
 					</section>
@@ -84,10 +84,8 @@ import { getVault } from '@/hooks/vaultCRUD'
 import { ref, inject, watch } from 'vue'
 import moment from 'moment'
 
-const paginatedItems = ref([]) // Data to show in the table
-const totalItems = ref(0)
-const dialog = ref(false)
-const selectedId = ref()
+//#region GET call
+
 const typeOfTransaction = inject('typeOfTransaction')
 
 const { transactions, getter: transactionGetter } = getTransactions()
@@ -113,7 +111,12 @@ watch(
 	{ immediate: true, deep: true }
 )
 
+//#endregion
+
 //#region pagination and ordering datatable
+
+const paginatedItems = ref([]) // Data to show in the table
+const totalItems = ref(0)
 
 const headers = [
 	{ title: 'ID', key: 'transactionId' },
@@ -156,6 +159,7 @@ const updateTableData = () => {
 
 const addSubmit = () => {
 	addTransaction(newTransaction.value)
+	newTransaction.value.amount = 0
 }
 
 const newTransaction = ref({
@@ -168,6 +172,8 @@ const newTransaction = ref({
 
 //#region Handling requisition dialog
 
+const dialog = ref(false)
+const selectedId = ref()
 const viewRequisition = (item) => {
 	selectedId.value = item.requisitionId
 	dialog.value = true

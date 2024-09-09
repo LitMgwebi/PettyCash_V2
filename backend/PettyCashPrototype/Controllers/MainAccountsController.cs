@@ -2,6 +2,7 @@
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class MainAccountsController : ControllerBase
     {
         private readonly IMainAccount _mainAccount;

@@ -2,7 +2,10 @@
 	<div v-if="user">
 		<h3>Welcome {{ user.fullName }}</h3>
 		<v-container>
-			<router-link :to="{ name: 'requisitions' }">
+			<router-link
+				v-if="user.role != 'Finance_Admin' && user.role != 'ICT_Admin'"
+				:to="{ name: 'requisitions' }"
+			>
 				<v-card title="Petty Cash Dashboard"> </v-card>
 			</router-link>
 

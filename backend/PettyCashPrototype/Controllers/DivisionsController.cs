@@ -2,6 +2,7 @@
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class DivisionsController : ControllerBase
     {
         private readonly IDivision _division;

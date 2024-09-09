@@ -1,6 +1,10 @@
 <template>
 	<v-container>
-		<v-row> <h2>Sub-Accounts</h2></v-row>
+		<v-row>
+			<v-col>
+				<h2>Sub-Accounts</h2>
+			</v-col>
+		</v-row>
 		<v-row>
 			<v-col>
 				<v-data-table-server
@@ -22,19 +26,19 @@
 					<form @submit.prevent="addSubmit">
 						<div>
 							<label>Name: </label>
-							<input type="text" v-model="newSubAccount.name" />
+							<input type="text" v-model="newSubAccount.name" required />
 						</div>
 						<div>
 							<label>Account Number: </label>
-							<input type="text" v-model="newSubAccount.accountNumber" />
+							<input type="text" v-model="newSubAccount.accountNumber" required />
 						</div>
 						<div>
 							<label>Description: </label>
 							<input type="text" v-model="newSubAccount.description" />
 						</div>
-						<div class="submit">
-							<button>Add</button>
-							<button @click="reloadPage">Cancel</button>
+						<div>
+							<v-btn type="submit">Add</v-btn>
+							<v-btn @click="emptyAddInputs()">Cancel</v-btn>
 						</div>
 					</form>
 				</section>
@@ -47,19 +51,19 @@
 					<form @submit.prevent="editSubmit">
 						<div>
 							<label>Name: </label>
-							<input type="text" v-model="updatedSubAccount.name" />
+							<input type="text" v-model="updatedSubAccount.name" required />
 						</div>
 						<div>
 							<label>Account Number: </label>
-							<input type="text" v-model="updatedSubAccount.accountNumber" />
+							<input type="text" v-model="updatedSubAccount.accountNumber" required />
 						</div>
 						<div>
 							<label>Description: </label>
 							<input type="text" v-model="updatedSubAccount.description" />
 						</div>
-						<div class="submit">
-							<button>Edit</button>
-							<button @click="reloadPage">Cancel</button>
+						<div>
+							<v-btn type="submit">Edit</v-btn>
+							<v-btn @click="emptyEditInputs()">Cancel</v-btn>
 						</div>
 					</form>
 				</section>
@@ -135,11 +139,14 @@ const newSubAccount = ref({
 	accountNumber: '',
 	description: ''
 })
-const addSubmit = () => {
-	addSubAccount(newSubAccount.value)
+const emptyAddInputs = () => {
 	newSubAccount.value.name = ''
 	newSubAccount.value.accountNumber = ''
 	newSubAccount.value.description = ''
+}
+const addSubmit = () => {
+	addSubAccount(newSubAccount.value)
+	emptyAddInputs()
 }
 
 //#endregion
@@ -151,12 +158,15 @@ const updatedSubAccount = ref({
 	accountNumber: '',
 	description: ''
 })
-const populateEdit = (subAccount) => (updatedSubAccount.value = subAccount)
-const editSubmit = () => {
-	editSubAccount(updatedSubAccount.value)
+const emptyEditInputs = () => {
 	updatedSubAccount.value.name = ''
 	updatedSubAccount.value.accountNumber = ''
 	updatedSubAccount.value.description = ''
+}
+const populateEdit = (subAccount) => (updatedSubAccount.value = subAccount)
+const editSubmit = () => {
+	editSubAccount(updatedSubAccount.value)
+	emptyEditInputs()
 }
 
 //#endregion

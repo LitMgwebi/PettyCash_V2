@@ -2,6 +2,7 @@
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Roles = "Finance_Admin, ICT_Admin")]
     public class VaultsController : ControllerBase
     {
         private readonly IVault _vault;

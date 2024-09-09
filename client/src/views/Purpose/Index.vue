@@ -1,6 +1,10 @@
 <template>
 	<v-container>
-		<v-row><h2>Purposes</h2></v-row>
+		<v-row>
+			<v-col>
+				<h2>Purposes</h2>
+			</v-col>
+		</v-row>
 		<v-row>
 			<v-col>
 				<v-data-table-server
@@ -29,9 +33,9 @@
 							<label>Description: </label>
 							<input type="text" v-model="newPurpose.description" />
 						</div>
-						<div class="submit">
-							<button>Add</button>
-							<button @click="reloadPage">Cancel</button>
+						<div>
+							<v-btn type="submit">Add</v-btn>
+							<v-btn @click="emptyAddInputs()">Cancel</v-btn>
 						</div>
 					</form>
 				</section>
@@ -50,9 +54,9 @@
 							<label>Description: </label>
 							<input type="text" v-model="updatedPurpose.description" />
 						</div>
-						<div class="submit">
-							<button>Edit</button>
-							<button @click="reloadPage">Cancel</button>
+						<div>
+							<v-btn type="submit">Edit</v-btn>
+							<v-btn @click="emptyEditInputs()">Cancel</v-btn>
 						</div>
 					</form>
 				</section>
@@ -65,9 +69,8 @@
 import { getPurposes, addPurpose, editPurpose, deletePurpose } from '@/hooks/purposeCRUD'
 import { ref, watch } from 'vue'
 
-const paginatedItems = ref([]) // Data to show in the table
-const totalItems = ref(0)
-const reloadPage = () => location.reload()
+//#region GET call
+
 const { purposes, getter } = getPurposes()
 
 watch(
@@ -78,6 +81,13 @@ watch(
 	},
 	{ immediate: true, deep: true }
 )
+
+//#endregion
+
+//#region pagination and ordering
+
+const paginatedItems = ref([]) // Data to show in the table
+const totalItems = ref(0)
 
 const headers = [
 	{ title: 'Name', value: 'name' },
@@ -91,8 +101,6 @@ const options = ref({
 	sortBy: [],
 	sortDesc: []
 })
-
-//#region pagination and ordering
 
 const updateTableData = () => {
 	let sortedItems = [...purposes.value]
@@ -123,10 +131,13 @@ const newPurpose = ref({
 	name: '',
 	description: ''
 })
-const addSubmit = () => {
-	addPurpose(newPurpose.value)
+const emptyAddInputs = () => {
 	newPurpose.value.name = ''
 	newPurpose.value.description = ''
+}
+const addSubmit = () => {
+	addPurpose(newPurpose.value)
+	emptyAddInputs()
 }
 
 //#endregion
@@ -137,11 +148,14 @@ const updatedPurpose = ref({
 	name: '',
 	description: ''
 })
+const emptyEditInputs = () => {
+	updatedPurpose.value.name = ''
+	updatedPurpose.value.description = ''
+}
 const populateEdit = (purpose) => (updatedPurpose.value = purpose)
 const editSubmit = () => {
 	editPurpose(updatedPurpose.value)
-	updatedPurpose.value.name = ''
-	updatedPurpose.value.description = ''
+	emptyEditInputs()
 }
 
 //#endregion

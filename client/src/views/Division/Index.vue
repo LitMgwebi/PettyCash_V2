@@ -1,6 +1,10 @@
 <template>
 	<v-container>
-		<v-row> <h2>Divisions</h2></v-row>
+		<v-row>
+			<v-col>
+				<h2>Divisions</h2>
+			</v-col>
+		</v-row>
 		<v-row>
 			<v-col>
 				<v-data-table-server
@@ -21,7 +25,7 @@
 					<h3>Add Division</h3>
 					<form @submit.prevent="addSubmit">
 						<div>
-							<label>Name: </label>
+							<label>Title: </label>
 							<input type="text" v-model="newDivision.name" />
 						</div>
 						<div>
@@ -44,9 +48,9 @@
 								</option>
 							</select>
 						</div>
-						<div class="submit">
-							<button>Add</button>
-							<button @click="reloadPage">Cancel</button>
+						<div>
+							<v-btn type="submit">Add</v-btn>
+							<v-btn @click="emptyAddInputs()">Cancel</v-btn>
 						</div>
 					</form>
 				</section>
@@ -58,7 +62,7 @@
 					<span v-else><h3>Select Division to edit</h3></span>
 					<form @submit.prevent="editSubmit">
 						<div>
-							<label>Name: </label>
+							<label>Title: </label>
 							<input type="text" v-model="updatedDivision.name" />
 						</div>
 						<div>
@@ -81,9 +85,9 @@
 								</option>
 							</select>
 						</div>
-						<div class="submit">
-							<button>Edit</button>
-							<button @click="reloadPage">Cancel</button>
+						<div>
+							<v-btn type="submit">Edit</v-btn>
+							<v-btn @click="emptyEditInputs()">Cancel</v-btn>
 						</div>
 					</form>
 				</section>
@@ -96,10 +100,9 @@
 import { getDivisions, editDivision, addDivision, deleteDivision } from '@/hooks/divisionCRUD'
 import { getDepartments } from '@/hooks/departmentCRUD'
 import { ref, onMounted, watch } from 'vue'
-import router from '@/router/router'
 
-const paginatedItems = ref([]) // Data to show in the table
-const totalItems = ref(0)
+//#region Get call
+
 const { divisions, getter: divisionGetter } = getDivisions()
 const { departments, getter: departmentGetter } = getDepartments()
 
@@ -115,6 +118,13 @@ watch(
 	{ immediate: true, deep: true }
 )
 
+//#endregion
+
+//#region pagination and ordering
+
+const paginatedItems = ref([]) // Data to show in the table
+const totalItems = ref(0)
+
 const headers = [
 	{ title: 'Title', value: 'name' },
 	{ title: 'Description', value: 'description' },
@@ -127,8 +137,6 @@ const options = ref({
 	sortBy: [],
 	sortDesc: []
 })
-
-//#region pagination and ordering
 
 const updateTableData = () => {
 	let sortedItems = [...divisions.value]
@@ -160,10 +168,13 @@ const newDivision = ref({
 	description: '',
 	departmentId: ''
 })
-const addSubmit = () => {
-	addDivision(newDivision.value)
+const emptyAddInputs = () => {
 	newDivision.value.name = ''
 	newDivision.value.description = ''
+}
+const addSubmit = () => {
+	addDivision(newDivision.value)
+	emptyAddInputs()
 }
 
 //#endregion
@@ -175,11 +186,14 @@ const updatedDivision = ref({
 	description: '',
 	departmentId: ''
 })
+const emptyEditInputs = () => {
+	updatedDivision.value.name = ''
+	updatedDivision.value.description = ''
+}
 const populateEdit = (division) => (updatedDivision.value = division)
 const editSubmit = () => {
 	editDivision(updatedDivision.value)
-	updatedDivision.value.name = ''
-	updatedDivision.value.description = ''
+	emptyEditInputs()
 }
 
 //#endregion

@@ -31,6 +31,7 @@ namespace PettyCashPrototype.Controllers
             }
         }
         [HttpGet, Route("details")]
+        [AllowAnonymous]
         public async Task<ActionResult<Glaccount>> Details(int id)
         {
             try

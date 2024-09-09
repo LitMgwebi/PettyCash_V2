@@ -4,6 +4,7 @@ namespace PettyCashPrototype.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Roles = "Finance_Admin, ICT_Admin")]
     public class TransactionsController : ControllerBase
     {
         private readonly ITransaction _transaction;

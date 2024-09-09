@@ -1,7 +1,7 @@
 <template>
 	<v-row>
 		<v-col>
-			<h3>Requisitions</h3>
+			<h2>Requisitions</h2>
 		</v-col>
 	</v-row>
 	<v-row>
