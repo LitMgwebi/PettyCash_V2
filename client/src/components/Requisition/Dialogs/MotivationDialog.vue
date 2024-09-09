@@ -1,49 +1,45 @@
 <template>
-	<div>
-		<v-card max-width="400" prepend-icon="mdi-update">
-			<div>
-				<v-data-table-server
-					v-model:items-per-page="options.itemsPerPage"
-					v-model:page="options.page"
-					:headers="headers"
-					:items="paginatedItems"
-					:items-length="totalItems"
-				>
-					<template
-						v-slot:[`item.delete`]="{ item }"
-						v-if="
-							user.id == requisition.applicant.id &&
-							requisition.managerRecommendation == null
-						"
-					>
-						<v-btn v-on:click="deleteMotivation(item)">Delete</v-btn>
-					</template>
-				</v-data-table-server>
-			</div>
-			<div
-				v-if="
-					user.id == requisition.applicant.id && requisition.managerRecommendation == null
-				"
+	<v-card max-width="400" prepend-icon="mdi-update">
+		<v-row>
+			<v-data-table-server
+				v-model:items-per-page="options.itemsPerPage"
+				v-model:page="options.page"
+				:headers="headers"
+				:items="paginatedItems"
+				:items-length="totalItems"
 			>
-				<section class="create">
-					<h3>Upload Motivation</h3>
-					<form @submit.prevent="saveMotivation" enctype="multipart/form-data">
-						<input
-							type="file"
-							accept="application/pdf"
-							ref="file"
-							@change="(e) => (file = e.target.files[0])"
-							required
-						/>
-						<button type="submit">Upload</button>
-					</form>
-				</section>
-			</div>
-			<template v-slot:actions>
-				<v-btn class="ms-auto" text="Close" @click="closeDialog"></v-btn>
-			</template>
-		</v-card>
-	</div>
+				<template
+					v-slot:[`item.delete`]="{ item }"
+					v-if="
+						user.id == requisition.applicant.id &&
+						requisition.managerRecommendation == null
+					"
+				>
+					<v-btn v-on:click="deleteMotivation(item)">Delete</v-btn>
+				</template>
+			</v-data-table-server>
+		</v-row>
+		<v-row
+			v-if="user.id == requisition.applicant.id && requisition.managerRecommendation == null"
+		>
+			<section class="create">
+				<h3>Upload Motivation</h3>
+				<form @submit.prevent="saveMotivation" enctype="multipart/form-data">
+					<input
+						type="file"
+						accept="application/pdf"
+						ref="file"
+						@change="(e) => (file = e.target.files[0])"
+						required
+					/>
+					<button type="submit">Upload</button>
+				</form>
+			</section>
+		</v-row>
+		<template v-slot:actions>
+			<v-btn class="ms-auto" text="Close" @click="closeDialog"></v-btn>
+		</template>
+	</v-card>
 </template>
 
 <script setup>
