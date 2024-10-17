@@ -1,7 +1,10 @@
-﻿namespace PettyCashPrototype.Controllers
+﻿using System.Security.Claims;
+
+namespace PettyCashPrototype.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Roles = "Finance_Admin, ICT_Admin")]
     public class GLAccountsController : ControllerBase
     {
         private readonly IGLAccount _glAccount;
@@ -13,19 +16,22 @@
         #region GET
 
         [HttpGet, Route("index")]
-        public async Task<ActionResult<IEnumerable<Glaccount>>> Index()
+        [AllowAnonymous]
+        public async Task<ActionResult<IEnumerable<Glaccount>>> Index(string command, int divisionId = 0)
         {
             try
             {
-                IEnumerable<Glaccount> glaccounts = await _glAccount.GetAll();
+                var identity = (ClaimsIdentity)User.Identity!;
+                var userId = identity.Claims.Where(c => c.Type == ClaimTypes.Sid).Select(c => c.Value).FirstOrDefault()!;
+                IEnumerable<Glaccount> glaccounts = await _glAccount.GetAll(command, userId, divisionId);
                 return Ok(glaccounts);
             } catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
         }
-
         [HttpGet, Route("details")]
+        [AllowAnonymous]
         public async Task<ActionResult<Glaccount>> Details(int id)
         {
             try
@@ -43,15 +49,16 @@
         #region POST
 
         [HttpPost, Route("create")]
-        public ActionResult<Glaccount> Create(Glaccount glAccount)
+        [Authorize(Roles = "ICT_Admin")]
+        public async Task<ActionResult<Glaccount>> Create(Glaccount glAccount)
         {
             try
             {
-                _glAccount.Create(glAccount);
+                await _glAccount.Create(glAccount);
                 return Ok(new {message = "The new GL Account has been added to the system."});
             } catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                return BadRequest(ex);
             }
         }
 
@@ -60,12 +67,13 @@
         #region PUT
 
         [HttpPut, Route("edit")]
-        public ActionResult Edit(Glaccount glAccount)
+        [Authorize(Roles = "ICT_Admin")]
+        public async Task<ActionResult> Edit(Glaccount glAccount)
         {
             try
             {
-                _glAccount.Edit(glAccount);
-                return Ok(new { message = $"{glAccount.Name} has been edited" });
+                await _glAccount.Edit(glAccount);
+                return Ok(new { message = $"{glAccount.Name} has been edited." });
             } catch (Exception ex)
             {
                 return BadRequest(ex.Message);
@@ -77,6 +85,7 @@
         #region DELETE
 
         [HttpDelete, Route("delete")]
+        [Authorize(Roles = "ICT_Admin")]
         public ActionResult Delete(Glaccount glAccount)
         {
             try

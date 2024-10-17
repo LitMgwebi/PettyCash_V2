@@ -2,6 +2,7 @@
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class MainAccountsController : ControllerBase
     {
         private readonly IMainAccount _mainAccount;
@@ -43,11 +44,11 @@
         #region POST
 
         [HttpPost, Route("create")]
-        public ActionResult<MainAccount> Create(MainAccount mainAccount)
+        public async Task<ActionResult<MainAccount>> Create(MainAccount mainAccount)
         {
             try
             {
-                _mainAccount.Create(mainAccount);
+                await _mainAccount.Create(mainAccount);
 
                 return Ok(new { message = "The new main account has been added to the system." });
             } catch (Exception ex)

@@ -1,8 +1,9 @@
-﻿using PettyCashPrototype.Seeding.Entites;
+﻿using PettyCashPrototype.Seeding;
+using PettyCashPrototype.Seeding.Entites;
 
 namespace PettyCashPrototype.Models;
 
-public partial class PettyCashPrototypeContext : IdentityDbContext<User, Role, string, IdentityUserClaim<string>, UserRole, IdentityUserLogin<string>, IdentityRoleClaim<string>, IdentityUserToken<string>>
+public partial class PettyCashPrototypeContext : IdentityDbContext<User>
 {
     public PettyCashPrototypeContext()
     {
@@ -14,6 +15,10 @@ public partial class PettyCashPrototypeContext : IdentityDbContext<User, Role, s
     }
 
     public virtual DbSet<Department> Departments { get; set; }
+    
+    public virtual DbSet<Division> Divisions { get; set; }
+
+    public virtual DbSet<JobTitle> JobTitles { get; set; }
 
     public virtual DbSet<Glaccount> Glaccounts { get; set; }
 
@@ -27,19 +32,19 @@ public partial class PettyCashPrototypeContext : IdentityDbContext<User, Role, s
 
     public virtual DbSet<SubAccount> SubAccounts { get; set; }
 
-    public virtual DbSet<TripStatus> TripStatuses { get; set; }
+    public virtual DbSet<Status> Statuses { get; set; }
+
+    public virtual DbSet<Document> Documents { get; set; }
+
+    public virtual DbSet<Vault> Vaults { get; set; }
+
+    public virtual DbSet<Transaction> Transactions { get; set; }
 
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<Department>(entity =>
-        {
-            entity.ToTable("Department");
-
-            entity.Property(e => e.DepartmentId).HasColumnName("DepartmentID");
-            entity.Property(e => e.IsActive).HasColumnName("isActive");
-        });
-
+        modelBuilder.Entity<Motivation>();
+        modelBuilder.Entity<Receipt>();
         modelBuilder.Entity<Glaccount>(entity =>
         {
             entity.ToTable("GLAccount");
@@ -104,7 +109,7 @@ public partial class PettyCashPrototypeContext : IdentityDbContext<User, Role, s
             entity.Property(e => e.GlaccountId).HasColumnName("GLAccountID");
             entity.Property(e => e.IsActive).HasColumnName("isActive");
             entity.Property(e => e.IssuerId).HasColumnName("IssuerID");
-            entity.Property(e => e.ManagerApprovalId).HasColumnName("ManagerApprovalID");
+            entity.Property(e => e.ManagerRecommendationId).HasColumnName("ManagerApprovalID");
             entity.Property(e => e.ManagerId).HasColumnName("ManagerID");
             entity.Property(e => e.TotalExpenses).HasColumnType("decimal(18, 2)");
 
@@ -115,7 +120,7 @@ public partial class PettyCashPrototypeContext : IdentityDbContext<User, Role, s
 
             entity.HasOne(d => d.FinanceApproval).WithMany(p => p.FinanceApprovals)
                 .HasForeignKey(d => d.FinanceApprovalId)
-                .HasConstraintName("FK_Requisition_TripStatus1");
+                .HasConstraintName("FK_Requisition_Status1");
 
             entity.HasOne(d => d.FinanceOfficer).WithMany(p => p.FinanceOfficers)
                 .HasForeignKey(d => d.FinanceOfficerId)
@@ -129,9 +134,13 @@ public partial class PettyCashPrototypeContext : IdentityDbContext<User, Role, s
                 .HasForeignKey(d => d.IssuerId)
                 .HasConstraintName("FK_Requisition_User3");
 
-            entity.HasOne(d => d.ManagerApproval).WithMany(p => p.ManagerApprovals)
-                .HasForeignKey(d => d.ManagerApprovalId)
-                .HasConstraintName("FK_Requisition_TripStatus");
+            entity.HasOne(d => d.ManagerRecommendation).WithMany(p => p.ManagerRecommendations)
+                .HasForeignKey(d => d.ManagerRecommendationId)
+                .HasConstraintName("FK_Requisition_Status");
+
+            entity.HasOne(d => d.State).WithMany(p => p.StatesofRequisition)
+                .HasForeignKey(d => d.StateId)
+                .HasConstraintName("FK_Requisition_Status2");
 
             entity.HasOne(d => d.Manager).WithMany(p => p.Managers)
                 .HasForeignKey(d => d.ManagerId)
@@ -146,11 +155,11 @@ public partial class PettyCashPrototypeContext : IdentityDbContext<User, Role, s
             entity.Property(e => e.IsActive).HasColumnName("isActive");
         });
 
-        modelBuilder.Entity<TripStatus>(entity =>
+        modelBuilder.Entity<Status>(entity =>
         {
-            entity.ToTable("TripStatus");
+            entity.ToTable("Status");
 
-            entity.Property(e => e.TripStatusId).HasColumnName("TripStatusID");
+            entity.Property(e => e.StatusId).HasColumnName("StatusID");
             entity.Property(e => e.Description).HasMaxLength(50);
             entity.Property(e => e.IsActive).HasColumnName("isActive");
         });
@@ -158,5 +167,15 @@ public partial class PettyCashPrototypeContext : IdentityDbContext<User, Role, s
         base.OnModelCreating(modelBuilder);
 
         modelBuilder.ApplyConfiguration(new PurposeSeeding());
+        modelBuilder.ApplyConfiguration(new DivisionSeeding());
+        modelBuilder.ApplyConfiguration(new DepartmentSeeding());        
+        modelBuilder.ApplyConfiguration(new OfficeSeeding());
+        modelBuilder.ApplyConfiguration(new SubAccountSeeding());
+        modelBuilder.ApplyConfiguration(new MainAccountSeeding());
+        modelBuilder.ApplyConfiguration(new RolesSeeding());
+        modelBuilder.ApplyConfiguration(new StatusSeeding());
+        modelBuilder.ApplyConfiguration(new JobTitleSeeding());
+        modelBuilder.ApplyConfiguration(new DocumentSeeding());
+        modelBuilder.ApplyConfiguration(new VaultSeeding());
     }
 }

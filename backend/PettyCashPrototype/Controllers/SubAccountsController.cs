@@ -2,6 +2,7 @@
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class SubAccountsController : ControllerBase
     {
         private readonly ISubAccount _subAccount;
@@ -43,11 +44,11 @@
         #region POST
 
         [HttpPost, Route("create")]
-        public ActionResult<SubAccount> Create(SubAccount subAccount)
+        public async Task<ActionResult<SubAccount>> Create(SubAccount subAccount)
         {
             try
             {
-                _subAccount.Create(subAccount);
+                await _subAccount.Create(subAccount);
 
                 return Ok(new {message = "The new sub account has been added to the system."});
             } catch (Exception ex)

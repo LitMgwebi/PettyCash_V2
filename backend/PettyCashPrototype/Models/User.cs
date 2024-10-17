@@ -8,15 +8,19 @@ public partial class User: IdentityUser
 
     public string Idnumber { get; set; } = null!;
 
-    public int? DepartmentId { get; set; }
+    public int DivisionId { get; set; }
 
-    public int? OfficeId { get; set; }
+    public int OfficeId { get; set; }
 
-    public bool IsActive { get; set; }
+    public int JobTitleId { get; set; }
 
-    public virtual Department? Department { get; set; }
+    public bool IsActive { get; set; } = true;
+
+    public virtual Division? Division { get; set; }
 
     public virtual Office? Office { get; set; }
+
+    public virtual JobTitle? JobTitle { get; set; }
 
     [JsonIgnore]
     public virtual ICollection<Requisition> Applicants { get; set; } = new List<Requisition>();
@@ -29,9 +33,12 @@ public partial class User: IdentityUser
 
     [JsonIgnore]
     public virtual ICollection<Requisition> Managers { get; set; } = new List<Requisition>();
-    
+
     [JsonIgnore]
-    public IList<UserRole>? UserRoles { get; set; }
+    public virtual ICollection<Transaction> Transactions { get; set; } = new List<Transaction>();
+    
+    //[JsonIgnore]
+    //public IList<UserRole>? UserRoles { get; set; }
 
     public string FullName
     {

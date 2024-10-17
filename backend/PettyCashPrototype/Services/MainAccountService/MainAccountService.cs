@@ -14,6 +14,8 @@
             {
                 IEnumerable<MainAccount> mainAccounts = await _db.MainAccounts
                     .Where(x => x.IsActive == true)
+                    .OrderBy(x => x.Name)
+                    .AsNoTracking()
                     .ToListAsync();
 
                 if (mainAccounts == null)
@@ -30,7 +32,8 @@
             {
                 MainAccount mainAccount = await _db.MainAccounts
                     .Where(a => a.IsActive == true)
-                    .SingleAsync(x => x.MainAccountId == id);
+                    .AsNoTracking()
+                    .FirstOrDefaultAsync(x => x.MainAccountId == id);
 
                 if (mainAccount == null)
                     throw new Exception("System could not retrieve the main account.");
@@ -40,11 +43,19 @@
             catch { throw; }
         }
 
-        public void Create(MainAccount mainAccount)
+        public async Task Create(MainAccount mainAccount)
         {
             try
             {
-                _db.MainAccounts.Add(mainAccount);
+                IEnumerable<MainAccount> mainAccounts = await GetAll();
+
+                if (mainAccounts.Select(x => x.Name).ToList().Contains(mainAccount.Name))
+                    throw new DbUpdateException($"System already contains Main Account with the name: {mainAccount.Name}");
+                
+                if (mainAccounts.Select(x => x.AccountNumber).ToList().Contains(mainAccount.AccountNumber))
+                    throw new DbUpdateException($"System already contains Main Account with the number: {mainAccount.AccountNumber}");
+                
+                var res = _db.MainAccounts.Add(mainAccount);
                 int result = _db.SaveChanges();
 
                 if (result == 0)

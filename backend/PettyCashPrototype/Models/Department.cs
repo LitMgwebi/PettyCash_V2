@@ -1,18 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
-namespace PettyCashPrototype.Models;
-
-public partial class Department
+namespace PettyCashPrototype.Models
 {
-    public int DepartmentId { get; set; }
+    [Table("Department")]
+    public class Department
+    {
+        public int DepartmentId { get; set; }
 
-    public string Name { get; set; } = null!;
+        public string Name { get; set; } = null!;
 
-    public string? Description { get; set; }
+        public string? Description { get; set; }
 
-    public bool IsActive { get; set; }
+        public bool IsActive { get; set; } = true;
 
-    [JsonIgnore]
-    public virtual ICollection<User> Users { get; set; } = new List<User>();
+        [JsonIgnore]
+        public virtual ICollection<Division> Divisions { get; set; } = new List<Division>();
+    }
 }

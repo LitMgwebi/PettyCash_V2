@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace PettyCashPrototype.Models;
+﻿namespace PettyCashPrototype.Models;
 
 public partial class Glaccount
 {
     public int GlaccountId { get; set; }
 
-    public string Name { get; set; } = null!;
+    public string? Name { get; set; }
 
     public string? Description { get; set; }
 
@@ -17,14 +14,24 @@ public partial class Glaccount
 
     public int PurposeId { get; set; }
 
-    public bool IsActive { get; set; }
+    public int DivisionId { get; set; }
 
-    public virtual MainAccount MainAccount { get; set; } = null!;
+    public int OfficeId { get; set; }
 
-    public virtual Purpose Purpose { get; set; } = null!;
+    public bool IsActive { get; set; } = true;
+    
+    public bool NeedsMotivation { get; set; }
+
+    public virtual MainAccount? MainAccount { get; set; }
+
+    public virtual Purpose? Purpose { get; set; }
+
+    public virtual Division? Division { get; set; }
+
+    public virtual Office? Office { get; set; }
 
     [JsonIgnore]
     public virtual ICollection<Requisition> Requisitions { get; set; } = new List<Requisition>();
 
-    public virtual SubAccount SubAccount { get; set; } = null!;
+    public virtual SubAccount? SubAccount { get; set; }
 }

@@ -4,7 +4,7 @@
     {
         public Task<IEnumerable<MainAccount>> GetAll();
         public Task<MainAccount> GetOne(int id);
-        public void Create(MainAccount mainAccount);
+        public Task Create(MainAccount mainAccount);
         public void Edit(MainAccount mainAccount);
         public void SoftDelete(MainAccount mainAccount);
     }

@@ -12,10 +12,11 @@
             {
                 IEnumerable<Purpose> purposes = await _db.Purposes
                     .Where(x => x.IsActive == true)
+                    .AsNoTracking()
                     .ToListAsync();
 
                 if (purposes == null)
-                    throw new Exception("System could not find any Purposes");
+                    throw new Exception("System could not find any Purposes.");
 
                 return purposes;
             } 
@@ -31,10 +32,11 @@
             {
                 Purpose purpose = await _db.Purposes
                     .Where(a => a.IsActive == true)
-                    .SingleAsync(x => x.PurposeId == id);
+                    .AsNoTracking()
+                    .FirstOrDefaultAsync(x => x.PurposeId == id);
                 
                 if (purpose == null)
-                    throw new Exception("System could not retrieve the Purpose");
+                    throw new Exception("System could not retrieve the Purpose.");
 
                 return purpose;
             }
@@ -69,7 +71,6 @@
 
                 if (result == 0)
                     throw new DbUpdateException($"System could not edit ${purpose.Name}.");
-
             }
             catch
             {
