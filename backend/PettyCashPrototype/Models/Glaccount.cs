@@ -22,7 +22,7 @@ public partial class Glaccount
     
     public bool NeedsMotivation { get; set; }
 
-    public virtual MainAccount? MainAccount { get; set; }
+    public virtual AccountSet? MainAccount { get; set; }
 
     public virtual Purpose? Purpose { get; set; }
 
@@ -33,5 +33,5 @@ public partial class Glaccount
     [JsonIgnore]
     public virtual ICollection<Requisition> Requisitions { get; set; } = new List<Requisition>();
 
-    public virtual SubAccount? SubAccount { get; set; }
+    public virtual AccountSet? SubAccount { get; set; }
 }

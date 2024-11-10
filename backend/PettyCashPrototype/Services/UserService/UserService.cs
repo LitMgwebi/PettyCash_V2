@@ -5,13 +5,13 @@ namespace PettyCashPrototype.Services.UserService
 {
     public class UserService : IUser
     {
-        private readonly PettyCashPrototypeContext _db;
+        private readonly PettyCashContext _db;
         private readonly UserManager<User> _userManager;
         private readonly IMapper _mapper;
         private readonly IOffice _office;
         private readonly IDivision _department;
         private readonly IJobTitle _jobTitle;
-        public UserService(PettyCashPrototypeContext db, UserManager<User> userManager, IMapper mapper, IOffice office, IDivision department, IJobTitle jobTitle)
+        public UserService(PettyCashContext db, UserManager<User> userManager, IMapper mapper, IOffice office, IDivision department, IJobTitle jobTitle)
         {
             _userManager = userManager;
             _db = db;

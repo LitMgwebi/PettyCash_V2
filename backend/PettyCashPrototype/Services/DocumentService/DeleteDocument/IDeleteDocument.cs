@@ -2,6 +2,6 @@
 {
     public interface IDeleteDocument
     {
-        Task<string> DeleteDocument(PettyCashPrototypeContext db, IRequisition _requisition, Document document);
+        Task<string> DeleteDocument(PettyCashContext db, IRequisition _requisition, Document document);
     }
 }

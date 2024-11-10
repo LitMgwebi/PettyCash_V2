@@ -2,7 +2,7 @@
 {
     public class DeleteMotivationState: IDeleteDocument
     {
-        public async Task<string> DeleteDocument(PettyCashPrototypeContext db, IRequisition _requisition, Document document)
+        public async Task<string> DeleteDocument(PettyCashContext db, IRequisition _requisition, Document document)
         {
             Requisition requisition = await _requisition.GetOne(document.RequisitionId);
             if (requisition.ManagerId == null)

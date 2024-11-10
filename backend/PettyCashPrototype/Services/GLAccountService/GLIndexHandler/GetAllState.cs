@@ -7,7 +7,7 @@
         {
             this.division = division;
         }
-        public async Task<IEnumerable<Glaccount>> GetGlAccounts(PettyCashPrototypeContext db, User user)
+        public async Task<IEnumerable<Glaccount>> GetGlAccounts(PettyCashContext db, User user)
         {
             IEnumerable<Glaccount> glAccounts = new List<Glaccount>();
             if (division!.DivisionId == 0)

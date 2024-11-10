@@ -3,10 +3,10 @@
     public class Manager : IFinanceApproval
     {
         private IFinanceApproval? nextOfficer;
-        private PettyCashPrototypeContext _db;
+        private PettyCashContext _db;
         private string requiredTitle = "Manager";
 
-        public Manager(PettyCashPrototypeContext db)
+        public Manager(PettyCashContext db)
         {
             _db = db;
         }

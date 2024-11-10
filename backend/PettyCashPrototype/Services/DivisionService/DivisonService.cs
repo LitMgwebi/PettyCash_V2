@@ -2,8 +2,8 @@
 {
     public class DivisonService: IDivision
     {
-        private PettyCashPrototypeContext _db;
-        public DivisonService(PettyCashPrototypeContext db) { _db = db; }
+        private PettyCashContext _db;
+        public DivisonService(PettyCashContext db) { _db = db; }
 
         public async Task<IEnumerable<Division>> GetAll()
         {

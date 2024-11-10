@@ -2,13 +2,13 @@
 {
     public class WithdrawalState: ICreateTransaction
     {
-        private PettyCashPrototypeContext _db;
+        private PettyCashContext _db;
         private Transaction transaction;
         private readonly decimal cashAmount;
         private readonly int requisitionId;
         private Vault vault;
         private IVault _vault;
-        public WithdrawalState(PettyCashPrototypeContext db, IVault _vault, Vault vault, Transaction transaction, decimal cashAmount, int requisitionId)
+        public WithdrawalState(PettyCashContext db, IVault _vault, Vault vault, Transaction transaction, decimal cashAmount, int requisitionId)
         {
             _db = db;
             this.vault = vault;

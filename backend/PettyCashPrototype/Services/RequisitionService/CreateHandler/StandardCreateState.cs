@@ -2,7 +2,7 @@
 {
     public class StandardCreateState : ICreateState
     {
-        public async Task<string> CreateRequisition(PettyCashPrototypeContext _db, Requisition requisition, string userId)
+        public async Task<string> CreateRequisition(PettyCashContext _db, Requisition requisition, string userId)
         {
             requisition.Stage = "Requisiton has been sent for recommendation.";
             requisition.ApplicantId = userId;

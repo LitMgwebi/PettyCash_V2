@@ -2,8 +2,8 @@
 {
     public class GetReceiptsState : IDocumentsState
     {
-        private PettyCashPrototypeContext _db;
-        public GetReceiptsState(PettyCashPrototypeContext db)
+        private PettyCashContext _db;
+        public GetReceiptsState(PettyCashContext db)
         {
             _db = db;
         }

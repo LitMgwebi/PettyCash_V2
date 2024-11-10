@@ -8,7 +8,7 @@
             _transaction = transaction;
         }
 
-        public async Task<string> EditRequisition(PettyCashPrototypeContext _db, Requisition requisition)
+        public async Task<string> EditRequisition(PettyCashContext _db, Requisition requisition)
         {
             if (requisition.TotalExpenses <= requisition.CashIssued)
             {

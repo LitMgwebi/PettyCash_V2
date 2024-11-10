@@ -3,12 +3,12 @@
     public class Deputy : IFinanceApproval
     {
         private IFinanceApproval nextOfficer = null!;
-        private PettyCashPrototypeContext _db;
+        private PettyCashContext _db;
         private string _userId;
         private string firstTitle = "Accountant";
         private string secondTitle = "Bookkeeper";
 
-        public Deputy(PettyCashPrototypeContext db, string userId)
+        public Deputy(PettyCashContext db, string userId)
         {
             _userId = userId;
             _db = db;

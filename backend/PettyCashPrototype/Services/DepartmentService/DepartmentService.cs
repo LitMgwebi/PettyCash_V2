@@ -4,8 +4,8 @@ namespace PettyCashPrototype.Services.DepartmentService
 {
     public class DepartmentService : IDepartment
     {
-        private PettyCashPrototypeContext _db;
-        public DepartmentService(PettyCashPrototypeContext db) { _db = db; }
+        private PettyCashContext _db;
+        public DepartmentService(PettyCashContext db) { _db = db; }
 
         public async Task<IEnumerable<Department>> GetAll()
         {

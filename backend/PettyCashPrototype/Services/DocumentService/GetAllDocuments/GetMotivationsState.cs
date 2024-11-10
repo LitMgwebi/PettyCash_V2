@@ -2,8 +2,8 @@
 {
     public class GetMotivationsState : IDocumentsState
     {
-        private PettyCashPrototypeContext _db;
-        public GetMotivationsState(PettyCashPrototypeContext db)
+        private PettyCashContext _db;
+        public GetMotivationsState(PettyCashContext db)
         {
             _db = db;
         }

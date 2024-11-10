@@ -2,8 +2,8 @@
 {
     public class JobTitleService: IJobTitle
     {
-        private PettyCashPrototypeContext _db;
-        public JobTitleService(PettyCashPrototypeContext db) { _db = db; }
+        private PettyCashContext _db;
+        public JobTitleService(PettyCashContext db) { _db = db; }
 
         public async Task<IEnumerable<JobTitle>> GetAll()
         {

@@ -2,9 +2,9 @@
 {
     public class GetReceiptsByRequisitionState : IDocumentsState
     {
-        private PettyCashPrototypeContext db;
+        private PettyCashContext db;
         private readonly int requisitionId;
-        public GetReceiptsByRequisitionState(PettyCashPrototypeContext db, int requisitionId)
+        public GetReceiptsByRequisitionState(PettyCashContext db, int requisitionId)
         {
             this.db = db;
             this.requisitionId = requisitionId;

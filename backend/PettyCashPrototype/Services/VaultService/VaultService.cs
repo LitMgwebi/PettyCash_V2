@@ -2,9 +2,9 @@
 {
     public class VaultService: IVault
     {
-        private PettyCashPrototypeContext _db;
+        private PettyCashContext _db;
 
-        public VaultService(PettyCashPrototypeContext db) { _db = db; }
+        public VaultService(PettyCashContext db) { _db = db; }
 
 
         public async Task<IEnumerable<Vault>> GetAll()

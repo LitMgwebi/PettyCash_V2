@@ -2,8 +2,8 @@
 {
     public class PurposeService: IPurpose
     {
-        private PettyCashPrototypeContext _db;
-        public PurposeService(PettyCashPrototypeContext db) => _db = db;
+        private PettyCashContext _db;
+        public PurposeService(PettyCashContext db) => _db = db;
 
 
         public async Task<IEnumerable<Purpose>> GetAll()

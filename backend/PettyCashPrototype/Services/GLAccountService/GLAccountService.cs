@@ -4,20 +4,18 @@ namespace PettyCashPrototype.Services.GLAccountService
 {
     public class GLAccountService: IGLAccount
     {
-        private PettyCashPrototypeContext _db;
+        private PettyCashContext _db;
         private readonly IDivision _department;
         private readonly IUser _user;
-        private readonly IMainAccount _mainAccount;
-        private readonly ISubAccount _subAccount;
+        private readonly IAccountSet _account;
         private readonly IPurpose _purpose;
         private readonly IOffice _office;
         private readonly IDivision _division;
-        public GLAccountService(PettyCashPrototypeContext db, IDivision department, IMainAccount mainAccount, ISubAccount subAccount, IPurpose purpose, IOffice office, IUser user, IDivision division)
+        public GLAccountService(PettyCashContext db, IDivision department, IAccountSet account, IPurpose purpose, IOffice office, IUser user, IDivision division)
         {
             _db = db;
             _department = department;
-            _mainAccount = mainAccount;
-            _subAccount = subAccount;
+            _account = account;
             _purpose = purpose;
             _office = office;
             _user = user;
@@ -78,8 +76,11 @@ namespace PettyCashPrototype.Services.GLAccountService
         {
             try
             {
-                MainAccount mainAccount = await _mainAccount.GetOne(glAccount.MainAccountId);
-                SubAccount subAccount = await _subAccount.GetOne(glAccount.SubAccountId);
+                ServerResponse<AccountSet> mainAccountResponse = await _account.GetOneAccountSet(AccountSet.MainAccount, glAccount.MainAccountId);
+                ServerResponse<AccountSet> subAccountResponse = await _account.GetOneAccountSet(AccountSet.SubAccount, glAccount.SubAccountId);
+
+                MainAccount mainAccount = (MainAccount)mainAccountResponse.Data!;
+                SubAccount subAccount = (SubAccount)subAccountResponse.Data!;
                 Division division = await _department.GetOne(glAccount.DivisionId);
                 Purpose purpose = await _purpose.GetOne(glAccount.PurposeId);
                 Office office = await _office.GetOne(glAccount.OfficeId);
@@ -105,12 +106,15 @@ namespace PettyCashPrototype.Services.GLAccountService
         {
             try
             {
-                glAccount.MainAccount = await _mainAccount.GetOne(glAccount.MainAccountId);
-                glAccount.SubAccount = await _subAccount.GetOne(glAccount.SubAccountId);
+                ServerResponse<AccountSet> mainAccountResponse = await _account.GetOneAccountSet(AccountSet.MainAccount, glAccount.MainAccountId);
+                ServerResponse<AccountSet> subAccountResponse = await _account.GetOneAccountSet(AccountSet.SubAccount, glAccount.SubAccountId);
+
+                MainAccount mainAccount = (MainAccount)mainAccountResponse.Data!;
+                SubAccount subAccount = (SubAccount)subAccountResponse.Data!;
                 glAccount.Division = await _department.GetOne(glAccount.DivisionId);
                 glAccount.Purpose = await _purpose.GetOne(glAccount.PurposeId);
                 glAccount.Office = await _office.GetOne(glAccount.OfficeId);
-                glAccount.Description = $"{glAccount.MainAccount.AccountNumber}/{glAccount.SubAccount.AccountNumber}/{glAccount.Division.Name}/{glAccount.Purpose.Name}/{glAccount.Office.Name}";
+                glAccount.Description = $"{glAccount.MainAccount!.AccountNumber}/{glAccount.SubAccount!.AccountNumber}/{glAccount.Division.Name}/{glAccount.Purpose.Name}/{glAccount.Office.Name}";
                 glAccount.Name = $"{glAccount.Division.Description} {glAccount.MainAccount.Name} ({glAccount.SubAccount.Name})";
                 _db.Glaccounts.Update(glAccount);
                 int result = _db.SaveChanges();

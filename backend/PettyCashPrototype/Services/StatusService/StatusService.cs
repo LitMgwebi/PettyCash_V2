@@ -2,8 +2,8 @@
 {
     public class StatusService: IStatus
     {
-        private PettyCashPrototypeContext _db;
-        public StatusService(PettyCashPrototypeContext db) { _db = db; }
+        private PettyCashContext _db;
+        public StatusService(PettyCashContext db) { _db = db; }
 
         public async Task<IEnumerable<Status>> GetAll()
         {

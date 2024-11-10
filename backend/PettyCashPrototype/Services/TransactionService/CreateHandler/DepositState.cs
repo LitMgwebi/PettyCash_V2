@@ -2,14 +2,14 @@
 {
     public class DepositState : ICreateTransaction
     {
-        private PettyCashPrototypeContext _db;
+        private PettyCashContext _db;
         private IVault _vault;
         private Vault vault;
         private Transaction transaction;
         private readonly decimal cashAmount;
         private readonly int requisitionId;
         private string userId;
-        public DepositState(PettyCashPrototypeContext db, IVault _vault, Vault vault, Transaction transaction,  decimal cashAmount, string userId, int requisitionId = 0)
+        public DepositState(PettyCashContext db, IVault _vault, Vault vault, Transaction transaction,  decimal cashAmount, string userId, int requisitionId = 0)
         {
             this.transaction = transaction;
             this.cashAmount = cashAmount;

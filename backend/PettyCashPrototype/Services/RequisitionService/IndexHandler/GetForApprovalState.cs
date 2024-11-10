@@ -17,7 +17,7 @@ namespace PettyCashPrototype.Services.RequisitionService.IndexHandler
             this.userId = userId;
         }
 
-        public async Task<IEnumerable<Requisition>> GetRequisitions(PettyCashPrototypeContext db)
+        public async Task<IEnumerable<Requisition>> GetRequisitions(PettyCashContext db)
         {
             JobTitle jobTitle = await _jobTitle.GetOne(jobTitleId);
             IEnumerable<Requisition> requisitions = new List<Requisition>();

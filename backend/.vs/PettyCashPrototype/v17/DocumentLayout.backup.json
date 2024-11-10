@@ -1,0 +1,227 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\lithi\\OneDrive\\Documentos\\Github\\PettyCash_V2\\backend\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\lithi\\OneDrive\\Documentos\\Github\\PettyCash_V2\\backend\\PettyCashPrototype\\Migrations\\20241110141743_InseptionOfAccountSets.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:PettyCashPrototype\\Migrations\\20241110141743_InseptionOfAccountSets.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\lithi\\OneDrive\\Documentos\\Github\\PettyCash_V2\\backend\\PettyCashPrototype\\Migrations\\20241110141704_InseptionOfAccountSets.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:PettyCashPrototype\\Migrations\\20241110141704_InseptionOfAccountSets.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F4A39040-71EA-4DCD-9014-56742C9785E2}|PettyCashPrototype\\PettyCashPrototype.csproj|c:\\users\\lithi\\onedrive\\documentos\\github\\pettycash_v2\\backend\\pettycashprototype\\seeding\\entites\\accountsetseeding.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F4A39040-71EA-4DCD-9014-56742C9785E2}|PettyCashPrototype\\PettyCashPrototype.csproj|solutionrelative:pettycashprototype\\seeding\\entites\\accountsetseeding.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F4A39040-71EA-4DCD-9014-56742C9785E2}|PettyCashPrototype\\PettyCashPrototype.csproj|c:\\users\\lithi\\onedrive\\documentos\\github\\pettycash_v2\\backend\\pettycashprototype\\models\\pettycashcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F4A39040-71EA-4DCD-9014-56742C9785E2}|PettyCashPrototype\\PettyCashPrototype.csproj|solutionrelative:pettycashprototype\\models\\pettycashcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F4A39040-71EA-4DCD-9014-56742C9785E2}|PettyCashPrototype\\PettyCashPrototype.csproj|c:\\users\\lithi\\onedrive\\documentos\\github\\pettycash_v2\\backend\\pettycashprototype\\seeding\\entites\\mainaccountseeding.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F4A39040-71EA-4DCD-9014-56742C9785E2}|PettyCashPrototype\\PettyCashPrototype.csproj|solutionrelative:pettycashprototype\\seeding\\entites\\mainaccountseeding.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F4A39040-71EA-4DCD-9014-56742C9785E2}|PettyCashPrototype\\PettyCashPrototype.csproj|c:\\users\\lithi\\onedrive\\documentos\\github\\pettycash_v2\\backend\\pettycashprototype\\seeding\\entites\\subaccountseeding.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F4A39040-71EA-4DCD-9014-56742C9785E2}|PettyCashPrototype\\PettyCashPrototype.csproj|solutionrelative:pettycashprototype\\seeding\\entites\\subaccountseeding.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F4A39040-71EA-4DCD-9014-56742C9785E2}|PettyCashPrototype\\PettyCashPrototype.csproj|c:\\users\\lithi\\onedrive\\documentos\\github\\pettycash_v2\\backend\\pettycashprototype\\models\\accountset.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F4A39040-71EA-4DCD-9014-56742C9785E2}|PettyCashPrototype\\PettyCashPrototype.csproj|solutionrelative:pettycashprototype\\models\\accountset.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F4A39040-71EA-4DCD-9014-56742C9785E2}|PettyCashPrototype\\PettyCashPrototype.csproj|c:\\users\\lithi\\onedrive\\documentos\\github\\pettycash_v2\\backend\\pettycashprototype\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{F4A39040-71EA-4DCD-9014-56742C9785E2}|PettyCashPrototype\\PettyCashPrototype.csproj|solutionrelative:pettycashprototype\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F4A39040-71EA-4DCD-9014-56742C9785E2}|PettyCashPrototype\\PettyCashPrototype.csproj|c:\\users\\lithi\\onedrive\\documentos\\github\\pettycash_v2\\backend\\pettycashprototype\\services\\accountsetservice\\iaccountset.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F4A39040-71EA-4DCD-9014-56742C9785E2}|PettyCashPrototype\\PettyCashPrototype.csproj|solutionrelative:pettycashprototype\\services\\accountsetservice\\iaccountset.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F4A39040-71EA-4DCD-9014-56742C9785E2}|PettyCashPrototype\\PettyCashPrototype.csproj|c:\\users\\lithi\\onedrive\\documentos\\github\\pettycash_v2\\backend\\pettycashprototype\\services\\glaccountservice\\glaccountservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F4A39040-71EA-4DCD-9014-56742C9785E2}|PettyCashPrototype\\PettyCashPrototype.csproj|solutionrelative:pettycashprototype\\services\\glaccountservice\\glaccountservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F4A39040-71EA-4DCD-9014-56742C9785E2}|PettyCashPrototype\\PettyCashPrototype.csproj|c:\\users\\lithi\\onedrive\\documentos\\github\\pettycash_v2\\backend\\pettycashprototype\\controllers\\accountsetscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F4A39040-71EA-4DCD-9014-56742C9785E2}|PettyCashPrototype\\PettyCashPrototype.csproj|solutionrelative:pettycashprototype\\controllers\\accountsetscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 121,
+          "SelectedChildIndex": 5,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:3:0:{d212f56b-c48a-434c-a121-1c5d80b59b9f}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:2:0:{d212f56b-c48a-434c-a121-1c5d80b59b9f}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c64b9c2-e352-428e-a56d-0ace190b99a6}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:1:0:{d212f56b-c48a-434c-a121-1c5d80b59b9f}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "20241110141743_InseptionOfAccountSets.cs",
+              "DocumentMoniker": "C:\\Users\\lithi\\OneDrive\\Documentos\\Github\\PettyCash_V2\\backend\\PettyCashPrototype\\Migrations\\20241110141743_InseptionOfAccountSets.cs",
+              "RelativeDocumentMoniker": "PettyCashPrototype\\Migrations\\20241110141743_InseptionOfAccountSets.cs",
+              "ToolTip": "C:\\Users\\lithi\\OneDrive\\Documentos\\Github\\PettyCash_V2\\backend\\PettyCashPrototype\\Migrations\\20241110141743_InseptionOfAccountSets.cs",
+              "RelativeToolTip": "PettyCashPrototype\\Migrations\\20241110141743_InseptionOfAccountSets.cs",
+              "ViewState": "AgIAAB4AAAAAAAAAAAAQwCwAAAAVAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-10T14:17:43.318Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "20241110141704_InseptionOfAccountSets.cs",
+              "DocumentMoniker": "C:\\Users\\lithi\\OneDrive\\Documentos\\Github\\PettyCash_V2\\backend\\PettyCashPrototype\\Migrations\\20241110141704_InseptionOfAccountSets.cs",
+              "RelativeDocumentMoniker": "PettyCashPrototype\\Migrations\\20241110141704_InseptionOfAccountSets.cs",
+              "ToolTip": "C:\\Users\\lithi\\OneDrive\\Documentos\\Github\\PettyCash_V2\\backend\\PettyCashPrototype\\Migrations\\20241110141704_InseptionOfAccountSets.cs",
+              "RelativeToolTip": "PettyCashPrototype\\Migrations\\20241110141704_InseptionOfAccountSets.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-10T14:17:04.818Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "AccountSetSeeding.cs",
+              "DocumentMoniker": "C:\\Users\\lithi\\OneDrive\\Documentos\\Github\\PettyCash_V2\\backend\\PettyCashPrototype\\Seeding\\Entites\\AccountSetSeeding.cs",
+              "RelativeDocumentMoniker": "PettyCashPrototype\\Seeding\\Entites\\AccountSetSeeding.cs",
+              "ToolTip": "C:\\Users\\lithi\\OneDrive\\Documentos\\Github\\PettyCash_V2\\backend\\PettyCashPrototype\\Seeding\\Entites\\AccountSetSeeding.cs",
+              "RelativeToolTip": "PettyCashPrototype\\Seeding\\Entites\\AccountSetSeeding.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABsAAAAQAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-10T14:09:54.254Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\Users\\lithi\\OneDrive\\Documentos\\Github\\PettyCash_V2\\backend\\PettyCashPrototype\\appsettings.json",
+              "RelativeDocumentMoniker": "PettyCashPrototype\\appsettings.json",
+              "ToolTip": "C:\\Users\\lithi\\OneDrive\\Documentos\\Github\\PettyCash_V2\\backend\\PettyCashPrototype\\appsettings.json",
+              "RelativeToolTip": "PettyCashPrototype\\appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAACGAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2024-11-10T14:03:32.339Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "SubAccountSeeding.cs",
+              "DocumentMoniker": "C:\\Users\\lithi\\OneDrive\\Documentos\\Github\\PettyCash_V2\\backend\\PettyCashPrototype\\Seeding\\Entites\\SubAccountSeeding.cs",
+              "RelativeDocumentMoniker": "PettyCashPrototype\\Seeding\\Entites\\SubAccountSeeding.cs",
+              "ToolTip": "C:\\Users\\lithi\\OneDrive\\Documentos\\Github\\PettyCash_V2\\backend\\PettyCashPrototype\\Seeding\\Entites\\SubAccountSeeding.cs",
+              "RelativeToolTip": "PettyCashPrototype\\Seeding\\Entites\\SubAccountSeeding.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAASAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-10T14:02:21.112Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "MainAccountSeeding.cs",
+              "DocumentMoniker": "C:\\Users\\lithi\\OneDrive\\Documentos\\Github\\PettyCash_V2\\backend\\PettyCashPrototype\\Seeding\\Entites\\MainAccountSeeding.cs",
+              "RelativeDocumentMoniker": "PettyCashPrototype\\Seeding\\Entites\\MainAccountSeeding.cs",
+              "ToolTip": "C:\\Users\\lithi\\OneDrive\\Documentos\\Github\\PettyCash_V2\\backend\\PettyCashPrototype\\Seeding\\Entites\\MainAccountSeeding.cs",
+              "RelativeToolTip": "PettyCashPrototype\\Seeding\\Entites\\MainAccountSeeding.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAASAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-10T14:00:57.255Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "PettyCashContext.cs",
+              "DocumentMoniker": "C:\\Users\\lithi\\OneDrive\\Documentos\\Github\\PettyCash_V2\\backend\\PettyCashPrototype\\Models\\PettyCashContext.cs",
+              "RelativeDocumentMoniker": "PettyCashPrototype\\Models\\PettyCashContext.cs",
+              "ToolTip": "C:\\Users\\lithi\\OneDrive\\Documentos\\Github\\PettyCash_V2\\backend\\PettyCashPrototype\\Models\\PettyCashContext.cs",
+              "RelativeToolTip": "PettyCashPrototype\\Models\\PettyCashContext.cs",
+              "ViewState": "AgIAAI4AAAAAAAAAAAAAAKAAAABBAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-10T13:51:42.81Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "GLAccountService.cs",
+              "DocumentMoniker": "C:\\Users\\lithi\\OneDrive\\Documentos\\Github\\PettyCash_V2\\backend\\PettyCashPrototype\\Services\\GLAccountService\\GLAccountService.cs",
+              "RelativeDocumentMoniker": "PettyCashPrototype\\Services\\GLAccountService\\GLAccountService.cs",
+              "ToolTip": "C:\\Users\\lithi\\OneDrive\\Documentos\\Github\\PettyCash_V2\\backend\\PettyCashPrototype\\Services\\GLAccountService\\GLAccountService.cs",
+              "RelativeToolTip": "PettyCashPrototype\\Services\\GLAccountService\\GLAccountService.cs",
+              "ViewState": "AgIAAGEAAAAAAAAAAAAkwHQAAABIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-10T13:43:43.153Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "AccountSetsController.cs",
+              "DocumentMoniker": "C:\\Users\\lithi\\OneDrive\\Documentos\\Github\\PettyCash_V2\\backend\\PettyCashPrototype\\Controllers\\AccountSetsController.cs",
+              "RelativeDocumentMoniker": "PettyCashPrototype\\Controllers\\AccountSetsController.cs",
+              "ToolTip": "C:\\Users\\lithi\\OneDrive\\Documentos\\Github\\PettyCash_V2\\backend\\PettyCashPrototype\\Controllers\\AccountSetsController.cs",
+              "RelativeToolTip": "PettyCashPrototype\\Controllers\\AccountSetsController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAADQAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-10T13:27:56.554Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "AccountSet.cs",
+              "DocumentMoniker": "C:\\Users\\lithi\\OneDrive\\Documentos\\Github\\PettyCash_V2\\backend\\PettyCashPrototype\\Models\\AccountSet.cs",
+              "RelativeDocumentMoniker": "PettyCashPrototype\\Models\\AccountSet.cs",
+              "ToolTip": "C:\\Users\\lithi\\OneDrive\\Documentos\\Github\\PettyCash_V2\\backend\\PettyCashPrototype\\Models\\AccountSet.cs",
+              "RelativeToolTip": "PettyCashPrototype\\Models\\AccountSet.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAA5AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-10T12:47:15.443Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "IAccountSet.cs",
+              "DocumentMoniker": "C:\\Users\\lithi\\OneDrive\\Documentos\\Github\\PettyCash_V2\\backend\\PettyCashPrototype\\Services\\AccountSetService\\IAccountSet.cs",
+              "RelativeDocumentMoniker": "PettyCashPrototype\\Services\\AccountSetService\\IAccountSet.cs",
+              "ToolTip": "C:\\Users\\lithi\\OneDrive\\Documentos\\Github\\PettyCash_V2\\backend\\PettyCashPrototype\\Services\\AccountSetService\\IAccountSet.cs",
+              "RelativeToolTip": "PettyCashPrototype\\Services\\AccountSetService\\IAccountSet.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-10T12:48:30.266Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -12,7 +12,7 @@
             this.userId = userId;
             this.issueState = issuedState;
         }
-        public async Task<IEnumerable<Requisition>> GetRequisitions(PettyCashPrototypeContext db)
+        public async Task<IEnumerable<Requisition>> GetRequisitions(PettyCashContext db)
         {
             User user = await _user.GetUserById(userId);
             IEnumerable<Requisition> requisitions = new List<Requisition>();

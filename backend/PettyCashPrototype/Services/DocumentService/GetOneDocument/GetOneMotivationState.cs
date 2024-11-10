@@ -2,10 +2,10 @@
 {
     public class GetOneMotivationState: IGetDocument
     {
-        private PettyCashPrototypeContext db;
+        private PettyCashContext db;
         private readonly int documentId;
 
-        public GetOneMotivationState(PettyCashPrototypeContext db, int documentId)
+        public GetOneMotivationState(PettyCashContext db, int documentId)
         {
             this.db = db;
             this.documentId = documentId;

@@ -8,7 +8,7 @@
             this.type = type;
         }
 
-        public async Task<string> EditRequisition(PettyCashPrototypeContext _db, Requisition requisition)
+        public async Task<string> EditRequisition(PettyCashContext _db, Requisition requisition)
         {
             if (type == typesOfDocument.Motivation)
             {

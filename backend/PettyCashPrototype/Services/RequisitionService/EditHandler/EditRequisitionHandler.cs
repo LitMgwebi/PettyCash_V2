@@ -6,7 +6,7 @@
 
         public void setState(IEditState state) => this.state = state;
 
-        public async Task<string> request(PettyCashPrototypeContext db, Requisition requisition)
+        public async Task<string> request(PettyCashContext db, Requisition requisition)
         {
             string message = await state.EditRequisition(db, requisition);
             return message;

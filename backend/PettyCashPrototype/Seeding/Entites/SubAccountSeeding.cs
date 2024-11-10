@@ -9,84 +9,84 @@ namespace PettyCashPrototype.Seeding.Entites
             builder.HasData(
                 new SubAccount
                 {
-                    SubAccountId = 1,
+                    AccountSetId = 10,
                     AccountNumber = "0206",
                     Name = "IT Audit",
                     IsActive = true,
                 },
                 new SubAccount
                 {
-                    SubAccountId = 2,
+                    AccountSetId = 11,
                     AccountNumber = "0045",
                     Name = "Meeting Fees",
                     IsActive = true,
                 },
                 new SubAccount
                 {
-                    SubAccountId = 3,
+                    AccountSetId = 12,
                     AccountNumber = "0001",
                     Name = "Accomodation",
                     IsActive = true,
                 },
                 new SubAccount
                 {
-                    SubAccountId = 4,
+                    AccountSetId = 13,
                     AccountNumber = "0006",
                     Name = "Basic Salaries",
                     IsActive = true,
                 },
                 new SubAccount
                 {
-                    SubAccountId = 5,
+                    AccountSetId = 14,
                     AccountNumber = "0034",
                     Name = "Housing",
                     IsActive = true,
                 },
                 new SubAccount
                 {
-                    SubAccountId = 6,
+                    AccountSetId = 15,
                     AccountNumber = "0101",
                     Name = "Membership Fees",
                     IsActive = true,
                 },
                 new SubAccount
                 {
-                    SubAccountId = 7,
+                    AccountSetId = 16,
                     AccountNumber = "0094",
                     Name = "System Support",
                     IsActive = true,
                 },
                 new SubAccount
                 {
-                    SubAccountId = 8,
+                    AccountSetId = 17,
                     AccountNumber = "0002",
                     Name = "Air travel",
                     IsActive = true,
                 },
                 new SubAccount
                 {
-                    SubAccountId = 9,
+                    AccountSetId = 18,
                     AccountNumber = "0066",
                     Name = "Shuttle and Taxi Service",
                     IsActive = true,
                 },
                 new SubAccount
                 {
-                    SubAccountId = 10,
+                    AccountSetId = 19,
                     AccountNumber = "0044",
                     Name = "Medical Aid",
                     IsActive = true,
                 },
                 new SubAccount
                 {
-                    SubAccountId = 11,
+                    AccountSetId = 20,
                     AccountNumber = "0010",
                     Name = "Cellphones and Data",
                     IsActive = true,
                 },
                 new SubAccount
                 {
-                    SubAccountId = 12,
+                    AccountSetId = 21,
                     AccountNumber = "0086",
                     Name = "Vehicle Rental",
                     IsActive = true,

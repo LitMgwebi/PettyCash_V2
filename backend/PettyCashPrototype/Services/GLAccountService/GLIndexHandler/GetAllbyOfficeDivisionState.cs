@@ -2,7 +2,7 @@
 {
     public class GetAllbyOfficeDivisionState: IGLIndex
     {
-        public async Task<IEnumerable<Glaccount>> GetGlAccounts(PettyCashPrototypeContext db, User user)
+        public async Task<IEnumerable<Glaccount>> GetGlAccounts(PettyCashContext db, User user)
         {
             IEnumerable<Glaccount> glAccounts = await db.Glaccounts
                 .Where(d => d.DivisionId == user.DivisionId)

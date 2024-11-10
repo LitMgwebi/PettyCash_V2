@@ -3,10 +3,10 @@
     public class CFO : IFinanceApproval
     {
         private IFinanceApproval? nextOfficer;
-        private PettyCashPrototypeContext _db;
+        private PettyCashContext _db;
         private string requiredTitle = "CFO";
 
-        public CFO(PettyCashPrototypeContext db)
+        public CFO(PettyCashContext db)
         {
             _db = db;
         }

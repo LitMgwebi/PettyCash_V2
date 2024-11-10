@@ -2,10 +2,10 @@
 {
     public class GetReceiptState: IGetDocument
     {
-        private PettyCashPrototypeContext db;
+        private PettyCashContext db;
         private readonly int documentId;
 
-        public GetReceiptState(PettyCashPrototypeContext db, int documentId)
+        public GetReceiptState(PettyCashContext db, int documentId)
         {
             this.db = db;
             this.documentId = documentId;

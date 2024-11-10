@@ -3,8 +3,7 @@
 global using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 global using PettyCashPrototype.Services.RequisitionService;
 global using PettyCashPrototype.Services.TransactionService;
-global using PettyCashPrototype.Services.MainAccountService;
-global using PettyCashPrototype.Services.SubAccountService;
+global using PettyCashPrototype.Services.AccountSetService;
 global using PettyCashPrototype.Services.DepartmentService;
 global using PettyCashPrototype.Services.GLAccountService;
 global using PettyCashPrototype.Services.DocumentService;
@@ -51,9 +50,8 @@ builder.Services.AddScoped<IDivision, DivisonService>();
 builder.Services.AddScoped<IJobTitle, JobTitleService>();
 builder.Services.AddScoped<IDocument, DocumentService>();
 builder.Services.AddScoped<IGLAccount, GLAccountService>();
-builder.Services.AddScoped<ISubAccount, SubAccountService>();
 builder.Services.AddScoped<IDepartment, DepartmentService>();
-builder.Services.AddScoped<IMainAccount, MainAccountService>();
+builder.Services.AddScoped<IAccountSet, AccountSetService>();
 builder.Services.AddScoped<ITransaction, TransactionService>();
 builder.Services.AddScoped<IRequisition, RequisitionService>();
 builder.Services.AddHostedService<PettyCashNotification>();
@@ -129,14 +127,14 @@ builder.Services.AddAuthorization(options =>
 
 #region Identity Configuration
 
-builder.Services.AddDbContext<PettyCashPrototypeContext>(options =>
+builder.Services.AddDbContext<PettyCashContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("DevelopmentConnection"));
     options.EnableSensitiveDataLogging();
 });
 builder.Services.AddIdentityCore<User>()
     .AddRoles<IdentityRole>()
-    .AddEntityFrameworkStores<PettyCashPrototypeContext>();
+    .AddEntityFrameworkStores<PettyCashContext>();
 builder.Services.Configure<IdentityOptions>(options =>
 {
     options.Password.RequireDigit = true;

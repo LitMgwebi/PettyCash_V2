@@ -10,7 +10,7 @@
             this.userId = userId;
         }
 
-        public async Task<string> EditRequisition(PettyCashPrototypeContext _db, Requisition requisition)
+        public async Task<string> EditRequisition(PettyCashContext _db, Requisition requisition)
         {
             string message = string.Empty;
             if (reviewRequisition.FinanceApproval == null)

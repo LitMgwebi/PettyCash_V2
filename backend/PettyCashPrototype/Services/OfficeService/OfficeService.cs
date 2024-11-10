@@ -2,8 +2,8 @@
 {
     public class OfficeService: IOffice
     {
-        private PettyCashPrototypeContext _db;
-        public OfficeService(PettyCashPrototypeContext db) => _db = db;
+        private PettyCashContext _db;
+        public OfficeService(PettyCashContext db) => _db = db;
 
 
         public async Task<IEnumerable<Office>> GetAll()

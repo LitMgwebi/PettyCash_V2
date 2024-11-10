@@ -6,7 +6,7 @@
 
         public void setState(IIndexState state) => this.state = state;
 
-        public async Task<IEnumerable<Requisition>> request(PettyCashPrototypeContext db)
+        public async Task<IEnumerable<Requisition>> request(PettyCashContext db)
         {
             IEnumerable <Requisition> requisitions = await state.GetRequisitions(db);
 

@@ -1,24 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\lithim\\OneDrive - sadpmr.co.za\\Documents\\Default VS Repo\\PettyCashPrototype\\backend\\PettyCashPrototype\\PettyCashPrototype.csproj": {}
+    "C:\\Users\\lithi\\OneDrive\\Documentos\\Github\\PettyCash_V2\\backend\\PettyCashPrototype\\PettyCashPrototype.csproj": {}
   },
   "projects": {
-    "C:\\Users\\lithim\\OneDrive - sadpmr.co.za\\Documents\\Default VS Repo\\PettyCashPrototype\\backend\\PettyCashPrototype\\PettyCashPrototype.csproj": {
+    "C:\\Users\\lithi\\OneDrive\\Documentos\\Github\\PettyCash_V2\\backend\\PettyCashPrototype\\PettyCashPrototype.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\lithim\\OneDrive - sadpmr.co.za\\Documents\\Default VS Repo\\PettyCashPrototype\\backend\\PettyCashPrototype\\PettyCashPrototype.csproj",
+        "projectUniqueName": "C:\\Users\\lithi\\OneDrive\\Documentos\\Github\\PettyCash_V2\\backend\\PettyCashPrototype\\PettyCashPrototype.csproj",
         "projectName": "PettyCashPrototype",
-        "projectPath": "C:\\Users\\lithim\\OneDrive - sadpmr.co.za\\Documents\\Default VS Repo\\PettyCashPrototype\\backend\\PettyCashPrototype\\PettyCashPrototype.csproj",
-        "packagesPath": "C:\\Users\\lithim\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\lithim\\OneDrive - sadpmr.co.za\\Documents\\Default VS Repo\\PettyCashPrototype\\backend\\PettyCashPrototype\\obj\\",
+        "projectPath": "C:\\Users\\lithi\\OneDrive\\Documentos\\Github\\PettyCash_V2\\backend\\PettyCashPrototype\\PettyCashPrototype.csproj",
+        "packagesPath": "C:\\Users\\lithi\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\lithi\\OneDrive\\Documentos\\Github\\PettyCash_V2\\backend\\PettyCashPrototype\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\lithim\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Users\\lithi\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -126,7 +122,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.303/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.403/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

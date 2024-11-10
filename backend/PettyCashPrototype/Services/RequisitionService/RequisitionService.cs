@@ -6,13 +6,13 @@ namespace PettyCashPrototype.Services.RequisitionService
 {
     public class RequisitionService : IRequisition
     {
-        private PettyCashPrototypeContext _db;
+        private PettyCashContext _db;
         private readonly IUser _user;
         private readonly ITransaction _transaction;
         private readonly IGLAccount _glAccount;
         private readonly IJobTitle _jobTitle;
         private readonly IStatus _status;
-        public RequisitionService(PettyCashPrototypeContext db, IUser user, IGLAccount gLAccount, IJobTitle jobTitle, ITransaction transaction, IStatus status)
+        public RequisitionService(PettyCashContext db, IUser user, IGLAccount gLAccount, IJobTitle jobTitle, ITransaction transaction, IStatus status)
         {
             _db = db;
             _user = user;

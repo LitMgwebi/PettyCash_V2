@@ -2,9 +2,9 @@
 {
     public class GetMotivationsByRequisitionState : IDocumentsState
     {
-        private PettyCashPrototypeContext db;
+        private PettyCashContext db;
         private readonly int requisitionId;
-        public GetMotivationsByRequisitionState(PettyCashPrototypeContext db, int requisitionId)
+        public GetMotivationsByRequisitionState(PettyCashContext db, int requisitionId)
         {
             this.db = db;
             this.requisitionId = requisitionId;

@@ -10,7 +10,7 @@
             this.userId = userId;
         }
 
-        public async Task<string> EditRequisition(PettyCashPrototypeContext _db, Requisition requisition)
+        public async Task<string> EditRequisition(PettyCashContext _db, Requisition requisition)
         {
             /*
              * There has to code here which is used to send emails to the applicant and the specific Financial Auth

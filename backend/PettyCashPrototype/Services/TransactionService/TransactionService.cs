@@ -4,9 +4,9 @@ namespace PettyCashPrototype.Services.TransactionService
 {
     public class TransactionService : ITransaction
     {
-        private PettyCashPrototypeContext _db;
+        private PettyCashContext _db;
         private IVault _vault;
-        public TransactionService(PettyCashPrototypeContext db, IVault vault)
+        public TransactionService(PettyCashContext db, IVault vault)
         {
             _db = db;
             _vault = vault;

@@ -12,7 +12,7 @@
             this.userId = userId;
             this.role = role;
         }
-        public async Task<IEnumerable<Requisition>> GetRequisitions(PettyCashPrototypeContext db)
+        public async Task<IEnumerable<Requisition>> GetRequisitions(PettyCashContext db)
         {
             IEnumerable<Requisition> requisitions = new List<Requisition>();
             User user = await _user.GetUserById(userId);

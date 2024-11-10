@@ -2,6 +2,6 @@
 {
     public interface IGLIndex
     {
-        Task<IEnumerable<Glaccount>> GetGlAccounts(PettyCashPrototypeContext db, User user);
+        Task<IEnumerable<Glaccount>> GetGlAccounts(PettyCashContext db, User user);
     }
 }

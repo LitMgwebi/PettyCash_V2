@@ -9,9 +9,9 @@ namespace PettyCashPrototype.Services.DocumentService
 {
     public class DocumentService : IDocument
     {
-        private PettyCashPrototypeContext _db;
+        private PettyCashContext _db;
         private IRequisition _requisition;
-        public DocumentService(PettyCashPrototypeContext db, IRequisition requisition) { 
+        public DocumentService(PettyCashContext db, IRequisition requisition) { 
             _db = db;
             _requisition = requisition;
         }

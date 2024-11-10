@@ -2,14 +2,14 @@
 {
     public class UploadMotivationState : IUploadDocument
     {
-        private PettyCashPrototypeContext _db;
+        private PettyCashContext _db;
         private IFormFile file;
         private IRequisition _requisition;
         private readonly string name;
         private readonly int requisitionId;
         private readonly string fileExtension;
 
-        public UploadMotivationState(PettyCashPrototypeContext db, IRequisition requisition, IFormFile file, string name, int requisitionId, string fileExtension)
+        public UploadMotivationState(PettyCashContext db, IRequisition requisition, IFormFile file, string name, int requisitionId, string fileExtension)
         {
             this.file = file;
             this.name = name;

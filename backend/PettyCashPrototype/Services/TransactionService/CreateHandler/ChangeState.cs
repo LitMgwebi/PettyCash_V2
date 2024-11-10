@@ -2,13 +2,13 @@
 {
     public class ChangeState: ICreateTransaction
     {
-        private PettyCashPrototypeContext _db;
+        private PettyCashContext _db;
         private IVault _vault;
         private Vault vault;
         private Transaction transaction;
         private readonly decimal cashAmount;
         private readonly int requisitionId;
-        public ChangeState(PettyCashPrototypeContext db, IVault _vault, Vault vault, Transaction transaction, decimal cashAmount, int requisitionId)
+        public ChangeState(PettyCashContext db, IVault _vault, Vault vault, Transaction transaction, decimal cashAmount, int requisitionId)
         {
             this.transaction = transaction;
             this.cashAmount = cashAmount;
